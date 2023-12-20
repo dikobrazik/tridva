@@ -1,4 +1,4 @@
-import {loadOffers} from '@/api/offers';
+import {loadOffers} from '@/api';
 import {InferGetStaticPropsType} from 'next';
 
 export const getStaticProps = async () => {
