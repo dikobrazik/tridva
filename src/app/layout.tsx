@@ -1,9 +1,10 @@
 import type {Metadata} from 'next';
-import {Inter} from 'next/font/google';
 import './globals.css';
 import {Logo} from '@/components/Logo';
 import {Row} from '@/components/layout/Row';
 import {TextField} from '@/components/TextField';
+import {Column} from '@/components/layout/Column';
+import {Inter} from 'next/font/google';
 
 const inter = Inter({subsets: ['latin']});
 
@@ -16,11 +17,15 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     return (
         <html lang="en">
             <body className={inter.className}>
-                <Row>
-                    <Logo />
-                    <TextField />
+                <Row justifyContent="center">
+                    <Column minWidth={360}>
+                        <Row alignItems="center" gap="2" paddingX={4} paddingY={4}>
+                            <Logo />
+                            <TextField />
+                        </Row>
+                        {children}
+                    </Column>
                 </Row>
-                {children}
             </body>
         </html>
     );

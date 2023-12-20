@@ -1,12 +1,12 @@
-import css from './Row.module.css';
+import css from './Column.module.css';
 import {extractStyles} from '../utils';
 import {UnitProps} from '../types';
 
-export const Row = ({children, ...props}: UnitProps) => {
+export const Column = ({children, ...props}: UnitProps) => {
     const styles = extractStyles(props);
 
     return (
-        <div className={css.row} style={styles}>
+        <div className={css.column} style={styles}>
             {children}
         </div>
     );
