@@ -11,6 +11,7 @@ export const InlineCssProperties = [
     'borderRadius',
     'maxWidth',
     'minWidth',
+    'flexWrap'
 ] satisfies Array<keyof CSSProperties>;
 
 const NumericProps = [
