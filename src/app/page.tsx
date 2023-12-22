@@ -12,8 +12,8 @@ export default async function Home() {
                 Рекомендации для вас
             </Text>
 
-            <Row flexWrap="wrap">
-                {Array(40)
+            <Row flexWrap="wrap" justifyContent="flex-start">
+                {Array(39)
                     .fill(undefined)
                     .map((_, index) => (
                         <OfferCard

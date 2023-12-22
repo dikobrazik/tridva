@@ -8,6 +8,8 @@ type Props = {
 
 export const Text = (props: PropsWithChildren<Props>) => {
     return (
-        <span style={{fontWeight: props.weight, fontSize: props.size, textAlign: props.align}}>{props.children}</span>
+        <span style={{fontWeight: props.weight ?? 400, fontSize: props.size ?? 12, textAlign: props.align}}>
+            {props.children}
+        </span>
     );
 };

@@ -9,6 +9,7 @@ type IconProps = {
 };
 
 export const Icon = (props: IconProps) => {
-    const {name, className} = props;
-    return <Image className={className} width={16} height={16} alt={`icon ${props.name}`} src={icons[props.name]} />;
+    return (
+        <Image className={props.className} width={16} height={16} alt={`icon ${props.name}`} src={icons[props.name]} />
+    );
 };
