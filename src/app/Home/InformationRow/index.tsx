@@ -2,6 +2,7 @@ import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import css from './InformationRow.module.scss';
+import {Text} from '@/components/Text';
 
 const InformationList = [
     {title: 'О\u00A0групповых покупках', description: ''},
@@ -17,7 +18,9 @@ export default async function InformationRow() {
             {InformationList.map((information, index) => (
                 <Column gap={2} className={css.information} key={index}>
                     <Box height={48} width={48} className={css.box} borderRadius={4} />
-                    {information.title}
+                    <Text size={8} align="center">
+                        {information.title}
+                    </Text>
                 </Column>
             ))}
         </Row>
