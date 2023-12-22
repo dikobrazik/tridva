@@ -21,7 +21,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                     <Column minWidth={360}>
                         <Row alignItems="center" gap="2" paddingX={4} paddingY={4}>
                             <Logo />
-                            <TextField />
+                            <TextField icon="search" />
                         </Row>
                         {children}
                     </Column>

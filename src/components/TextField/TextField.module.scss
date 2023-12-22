@@ -1,0 +1,31 @@
+.container {
+    position: relative;
+
+    width: 100%;
+}
+
+.input {
+    width: 100%;
+    padding: 8px 12px;
+
+    border: 1px solid #9CA3AA7A;
+    border-radius: 10px;
+
+    size: 12px;
+    line-height: 14px;
+
+    padding-right: 40px;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.icon {
+    position: absolute;
+
+    top: 50%;
+    right: 12px;
+
+    margin-top: -8px;
+}

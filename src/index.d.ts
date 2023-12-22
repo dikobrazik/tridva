@@ -1,9 +1,9 @@
-declare module "*.css" {
-    interface CSSModule {
-        [className: string]: string;
-    }
+// declare module "*.css" {
+//     interface CSSModule {
+//         [className: string]: string;
+//     }
 
-    const styles: CSSModule;
+//     const styles: CSSModule;
 
-    export = styles;
-}
+//     export = styles;
+// }
