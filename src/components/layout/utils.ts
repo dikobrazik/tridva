@@ -6,15 +6,35 @@ export const InlineCssProperties = [
     'justifyContent',
     'alignItems',
     'flexDirection',
+    'width',
+    'height',
+    'borderRadius',
     'maxWidth',
     'minWidth',
 ] satisfies Array<keyof CSSProperties>;
 
-export const extractStyles = <T>(props: UnitProps<T>) => {
-    const styles =  InlineCssProperties.reduce((styles, key) => {
-        styles[key] = props[key];
-        return styles;
-    }, {} as Partial<CSSProperties>);
+const NumericProps = [
+    'gap',
+    'borderRadius',
+] satisfies Array<keyof UnitProps>;
+
+export const extractStyles = (props: UnitProps) => {
+    const otherProps = {} as Omit<UnitProps, keyof CSSProperties>;
+    const styles = {} as Partial<CSSProperties>;
+
+    for (const [key, value] of Object.entries(props)) {
+        if (InlineCssProperties.includes(key)) {
+            styles[key] = value;
+        } else {
+            otherProps[key] = value;
+        }
+    }
+
+    for (const numericProp of NumericProps) {
+        if (props[numericProp] !== undefined) {
+            styles[numericProp] = Number(props[numericProp]) * 4;
+        }
+    }
 
     if (props.paddingX !== undefined) {
         styles.paddingLeft = Number(props.paddingX) * 4;
@@ -26,9 +46,5 @@ export const extractStyles = <T>(props: UnitProps<T>) => {
         styles.paddingBottom = Number(props.paddingY) * 4;
     }
 
-    if (props.gap !== undefined) {
-        styles.gap = Number(props.gap) * 4;
-    }
-
-    return styles;
+    return {styles, otherProps};
 }

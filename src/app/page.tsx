@@ -1,13 +1,10 @@
-import {loadOffers} from '@/api';
+import {Column} from '@/components/layout/Column';
+import InformationRow from './Home/InformationRow';
 
 export default async function Home() {
-    const offers = await loadOffers();
-
     return (
-        <div>
-            {offers.map(offer => (
-                <li key={offer.id}>{offer.title}</li>
-            ))}
-        </div>
+        <Column>
+            <InformationRow />
+        </Column>
     );
 }

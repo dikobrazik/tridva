@@ -7,4 +7,6 @@ type StyleProps = Pick<CSSProperties, (typeof InlineCssProperties)[number]> & {
     paddingY?: number | `${number}`
 };
 
-export type UnitProps<T = {}> = PropsWithChildren<StyleProps & T>
+type HtmlElementProps = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>;
+
+export type UnitProps<T = {}> = PropsWithChildren<StyleProps & T & HtmlElementProps>

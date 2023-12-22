@@ -5,6 +5,7 @@ import {Row} from '@/components/layout/Row';
 import {TextField} from '@/components/TextField';
 import {Column} from '@/components/layout/Column';
 import {Inter} from 'next/font/google';
+import InformationRow from './page';
 
 const inter = Inter({subsets: ['latin']});
 
@@ -18,8 +19,8 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <html lang="en">
             <body className={inter.className}>
                 <Row justifyContent="center">
-                    <Column minWidth={360}>
-                        <Row alignItems="center" gap="2" paddingX={4} paddingY={4}>
+                    <Column gap={4} minWidth={360} padding="16px">
+                        <Row alignItems="center" gap="2">
                             <Logo />
                             <TextField icon="search" />
                         </Row>

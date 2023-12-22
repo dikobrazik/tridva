@@ -1,0 +1,16 @@
+.information {
+    max-width: 48px;
+
+    &:first-of-type .box {
+        background: linear-gradient(300.11deg, #F40C43 6.73%, #FFE2C6 107.75%);
+    }
+
+    & .box {
+        border: 1px solid #EAE5EC;
+        background: linear-gradient(0deg, #EAE5EC, #EAE5EC), linear-gradient(0deg, #F2ECF4, #F2ECF4);
+    }
+
+    font-size: 8px;
+
+    text-align: center;
+}
