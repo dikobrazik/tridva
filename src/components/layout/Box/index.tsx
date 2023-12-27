@@ -1,12 +1,9 @@
 import {extractStyles} from '../utils';
-import {UnitProps} from '../types';
+import {AsTags, UnitProps} from '../types';
+import React from 'react';
 
-export const Box = ({children, ...props}: UnitProps) => {
+export const Box = <As extends AsTags = 'div'>({children, as = 'div', ...props}: UnitProps<As>) => {
     const {otherProps, styles} = extractStyles(props);
 
-    return (
-        <div {...otherProps} style={styles}>
-            {children}
-        </div>
-    );
+    return React.createElement(as, {...otherProps, style: styles}, children);
 };

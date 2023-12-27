@@ -1,9 +1,9 @@
 import css from './Row.module.css';
 import {extractStyles} from '../utils';
-import {UnitProps} from '../types';
+import {AsTags, UnitProps} from '../types';
 import cn from 'classnames';
 
-export const Row = ({children, ...props}: UnitProps) => {
+export const Row = <As extends AsTags = 'div'>({children, ...props}: UnitProps<As>) => {
     const {otherProps, styles} = extractStyles(props);
 
     return (

@@ -1,14 +1,15 @@
 import css from './Column.module.css';
 import {extractStyles} from '../utils';
-import {UnitProps} from '../types';
+import {AsTags, UnitProps} from '../types';
 import cn from 'classnames';
+import React from 'react';
 
-export const Column = ({children, ...props}: UnitProps) => {
+export const Column = <As extends AsTags = 'div'>({children, as, ...props}: UnitProps<As>) => {
     const {styles, otherProps} = extractStyles(props);
 
-    return (
-        <div {...otherProps} className={cn(css.column, otherProps.className)} style={styles}>
-            {children}
-        </div>
+    return React.createElement(
+        as ?? 'div',
+        {...otherProps, className: cn(css.column, otherProps.className), style: styles},
+        children,
     );
 };
