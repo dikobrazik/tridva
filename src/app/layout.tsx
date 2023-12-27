@@ -5,10 +5,10 @@ import {Row} from '@/components/layout/Row';
 import {TextField} from '@/components/TextField';
 import {Column} from '@/components/layout/Column';
 import {Inter} from 'next/font/google';
-import InformationRow from './page';
 import {Icon, IconName} from '@/components/Icon';
 import {Text} from '@/components/Text';
 import {Box} from '@/components/layout/Box';
+import React from 'react';
 
 const inter = Inter({subsets: ['latin']});
 
