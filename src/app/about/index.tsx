@@ -8,5 +8,5 @@ export const getStaticProps = async () => {
 };
 
 export default function About(props: InferGetStaticPropsType<typeof getStaticProps>) {
-    return <div>lol</div>;
+    return <div>lol </div>;
 }
