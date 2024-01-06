@@ -31,7 +31,9 @@ export const extractStyles = (props: UnitProps) => {
         if (InlineCssProperties.includes(key)) {
             styles[key] = value;
         } else {
-            otherProps[key] = value;
+            if (key !== 'paddingX' && key !== 'paddingY') {
+                otherProps[key] = value;
+            }
         }
     }
 
