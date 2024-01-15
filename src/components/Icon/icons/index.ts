@@ -7,3 +7,5 @@ export { default as menu } from './menu.svg';
 export { default as cart } from './cart.svg';
 export { default as hanger } from './hanger.svg';
 export { default as chevron } from './chevron-right.svg';
+export { default as switch } from './arrow-switch.svg';
+export { default as audio } from './audio-settings.svg';

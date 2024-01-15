@@ -23,11 +23,11 @@ function CategoryItem({title, href}: {title: string; href: string}) {
 export default function Categories() {
     return (
         <Column paddingX={4}>
-            <CategoryItem title="Одежда и обувь" href="/category" />
-            <CategoryItem title="Красота и здоровье" href="/category" />
-            <CategoryItem title="Электроника" href="/category" />
-            <CategoryItem title="Бытовая техника" href="/category" />
-            <CategoryItem title="Автотовары" href="/category" />
+            <CategoryItem title="Одежда и обувь" href="/catalog" />
+            <CategoryItem title="Красота и здоровье" href="/catalog" />
+            <CategoryItem title="Электроника" href="/catalog" />
+            <CategoryItem title="Бытовая техника" href="/catalog" />
+            <CategoryItem title="Автотовары" href="/catalog" />
         </Column>
     );
 }
