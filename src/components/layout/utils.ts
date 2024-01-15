@@ -1,19 +1,26 @@
-import {CSSProperties} from "react";
-import {UnitProps} from "./types";
+import { CSSProperties } from "react";
+import { UnitProps } from "./types";
 
 export const InlineCssProperties = [
+    'display',
     'padding',
+    'paddingBottom',
+    'paddingTop',
+    'margin',
+    'marginBottom',
     'justifyContent',
     'alignItems',
     'flexDirection',
     'width',
     'height',
     'borderRadius',
+    'borderBottom',
     'maxWidth',
     'minWidth',
     'maxHeight',
     'minHeight',
     'flexWrap',
+    'overflowX',
     'overflowY',
     'flex'
 ] satisfies Array<keyof CSSProperties>;
@@ -53,5 +60,5 @@ export const extractStyles = (props: UnitProps) => {
         styles.paddingBottom = Number(props.paddingY) * 4;
     }
 
-    return {styles, otherProps};
+    return { styles, otherProps };
 }

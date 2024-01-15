@@ -1,0 +1,14 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 24px 8px;
+}
+
+.headerButton {
+    border: 1px solid #E1A6B414;
+    border-radius: 8px;
+    padding: 6px 12px;
+    height: 28px;
+    background: linear-gradient(0deg, rgba(225, 166, 180, 0.08), rgba(225, 166, 180, 0.08)),
+linear-gradient(0deg, #F5F5F5, #F5F5F5);
+}

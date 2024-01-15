@@ -8,28 +8,46 @@ import {Row} from '../layout/Row';
 import {Icon} from '../Icon';
 
 export const OfferCard = (props: Offer) => {
-    const {title, cost} = props;
+    const {title, cost, discount} = props;
 
     return (
-        <Column flex="1 0 160px" gap={2} padding={4}>
+        <Column gap={2}>
             <Image className={css.image} alt={`image for offer named ${title}`} src={duck} />
-            <Text size={16} weight={600}>
-                {cost} ₽
-            </Text>
-            <Text>{title}</Text>
-            <Row gap={2} alignItems="center">
-                <Row gap={1}>
-                    <Icon name="star" />
-                    <Text size={10}>4.9</Text>
+
+            {discount ? (
+                <Row alignItems="center">
+                    <Text size={16} weight={600}>
+                        {Math.round((Number(cost) * discount) / 100)} ₽
+                    </Text>
+                    <Text color="#303234A3" decoration="line-through" size={12} weight={400}>
+                        {cost} ₽
+                    </Text>
+                    <Text color="#F40C43" size={12} weight={400}>
+                        -{discount}%
+                    </Text>
                 </Row>
-                <Row gap={1}>
-                    <Icon name="message" />
-                    <Text size={10}>123 отзыва</Text>
+            ) : (
+                <Text size={16} weight={600}>
+                    {cost} ₽
+                </Text>
+            )}
+
+            <Column gap={1}>
+                <Text>{title}</Text>
+                <Row gap={2} alignItems="center">
+                    <Row gap={1} alignItems="center">
+                        <Icon name="star" />
+                        <Text size={10}>4.9</Text>
+                    </Row>
+                    <Row gap={1} alignItems="center">
+                        <Icon name="message" />
+                        <Text size={10}>123 отзыва</Text>
+                    </Row>
                 </Row>
-            </Row>
-            <Row justifyContent="space-between">
-                <Text size={10}>Купили 256 раз</Text>
-            </Row>
+                <Row justifyContent="space-between">
+                    <Text size={10}>Купили 256 раз</Text>
+                </Row>
+            </Column>
         </Column>
     );
 };

@@ -3,4 +3,5 @@ export type Offer = {
   title: string;
   description: string;
   cost: string;
+  discount?: number;
 };
