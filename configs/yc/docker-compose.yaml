@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+    nginx:
+        image: cr.yandex/crpkv40doqi2snrfmq1e/tridva-nginx-front
+        ports:
+            - '80:80'
+        restart: always
+        depends_on:
+            - frontend
+
+    frontend:
+        image: cr.yandex/crpkv40doqi2snrfmq1e/tridva-front
+        restart: always
