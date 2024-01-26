@@ -9,6 +9,7 @@ import {Icon, IconName} from '@/components/Icon';
 import {Text} from '@/components/Text';
 import {Box} from '@/components/layout/Box';
 import React from 'react';
+import Link from 'next/link';
 
 const inter = Inter({subsets: ['latin']});
 
@@ -19,10 +20,12 @@ export const metadata: Metadata = {
 
 const FooterButton = ({icon, title, href}: {icon: IconName; title: string; href: string}) => {
     return (
-        <Column as="a" gap={1} href={href} alignItems="center" paddingX={3}>
-            <Icon name={icon} size="m" />
-            <Text>{title}</Text>
-        </Column>
+        <Link href={href}>
+            <Column gap={1} alignItems="center" paddingX={3}>
+                <Icon name={icon} size="m" />
+                <Text>{title}</Text>
+            </Column>
+        </Link>
     );
 };
 

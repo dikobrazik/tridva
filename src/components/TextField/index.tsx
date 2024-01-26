@@ -9,7 +9,7 @@ export const TextField = (props: Props) => {
     const {icon} = props;
     return (
         <span className={css.container}>
-            <input className={css.input} name="search" placeholder="Искать товары и категории" />
+            <input className={css.input} name="search" placeholder="Искать товары и категории" type="search" />
             {icon && <Icon className={css.icon} name={icon} />}
         </span>
     );
