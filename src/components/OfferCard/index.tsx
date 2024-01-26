@@ -8,7 +8,7 @@ import {Row} from '../layout/Row';
 import {Icon} from '../Icon';
 
 export const OfferCard = (props: Offer) => {
-    const {title, cost, discount} = props;
+    const {title, price, discount} = props;
 
     return (
         <Column gap={2}>
@@ -17,10 +17,10 @@ export const OfferCard = (props: Offer) => {
             {discount ? (
                 <Row alignItems="center">
                     <Text size={16} weight={600}>
-                        {Math.round((Number(cost) * discount) / 100)} ₽
+                        {Math.round((Number(price) * discount) / 100)} ₽
                     </Text>
                     <Text color="#303234A3" decoration="line-through" size={12} weight={400}>
-                        {cost} ₽
+                        {price} ₽
                     </Text>
                     <Text color="#F40C43" size={12} weight={400}>
                         -{discount}%
@@ -28,7 +28,7 @@ export const OfferCard = (props: Offer) => {
                 </Row>
             ) : (
                 <Text size={16} weight={600}>
-                    {cost} ₽
+                    {price} ₽
                 </Text>
             )}
 

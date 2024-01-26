@@ -5,8 +5,11 @@ import {Row} from '@/components/layout/Row';
 import {OfferCard} from '@/components/OfferCard';
 import css from './Page.module.scss';
 import {Box} from '@/components/layout/Box';
+import {loadOffers} from '@/api';
 
 export default async function Home() {
+    const offers = await loadOffers();
+
     return (
         <Column>
             <Column paddingBottom="8px" borderBottom="4px solid #F5F5F5">
@@ -37,17 +40,9 @@ export default async function Home() {
                 </Box>
 
                 <Box className={css.grid}>
-                    {Array(11)
-                        .fill(undefined)
-                        .map((_, index) => (
-                            <OfferCard
-                                key={index}
-                                id={1}
-                                cost="1499"
-                                description="dwa"
-                                title={`Подвес на зеркало "Утка" высота 8 см, шнурок 50 см`}
-                            />
-                        ))}
+                    {offers.map((offer, index) => (
+                        <OfferCard key={index} {...offer} />
+                    ))}
                 </Box>
             </Column>
         </Column>
