@@ -7,6 +7,7 @@ import {Column} from '@/components/layout/Column';
 import {Inter} from 'next/font/google';
 import {Icon, IconName} from '@/components/Icon';
 import {Text} from '@/components/Text';
+import {Box} from '@/components/layout/Box';
 import React from 'react';
 import Link from 'next/link';
 import StoreProvider from './StoreProvider';
@@ -38,7 +39,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                         <Logo />
                         <TextField icon="search" />
                     </Row>
-                    <StoreProvider>{children}</StoreProvider>
+                    <Box overflowY="scroll" height="100vh">
+                        <StoreProvider>{children}</StoreProvider>
+                    </Box>
                     <Row padding="8px 16px" justifyContent="space-between">
                         <FooterButton icon="home" title="Главная" href="/" />
                         <FooterButton icon="menu" title="Категории" href="/menu" />
