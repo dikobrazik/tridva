@@ -1,15 +1,18 @@
 import {loadOffers} from '@/api';
-import {RootState, createAppAsyncThunk} from '@/lib/store';
+import {RootState} from '@/lib/store';
 import {Offer} from '@/types/offers';
-import {createSlice, createEntityAdapter} from '@reduxjs/toolkit';
+import {createSlice, createEntityAdapter, createAsyncThunk} from '@reduxjs/toolkit';
 
 const NAMESPACE = 'offers';
 
 const offerAdapter = createEntityAdapter<Offer>();
 
-export const loadOffersAction = createAppAsyncThunk<Offer[]>(`${NAMESPACE}/load`, (_, {getState}) => {
-    return loadOffers({page: offersSelectors.selectCurrentPage(getState())});
-});
+export const loadOffersAction = createAsyncThunk<Offer[], void, {state: RootState}>(
+    `${NAMESPACE}/load`,
+    (_, {getState}) => {
+        return loadOffers({page: offersSelectors.selectCurrentPage(getState())});
+    },
+);
 
 const offersSlice = createSlice({
     name: NAMESPACE,
