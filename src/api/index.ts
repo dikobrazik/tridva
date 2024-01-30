@@ -1,5 +1,5 @@
-import axios from "axios";
+import axios from 'axios';
 
 export * from './offers';
 
-axios.defaults.baseURL = `${process.env.HOST}/api`;
+axios.defaults.baseURL = `${process.env.NEXT_PUBLIC_HOST}/api`;

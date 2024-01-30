@@ -12,7 +12,7 @@ const InformationList = [
     {title: 'Выгодные товары дня', description: ''},
 ];
 
-export default async function InformationRow() {
+export default function InformationRow() {
     return (
         <Row justifyContent="space-between" paddingY={2} paddingX={4}>
             {InformationList.map((information, index) => (

@@ -1,12 +1,3 @@
-import {loadOffers} from '@/api';
-import {InferGetStaticPropsType} from 'next';
-
-export const getStaticProps = async () => {
-    const offers = await loadOffers();
-
-    return {props: {offers}};
-};
-
-export default function About(props: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function About() {
     return <div>lol </div>;
 }

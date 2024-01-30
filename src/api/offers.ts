@@ -1,4 +1,9 @@
-import {Offer} from "@/types/offers";
-import axios from "axios";
+import {Offer} from '@/types/offers';
+import axios from 'axios';
 
-export const loadOffers = (): Promise<Offer[]> => axios<Offer[]>("offers").then((response) => response.data);
+type LoadOffersPayload = {
+    page?: number;
+};
+
+export const loadOffers = (payload?: LoadOffersPayload): Promise<Offer[]> =>
+    axios<Offer[]>('offers', {params: payload}).then(response => response.data);
