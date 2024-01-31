@@ -10,6 +10,16 @@ const nextConfig = {
     eslint: {
         ignoreDuringBuilds: true,
     },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'goods-photos.static1-sima-land.com',
+                port: '',
+                pathname: '/items/**',
+            },
+        ],
+    },
 };
 
 module.exports = nextConfig;

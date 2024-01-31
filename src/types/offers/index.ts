@@ -4,4 +4,5 @@ export type Offer = {
     description: string;
     price: string;
     discount?: number;
+    photos?: string[];
 };

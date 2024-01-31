@@ -8,11 +8,19 @@ import {Row} from '../layout/Row';
 import {Icon} from '../Icon';
 
 export const OfferCard = (props: Offer) => {
-    const {title, price, discount} = props;
+    const {title, price, discount, photos} = props;
+
+    const imageSrc = photos?.length ? `${photos[0]}/700.jpg` : duck;
 
     return (
         <Column gap={2}>
-            <Image className={css.image} alt={`image for offer named ${title}`} src={duck} />
+            <Image
+                width="150"
+                height="150"
+                className={css.image}
+                alt={`image for offer named ${title}`}
+                src={imageSrc}
+            />
 
             {discount ? (
                 <Row alignItems="center">
