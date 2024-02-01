@@ -1,11 +1,15 @@
 import {Category} from '@/types/category';
 import axios from 'axios';
 
-type LoadOffersPayload = {
+type LoadCategoriesPayload = {
     level?: number;
 };
 
-export const loadCategories = (payload: LoadOffersPayload = {level: 1}): Promise<Category[]> =>
+type LoadCategoryPayload = {
+    categoryId: number;
+};
+
+export const loadCategories = (payload: LoadCategoriesPayload = {level: 1}): Promise<Category[]> =>
     axios<Category[]>('categories', {params: payload})
         .then(response => response.data)
         .catch(e => {
@@ -13,3 +17,8 @@ export const loadCategories = (payload: LoadOffersPayload = {level: 1}): Promise
 
             return [];
         });
+
+export const loadCategory = (payload: LoadCategoryPayload): Promise<Category> =>
+    axios<Category>(`categories/${payload.categoryId}`, {params: payload})
+        .then(response => response.data)
+        .catch(() => ({} as Category));

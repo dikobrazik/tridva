@@ -5,32 +5,12 @@ import {Text} from '@/components/Text';
 import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
-import {loadOffersAction, offersActions, offersSelectors} from '@/lib/features/offers';
-import {useAppDispatch, useAppSelector} from '@/lib/hooks';
-import {UIEventHandler, useEffect} from 'react';
 import InformationRow from './Home/InformationRow';
 import css from './Page.module.scss';
+import {useOffers} from './useOffers';
 
 export default function Home() {
-    const dispatch = useAppDispatch();
-
-    const offers = useAppSelector(offersSelectors.selectAll);
-    const areOffersLoading = useAppSelector(offersSelectors.selectIsLoading);
-
-    useEffect(() => {
-        dispatch(loadOffersAction());
-    }, []);
-
-    const onScroll: UIEventHandler<HTMLDivElement> = e => {
-        const container = e.target as HTMLDivElement;
-
-        if (container.scrollTop >= container.scrollHeight - 1.5 * container.offsetHeight) {
-            if (!areOffersLoading) {
-                dispatch(offersActions.incrementPage());
-                dispatch(loadOffersAction());
-            }
-        }
-    };
+    const {offers, onScroll} = useOffers();
 
     return (
         <Column onScroll={onScroll} overflowY="scroll" height="100vh">

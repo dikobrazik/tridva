@@ -7,10 +7,10 @@ const NAMESPACE = 'offers';
 
 const offerAdapter = createEntityAdapter<Offer>();
 
-export const loadOffersAction = createAsyncThunk<Offer[], void, {state: RootState}>(
+export const loadOffersAction = createAsyncThunk<Offer[], {categoryId?: number}, {state: RootState}>(
     `${NAMESPACE}/load`,
-    (_, {getState}) => {
-        return loadOffers({page: offersSelectors.selectCurrentPage(getState())});
+    (payload, {getState}) => {
+        return loadOffers({page: offersSelectors.selectCurrentPage(getState()), category: payload.categoryId});
     },
 );
 

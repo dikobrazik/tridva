@@ -7,6 +7,7 @@ type IconProps = {
     className?: string;
     name: IconName;
     size?: 's' | 'm' | 'l';
+    onClick?: () => void;
 };
 
 const SIZE_MAP = {
@@ -16,7 +17,7 @@ const SIZE_MAP = {
 };
 
 export const Icon = (props: IconProps) => {
-    const {className, name, size = 's'} = props;
+    const {className, name, size = 's', onClick} = props;
     return (
         <Image
             className={className}
@@ -24,6 +25,7 @@ export const Icon = (props: IconProps) => {
             height={SIZE_MAP[size]}
             alt={`icon ${name}`}
             src={icons[name]}
+            onClick={onClick}
         />
     );
 };

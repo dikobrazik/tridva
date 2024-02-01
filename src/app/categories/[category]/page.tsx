@@ -8,20 +8,34 @@ import {Row} from '@/components/layout/Row';
 import css from './Page.module.scss';
 import {OfferCard} from '@/components/OfferCard';
 import Filter from './Filter';
-import {useState} from 'react';
+import {useOffers} from '@/app/useOffers';
+import {useParams} from 'next/navigation';
+import {useEffect, useState} from 'react';
+import {loadCategory, loadOffersTotal} from '@/api';
+import {Category} from '@/types/category';
 
 export default function Catalog() {
-    const [isFilterVisible, setIsFilterVisible] = useState(false);
+    const [category, setCategory] = useState<Category>();
+    const [total, setTotal] = useState<number>(0);
+    const {category: categoryId} = useParams();
+    const {offers, onScroll} = useOffers({categoryId: Number(categoryId)});
+
+    useEffect(() => {
+        loadCategory({categoryId: Number(categoryId)}).then(setCategory);
+        loadOffersTotal({category: Number(categoryId)}).then(setTotal);
+    }, []);
 
     return (
-        <Column paddingX={4} paddingY={2}>
+        <Column paddingX={4} paddingY={2} onScroll={onScroll} overflowY="scroll" height="100vh">
             <Column gap={2}>
                 <Text size={24} weight={600}>
-                    Бытовая техника
+                    {category?.name}
                 </Text>
-                <Text size={10} weight={400}>
-                    123 товара
-                </Text>
+                {total && (
+                    <Text size={10} weight={400}>
+                        {total} товара
+                    </Text>
+                )}
             </Column>
             <Row paddingY={6} justifyContent="space-between" alignItems="center">
                 <Row alignItems="center">
@@ -30,25 +44,14 @@ export default function Catalog() {
                     </Text>
                     <Icon name="switch" size="s"></Icon>
                 </Row>
-                <div onClick={() => setIsFilterVisible(true)}>
-                    <Icon name="audio" size="s"></Icon>
-                </div>
+
+                <Filter />
             </Row>
             <Box className={css.grid}>
-                {Array(11)
-                    .fill(undefined)
-                    .map((_, index) => (
-                        <OfferCard
-                            key={index}
-                            id={1}
-                            price="1499"
-                            discount={63}
-                            description="dwa"
-                            title={`Подвес на зеркало "Утка" высота 8 см, шнурок 50 см`}
-                        />
-                    ))}
+                {offers.map((offer, index) => (
+                    <OfferCard key={index} {...offer} />
+                ))}
             </Box>
-            {isFilterVisible && <Filter />}
         </Column>
     );
 }
