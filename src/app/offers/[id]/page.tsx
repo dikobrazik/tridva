@@ -1,6 +1,10 @@
 import {loadCategory, loadOffer} from '@/api';
 import {Column} from '@/components/layout/Column';
 import Image from 'next/image';
+import css from './Page.module.scss';
+import {Box} from '@/components/layout/Box';
+import {Row} from '@/components/layout/Row';
+import {Text} from '@/components/Text';
 
 type Props = {
     params: {id: string};
@@ -17,9 +21,18 @@ export default async function Offer(props: Props) {
 
     return (
         <Column>
-            {imageSrc && <Image src={imageSrc} width={700} height={700} alt="offer image" />}
-            {category.name}
-            {price} ₽{title}
+            {imageSrc && <Image className={css.image} src={imageSrc} width={700} height={700} alt="offer image" />}
+            <Column gap={3} paddingX="4" paddingY="2">
+                <Row>
+                    <Box className={css.category}>{category.name}</Box>
+                </Row>
+                <Text weight="600" size="24px">
+                    {price} ₽
+                </Text>
+                <Text weight="600" size="16px">
+                    {title}
+                </Text>
+            </Column>
         </Column>
     );
 }

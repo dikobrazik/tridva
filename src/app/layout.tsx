@@ -36,7 +36,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             <body className={inter.className}>
                 <Column minWidth={360} height="100vh">
                     <Row alignItems="center" gap="2" paddingX={4} paddingY={4}>
-                        <Logo />
+                        <Link href="/">
+                            <Logo />
+                        </Link>
                         <TextField icon="search" />
                     </Row>
                     <Box overflowY="scroll" height="100vh">

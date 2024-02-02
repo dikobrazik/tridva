@@ -1,5 +1,5 @@
-import { CSSProperties } from "react";
-import { UnitProps } from "./types";
+import {CSSProperties} from 'react';
+import {UnitProps} from './types';
 
 export const InlineCssProperties = [
     'display',
@@ -22,20 +22,24 @@ export const InlineCssProperties = [
     'flexWrap',
     'overflowX',
     'overflowY',
-    'flex'
+    'flex',
 ] satisfies Array<keyof CSSProperties>;
 
 const NumericProps = [
     'gap',
     'borderRadius',
+    // @ts-expect-error
 ] satisfies Array<keyof UnitProps>;
 
+// @ts-expect-error
 export const extractStyles = (props: UnitProps) => {
+    // @ts-expect-error
     const otherProps = {} as Omit<UnitProps, keyof CSSProperties>;
     const styles = {} as Partial<CSSProperties>;
 
     for (const [key, value] of Object.entries(props)) {
         if (InlineCssProperties.includes(key)) {
+            // @ts-expect-error
             styles[key] = value;
         } else {
             if (key !== 'paddingX' && key !== 'paddingY') {
@@ -46,6 +50,7 @@ export const extractStyles = (props: UnitProps) => {
 
     for (const numericProp of NumericProps) {
         if (props[numericProp] !== undefined) {
+            // @ts-expect-error
             styles[numericProp] = Number(props[numericProp]) * 4;
         }
     }
@@ -60,5 +65,5 @@ export const extractStyles = (props: UnitProps) => {
         styles.paddingBottom = Number(props.paddingY) * 4;
     }
 
-    return { styles, otherProps };
-}
+    return {styles, otherProps};
+};
