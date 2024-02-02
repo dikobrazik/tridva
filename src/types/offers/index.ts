@@ -5,4 +5,5 @@ export type Offer = {
     price: string;
     discount?: number;
     photos?: string[];
+    categoryId: number;
 };
