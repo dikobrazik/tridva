@@ -9,7 +9,7 @@ type Props = {
 export const useOffers = (props?: Props) => {
     const dispatch = useAppDispatch();
 
-    const offers = useAppSelector(offersSelectors.selectAll);
+    const offers = useAppSelector(offersSelectors.selectLoadedOffers);
     const areOffersLoading = useAppSelector(offersSelectors.selectIsLoading);
 
     useEffect(() => {

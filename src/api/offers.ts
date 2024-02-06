@@ -2,6 +2,7 @@ import {Offer} from '@/types/offers';
 import axios from 'axios';
 
 type LoadOffersPayload = {
+    search?: string;
     page?: number;
     category?: number;
 };
