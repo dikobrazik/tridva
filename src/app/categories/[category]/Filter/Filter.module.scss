@@ -4,7 +4,7 @@
     left: 0;
     bottom: 0;
     right: 0;
-    background: #38343A52;
+    background: #38343a52;
 }
 
 .filter {
@@ -12,7 +12,7 @@
     flex-direction: column;
     gap: 24px;
 
-    background: #FFF;
+    background: #fff;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -26,7 +26,7 @@
         position: absolute;
         width: 74px;
         height: 3px;
-        background: #EFEBF1;
+        background: #efebf1;
         top: 8px;
         left: calc(50% - 37px);
     }
@@ -34,7 +34,7 @@
 
 .inputContainer {
     position: relative;
-    
+
     &::after {
         content: '';
         position: absolute;
@@ -48,28 +48,16 @@
 
 .input {
     width: calc(50% - 12px);
-    border: 1px solid #9CA3AA7A;
+    border: 1px solid #9ca3aa7a;
     padding: 12px 16px;
     border-radius: 12px;
     font-size: 14px;
-    line-height: 16px;  
+    line-height: 16px;
     font-weight: 400;
-    color: #2F3337A3;
+    color: #2f3337a3;
 }
 
 .checkbox {
     margin-right: 8px;
     vertical-align: middle;
-}
-
-.button {
-    width: 100%;
-    padding: 16px 0;
-    background: #F40C43;
-    color: #FFFFFF;
-    font-size: 16px;
-    line-height: 20px;
-    font-weight: 600;
-    border: none;
-    border-radius: 16px;
 }

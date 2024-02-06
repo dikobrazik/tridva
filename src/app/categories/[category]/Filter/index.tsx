@@ -7,6 +7,7 @@ import {Column} from '@/components/layout/Column';
 import css from './Filter.module.scss';
 import {Box} from '@/components/layout/Box';
 import {useState} from 'react';
+import {Button} from '@/components/Button';
 
 export default function Filter() {
     const [isDrawerVisible, setIsDrawerVisible] = useState(false);
@@ -85,7 +86,7 @@ export default function Filter() {
                             </Row>
                         </Column>
 
-                        <button className={css.button}>Применить фильтры</button>
+                        <Button>Применить фильтры</Button>
                     </form>
                 </div>
             )}

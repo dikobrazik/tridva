@@ -2,7 +2,6 @@ import type {Metadata} from 'next';
 import './globals.css';
 import {Logo} from '@/components/Logo';
 import {Row} from '@/components/layout/Row';
-import {TextField} from '@/components/TextField';
 import {Column} from '@/components/layout/Column';
 import {Inter} from 'next/font/google';
 import {Icon, IconName} from '@/components/Icon';
@@ -11,6 +10,7 @@ import {Box} from '@/components/layout/Box';
 import React from 'react';
 import Link from 'next/link';
 import StoreProvider from './StoreProvider';
+import {Search} from './Search';
 
 const inter = Inter({subsets: ['latin']});
 
@@ -39,7 +39,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                         <Link href="/">
                             <Logo />
                         </Link>
-                        <TextField icon="search" />
+                        <Search />
                     </Row>
                     <Box overflowY="scroll" height="100vh">
                         <StoreProvider>{children}</StoreProvider>
