@@ -1,7 +1,8 @@
 import {loadOffers} from '@/api';
 import {RootState} from '@/lib/store';
+import {uniq} from '@/shared/utils/uniq';
 import {Offer} from '@/types/offers';
-import {createSlice, createEntityAdapter, createAsyncThunk} from '@reduxjs/toolkit';
+import {createSlice, createEntityAdapter, createAsyncThunk, createSelector} from '@reduxjs/toolkit';
 
 const NAMESPACE = 'offers';
 
@@ -49,11 +50,12 @@ const offersSlice = createSlice({
                 const offersIds = payload.map(offerAdapter.selectId);
                 const categoryId = meta.arg.categoryId;
                 if (categoryId) {
-                    state.offersIdsByCategoryIds[categoryId] = (state.offersIdsByCategoryIds[categoryId] ?? []).concat(
-                        offersIds,
+                    state.offersIdsByCategoryIds[categoryId] = uniq(
+                        (state.offersIdsByCategoryIds[categoryId] ?? []).concat(offersIds),
                     );
                 } else {
                     state.loadedOffersIds.push(...payload.map(offerAdapter.selectId));
+                    state.loadedOffersIds = uniq(state.loadedOffersIds);
                 }
 
                 offerAdapter.addMany(state, payload);
@@ -67,6 +69,7 @@ const offersSlice = createSlice({
             .addCase(searchOffersAction.fulfilled, (state, {payload}) => {
                 state.loading = false;
                 state.foundOffersIds.push(...payload.map(offerAdapter.selectId));
+                state.foundOffersIds = uniq(state.foundOffersIds);
 
                 offerAdapter.addMany(state, payload);
             })
@@ -84,13 +87,22 @@ const offersStateSelector = (state: RootState) => state.offers;
 const offersSliceSelectors = offersSlice.getSelectors(offersStateSelector);
 const offerAdapterSelectors = offerAdapter.getSelectors(offersStateSelector);
 
+const EMPTY_ARRAY = [] as number[];
+
 export const offersSelectors = {
     ...offersSliceSelectors,
     ...offerAdapterSelectors,
-    selectLoadedOffers: (state: RootState) =>
-        offersSliceSelectors.selectLoadedOffersIds(state).map(id => offerAdapterSelectors.selectById(state, id)),
-    selectCategoryOffers: (categoryId: number) => (state: RootState) =>
-        (offersSliceSelectors.selectOffersIdsByCategoryIds(state)[categoryId] ?? []).map(id =>
-            offerAdapter.getSelectors((state: RootState) => state.offers).selectById(state, id),
-        ),
+    selectLoadedOffers: createSelector(
+        [offersSliceSelectors.selectLoadedOffersIds, (state: RootState) => state],
+        (ids, state) => ids.map(id => offerAdapterSelectors.selectById(state, id)),
+    ),
+    selectCategoryOffers: createSelector(
+        [
+            (state: RootState, categoryId: number) =>
+                offersSliceSelectors.selectOffersIdsByCategoryIds(state)[categoryId] ?? EMPTY_ARRAY,
+            (state: RootState) => state,
+        ],
+        (ids, state) =>
+            ids.map(id => offerAdapter.getSelectors((state: RootState) => state.offers).selectById(state, id)),
+    ),
 };

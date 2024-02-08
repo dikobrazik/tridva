@@ -1,3 +1,5 @@
+const path = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     typescript: {
@@ -9,6 +11,9 @@ const nextConfig = {
     },
     eslint: {
         ignoreDuringBuilds: true,
+    },
+    sassOptions: {
+        includePaths: [path.join(__dirname, 'src/styles')],
     },
     images: {
         remotePatterns: [

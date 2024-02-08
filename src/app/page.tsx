@@ -8,12 +8,13 @@ import {Row} from '@/components/layout/Row';
 import InformationRow from './Home/InformationRow';
 import css from './Page.module.scss';
 import {useOffers} from './useOffers';
+import {Loader} from '@/components/Loader';
 
 export default function Home() {
-    const {offers, onScroll} = useOffers();
+    const {offers, onScroll, areOffersLoading} = useOffers();
 
     return (
-        <Column onScroll={onScroll} overflowY="scroll" height="100vh">
+        <Column onScroll={onScroll} overflowY="scroll" height="100%">
             <Column paddingBottom="8px" borderBottom="4px solid #F5F5F5">
                 <Row gap={2} overflowX="auto" paddingBottom="8px" paddingX={4}>
                     <button className={css.headerButton}>
@@ -46,6 +47,12 @@ export default function Home() {
                         <OfferCard key={index} {...offer} />
                     ))}
                 </Box>
+
+                {areOffersLoading && (
+                    <Box display="flex" justifyContent="center">
+                        <Loader />
+                    </Box>
+                )}
             </Column>
         </Column>
     );

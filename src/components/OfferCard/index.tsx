@@ -7,6 +7,7 @@ import duck from './duck.png';
 import {Row} from '../layout/Row';
 import {Icon} from '../Icon';
 import Link from 'next/link';
+import {pluralize} from '@/shared/utils/pluralize';
 
 export const OfferCard = (props: Offer) => {
     const {id, title, price, discount, rating, photos, reviewsCount} = props;
@@ -53,11 +54,13 @@ export const OfferCard = (props: Offer) => {
                         )}
                         <Row gap={1} alignItems="center">
                             <Icon name="message" />
-                            <Text size={10}>{reviewsCount} отзыва</Text>
+                            <Text size={10}>
+                                {reviewsCount} {pluralize(reviewsCount, ['отзыв', 'отзыва', 'отзывов'])}
+                            </Text>
                         </Row>
                     </Row>
                     <Row justifyContent="space-between">
-                        <Text size={10}>Купили 256 раз</Text>
+                        <Text size={10}>Купили 256 {pluralize(256, ['раз', 'раза', 'раз'])}</Text>
                     </Row>
                 </Column>
             </Column>

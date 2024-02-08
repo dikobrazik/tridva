@@ -11,31 +11,34 @@ import Filter from './Filter';
 import {useOffers} from '@/app/useOffers';
 import {useParams} from 'next/navigation';
 import {useEffect, useState} from 'react';
-import {loadCategory, loadOffersTotal} from '@/api';
+import {loadCategory} from '@/api';
 import {Category} from '@/types/category';
+import {Skeleton} from '@/components/Skeleton';
+import {pluralize} from '@/shared/utils/pluralize';
+import {Loader} from '@/components/Loader';
 
 export default function Catalog() {
     const [category, setCategory] = useState<Category>();
-    const [total, setTotal] = useState<number>(0);
     const {category: categoryId} = useParams();
-    const {offers, onScroll} = useOffers({categoryId: Number(categoryId)});
+    const {areOffersLoading, offers, onScroll} = useOffers({categoryId: Number(categoryId)});
 
     useEffect(() => {
         loadCategory({categoryId: Number(categoryId)}).then(setCategory);
-        loadOffersTotal({category: Number(categoryId)}).then(setTotal);
     }, []);
 
     return (
-        <Column paddingX={4} paddingY={2} onScroll={onScroll} overflowY="scroll" height="100vh">
+        <Column paddingX={4} paddingY={2} onScroll={onScroll} overflowY="scroll" height="100%">
             <Column gap={2}>
-                <Text size={24} weight={600}>
-                    {category?.name}
-                </Text>
-                {total && (
-                    <Text size={10} weight={400}>
-                        {total} товара
+                <Skeleton isLoading={category === undefined} height={30} width={300}>
+                    <Text size={24} weight={600}>
+                        {category?.name}
                     </Text>
-                )}
+                </Skeleton>
+                <Skeleton isLoading={category === undefined} height={12} width={60}>
+                    <Text size={10} weight={400}>
+                        {category?.offersCount} {pluralize(category?.offersCount ?? 0, ['товар', 'товара', 'товаров'])}
+                    </Text>
+                </Skeleton>
             </Column>
             <Row paddingY={6} justifyContent="space-between" alignItems="center">
                 <Row alignItems="center" gap="2">
@@ -52,6 +55,11 @@ export default function Catalog() {
                     <OfferCard key={index} {...offer} />
                 ))}
             </Box>
+            {areOffersLoading && (
+                <Box display="flex" justifyContent="center">
+                    <Loader />
+                </Box>
+            )}
         </Column>
     );
 }

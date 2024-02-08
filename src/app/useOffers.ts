@@ -1,5 +1,6 @@
 import {loadOffersAction, offersActions, offersSelectors} from '@/lib/features/offers';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
+import {RootState} from '@/lib/store';
 import {UIEventHandler, useEffect, useMemo} from 'react';
 
 type Props = {
@@ -9,13 +10,12 @@ type Props = {
 export const useOffers = (props?: Props) => {
     const dispatch = useAppDispatch();
 
-    const offersSelector = useMemo(
-        () =>
-            props?.categoryId
-                ? offersSelectors.selectCategoryOffers(props?.categoryId)
-                : offersSelectors.selectLoadedOffers,
-        [props?.categoryId],
-    );
+    const offersSelector = useMemo(() => {
+        const categoryId = props?.categoryId;
+        return categoryId
+            ? (state: RootState) => offersSelectors.selectCategoryOffers(state, categoryId)
+            : offersSelectors.selectLoadedOffers;
+    }, [props?.categoryId]);
 
     const offers = useAppSelector(offersSelector);
     const areOffersLoading = useAppSelector(offersSelectors.selectIsLoading);
@@ -35,5 +35,5 @@ export const useOffers = (props?: Props) => {
         }
     };
 
-    return {offers, onScroll};
+    return {areOffersLoading, offers, onScroll};
 };

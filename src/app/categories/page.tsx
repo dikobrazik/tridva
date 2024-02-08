@@ -27,9 +27,11 @@ export default async function Categories() {
 
     return (
         <Column paddingX={4}>
-            {categories.map(({id, name}) => (
-                <CategoryItem key={id} name={name} href={`/categories/${id}`} />
-            ))}
+            {categories
+                .filter(category => category.offersCount > 0)
+                .map(({id, name}) => (
+                    <CategoryItem key={id} name={name} href={`/categories/${id}`} />
+                ))}
         </Column>
     );
 }

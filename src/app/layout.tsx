@@ -42,7 +42,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                             </Link>
                             <Search />
                         </Row>
-                        <Box overflowY="scroll" height="100vh">
+                        <Box overflowY="scroll" height="100%">
                             {children}
                         </Box>
                         <Row padding="8px 16px" justifyContent="space-between">
