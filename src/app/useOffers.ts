@@ -1,6 +1,6 @@
 import {loadOffersAction, offersActions, offersSelectors} from '@/lib/features/offers';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
-import {UIEventHandler, useEffect} from 'react';
+import {UIEventHandler, useEffect, useMemo} from 'react';
 
 type Props = {
     categoryId?: number;
@@ -9,7 +9,15 @@ type Props = {
 export const useOffers = (props?: Props) => {
     const dispatch = useAppDispatch();
 
-    const offers = useAppSelector(offersSelectors.selectLoadedOffers);
+    const offersSelector = useMemo(
+        () =>
+            props?.categoryId
+                ? offersSelectors.selectCategoryOffers(props?.categoryId)
+                : offersSelectors.selectLoadedOffers,
+        [props?.categoryId],
+    );
+
+    const offers = useAppSelector(offersSelector);
     const areOffersLoading = useAppSelector(offersSelectors.selectIsLoading);
 
     useEffect(() => {

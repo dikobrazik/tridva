@@ -6,18 +6,20 @@ import {Row} from '@/components/layout/Row';
 import {Column} from '@/components/layout/Column';
 import css from './Filter.module.scss';
 import {Box} from '@/components/layout/Box';
-import {useState} from 'react';
 import {Button} from '@/components/Button';
+import {useToggler} from '@/hooks/useToggler';
+import {Drawer} from '@/components/Drawer';
+import {TextField} from '@/components/TextField';
 
 export default function Filter() {
-    const [isDrawerVisible, setIsDrawerVisible] = useState(false);
+    const {isActive, toggle} = useToggler();
 
     return (
         <>
-            <Icon name="audio" size="s" onClick={() => setIsDrawerVisible(true)} />
-            {isDrawerVisible && (
-                <div className={css.wrapper} onClick={() => setIsDrawerVisible(false)}>
-                    <form className={css.filter}>
+            <Icon name="audio" size="s" onClick={toggle} />
+            <Drawer isOpen={isActive} onClose={toggle}>
+                <form onSubmit={e => e.preventDefault()}>
+                    <Column gap="8">
                         <Box>
                             <Box marginBottom="12px">
                                 <Text size={16} height={20} weight={600}>
@@ -73,23 +75,23 @@ export default function Filter() {
                             </Column>
                         </Box>
 
-                        <Column>
-                            <Box marginBottom="16px">
+                        <Column gap="4">
+                            <Box>
                                 <Text size={16} height={20} weight={600}>
                                     Цена
                                 </Text>
                             </Box>
 
-                            <Row className={css.inputContainer} justifyContent="space-between">
-                                <input className={css.input} name="from" placeholder="От" />
-                                <input className={css.input} name="to" placeholder="До" />
+                            <Row className={css.inputContainer} gap="4" justifyContent="space-between">
+                                <TextField size="m" name="from" placeholder="От" />
+                                <TextField size="m" name="to" placeholder="До" />
                             </Row>
                         </Column>
 
                         <Button>Применить фильтры</Button>
-                    </form>
-                </div>
-            )}
+                    </Column>
+                </form>
+            </Drawer>
         </>
     );
 }

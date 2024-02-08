@@ -1,0 +1,62 @@
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #38343a52;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    background: #fff;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 32px 16px 16px 16px;
+    border-radius: 24px 24px 0 0;
+    color: #303234;
+
+    -webkit-animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+
+    // полоска сверху дровера
+    &::after {
+        content: '';
+        position: absolute;
+        width: 74px;
+        height: 3px;
+        background: #efebf1;
+        top: 8px;
+        left: calc(50% - 37px);
+    }
+}
+
+@-webkit-keyframes slide-in-bottom {
+    0% {
+        -webkit-transform: translateY(100vh);
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@keyframes slide-in-bottom {
+    0% {
+        -webkit-transform: translateY(100vh);
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
