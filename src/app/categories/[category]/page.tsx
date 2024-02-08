@@ -7,7 +7,6 @@ import css from './Page.module.scss';
 import {OfferCard} from '@/components/OfferCard';
 import Filter from './Filter';
 import {loadCategory, loadOffers} from '@/api';
-import {Skeleton} from '@/components/Skeleton';
 import {pluralize} from '@/shared/utils/pluralize';
 import {OffersList, OffersListContainer, OffersListLoader} from '@/app/OffersList';
 
@@ -22,18 +21,14 @@ export default async function Catalog(props: Props) {
     const category = await loadCategory({categoryId});
 
     return (
-        <OffersListContainer>
+        <OffersListContainer paddingY={2} paddingX={4}>
             <Column gap={2}>
-                <Skeleton isLoading={category === undefined} height={30} width={300}>
-                    <Text size={24} weight={600}>
-                        {category?.name}
-                    </Text>
-                </Skeleton>
-                <Skeleton isLoading={category === undefined} height={12} width={60}>
-                    <Text size={10} weight={400}>
-                        {category?.offersCount} {pluralize(category?.offersCount ?? 0, ['товар', 'товара', 'товаров'])}
-                    </Text>
-                </Skeleton>
+                <Text size={24} weight={600}>
+                    {category?.name}
+                </Text>
+                <Text size={10} weight={400}>
+                    {category?.offersCount} {pluralize(category?.offersCount ?? 0, ['товар', 'товара', 'товаров'])}
+                </Text>
             </Column>
             <Row paddingY={6} justifyContent="space-between" alignItems="center">
                 <Row alignItems="center" gap="2">
