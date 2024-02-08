@@ -38,7 +38,7 @@ export default function Catalog() {
                 )}
             </Column>
             <Row paddingY={6} justifyContent="space-between" alignItems="center">
-                <Row alignItems="center">
+                <Row alignItems="center" gap="2">
                     <Text size={14} weight={500}>
                         Популярные
                     </Text>

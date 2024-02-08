@@ -9,7 +9,7 @@ import {Icon} from '../Icon';
 import Link from 'next/link';
 
 export const OfferCard = (props: Offer) => {
-    const {id, title, price, discount, photos} = props;
+    const {id, title, price, discount, rating, photos, reviewsCount} = props;
 
     const imageSrc = photos?.length ? `${photos[0]}/700.jpg` : duck;
 
@@ -45,13 +45,15 @@ export const OfferCard = (props: Offer) => {
                 <Column gap={1}>
                     <Text>{title}</Text>
                     <Row gap={2} alignItems="center">
-                        <Row gap={1} alignItems="center">
-                            <Icon name="star" />
-                            <Text size={10}>4.9</Text>
-                        </Row>
+                        {rating && (
+                            <Row gap={1} alignItems="center">
+                                <Icon name="star" />
+                                <Text size={10}>{rating}</Text>
+                            </Row>
+                        )}
                         <Row gap={1} alignItems="center">
                             <Icon name="message" />
-                            <Text size={10}>123 отзыва</Text>
+                            <Text size={10}>{reviewsCount} отзыва</Text>
                         </Row>
                     </Row>
                     <Row justifyContent="space-between">

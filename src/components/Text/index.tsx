@@ -18,7 +18,7 @@ export const Text = (props: PropsWithChildren<Props>) => {
                 fontWeight: props.weight ?? 400,
                 fontSize: props.size ?? 12,
                 textAlign: props.align,
-                lineHeight: `${props.height}px`,
+                lineHeight: props.height ? `${props.height}px` : undefined,
                 whiteSpace: props.space,
                 textDecoration: props.decoration,
                 color: props.color,

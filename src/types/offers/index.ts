@@ -6,4 +6,6 @@ export type Offer = {
     discount?: number;
     photos?: string[];
     categoryId: number;
+    rating?: number;
+    reviewsCount: number;
 };
