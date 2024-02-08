@@ -1,5 +1,3 @@
-'use client';
-
 import {Icon} from '@/components/Icon';
 import {Text} from '@/components/Text';
 import {Box} from '@/components/layout/Box';
@@ -8,26 +6,23 @@ import {Row} from '@/components/layout/Row';
 import css from './Page.module.scss';
 import {OfferCard} from '@/components/OfferCard';
 import Filter from './Filter';
-import {useOffers} from '@/app/useOffers';
-import {useParams} from 'next/navigation';
-import {useEffect, useState} from 'react';
-import {loadCategory} from '@/api';
-import {Category} from '@/types/category';
+import {loadCategory, loadOffers} from '@/api';
 import {Skeleton} from '@/components/Skeleton';
 import {pluralize} from '@/shared/utils/pluralize';
-import {Loader} from '@/components/Loader';
+import {OffersList, OffersListContainer, OffersListLoader} from '@/app/OffersList';
 
-export default function Catalog() {
-    const [category, setCategory] = useState<Category>();
-    const {category: categoryId} = useParams();
-    const {areOffersLoading, offers, onScroll} = useOffers({categoryId: Number(categoryId)});
+type Props = {
+    params: {category: string};
+    searchParams: {};
+};
 
-    useEffect(() => {
-        loadCategory({categoryId: Number(categoryId)}).then(setCategory);
-    }, []);
+export default async function Catalog(props: Props) {
+    const categoryId = Number(props.params.category);
+    const offers = await loadOffers({category: categoryId});
+    const category = await loadCategory({categoryId});
 
     return (
-        <Column paddingX={4} paddingY={2} onScroll={onScroll} overflowY="scroll" height="100%">
+        <OffersListContainer>
             <Column gap={2}>
                 <Skeleton isLoading={category === undefined} height={30} width={300}>
                     <Text size={24} weight={600}>
@@ -54,12 +49,9 @@ export default function Catalog() {
                 {offers.map((offer, index) => (
                     <OfferCard key={index} {...offer} />
                 ))}
+                <OffersList categoryId={categoryId} />
             </Box>
-            {areOffersLoading && (
-                <Box display="flex" justifyContent="center">
-                    <Loader />
-                </Box>
-            )}
-        </Column>
+            <OffersListLoader />
+        </OffersListContainer>
     );
 }

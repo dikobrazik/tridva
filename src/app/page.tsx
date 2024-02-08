@@ -1,5 +1,3 @@
-'use client';
-
 import {OfferCard} from '@/components/OfferCard';
 import {Text} from '@/components/Text';
 import {Box} from '@/components/layout/Box';
@@ -7,14 +5,14 @@ import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import InformationRow from './Home/InformationRow';
 import css from './Page.module.scss';
-import {useOffers} from './useOffers';
-import {Loader} from '@/components/Loader';
+import {OffersList, OffersListContainer, OffersListLoader} from './OffersList';
+import {loadOffers} from '@/api';
 
-export default function Home() {
-    const {offers, onScroll, areOffersLoading} = useOffers();
+export default async function Home() {
+    const offers = await loadOffers();
 
     return (
-        <Column onScroll={onScroll} overflowY="scroll" height="100%">
+        <OffersListContainer>
             <Column paddingBottom="8px" borderBottom="4px solid #F5F5F5">
                 <Row gap={2} overflowX="auto" paddingBottom="8px" paddingX={4}>
                     <button className={css.headerButton}>
@@ -46,14 +44,11 @@ export default function Home() {
                     {offers.map((offer, index) => (
                         <OfferCard key={index} {...offer} />
                     ))}
+                    <OffersList />
                 </Box>
 
-                {areOffersLoading && (
-                    <Box display="flex" justifyContent="center">
-                        <Loader />
-                    </Box>
-                )}
+                <OffersListLoader />
             </Column>
-        </Column>
+        </OffersListContainer>
     );
 }

@@ -11,6 +11,7 @@ import React from 'react';
 import Link from 'next/link';
 import StoreProvider from './StoreProvider';
 import {Search} from './Search';
+import {OffersListContextProvider} from './OffersList/context';
 
 const inter = Inter({subsets: ['latin']});
 
@@ -35,23 +36,25 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <html lang="en">
             <body className={inter.className}>
                 <StoreProvider>
-                    <Column minWidth={360} height="100vh">
-                        <Row alignItems="center" gap="2" paddingX={4} paddingY={4}>
-                            <Link href="/">
-                                <Logo />
-                            </Link>
-                            <Search />
-                        </Row>
-                        <Box overflowY="scroll" height="100%">
-                            {children}
-                        </Box>
-                        <Row padding="8px 16px" justifyContent="space-between">
-                            <FooterButton icon="home" title="Главная" href="/" />
-                            <FooterButton icon="menu" title="Категории" href="/categories" />
-                            <FooterButton icon="cart" title="Корзина" href="/cart" />
-                            <FooterButton icon="user" title="Профиль" href="" />
-                        </Row>
-                    </Column>
+                    <OffersListContextProvider>
+                        <Column minWidth={360} height="100vh">
+                            <Row alignItems="center" gap="2" paddingX={4} paddingY={4}>
+                                <Link href="/">
+                                    <Logo />
+                                </Link>
+                                <Search />
+                            </Row>
+                            <Box overflowY="scroll" height="100%">
+                                {children}
+                            </Box>
+                            <Row padding="8px 16px" justifyContent="space-between">
+                                <FooterButton icon="home" title="Главная" href="/" />
+                                <FooterButton icon="menu" title="Категории" href="/categories" />
+                                <FooterButton icon="cart" title="Корзина" href="/cart" />
+                                <FooterButton icon="user" title="Профиль" href="" />
+                            </Row>
+                        </Column>
+                    </OffersListContextProvider>
                 </StoreProvider>
             </body>
         </html>

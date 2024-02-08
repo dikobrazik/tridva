@@ -23,7 +23,7 @@ export const searchOffersAction = createAsyncThunk<Offer[], {search: string}, {s
 const offersSlice = createSlice({
     name: NAMESPACE,
     initialState: offerAdapter.getInitialState({
-        page: 1,
+        page: 2,
         loadedOffersIds: [] as number[],
         foundOffersIds: [] as number[],
         offersIdsByCategoryIds: {} as Record<number, number[]>,
