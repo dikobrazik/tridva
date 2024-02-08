@@ -8,3 +8,60 @@
     border-radius: 8px;
     padding: 4px 8px;
 }
+
+.tab {
+    width: 100%;
+    border: 1px solid #9CA3AA7A;
+    border-radius: 12px;
+}
+
+.greentab {
+    color: #42C52D;
+    background: #3BCF233D;
+}
+
+.groups {
+    border-top: 1px solid;
+
+    &List {
+        list-style: none;
+    
+        & li:not(:last-child) {
+            border-bottom: 1px solid #9CA3AA52
+        }
+    }
+
+    &Btn {
+        padding: 8px 12px;
+        background: #F40C43;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 12px;
+    }
+}
+
+
+
+.about {
+    border-top: 1px solid;
+
+    &List {
+        list-style: none;
+    
+        & li:not(:last-child) {
+            border-bottom: 1px solid #9CA3AA52
+        }
+    }
+}
+
+.iconBox {
+    line-height: 0;
+    position: relative;
+    right: -4px;
+}
+
+.btn {
+    background: none;
+    border: none;
+    padding: 8px 0px;
+}

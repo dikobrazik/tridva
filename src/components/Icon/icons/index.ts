@@ -9,3 +9,6 @@ export { default as hanger } from './hanger.svg';
 export { default as chevron } from './chevron-right.svg';
 export { default as switch } from './arrow-switch.svg';
 export { default as audio } from './audio-settings.svg';
+export { default as delivery } from './delivery.svg';
+export { default as crown } from './crown.svg';
+export { default as help } from './help.svg';
