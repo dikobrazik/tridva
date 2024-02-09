@@ -1,5 +1,5 @@
 import type {Metadata} from 'next';
-import './globals.css';
+import './globals.scss';
 import {Logo} from '@/components/Logo';
 import {Row} from '@/components/layout/Row';
 import {Column} from '@/components/layout/Column';
@@ -37,7 +37,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             <body className={inter.className}>
                 <StoreProvider>
                     <OffersListContextProvider>
-                        <Column minWidth={360} height="100vh">
+                        <Column minWidth={360} height="100%">
                             <Row alignItems="center" gap="2" paddingX={4} paddingY={4}>
                                 <Link href="/">
                                     <Logo />
