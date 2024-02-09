@@ -8,4 +8,5 @@ export type Offer = {
     categoryId: number;
     rating?: number;
     reviewsCount: number;
+    groupsCount: number;
 };
