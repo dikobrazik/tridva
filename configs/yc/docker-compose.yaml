@@ -11,4 +11,5 @@ services:
 
     frontend:
         image: cr.yandex/crpkv40doqi2snrfmq1e/tridva-front
+        volumes: /usr/app/.next/cache/images:/var/tmp/next-images
         restart: always
