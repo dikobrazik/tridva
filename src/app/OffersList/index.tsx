@@ -25,7 +25,10 @@ export function OffersList(props: Props) {
     return offers.map((offer, index) => <OfferCard key={index} {...offer} />);
 }
 
-export function OffersListContainer({children, ...columnProps}: PropsWithChildren<{}>) {
+export function OffersListContainer({
+    children,
+    ...columnProps
+}: PropsWithChildren<{paddingY?: number; paddingX?: number}>) {
     const {onScroll} = useContext(OffersListContext);
 
     return (

@@ -1,4 +1,3 @@
-import {Icon} from '@/components/Icon';
 import {Text} from '@/components/Text';
 import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
@@ -9,6 +8,7 @@ import Filter from './Filter';
 import {loadCategory, loadOffers} from '@/api';
 import {pluralize} from '@/shared/utils/pluralize';
 import {OffersList, OffersListContainer, OffersListLoader} from '@/app/OffersList';
+import {Sorting} from './Sorting';
 
 type Props = {
     params: {category: string};
@@ -31,13 +31,7 @@ export default async function Catalog(props: Props) {
                 </Text>
             </Column>
             <Row paddingY={6} justifyContent="space-between" alignItems="center">
-                <Row alignItems="center" gap="2">
-                    <Text size={14} weight={500}>
-                        Популярные
-                    </Text>
-                    <Icon name="switch" size="s"></Icon>
-                </Row>
-
+                <Sorting />
                 <Filter />
             </Row>
             <Box className={css.grid}>

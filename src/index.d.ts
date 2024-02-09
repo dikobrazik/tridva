@@ -29,3 +29,5 @@ interface ObjectConstructor {
         o: T,
     ): {[P in keyof T]: TypedPropertyDescriptor<T[P]>} & {[x: string]: PropertyDescriptor};
 }
+
+type Values<T> = T[keyof T];
