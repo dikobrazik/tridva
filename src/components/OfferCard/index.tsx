@@ -12,7 +12,7 @@ import {pluralize} from '@/shared/utils/pluralize';
 export const OfferCard = (props: Offer) => {
     const {id, title, price, discount, rating, photos, reviewsCount} = props;
 
-    const imageSrc = photos?.length ? `${photos[0]}/700.jpg` : duck;
+    const imageSrc = photos?.length ? `${photos[0]}/280.jpg` : duck;
 
     return (
         <Link href={`/offers/${id}`}>
