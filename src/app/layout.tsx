@@ -19,6 +19,7 @@ export const metadata: Metadata = {
     description: 'Интернет-магазин с возможностью покупать товары группой по оптовым ценам',
     verification: {
         yandex: '08f5e449ef421774',
+        google: 'kOMBcuVi1F7zH0Rj3nyl0v3HiIyN2OUJwcvY99xFYpY',
     },
 };
 
