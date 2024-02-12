@@ -1,6 +1,7 @@
 import {loadOffersAction, offersActions, offersSelectors} from '@/lib/features/offers';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 import {RootState} from '@/lib/store';
+import {debounce} from '@/shared/utils/debounce';
 import {UIEventHandler, useEffect, useMemo} from 'react';
 
 type Props = {
@@ -24,7 +25,7 @@ export const useOffers = (props?: Props) => {
         dispatch(loadOffersAction({categoryId: props?.categoryId}));
     }, []);
 
-    const onScroll: UIEventHandler<HTMLDivElement> = e => {
+    const onScroll: UIEventHandler<HTMLDivElement> = debounce(e => {
         const container = e.target as HTMLDivElement;
 
         if (container.scrollTop >= container.scrollHeight - 1.5 * container.offsetHeight) {
@@ -33,7 +34,7 @@ export const useOffers = (props?: Props) => {
                 dispatch(loadOffersAction({categoryId: props?.categoryId}));
             }
         }
-    };
+    }, 500);
 
     return {areOffersLoading, offers, onScroll};
 };
