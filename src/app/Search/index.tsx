@@ -14,7 +14,8 @@ export const Search = () => {
     const {isActive, toggle} = useToggler();
 
     const onSearchClick = useCallback(() => {
-        dispatch(searchOffersAction({search}));
+        toggle();
+        // dispatch(searchOffersAction({search}));
     }, [search]);
 
     return (
@@ -23,7 +24,9 @@ export const Search = () => {
             {isActive && (
                 <Column className={css.layover} justifyContent="space-between">
                     <Column></Column>
-                    <Button onClick={onSearchClick}>Найти</Button>
+                    <Button variant="normal" onClick={onSearchClick}>
+                        Найти
+                    </Button>
                 </Column>
             )}
         </>

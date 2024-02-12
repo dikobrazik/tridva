@@ -15,8 +15,11 @@ import {FooterButton} from './FooterButton';
 const inter = Inter({subsets: ['latin']});
 
 export const metadata: Metadata = {
-    title: 'Tridva',
-    description: 'Grouped marketplace',
+    title: 'Tridva - интернет-магазин. Дешевые групповые покупки товаров',
+    description: 'Интернет-магазин с возможностью покупать товары группой по оптовым ценам',
+    verification: {
+        yandex: '08f5e449ef421774',
+    },
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

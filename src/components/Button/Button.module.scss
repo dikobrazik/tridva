@@ -10,5 +10,18 @@
     &.variant-action {
         color: #ffffff;
         background: #f40c43;
+
+        &:hover {
+            background: #e00c3d;
+        }
+    }
+
+    &.variant-normal {
+        color: #303234;
+        background: #e9e9e9;
+
+        &:hover {
+            background: #dddddd;
+        }
     }
 }

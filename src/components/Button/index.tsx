@@ -3,7 +3,7 @@ import cn from 'classnames';
 import css from './Button.module.scss';
 
 type Props = PropsWithChildren<{
-    variant?: 'action';
+    variant?: 'action' | 'normal';
 }> &
     ButtonHTMLAttributes<HTMLButtonElement>;
 
