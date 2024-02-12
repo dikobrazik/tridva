@@ -7,6 +7,8 @@ import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
 import {Icon} from '@/components/Icon';
 import cn from 'classnames';
+import Groups from './Groups';
+import Reviews from './Reviews';
 
 type Props = {
     params: {id: string};
@@ -84,83 +86,7 @@ export default async function Offer(props: Props) {
                     </Row>
                 </Column>
 
-                <Column className={css.groups} gap={2} padding="16px 0px 4px">
-                    <Column gap={1}>
-                        <Row justifyContent="space-between">
-                            <Text weight="600" size="16px" height={12}>
-                                Группы{' '}
-                                <Text weight="600" size="16px" height={12}>
-                                    2
-                                </Text>
-                            </Text>
-                            <Row alignItems="center" gap={1}>
-                                <Text weight="400" size="10px" height={12}>
-                                    Как это работает
-                                </Text>
-                                <Icon name="help" />
-                            </Row>
-                        </Row>
-                        <Text weight="400" size="10px" height={12}>
-                            2 человека создали групповую покупку.
-                            <br />
-                            Если вы присоединитесь сейчас, то купите дешевле сразу
-                        </Text>
-                    </Column>
-
-                    <ul className={css.groupsList}>
-                        <li>
-                            <Row justifyContent="space-between" paddingY={3}>
-                                <Column gap={1}>
-                                    <Row>
-                                        <Box></Box>
-                                        <Text weight="500" size="12px" height={14}>
-                                            Арина С.
-                                        </Text>
-                                    </Row>
-                                    <Text weight="400" size="10px" height={12}>
-                                        Для покупки нужен еще 1 человек
-                                    </Text>
-                                    <Text weight="400" size="10px" height={12}>
-                                        Закрытие группы через: 1:23:45
-                                    </Text>
-                                </Column>
-                                <Box>
-                                    <button className={css.groupsBtn}>
-                                        <Text weight="600" size="12px" height={14}>
-                                            Присоединиться
-                                        </Text>
-                                    </button>
-                                </Box>
-                            </Row>
-                        </li>
-
-                        <li>
-                            <Row justifyContent="space-between" paddingY={3}>
-                                <Column gap={1}>
-                                    <Row>
-                                        <Box></Box>
-                                        <Text weight="500" size="12px" height={14}>
-                                            Арина С.
-                                        </Text>
-                                    </Row>
-                                    <Text weight="400" size="10px" height={12}>
-                                        Для покупки нужен еще 1 человек
-                                    </Text>
-                                    <Text weight="400" size="10px" height={12}>
-                                        Закрытие группы через: 1:23:45
-                                    </Text>
-                                </Column>
-                                <Box>
-                                    <button className={css.groupsBtn}>
-                                        <Text weight="600" size="12px" height={14}>
-                                            Присоединиться
-                                        </Text>
-                                    </button>
-                                </Box>
-                            </Row>
-                        </li>
-                    </ul>
-                </Column>
+                <Groups />
 
                 <Column className={css.about} paddingY={4} gap={3}>
                     <Text weight="600" size="16px" height={20}>
@@ -204,6 +130,7 @@ export default async function Offer(props: Props) {
                         </Text>
                     </button>
                 </Column>
+                <Reviews />
             </Column>
         </Column>
     );
