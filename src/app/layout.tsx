@@ -15,8 +15,8 @@ import {FooterButton} from './FooterButton';
 const inter = Inter({subsets: ['latin']});
 
 export const metadata: Metadata = {
-    title: 'Tridva - интернет-магазин. Дешевые групповые покупки товаров',
-    description: 'Интернет-магазин с возможностью покупать товары группой по оптовым ценам',
+    title: 'Tridva - интернет-магазин. Дешевые совместные покупки товаров',
+    description: 'Интернет-магазин с возможностью покупать товары совместно по оптовым ценам',
     verification: {
         yandex: '08f5e449ef421774',
         google: 'kOMBcuVi1F7zH0Rj3nyl0v3HiIyN2OUJwcvY99xFYpY',
