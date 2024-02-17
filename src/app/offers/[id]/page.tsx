@@ -9,17 +9,19 @@ import {Icon} from '@/components/Icon';
 import cn from 'classnames';
 import Groups from './Groups';
 import Reviews from './Reviews';
+import {pluralize} from '@/shared/utils/pluralize';
 
 type Props = {
     params: {id: string};
-    searchParams: {};
+    searchParams: unknown;
 };
 
 export default async function Offer(props: Props) {
-    const offer = await loadOffer({id: Number(props.params.id)});
+    const offerId = Number(props.params.id);
+    const offer = await loadOffer({id: offerId});
     const category = await loadCategory({categoryId: Number(offer.categoryId)});
 
-    const {title, photos, price} = offer;
+    const {title, photos, price, reviewsCount, rating} = offer;
 
     const imageSrc = photos?.length ? `${photos[0]}/700.jpg` : undefined;
 
@@ -43,11 +45,11 @@ export default async function Offer(props: Props) {
                             <Row gap={1}>
                                 <Icon name="star" />
                                 <Text weight="400" size="12px" height={16}>
-                                    4.9
+                                    {rating}
                                 </Text>
                             </Row>
                             <Text weight="400" size="10px" height={12}>
-                                123 отзыва
+                                {reviewsCount} {pluralize(reviewsCount, ['отзыв', 'отзыва', 'отзывов'])}
                             </Text>
                         </Column>
                         <Column className={css.tab} gap={1} paddingX="2" paddingY="2">
@@ -130,7 +132,7 @@ export default async function Offer(props: Props) {
                         </Text>
                     </button>
                 </Column>
-                <Reviews />
+                <Reviews offerId={offerId} reviewsCount={reviewsCount} rating={rating} />
             </Column>
         </Column>
     );
