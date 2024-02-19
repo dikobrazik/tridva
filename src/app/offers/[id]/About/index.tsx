@@ -2,8 +2,6 @@ import css from './About.module.scss';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
-import {Icon} from '@/components/Icon';
-import {Box} from '@/components/layout/Box';
 
 const data = {
     characteristics: [

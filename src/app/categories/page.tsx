@@ -15,7 +15,7 @@ function CategoryItem({name, href}: {name: string; href: string}) {
                     <Row width="100%" paddingX={3}>
                         <Text size={14}>{name}</Text>
                     </Row>
-                    <Icon name="chevron" size="m" />
+                    <Icon name="chevronLeft" size="m" />
                 </Row>
             </Column>
         </Link>

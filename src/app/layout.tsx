@@ -11,6 +11,7 @@ import StoreProvider from './StoreProvider';
 import {Search} from './Search';
 import {OffersListContextProvider} from './OffersList/context';
 import {FooterButton} from './FooterButton';
+import css from './Layout.module.scss';
 
 const inter = Inter({subsets: ['latin']});
 
@@ -39,7 +40,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                             <Box overflowY="auto" height="100%">
                                 {children}
                             </Box>
-                            <Row padding="8px 16px" justifyContent="space-between">
+                            <Row className={css.footer} padding="8px 16px" justifyContent="space-between">
                                 <FooterButton icon="home" activeIcon="homeActive" title="Главная" href="/" />
                                 <FooterButton
                                     icon="menu"

@@ -3,6 +3,9 @@ import axios from 'axios';
 
 type LoadReviewsPayload = {
     offerId: number;
+
+    page?: number;
+    pageSize?: number;
 };
 
 export const loadReviews = (payload: LoadReviewsPayload): Promise<Review[]> =>

@@ -3,7 +3,7 @@ import * as icons from './icons';
 
 export type IconName = keyof typeof icons;
 
-type IconProps = {
+export type IconProps = {
     className?: string;
     name: IconName;
     size?: 's' | 'm' | 'l';

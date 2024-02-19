@@ -1,18 +1,30 @@
-import {ButtonHTMLAttributes, PropsWithChildren} from 'react';
+import {PropsWithChildren} from 'react';
 import cn from 'classnames';
 import css from './Button.module.scss';
+import {Icon, IconName, IconProps} from '../Icon';
+import {Box} from '../layout/Box';
+import {UnitProps} from '../layout/types';
 
 type Props = PropsWithChildren<{
-    variant?: 'action' | 'normal';
+    variant?: 'action' | 'normal' | 'pseudo';
+    icon?: IconName;
+    iconSize?: IconProps['size'];
+    fullWith?: boolean;
 }> &
-    ButtonHTMLAttributes<HTMLButtonElement>;
+    UnitProps<'button'>;
 
 export const Button = (props: Props) => {
-    const {variant = 'action', children, ...buttonProps} = props;
+    const {variant = 'action', fullWith, children, icon, iconSize, ...buttonProps} = props;
 
     return (
-        <button className={cn(css.button, css[`variant-${variant}`])} {...buttonProps}>
+        <Box
+            as="button"
+            gap="2"
+            className={cn(css.button, css[`variant-${variant}`], {[css.fullWidth]: fullWith})}
+            {...buttonProps}
+        >
             {children}
-        </button>
+            {icon && <Icon className={css.icon} name={icon} size={iconSize} />}
+        </Box>
     );
 };

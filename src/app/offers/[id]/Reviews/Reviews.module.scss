@@ -8,21 +8,10 @@
     height: 132px;
     border: 1px solid #9CA3AA7A;
     border-radius: 12px;
-    // overflow: hidden;
 
     & span {
         display: block;
-        // display: -webkit-box;
-        // -webkit-line-clamp: 2;
-        // -webkit-box-orient: vertical;;
         overflow: hidden;
-        // white-space: nowrap;
         text-overflow: ellipsis;
     }
-}
-
-.btn {
-    background: none;
-    border: none;
-    padding: 8px 0px;
 }

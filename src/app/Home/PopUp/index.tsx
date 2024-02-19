@@ -27,7 +27,7 @@ export default function PopUp() {
                     <a className={css.link} href="/">
                         <Row alignItems="center">
                             <Box className={css.iconBox}>
-                                <Icon name="chevron" size="s" />
+                                <Icon name="chevronRight" size="s" />
                             </Box>
                             <Text size={12} height={16} weight={600}>
                                 О сервисе
@@ -40,7 +40,7 @@ export default function PopUp() {
                                 Пригласи друзей
                             </Text>
                             <Box className={css.iconBox}>
-                                <Icon name="chevron" size="s" />
+                                <Icon name="chevronRight" size="s" />
                             </Box>
                         </Row>
                     </a>

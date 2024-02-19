@@ -1,11 +1,21 @@
 .button {
-    width: 100%;
+    width: auto;
     padding: 16px 0;
     font-size: 16px;
     line-height: 20px;
     font-weight: 600;
     border: none;
     border-radius: 16px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: transparent;
+
+    &.fullWith {
+        width: 100%;
+    }
 
     &.variant-action {
         color: #ffffff;
@@ -22,6 +32,16 @@
 
         &:hover {
             background: #dddddd;
+        }
+    }
+
+    &.variant-pseudo {
+        color: #303234;
+
+        padding: 0px;
+
+        &:hover {
+            color: #787676;
         }
     }
 }

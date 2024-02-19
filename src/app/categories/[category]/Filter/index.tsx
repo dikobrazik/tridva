@@ -32,7 +32,7 @@ export default function Filter() {
                                     <Text size={14} height={18} weight={500}>
                                         Для кухни
                                     </Text>
-                                    <Icon name="chevron" size="m"></Icon>
+                                    <Icon name="chevronRight" size="m"></Icon>
                                 </Row>
                             </Column>
 
@@ -41,7 +41,7 @@ export default function Filter() {
                                     <Text size={14} height={18} weight={500}>
                                         Для кухни
                                     </Text>
-                                    <Icon name="chevron" size="m"></Icon>
+                                    <Icon name="chevronRight" size="m"></Icon>
                                 </Row>
                                 <Column gap={1} paddingX={4}>
                                     <label className={css.label}>
