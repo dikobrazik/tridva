@@ -8,11 +8,28 @@ type LoadReviewsPayload = {
     pageSize?: number;
 };
 
+type CreateReviewPayload = {
+    offerId: number;
+
+    text: string;
+    rating: number;
+};
+
 export const loadReviews = (payload: LoadReviewsPayload): Promise<Review[]> =>
-    axios<Review[]>(`reviews/${payload.offerId}`)
+    axios<Review[]>(`offers/${payload.offerId}/reviews`)
         .then(response => response.data)
         .catch(e => {
             console.log(e);
 
             return [];
+        });
+
+export const createReview = ({offerId, ...body}: CreateReviewPayload): Promise<Review[]> =>
+    axios
+        .post(`offers/${offerId}/reviews`, body)
+        .then(response => response.data)
+        .catch(e => {
+            console.log(e);
+
+            return {};
         });

@@ -2,13 +2,38 @@
 
 import {Button} from '@/components/Button';
 import {Drawer} from '@/components/Drawer';
+import {Rating} from '@/components/Rating';
 import {Text} from '@/components/Text';
-import {TextField} from '@/components/TextField';
 import {Column} from '@/components/layout/Column';
+import {Row} from '@/components/layout/Row';
+import duck from '@/components/OfferCard/duck.png';
 import {useToggler} from '@/hooks/useToggler';
+import {Offer} from '@/types/offers';
+import Image from 'next/image';
+import {useState} from 'react';
+import css from './Reviews.module.scss';
+import {TextArea} from '@/components/TextArea';
+import {createReview} from '@/api';
 
-export const NewReviewDrawer = () => {
+export const NewReviewDrawer = ({offer}: {offer: Offer}) => {
+    const [rating, setRating] = useState(1);
+    const [text, setText] = useState('');
     const {isActive, toggle} = useToggler();
+
+    const {photos, title} = offer;
+
+    const offerImageSrc = photos?.length ? `${photos[0]}/700.jpg` : duck;
+
+    const onCreateReviewClick = async () => {
+        await createReview({
+            offerId: offer.id,
+            rating,
+            text,
+        });
+
+        toggle();
+    };
+
     return (
         <>
             <Button paddingY="2" variant="outline" onClick={toggle}>
@@ -20,10 +45,19 @@ export const NewReviewDrawer = () => {
                     <Text size="16px" weight={600}>
                         Поделитесь впечатлением о товаре
                     </Text>
-                    <span>Ваша оценка:</span>
-                    <span>Напишите отзыв</span>
-                    <TextField />
-                    <Button>Отправить отзыв</Button>
+                    <Row className={css.newReviewOfferBox} padding="4px">
+                        <Image width={54} height={54} src={offerImageSrc} alt="offer image" />
+                        <Text>{title}</Text>
+                    </Row>
+                    <Column gap="2">
+                        <span>Ваша оценка:</span>
+                        <Rating rating={rating} onChange={setRating} />
+                    </Column>
+                    <Column gap="2">
+                        <span>Напишите отзыв</span>
+                        <TextArea rows={4} value={text} onChange={e => setText(e.target.value)} />
+                    </Column>
+                    <Button onClick={onCreateReviewClick}>Отправить отзыв</Button>
                 </Column>
             </Drawer>
         </>

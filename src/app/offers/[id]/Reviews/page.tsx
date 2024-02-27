@@ -75,7 +75,7 @@ export default async function Reviews(props: Props) {
                     <Rating rating={offer.rating ?? 0} />
                 </Row>
 
-                <NewReviewDrawer />
+                <NewReviewDrawer offer={offer} />
 
                 <Row>
                     <Button variant="pseudo" icon="switch">

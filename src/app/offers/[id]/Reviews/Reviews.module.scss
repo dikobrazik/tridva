@@ -19,3 +19,12 @@
 
     padding: 0 16px 16px 16px;
 }
+
+.newReviewOfferBox {
+    border-radius: 10px;
+    border: 1px solid #9ca3aa7a;
+
+    & > img {
+        border-radius: 8px;
+    }
+}
