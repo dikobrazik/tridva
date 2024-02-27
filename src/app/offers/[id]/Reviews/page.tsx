@@ -77,11 +77,11 @@ export default async function Reviews(props: Props) {
 
                 <NewReviewDrawer offer={offer} />
 
-                <Row>
+                {/* <Row>
                     <Button variant="pseudo" icon="switch">
                         По дате
                     </Button>
-                </Row>
+                </Row> */}
             </Column>
 
             <Column gap="2" overflowY="scroll">

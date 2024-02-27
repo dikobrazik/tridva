@@ -6,8 +6,8 @@ import {loadReviews} from '@/api/reviews';
 import {Review} from '@/types/review';
 import {format} from 'date-fns';
 import {Rating} from '@/components/Rating';
-import {Button} from '@/components/Button';
 import Link from 'next/link';
+import {Button} from '@/components/Button';
 
 function ReviewsItem(review: Review) {
     return (
@@ -39,11 +39,11 @@ export default async function Reviews({offerId, reviewsCount, rating = 0}: Props
                     </Text>
                 </Text>
 
-                <Button variant="pseudo" icon="pen" paddingY={0}>
+                {/* <Button variant="pseudo" icon="pen" paddingY={0}>
                     <Text weight="500" size="12px" height={14}>
                         Написать отзыв
                     </Text>
-                </Button>
+                </Button> */}
             </Row>
             <Row alignItems="center" gap={2}>
                 <Text size="12px" weight={400}>
@@ -57,9 +57,13 @@ export default async function Reviews({offerId, reviewsCount, rating = 0}: Props
                 ))}
             </Row>
             <Link href={`/offers/${offerId}/reviews`}>
-                <Text weight="500" size="12px" height={14} decoration="underline">
-                    Все отзывы
-                </Text>
+                <Row justifyContent="center">
+                    <Button variant="pseudo">
+                        <Text weight="500" size="12px" height={14} decoration="underline">
+                            Все отзывы
+                        </Text>
+                    </Button>
+                </Row>
             </Link>
         </Column>
     );
