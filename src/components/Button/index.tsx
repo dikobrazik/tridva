@@ -8,19 +8,21 @@ import {UnitProps} from '../layout/types';
 type Props = PropsWithChildren<{
     variant?: 'action' | 'normal' | 'pseudo' | 'outline';
     icon?: IconName;
+    size?: 'l' | 'm';
     iconSize?: IconProps['size'];
     fullWith?: boolean;
 }> &
     UnitProps<'button'>;
 
 export const Button = (props: Props) => {
-    const {variant = 'action', fullWith, children, icon, iconSize, ...buttonProps} = props;
+    const {variant = 'action', size = 'l', fullWith, children, icon, iconSize, ...buttonProps} = props;
 
+    console.log(size);
     return (
         <Box
             as="button"
             gap="2"
-            className={cn(css.button, css[`variant-${variant}`], {[css.fullWidth]: fullWith})}
+            className={cn(css.button, css[`variant-${variant}`], css[`size-${size}`], {[css.fullWidth]: fullWith})}
             {...buttonProps}
         >
             {children}

@@ -4,26 +4,18 @@ import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {Review} from '@/types/review';
-import Image from 'next/image';
 import css from './Reviews.module.scss';
 import {format} from 'date-fns';
 import {loadOffer, loadReviews} from '@/api';
 import {NewReviewDrawer} from './NewReviewDrawer';
 import Link from 'next/link';
+import {Profile} from '@/components/Profile';
 
 const ReviewItem = (review: Review) => {
     return (
         <Column className={css.reviewItem} gap="2" paddingY="3" paddingX="4">
             <Row justifyContent="space-between">
-                <Row gap="2">
-                    <Image
-                        src="https://cdn-icons-png.flaticon.com/128/4128/4128176.png"
-                        width="24"
-                        height="24"
-                        alt="avatar"
-                    />
-                    {review.authorName}
-                </Row>
+                <Profile name={review.authorName} />
 
                 <Text size="10px" weight={400} color="#303234A3">
                     {format(new Date(review.createdAt), 'PPP')}

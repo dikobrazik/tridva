@@ -1,19 +1,5 @@
-.groups {
-    border-top: 1px solid;
-
-    &List {
-        list-style: none;
-    
-        & li:not(:last-child) {
-            border-bottom: 1px solid #9CA3AA52
-        }
-    }
-
-    &Btn {
-        padding: 8px 12px;
-        background: #F40C43;
-        color: #FFFFFF;
-        border: none;
-        border-radius: 12px;
+.groupItem {
+    &:not(:last-child) {
+        border-bottom: 1px solid #9ca3aa52;
     }
 }

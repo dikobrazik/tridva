@@ -1,6 +1,6 @@
 /**
  * Функция для склонения русских слов
- * Пример использования: ruDeclination(5,'комментари|й|я|ев')
+ * Пример использования: pluralize(5, ['человек', 'человека', 'человек'])
  * */
 export function pluralize(number: number, w: [string, string, string]) {
     const n = Math.abs(number * 1); // abs на случай отрицательного значения

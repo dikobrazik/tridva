@@ -88,7 +88,7 @@ export default async function Offer(props: Props) {
                     </Row>
                 </Column>
 
-                <Groups />
+                {offer.groupsCount > 0 && <Groups offerId={offerId} count={offer.groupsCount} />}
 
                 <Column className={css.about} paddingY={4} gap={3}>
                     <Text weight="600" size="16px" height={20}>

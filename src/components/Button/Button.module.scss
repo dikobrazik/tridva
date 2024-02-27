@@ -1,6 +1,6 @@
 .button {
     width: auto;
-    padding: 16px 0;
+    padding: 16px 20px;
     font-size: 16px;
     line-height: 20px;
     font-weight: 600;
@@ -12,6 +12,12 @@
     align-items: center;
 
     background-color: transparent;
+
+    &.size-m {
+        padding: 8px 12px;
+
+        border-radius: 8px;
+    }
 
     &.fullWith {
         width: 100%;
