@@ -8,7 +8,7 @@ import {Text} from '@/components/Text';
 import {Icon} from '@/components/Icon';
 import cn from 'classnames';
 import Groups from './Groups';
-import Reviews from './Reviews';
+import Reviews from './_reviewsBlock';
 import {pluralize} from '@/shared/utils/pluralize';
 
 type Props = {

@@ -1,17 +1,21 @@
-.reviewsList {
-    width: 100%;
-    overflow: auto;
+.container {
+    background-color: #f5f5f5;
 }
 
-.reviewsItem {
-    min-width: 160px;
-    height: 132px;
-    border: 1px solid #9CA3AA7A;
-    border-radius: 12px;
+.header {
+    background-color: #fff;
+}
 
-    & span {
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+.reviewItem {
+    background-color: #fff;
+
+    border-radius: 16px;
+}
+
+.topContent {
+    background-color: #fff;
+
+    border-radius: 0 0 16px 16px;
+
+    padding: 0 16px 16px 16px;
 }

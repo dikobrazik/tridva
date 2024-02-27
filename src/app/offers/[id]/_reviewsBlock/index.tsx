@@ -7,7 +7,7 @@ import {Review} from '@/types/review';
 import {format} from 'date-fns';
 import {Rating} from '@/components/Rating';
 import {Button} from '@/components/Button';
-import {ReviewsDrawer} from './ReviewsDrawer';
+import Link from 'next/link';
 
 function ReviewsItem(review: Review) {
     return (
@@ -56,7 +56,11 @@ export default async function Reviews({offerId, reviewsCount, rating = 0}: Props
                     <ReviewsItem key={review.id} {...review} />
                 ))}
             </Row>
-            <ReviewsDrawer offerId={offerId} reviewsCount={reviewsCount} rating={rating} />
+            <Link href={`/offers/${offerId}/reviews`}>
+                <Text weight="500" size="12px" height={14} decoration="underline">
+                    Все отзывы
+                </Text>
+            </Link>
         </Column>
     );
 }

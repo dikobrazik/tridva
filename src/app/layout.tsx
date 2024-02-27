@@ -1,14 +1,12 @@
 import type {Metadata} from 'next';
 import './globals.scss';
-import {Logo} from '@/components/Logo';
 import {Row} from '@/components/layout/Row';
 import {Column} from '@/components/layout/Column';
 import {Inter} from 'next/font/google';
 import {Box} from '@/components/layout/Box';
 import React from 'react';
-import Link from 'next/link';
 import StoreProvider from './StoreProvider';
-import {Search} from './Search';
+import {Header} from './Header';
 import {OffersListContextProvider} from './OffersList/context';
 import {FooterButton} from './FooterButton';
 import css from './Layout.module.scss';
@@ -31,12 +29,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 <StoreProvider>
                     <OffersListContextProvider>
                         <Column minWidth={360} height="100%">
-                            <Row alignItems="center" gap="2" paddingX={4} paddingY={4}>
-                                <Link href="/">
-                                    <Logo />
-                                </Link>
-                                <Search />
-                            </Row>
+                            <Header />
                             <Box overflowY="auto" height="100%">
                                 {children}
                             </Box>

@@ -13,13 +13,7 @@ export const TextField = (props: Props) => {
 
     return (
         <span className={css.container}>
-            <input
-                {...inputProps}
-                className={cn(css.input, css[`size-${size}`])}
-                name="search"
-                placeholder="Искать товары и категории"
-                type="search"
-            />
+            <input {...inputProps} className={cn(css.input, css[`size-${size}`])} name="search" type="search" />
             {icon && <Icon className={css.icon} name={icon} />}
         </span>
     );

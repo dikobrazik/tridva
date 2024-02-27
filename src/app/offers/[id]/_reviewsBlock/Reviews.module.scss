@@ -1,0 +1,17 @@
+.reviewsList {
+    width: 100%;
+    overflow: auto;
+}
+
+.reviewsItem {
+    min-width: 160px;
+    height: 132px;
+    border: 1px solid #9ca3aa7a;
+    border-radius: 12px;
+
+    & span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

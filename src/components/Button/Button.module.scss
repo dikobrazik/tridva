@@ -44,4 +44,15 @@
             color: #787676;
         }
     }
+
+    &.variant-outline {
+        color: #f40c43;
+        background-color: white;
+        border: 1px solid #f40c43;
+
+        &:hover {
+            color: #9f0a2c;
+            border: 1px solid #9f0a2c;
+        }
+    }
 }
