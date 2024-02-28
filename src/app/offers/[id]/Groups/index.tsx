@@ -45,7 +45,7 @@ export default async function Groups(props: Props) {
     const groups = await loadOfferGroups({id: props.offerId});
 
     return (
-        <Column className={css.groups} gap={2} padding="16px 0px 4px">
+        <Column className={css.groups} gap={2}>
             <Column gap={1}>
                 <Row justifyContent="space-between">
                     <Text weight="600" size="16px" height={12}>

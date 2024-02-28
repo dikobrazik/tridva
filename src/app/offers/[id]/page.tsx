@@ -55,7 +55,7 @@ export default async function Offer(props: Props) {
 
     return (
         <Column gap="2">
-            <Block>
+            <Block gap="3">
                 {imageSrc && <Image className={css.image} src={imageSrc} width={700} height={700} alt="offer image" />}
                 <Row>
                     <Box className={css.category}>{category.name}</Box>
@@ -113,7 +113,7 @@ export default async function Offer(props: Props) {
             <Block>{offer.groupsCount > 0 && <Groups offerId={offerId} count={offer.groupsCount} />}</Block>
 
             <Block>
-                <Column className={css.about} paddingY={4} gap={3}>
+                <Column className={css.about} gap={3}>
                     <Text weight="600" size="16px" height={20}>
                         О товаре
                     </Text>

@@ -30,7 +30,7 @@ export default async function Reviews({offerId, reviewsCount, rating = 0}: Props
     const reviews = await loadReviews({offerId});
 
     return (
-        <Column gap={3} paddingY={4}>
+        <Column gap={3}>
             <Row alignItems="center" justifyContent="space-between">
                 <Text weight="600" size="16px" height={20}>
                     Отзывы{' '}
