@@ -10,18 +10,20 @@ type Props = PropsWithChildren<{
     icon?: IconName;
     size?: 'l' | 'm';
     iconSize?: IconProps['size'];
-    fullWith?: boolean;
+    width?: 'auto' | 'full';
 }> &
     UnitProps<'button'>;
 
 export const Button = (props: Props) => {
-    const {variant = 'action', size = 'l', fullWith, children, icon, iconSize, ...buttonProps} = props;
+    const {variant = 'action', size = 'l', width, children, icon, iconSize, ...buttonProps} = props;
 
     return (
         <Box
             as="button"
             gap="2"
-            className={cn(css.button, css[`variant-${variant}`], css[`size-${size}`], {[css.fullWidth]: fullWith})}
+            className={cn(css.button, css[`variant-${variant}`], css[`size-${size}`], {
+                [css.fullWidth]: width === 'full',
+            })}
             {...buttonProps}
         >
             {children}

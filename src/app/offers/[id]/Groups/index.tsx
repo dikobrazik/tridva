@@ -6,8 +6,8 @@ import {Icon} from '@/components/Icon';
 import {loadOfferGroups} from '@/api';
 import {formatDistanceToNow} from 'date-fns';
 import {pluralize} from '@/shared/utils/pluralize';
-import {Button} from '@/components/Button';
 import {Profile} from '@/components/Profile';
+import {JoinGroupDrawer} from './JoinGroupDrawer';
 
 type ItemProps = {
     name: string;
@@ -24,16 +24,14 @@ function GroupsItem(props: ItemProps) {
                 <Row>
                     <Profile name={name} />
                 </Row>
-                <Text weight="400" size="10px" height={12}>
+                <Text weight="400" size={10} height={12}>
                     Для покупки нужен еще {count} человек
                 </Text>
-                <Text weight="400" size="10px" height={12}>
+                <Text weight="400" size={10} height={12}>
                     Закрытие группы через: {time}
                 </Text>
             </Column>
-            <Button variant="action" size="m">
-                Присоединиться
-            </Button>
+            <JoinGroupDrawer />
         </Row>
     );
 }
