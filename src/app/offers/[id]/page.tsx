@@ -10,10 +10,38 @@ import cn from 'classnames';
 import Groups from './Groups';
 import Reviews from './_reviewsBlock';
 import {pluralize} from '@/shared/utils/pluralize';
+import Link from 'next/link';
+import {ReactNode} from 'react';
+import {Block} from '@/components/layout/Block';
 
 type Props = {
     params: {id: string};
     searchParams: unknown;
+};
+
+type CardProps = {
+    href?: string;
+    title: ReactNode;
+    description: ReactNode;
+};
+
+const Card = ({href, title, description}: CardProps) => {
+    const card = (
+        <Column gap={1} paddingX="2" paddingY="2">
+            <Text weight="400" size="12px" height={16}>
+                {title}
+            </Text>
+            <Text weight="400" size="10px" height={12} color="#303234A3">
+                {description}
+            </Text>
+        </Column>
+    );
+
+    if (href) {
+        return <Link href={href}>{card}</Link>;
+    }
+
+    return card;
 };
 
 export default async function Offer(props: Props) {
@@ -26,9 +54,9 @@ export default async function Offer(props: Props) {
     const imageSrc = photos?.length ? `${photos[0]}/700.jpg` : undefined;
 
     return (
-        <Column>
-            {imageSrc && <Image className={css.image} src={imageSrc} width={700} height={700} alt="offer image" />}
-            <Column gap={2} paddingX="4" paddingY="2">
+        <Column gap="2">
+            <Block>
+                {imageSrc && <Image className={css.image} src={imageSrc} width={700} height={700} alt="offer image" />}
                 <Row>
                     <Box className={css.category}>{category.name}</Box>
                 </Row>
@@ -40,34 +68,27 @@ export default async function Offer(props: Props) {
                 </Text>
 
                 <Column gap={2}>
-                    <Row gap={2}>
-                        <Column className={css.tab} gap={1} paddingX="2" paddingY="2">
-                            <Row gap={1}>
-                                <Icon name="star" />
-                                <Text weight="400" size="12px" height={16}>
+                    <Row gap={2} className={css.cards}>
+                        <Card
+                            href={`/offers/${offerId}/reviews`}
+                            title={
+                                <Row gap={1}>
+                                    <Icon name="star" />
                                     {rating}
-                                </Text>
-                            </Row>
-                            <Text weight="400" size="10px" height={12}>
-                                {reviewsCount} {pluralize(reviewsCount, ['отзыв', 'отзыва', 'отзывов'])}
-                            </Text>
-                        </Column>
-                        <Column className={css.tab} gap={1} paddingX="2" paddingY="2">
-                            <Text weight="400" size="12px" height={16}>
-                                300 заказов
-                            </Text>
-                            <Text weight="400" size="10px" height={12}>
-                                за последние 30 дней
-                            </Text>
-                        </Column>
-                        <Column className={css.tab} gap={1} paddingX="2" paddingY="2">
-                            <Text weight="400" size="12px" height={16}>
-                                2 группы
-                            </Text>
-                            <Text weight="400" size="10px" height={12}>
-                                присоединитесь сейчас
-                            </Text>
-                        </Column>
+                                </Row>
+                            }
+                            description={`${reviewsCount} ${pluralize(reviewsCount, ['отзыв', 'отзыва', 'отзывов'])}`}
+                        />
+                        <Card title="300 заказов" description="за последние 30 дней" />
+                        <Card
+                            href="#groups"
+                            title={`${offer.groupsCount} ${pluralize(offer.groupsCount, [
+                                'группа',
+                                'группы',
+                                'групп',
+                            ])}`}
+                            description="присоединитесь сейчас"
+                        />
                     </Row>
                     <Row className={css.tab} justifyContent="space-between" paddingX={2} paddingY={1}>
                         <Row alignItems="center" gap={1}>
@@ -87,9 +108,11 @@ export default async function Offer(props: Props) {
                         </Text>
                     </Row>
                 </Column>
+            </Block>
 
-                {offer.groupsCount > 0 && <Groups offerId={offerId} count={offer.groupsCount} />}
+            <Block>{offer.groupsCount > 0 && <Groups offerId={offerId} count={offer.groupsCount} />}</Block>
 
+            <Block>
                 <Column className={css.about} paddingY={4} gap={3}>
                     <Text weight="600" size="16px" height={20}>
                         О товаре
@@ -126,14 +149,18 @@ export default async function Offer(props: Props) {
                             </Row>
                         </li>
                     </ul>
+
                     <button className={css.btn}>
                         <Text weight="500" size="12px" height={14} decoration="underline">
                             Все характеристики и описание
                         </Text>
                     </button>
                 </Column>
+            </Block>
+
+            <Block>
                 <Reviews offerId={offerId} reviewsCount={reviewsCount} rating={rating} />
-            </Column>
+            </Block>
         </Column>
     );
 }

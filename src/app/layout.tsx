@@ -30,7 +30,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                     <OffersListContextProvider>
                         <Column minWidth={360} height="100%">
                             <Header />
-                            <Box overflowY="auto" height="100%">
+                            <Box className={css.container} overflowY="auto" height="100%">
                                 {children}
                             </Box>
                             <Row className={css.footer} padding="8px 16px" justifyContent="space-between">

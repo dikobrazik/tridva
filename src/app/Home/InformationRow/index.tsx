@@ -14,7 +14,7 @@ const InformationList = [
 
 export default function InformationRow() {
     return (
-        <Row justifyContent="space-between" paddingY={2} paddingX={4}>
+        <Row justifyContent="space-between" paddingY={2}>
             {InformationList.map((information, index) => (
                 <Column gap={2} className={css.information} key={index}>
                     <Box height={48} width={48} className={css.box} borderRadius={4} />

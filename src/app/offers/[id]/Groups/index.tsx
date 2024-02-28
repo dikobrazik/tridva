@@ -51,8 +51,8 @@ export default async function Groups(props: Props) {
             <Column gap={1}>
                 <Row justifyContent="space-between">
                     <Text weight="600" size="16px" height={12}>
-                        Группы{' '}
-                        <Text weight="600" size="16px" height={12}>
+                        <a name="groups">Группы </a>
+                        <Text weight="600" size="16px" height={12} color="#3032347A">
                             {props.count}
                         </Text>
                     </Text>

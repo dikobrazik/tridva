@@ -28,7 +28,7 @@ export function OffersList(props: Props) {
 export function OffersListContainer({
     children,
     ...columnProps
-}: PropsWithChildren<{paddingY?: number; paddingX?: number}>) {
+}: PropsWithChildren<{className?: string; paddingY?: number; paddingX?: number; gap?: `${number}`}>) {
     const {onScroll} = useContext(OffersListContext);
 
     return (

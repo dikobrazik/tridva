@@ -1,20 +1,20 @@
 import {OfferCard} from '@/components/OfferCard';
 import {Text} from '@/components/Text';
 import {Box} from '@/components/layout/Box';
-import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import InformationRow from './Home/InformationRow';
 import css from './Page.module.scss';
 import {OffersList, OffersListContainer, OffersListLoader} from './OffersList';
 import {loadOffers} from '@/api';
+import {Block} from '@/components/layout/Block';
 
 export default async function Home() {
     const offers = await loadOffers();
 
     return (
-        <OffersListContainer>
-            <Column paddingBottom="8px" borderBottom="4px solid #F5F5F5">
-                <Row gap={2} overflowX="auto" paddingBottom="8px" paddingX={4}>
+        <OffersListContainer gap="2">
+            <Block paddingTop="0">
+                <Row gap={2} overflowX="auto" paddingBottom="8px">
                     <button className={css.headerButton}>
                         <Text size={12}>Посуда</Text>
                     </button>
@@ -31,10 +31,10 @@ export default async function Home() {
                     </button>
                 </Row>
                 <InformationRow />
-            </Column>
+            </Block>
 
-            <Column paddingY={2} paddingX={4}>
-                <Box paddingY={4}>
+            <Block>
+                <Box paddingBottom="16px">
                     <Text weight={600} size={20}>
                         Рекомендации для вас
                     </Text>
@@ -48,7 +48,7 @@ export default async function Home() {
                 </Box>
 
                 <OffersListLoader />
-            </Column>
+            </Block>
         </OffersListContainer>
     );
 }

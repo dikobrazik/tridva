@@ -21,7 +21,7 @@ export default async function Catalog(props: Props) {
     const category = await loadCategory({categoryId});
 
     return (
-        <OffersListContainer paddingY={2} paddingX={4}>
+        <OffersListContainer className={css.offerList} paddingY={2} paddingX={4}>
             <Column gap={2}>
                 <Text size={24} weight={600}>
                     {category?.name}

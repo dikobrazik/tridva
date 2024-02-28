@@ -17,7 +17,6 @@ type Props = PropsWithChildren<{
 export const Button = (props: Props) => {
     const {variant = 'action', size = 'l', fullWith, children, icon, iconSize, ...buttonProps} = props;
 
-    console.log(size);
     return (
         <Box
             as="button"

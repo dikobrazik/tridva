@@ -9,13 +9,13 @@ import Link from 'next/link';
 function CategoryItem({name, href}: {name: string; href: string}) {
     return (
         <Link href={href}>
-            <Column className={css.categoryItem} paddingY={4}>
+            <Column className={css.categoryItem} paddingY={4} paddingX={4}>
                 <Row alignItems="center" justifyContent="space-between">
                     <Icon name="hanger" size="m" />
                     <Row width="100%" paddingX={3}>
                         <Text size={14}>{name}</Text>
                     </Row>
-                    <Icon name="chevronLeft" size="m" />
+                    <Icon name="chevronRight" size="m" />
                 </Row>
             </Column>
         </Link>
@@ -26,7 +26,7 @@ export default async function Categories() {
     const categories = await loadCategories();
 
     return (
-        <Column paddingX={4}>
+        <Column>
             {categories
                 .filter(category => category.offersCount > 0)
                 .map(({id, name}) => (

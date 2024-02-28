@@ -1,0 +1,9 @@
+.block {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 16px;
+
+    &:first-child {
+        border-radius: 0 0 16px 16px;
+    }
+}

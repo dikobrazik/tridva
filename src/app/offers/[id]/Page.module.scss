@@ -12,7 +12,7 @@
     padding: 4px 8px;
 }
 
-.tab {
+.cards > * {
     width: 100%;
     border: 1px solid #9ca3aa7a;
     border-radius: 12px;
@@ -44,8 +44,6 @@
 }
 
 .about {
-    border-top: 1px solid;
-
     &List {
         list-style: none;
 
