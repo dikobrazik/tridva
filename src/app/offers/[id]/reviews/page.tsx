@@ -10,6 +10,7 @@ import {loadOffer, loadReviews} from '@/api';
 import {NewReviewDrawer} from './NewReviewDrawer';
 import Link from 'next/link';
 import {Profile} from '@/components/Profile';
+import {omitCurrentYear} from '@/shared/date/omitCurrentYear';
 
 const ReviewItem = (review: Review) => {
     return (
@@ -18,7 +19,7 @@ const ReviewItem = (review: Review) => {
                 <Profile name={review.authorName} />
 
                 <Text size="10px" weight={400} color="#303234A3">
-                    {format(new Date(review.createdAt), 'PPP')}
+                    {omitCurrentYear(format(new Date(review.createdAt), 'dd MMMM yyyy'))}
                 </Text>
             </Row>
             <Row gap="2">

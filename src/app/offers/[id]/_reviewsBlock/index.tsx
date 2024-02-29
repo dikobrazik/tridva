@@ -8,12 +8,15 @@ import {format} from 'date-fns';
 import {Rating} from '@/components/Rating';
 import Link from 'next/link';
 import {Button} from '@/components/Button';
+import {omitCurrentYear} from '@/shared/date/omitCurrentYear';
 
 function ReviewsItem(review: Review) {
     return (
         <Column className={css.reviewsItem} gap={1} paddingX={2} paddingY={2}>
             <Text>{review.authorName}</Text>
-            <Text>{format(new Date(review.createdAt), 'PPP')}</Text>
+            <Text size={10} weight={400} color="#303234A3">
+                {omitCurrentYear(format(new Date(review.createdAt), 'dd MMMM yyyy'))}
+            </Text>
             <Rating rating={review.rating} />
             <Text>{review.text}</Text>
         </Column>

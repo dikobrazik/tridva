@@ -10,6 +10,10 @@ import {Header} from './Header';
 import {OffersListContextProvider} from './OffersList/context';
 import {FooterButton} from './FooterButton';
 import css from './Layout.module.scss';
+import {ru} from 'date-fns/locale';
+import {setDefaultOptions} from 'date-fns';
+
+setDefaultOptions({locale: ru});
 
 const inter = Inter({subsets: ['latin']});
 

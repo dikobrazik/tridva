@@ -1,4 +1,5 @@
 'use client';
+
 import {Button} from '@/components/Button';
 import {Drawer} from '@/components/Drawer';
 import {Text} from '@/components/Text';
@@ -9,14 +10,15 @@ import Image from 'next/image';
 import participantImage from './participant.svg';
 import Link from 'next/link';
 import {useState} from 'react';
+import {joinGroup} from '@/api/group';
 
-const GroupHost = () => {
+const GroupHost = ({ownerName}: {ownerName: string}) => {
     return (
         <Column flex="1" gap="2" alignItems="center">
             <Image src="https://cdn-icons-png.flaticon.com/128/4128/4128176.png" width="48" height="48" alt="avatar" />
             <Column gap="1">
-                <Text size={12} weight={500}>
-                    Михаил Кириллов
+                <Text align="center" size={12} weight={500}>
+                    {ownerName}
                 </Text>
                 <Text align="center" size={10} weight={400} color="#303234A3">
                     Создатель группы
@@ -42,7 +44,20 @@ const GroupParticipant = () => {
     );
 };
 
-const JoinGroupContent = ({onGroupJoined}: {onGroupJoined: (joined: boolean) => void}) => {
+const JoinGroupContent = ({
+    onGroupJoined,
+    ownerName,
+    groupId,
+}: {
+    groupId: number;
+    ownerName: string;
+    onGroupJoined: (joined: boolean) => void;
+}) => {
+    const onJoinGroupClick = async () => {
+        joinGroup({groupId});
+        onGroupJoined(true);
+    };
+
     return (
         <Column gap="10">
             <Column alignItems="center" gap="1">
@@ -54,14 +69,14 @@ const JoinGroupContent = ({onGroupJoined}: {onGroupJoined: (joined: boolean) => 
                 </Text>
             </Column>
             <Row>
-                <GroupHost />
+                <GroupHost ownerName={ownerName} />
                 <GroupParticipant />
             </Row>
             <Column gap="4" alignItems="center">
                 <Text size={12} weight={500}>
                     Закрытие группы через: <Text color="#303234A3">23:19:00</Text>
                 </Text>
-                <Button width="full" onClick={() => onGroupJoined(true)}>
+                <Button width="full" onClick={onJoinGroupClick}>
                     Присоединиться к этой группе
                 </Button>
             </Column>
@@ -93,7 +108,12 @@ const GroupJoinedContent = () => {
     );
 };
 
-export const JoinGroupDrawer = () => {
+type Props = {
+    ownerName: string;
+    groupId: number;
+};
+
+export const JoinGroupDrawer = ({ownerName, groupId}: Props) => {
     const [isGroupJoined, setGroupJoined] = useState(false);
 
     const {isActive, toggle} = useToggler();
@@ -104,7 +124,11 @@ export const JoinGroupDrawer = () => {
                 Присоединиться
             </Button>
             <Drawer isOpen={isActive} onClose={toggle}>
-                {isGroupJoined ? <GroupJoinedContent /> : <JoinGroupContent onGroupJoined={setGroupJoined} />}
+                {isGroupJoined ? (
+                    <GroupJoinedContent />
+                ) : (
+                    <JoinGroupContent groupId={groupId} ownerName={ownerName} onGroupJoined={setGroupJoined} />
+                )}
             </Drawer>
         </>
     );

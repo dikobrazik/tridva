@@ -10,28 +10,34 @@ import {Profile} from '@/components/Profile';
 import {JoinGroupDrawer} from './JoinGroupDrawer';
 
 type ItemProps = {
-    name: string;
+    groupId: number;
+    ownerName: string;
     count: number;
-    time: string;
+    createdAt: string;
 };
 
 function GroupsItem(props: ItemProps) {
-    const {name, count, time} = props;
+    const {groupId, ownerName, count, createdAt} = props;
 
     return (
         <Row className={css.groupItem} alignItems="flex-start" justifyContent="space-between" paddingY={3}>
             <Column gap={1}>
                 <Row>
-                    <Profile name={name} />
+                    <Profile name={ownerName} />
                 </Row>
                 <Text weight="400" size={10} height={12}>
-                    Для покупки нужен еще {count} человек
+                    Для покупки{' '}
+                    {pluralize(count, [
+                        `нужен еще ${count} человек`,
+                        `нужено еще ${count} человека`,
+                        `нужено еще ${count} человек`,
+                    ])}
                 </Text>
                 <Text weight="400" size={10} height={12}>
-                    Закрытие группы через: {time}
+                    Закрытие группы через: {formatDistanceToNow(new Date(createdAt))}
                 </Text>
             </Column>
-            <JoinGroupDrawer />
+            <JoinGroupDrawer groupId={groupId} ownerName={ownerName} />
         </Row>
     );
 }
@@ -49,6 +55,7 @@ export default async function Groups(props: Props) {
             <Column gap={1}>
                 <Row justifyContent="space-between">
                     <Text weight="600" size="16px" height={12}>
+                        {/* @ts-expect-error TS2322 почему то name не определен в HtmlAnchoreElement */}
                         <a name="groups">Группы </a>
                         <Text weight="600" size="16px" height={12} color="#3032347A">
                             {props.count}
@@ -72,9 +79,10 @@ export default async function Groups(props: Props) {
             {groups.map(group => (
                 <GroupsItem
                     key={group.id}
-                    name="Арина С."
-                    count={1}
-                    time={formatDistanceToNow(new Date(group.createdAt))}
+                    groupId={group.id}
+                    ownerName={group.ownerName}
+                    count={group.capacity - group.participantsCount}
+                    createdAt={group.createdAt}
                 />
             ))}
         </Column>
