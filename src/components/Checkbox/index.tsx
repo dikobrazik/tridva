@@ -1,14 +1,21 @@
+import Image from 'next/image';
 import css from './Checkbox.module.scss';
+import checkImg from './check.svg';
+import cn from 'classnames';
 
 type Props = {
     name: string;
+    checked: boolean;
+    onChange: (checked: boolean) => void;
 };
 
 export const Checkbox = (props: Props) => {
-    const {name} = props;
+    const {name, checked, onChange} = props;
+
     return (
-        <label className={css.label} htmlFor={name}>
-            <input name={name} />
+        <label className={cn(css.label, {[css.cheked]: Boolean(checked)})}>
+            <input type="checkbox" checked={checked} onChange={e => onChange(e.target.checked)} />
+            {checked && <Image src={checkImg} width={5} height={4} alt="checked" />}
         </label>
     );
 };

@@ -1,8 +1,24 @@
 .label {
+    min-width: 14px;
     width: 14px;
     height: 14px;
     border: 1px solid #9ca3aa7a;
     border-radius: 4px;
+
+    position: relative;
+
+    user-select: none;
+
+    &.cheked {
+        border: 1px solid #f40c43;
+    }
+
+    & > img {
+        position: absolute;
+
+        left: 4px;
+        top: 4px;
+    }
 
     & > input {
         display: none;

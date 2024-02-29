@@ -111,7 +111,11 @@ export default async function Offer(props: Props) {
                 </Column>
             </Block>
 
-            <Block>{offer.groupsCount > 0 && <Groups offerId={offerId} count={offer.groupsCount} />}</Block>
+            {offer.groupsCount > 0 && (
+                <Block>
+                    <Groups offerId={offerId} count={offer.groupsCount} />
+                </Block>
+            )}
 
             <Block>
                 <Column className={css.about} gap={3}>
@@ -159,9 +163,11 @@ export default async function Offer(props: Props) {
                 </Column>
             </Block>
 
-            <Block>
-                <Reviews offerId={offerId} reviewsCount={reviewsCount} rating={rating} />
-            </Block>
+            {reviewsCount > 0 && (
+                <Block>
+                    <Reviews offerId={offerId} reviewsCount={reviewsCount} rating={rating} />
+                </Block>
+            )}
         </Column>
     );
 }

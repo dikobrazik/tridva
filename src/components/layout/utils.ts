@@ -23,6 +23,8 @@ export const InlineCssProperties = [
     'overflowX',
     'overflowY',
     'flex',
+    'background',
+    'backgroundColor',
 ] satisfies Array<keyof CSSProperties>;
 
 const NumericProps = [

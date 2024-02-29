@@ -6,11 +6,12 @@ export type IconName = keyof typeof icons;
 export type IconProps = {
     className?: string;
     name: IconName;
-    size?: 's' | 'm' | 'l';
+    size?: 'xs' | 's' | 'm' | 'l';
     onClick?: () => void;
 };
 
 const SIZE_MAP = {
+    xs: 12,
     s: 16,
     m: 24,
     l: 32,
