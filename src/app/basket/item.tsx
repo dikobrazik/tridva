@@ -18,12 +18,12 @@ export const BasketItem = ({offer}: Props) => {
     const [selected, setSelected] = useState(false);
 
     return (
-        <Column className={css.item} onClick={() => setSelected(!selected)}>
-            <Row className={css.dwa} gap="3">
+        <Column className={css.item}>
+            <Row gap="3">
                 <Image src={getOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
                 <Column gap="2">
                     <Link href={`/offers/${offer.id}`}>
-                        <Text size={12} weight={400}>
+                        <Text size={12} weight={400} height={16}>
                             {offer.title}
                         </Text>
                     </Link>
