@@ -9,8 +9,8 @@ import {useToggler} from '@/hooks/useToggler';
 import Image from 'next/image';
 import participantImage from './participant.svg';
 import Link from 'next/link';
-import {useState} from 'react';
-import {joinGroup} from '@/api/group';
+import {useEffect, useState} from 'react';
+import {joinGroup} from '@/api';
 
 const GroupHost = ({ownerName}: {ownerName: string}) => {
     return (
@@ -54,7 +54,7 @@ const JoinGroupContent = ({
     onGroupJoined: (joined: boolean) => void;
 }) => {
     const onJoinGroupClick = async () => {
-        joinGroup({groupId});
+        await joinGroup({groupId});
         onGroupJoined(true);
     };
 
@@ -117,6 +117,12 @@ export const JoinGroupDrawer = ({ownerName, groupId}: Props) => {
     const [isGroupJoined, setGroupJoined] = useState(false);
 
     const {isActive, toggle} = useToggler();
+
+    useEffect(() => {
+        if (isActive) {
+            setGroupJoined(false);
+        }
+    }, [isActive]);
 
     return (
         <>

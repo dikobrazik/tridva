@@ -1,0 +1,10 @@
+.label {
+    width: 14px;
+    height: 14px;
+    border: 1px solid #9ca3aa7a;
+    border-radius: 4px;
+
+    & > input {
+        display: none;
+    }
+}

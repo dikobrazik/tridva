@@ -3,16 +3,16 @@ import {Column} from '../layout/Column';
 import {Text} from '../Text';
 import Image from 'next/image';
 import css from './OfferCard.module.scss';
-import duck from './duck.png';
 import {Row} from '../layout/Row';
 import {Icon} from '../Icon';
 import Link from 'next/link';
 import {pluralize} from '@/shared/utils/pluralize';
+import {getOfferPhoto} from '@/shared/photos';
 
 export const OfferCard = (props: Offer) => {
     const {id, title, price, discount, rating, photos, reviewsCount} = props;
 
-    const imageSrc = photos?.length ? `${photos[0]}/280.jpg` : duck;
+    const imageSrc = getOfferPhoto(photos, 280);
 
     return (
         <Link href={`/offers/${id}`}>

@@ -6,7 +6,6 @@ import {Rating} from '@/components/Rating';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
-import duck from '@/components/OfferCard/duck.png';
 import {useToggler} from '@/hooks/useToggler';
 import {Offer} from '@/types/offers';
 import Image from 'next/image';
@@ -14,6 +13,7 @@ import {useState} from 'react';
 import css from './Reviews.module.scss';
 import {TextArea} from '@/components/TextArea';
 import {createReview} from '@/api';
+import {getOfferPhoto} from '@/shared/photos';
 
 export const NewReviewDrawer = ({offer}: {offer: Offer}) => {
     const [rating, setRating] = useState(1);
@@ -22,7 +22,7 @@ export const NewReviewDrawer = ({offer}: {offer: Offer}) => {
 
     const {photos, title} = offer;
 
-    const offerImageSrc = photos?.length ? `${photos[0]}/700.jpg` : duck;
+    const offerImageSrc = getOfferPhoto(photos);
 
     const onCreateReviewClick = async () => {
         await createReview({

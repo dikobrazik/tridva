@@ -45,7 +45,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                                     title="Категории"
                                     href="/categories"
                                 />
-                                <FooterButton icon="cart" activeIcon="cartActive" title="Корзина" href="/cart" />
+                                <FooterButton icon="cart" activeIcon="cartActive" title="Корзина" href="/basket" />
                                 <FooterButton icon="user" activeIcon="userActive" title="Профиль" href="/profile" />
                             </Row>
                         </Column>

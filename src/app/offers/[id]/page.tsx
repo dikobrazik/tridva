@@ -13,6 +13,7 @@ import {pluralize} from '@/shared/utils/pluralize';
 import Link from 'next/link';
 import {ReactNode} from 'react';
 import {Block} from '@/components/layout/Block';
+import {getOfferPhoto} from '@/shared/photos';
 
 type Props = {
     params: {id: string};
@@ -51,7 +52,7 @@ export default async function Offer(props: Props) {
 
     const {title, photos, price, reviewsCount, rating} = offer;
 
-    const imageSrc = photos?.length ? `${photos[0]}/700.jpg` : undefined;
+    const imageSrc = getOfferPhoto(photos);
 
     return (
         <Column gap="2">
