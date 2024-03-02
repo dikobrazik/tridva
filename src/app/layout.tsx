@@ -12,6 +12,7 @@ import {FooterButton} from './FooterButton';
 import css from './Layout.module.scss';
 import {ru} from 'date-fns/locale';
 import {setDefaultOptions} from 'date-fns';
+import AuthorizationProvider from './AuthorizationProvider';
 
 setDefaultOptions({locale: ru});
 
@@ -31,25 +32,27 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <html lang="en">
             <body className={inter.className}>
                 <StoreProvider>
-                    <OffersListContextProvider>
-                        <Column minWidth={360} height="100%">
-                            <Header />
-                            <Box className={css.container} overflowY="auto" height="100%">
-                                {children}
-                            </Box>
-                            <Row className={css.footer} padding="8px 16px" justifyContent="space-between">
-                                <FooterButton icon="home" activeIcon="homeActive" title="Главная" href="/" />
-                                <FooterButton
-                                    icon="menu"
-                                    activeIcon="menuActive"
-                                    title="Категории"
-                                    href="/categories"
-                                />
-                                <FooterButton icon="cart" activeIcon="cartActive" title="Корзина" href="/basket" />
-                                <FooterButton icon="user" activeIcon="userActive" title="Профиль" href="/profile" />
-                            </Row>
-                        </Column>
-                    </OffersListContextProvider>
+                    <AuthorizationProvider>
+                        <OffersListContextProvider>
+                            <Column minWidth={360} height="100%">
+                                <Header />
+                                <Box className={css.container} overflowY="auto" height="100%">
+                                    {children}
+                                </Box>
+                                <Row className={css.footer} padding="8px 16px" justifyContent="space-between">
+                                    <FooterButton icon="home" activeIcon="homeActive" title="Главная" href="/" />
+                                    <FooterButton
+                                        icon="menu"
+                                        activeIcon="menuActive"
+                                        title="Категории"
+                                        href="/categories"
+                                    />
+                                    <FooterButton icon="cart" activeIcon="cartActive" title="Корзина" href="/basket" />
+                                    <FooterButton icon="user" activeIcon="userActive" title="Профиль" href="/profile" />
+                                </Row>
+                            </Column>
+                        </OffersListContextProvider>
+                    </AuthorizationProvider>
                 </StoreProvider>
             </body>
         </html>
