@@ -10,6 +10,9 @@ export {default as crown} from './crown.svg';
 export {default as help} from './help.svg';
 export {default as pen} from './pen.svg';
 export {default as close} from './close.svg';
+export {default as minus} from './minus.svg';
+export {default as plus} from './plus.svg';
+export {default as trash} from './trash.svg';
 
 export {default as home} from './home.svg';
 export {default as homeActive} from './home-active.svg';

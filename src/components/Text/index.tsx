@@ -15,8 +15,8 @@ export const Text = (props: PropsWithChildren<Props>) => {
     return (
         <span
             style={{
-                fontWeight: props.weight ?? 400,
-                fontSize: props.size ?? 12,
+                fontWeight: props.weight,
+                fontSize: props.size,
                 textAlign: props.align,
                 lineHeight: props.height ? `${props.height}px` : undefined,
                 whiteSpace: props.space,

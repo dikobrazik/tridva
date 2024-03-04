@@ -9,13 +9,31 @@ import Image from 'next/image';
 import {useState} from 'react';
 import css from './Item.module.scss';
 import Link from 'next/link';
+import {Button} from '@/components/Button';
+import {removeItemFromBasket} from '@/api';
 
 type Props = {
+    id: number;
+    count: number;
     offer: Offer;
 };
 
-export const BasketItem = ({offer}: Props) => {
+const Counter = ({count}: {count: number}) => {
+    return (
+        <Row className={css.counter} alignItems="center" gap="2">
+            <Button size="xs" variant="action-white" icon="minus" />
+            {count}
+            <Button size="xs" variant="action-white" icon="plus" />
+        </Row>
+    );
+};
+
+export const BasketItem = ({id, offer, count}: Props) => {
     const [selected, setSelected] = useState(false);
+
+    const onRemoveClick = () => {
+        removeItemFromBasket({id});
+    };
 
     return (
         <Column className={css.item}>
@@ -35,6 +53,10 @@ export const BasketItem = ({offer}: Props) => {
                     </Text>
                 </Column>
                 <Checkbox name="select" checked={selected} onChange={setSelected} />
+            </Row>
+            <Row justifyContent="space-between">
+                <Counter count={count} />
+                <Button size="xs" icon="trash" variant="normal" onClick={onRemoveClick} />
             </Row>
         </Column>
     );

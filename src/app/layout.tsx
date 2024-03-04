@@ -13,6 +13,8 @@ import css from './Layout.module.scss';
 import {ru} from 'date-fns/locale';
 import {setDefaultOptions} from 'date-fns';
 import AuthorizationProvider from './AuthorizationProvider';
+import {cookies} from 'next/headers';
+import axios from 'axios';
 
 setDefaultOptions({locale: ru});
 
@@ -28,6 +30,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
+    // Говнохак, пока не посадим сервер и клиент на один домен
+    if (typeof window === 'undefined') {
+        const token = cookies().get('token');
+        axios.defaults.headers.common.Authorization = `Bearer ${token?.value}`;
+    }
+
     return (
         <html lang="en">
             <body className={inter.className}>

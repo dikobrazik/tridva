@@ -19,6 +19,12 @@
         border-radius: 8px;
     }
 
+    &.size-xs {
+        padding: 2px;
+
+        border-radius: 4px;
+    }
+
     &.fullWith {
         width: 100%;
     }
@@ -38,6 +44,15 @@
 
         &:hover {
             background: #dddddd;
+        }
+    }
+
+    &.variant-action-white {
+        color: #303234;
+        background: #ffffff;
+
+        &:hover {
+            background: #ebebeb;
         }
     }
 

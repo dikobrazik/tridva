@@ -5,6 +5,10 @@ type JoinGroupPayload = {
     groupId: number;
 };
 
+type RemoveItemPayload = {
+    id: number;
+};
+
 export const getBasketItems = (): Promise<BasketItem[]> =>
     axios
         .get(`basket`)
@@ -13,3 +17,6 @@ export const getBasketItems = (): Promise<BasketItem[]> =>
 
 export const joinGroup = ({groupId}: JoinGroupPayload): Promise<BasketItem[]> =>
     axios.put(`basket`, {groupId}).then(response => response.data);
+
+export const removeItemFromBasket = ({id}: RemoveItemPayload): Promise<BasketItem[]> =>
+    axios.delete(`basket/${id}`).then(response => response.data);

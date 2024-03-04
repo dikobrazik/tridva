@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import css from './Checkbox.module.scss';
 import checkImg from './check.svg';

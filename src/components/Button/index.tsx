@@ -6,9 +6,9 @@ import {Box} from '../layout/Box';
 import {UnitProps} from '../layout/types';
 
 type Props = PropsWithChildren<{
-    variant?: 'action' | 'normal' | 'pseudo' | 'outline';
+    variant?: 'action' | 'action-white' | 'normal' | 'pseudo' | 'outline';
     icon?: IconName;
-    size?: 'l' | 'm';
+    size?: 'xs' | 's' | 'm' | 'l';
     iconSize?: IconProps['size'];
     width?: 'auto' | 'full';
 }> &

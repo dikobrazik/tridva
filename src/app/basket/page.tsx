@@ -6,20 +6,33 @@ import {Text} from '@/components/Text';
 import {Row} from '@/components/layout/Row';
 import {sum} from '@/shared/utils/sum';
 import {Separator} from '@/components/Separator';
+import {Checkbox} from '@/components/Checkbox';
 
 export default async function Basket() {
     const basketItems = await getBasketItems();
+
+    const itemsCount = basketItems.length;
 
     const offersCost = sum(basketItems.map(({offer}) => Number(offer.price))).toFixed(2);
 
     return (
         <Column gap="2" flex="1">
+            <Row background="#fff" padding="16px" justifyContent="space-between">
+                <span />
+                <Text size={16} weight={600}>
+                    Корзина{' '}
+                    <Text size={16} weight={600} color="#3032347A">
+                        {itemsCount}
+                    </Text>
+                </Text>
+                <Checkbox />
+            </Row>
             {basketItems.map(({id, offer}) => (
                 <Block key={id}>
-                    <BasketItem offer={offer} />
+                    <BasketItem id={id} count={1} offer={offer} />
                 </Block>
             ))}
-            {basketItems.length && (
+            {Boolean(itemsCount) && (
                 <Block gap="4">
                     <Text size={12} weight={600}>
                         Ваш заказ
