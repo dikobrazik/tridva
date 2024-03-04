@@ -27,9 +27,9 @@ export default async function Basket() {
                 </Text>
                 <Checkbox />
             </Row>
-            {basketItems.map(({id, offer}) => (
+            {basketItems.map(({id, capacity, offer}) => (
                 <Block key={id}>
-                    <BasketItem id={id} count={1} offer={offer} />
+                    <BasketItem id={id} capacity={capacity} count={1} offer={offer} />
                 </Block>
             ))}
             {Boolean(itemsCount) && (

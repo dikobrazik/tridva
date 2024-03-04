@@ -14,6 +14,7 @@ import {removeItemFromBasket} from '@/api';
 
 type Props = {
     id: number;
+    capacity: number;
     count: number;
     offer: Offer;
 };
@@ -28,7 +29,7 @@ const Counter = ({count}: {count: number}) => {
     );
 };
 
-export const BasketItem = ({id, offer, count}: Props) => {
+export const BasketItem = ({id, capacity, offer, count}: Props) => {
     const [selected, setSelected] = useState(false);
 
     const onRemoveClick = () => {
@@ -36,7 +37,7 @@ export const BasketItem = ({id, offer, count}: Props) => {
     };
 
     return (
-        <Column className={css.item}>
+        <Column className={css.item} gap="2">
             <Row gap="3">
                 <Image src={getOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
                 <Column gap="2">
@@ -46,11 +47,13 @@ export const BasketItem = ({id, offer, count}: Props) => {
                         </Text>
                     </Link>
                     <Text size={14} weight={600}>
-                        {offer.price}
+                        {offer.price} ₽
                     </Text>
-                    <Text size={10} weight={400} color="#303234A3">
-                        Оплатите товар, чтобы подтвердить участие.
-                    </Text>
+                    {capacity !== 1 && (
+                        <Text size={10} weight={400} color="#303234A3">
+                            Оплатите товар, чтобы подтвердить участие.
+                        </Text>
+                    )}
                 </Column>
                 <Checkbox name="select" checked={selected} onChange={setSelected} />
             </Row>
