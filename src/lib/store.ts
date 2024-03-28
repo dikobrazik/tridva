@@ -1,12 +1,16 @@
 import {configureStore} from '@reduxjs/toolkit';
 import {offersReducer} from './features/offers';
 import {reviewsReducer} from './features/reviews';
+import {basketReducer} from './features/basket';
+import {userReducer} from './features/user';
 
 export const makeStore = () => {
     return configureStore({
         reducer: {
+            basket: basketReducer,
             offers: offersReducer,
             reviews: reviewsReducer,
+            user: userReducer,
         },
     });
 };

@@ -1,0 +1,48 @@
+@import 'animation/slide-in.scss';
+
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #38343a52;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+
+    background: #fff;
+    position: absolute;
+    left: 10vw;
+    right: 10vw;
+    top: 30%;
+    padding: 40px 16px 16px 16px;
+    border-radius: 24px;
+    color: #303234;
+
+    -webkit-animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+
+    &.withLine {
+        // полоска сверху дровера
+        &::after {
+            content: '';
+            position: absolute;
+            width: 74px;
+            height: 3px;
+            background: #efebf1;
+            top: 8px;
+            left: calc(50% - 37px);
+        }
+    }
+
+    & .closeIcon {
+        cursor: pointer;
+        position: absolute;
+
+        top: 16px;
+        right: 16px;
+    }
+}

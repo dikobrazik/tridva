@@ -6,11 +6,13 @@ import {Row} from '@/components/layout/Row';
 import {getOfferPhoto} from '@/shared/photos';
 import {Offer} from '@/types/offers';
 import Image from 'next/image';
-import {useState} from 'react';
 import css from './Item.module.scss';
 import Link from 'next/link';
 import {Button} from '@/components/Button';
 import {removeItemFromBasket} from '@/api';
+import {useAppDispatch, useAppSelector} from '@/lib/hooks';
+import {basketActions, basketSelectors} from '@/lib/features/basket';
+import {useEffect} from 'react';
 
 type Props = {
     id: number;
@@ -30,7 +32,16 @@ const Counter = ({count}: {count: number}) => {
 };
 
 export const BasketItem = ({id, capacity, offer, count}: Props) => {
-    const [selected, setSelected] = useState(false);
+    const dispatch = useAppDispatch();
+    const selected = useAppSelector(state => basketSelectors.selectIsBasketItemSelected(state, id));
+
+    const toggleItemSelect = () => {
+        dispatch(basketActions.toggleBasketItem(id));
+    };
+
+    useEffect(() => {
+        dispatch(basketActions.setBasketItem({id, checked: false}));
+    }, []);
 
     const onRemoveClick = () => {
         removeItemFromBasket({id});
@@ -38,24 +49,26 @@ export const BasketItem = ({id, capacity, offer, count}: Props) => {
 
     return (
         <Column className={css.item} gap="2">
-            <Row gap="3">
-                <Image src={getOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
-                <Column gap="2">
-                    <Link href={`/offers/${offer.id}`}>
-                        <Text size={12} weight={400} height={16}>
-                            {offer.title}
+            <Row gap="3" justifyContent="space-between">
+                <Row gap="3">
+                    <Image src={getOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
+                    <Column gap="2">
+                        <Link href={`/offers/${offer.id}`}>
+                            <Text size={12} weight={400} height={16}>
+                                {offer.title}
+                            </Text>
+                        </Link>
+                        <Text size={14} weight={600}>
+                            {offer.price} ₽
                         </Text>
-                    </Link>
-                    <Text size={14} weight={600}>
-                        {offer.price} ₽
-                    </Text>
-                    {capacity !== 1 && (
-                        <Text size={10} weight={400} color="#303234A3">
-                            Оплатите товар, чтобы подтвердить участие.
-                        </Text>
-                    )}
-                </Column>
-                <Checkbox name="select" checked={selected} onChange={setSelected} />
+                        {capacity !== 1 && (
+                            <Text size={10} weight={400} color="#303234A3">
+                                Оплатите товар, чтобы подтвердить участие.
+                            </Text>
+                        )}
+                    </Column>
+                </Row>
+                <Checkbox name="select" checked={selected} onChange={toggleItemSelect} />
             </Row>
             <Row justifyContent="space-between">
                 <Counter count={count} />

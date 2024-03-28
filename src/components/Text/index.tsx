@@ -9,6 +9,7 @@ type Props = {
     decoration?: CSSProperties['textDecoration'];
     color?: CSSProperties['color'];
     marginRight?: CSSProperties['marginRight'];
+    wrap?: CSSProperties['textWrap'];
 };
 
 export const Text = (props: PropsWithChildren<Props>) => {
@@ -23,6 +24,7 @@ export const Text = (props: PropsWithChildren<Props>) => {
                 textDecoration: props.decoration,
                 color: props.color,
                 marginRight: props.marginRight,
+                textWrap: props.wrap,
             }}
         >
             {props.children}

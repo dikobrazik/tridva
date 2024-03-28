@@ -12,7 +12,7 @@ import {FooterButton} from './FooterButton';
 import css from './Layout.module.scss';
 import {ru} from 'date-fns/locale';
 import {setDefaultOptions} from 'date-fns';
-import AuthorizationProvider from './AuthorizationProvider';
+import AuthTokenProvider from './AuthorizationProvider';
 import {cookies} from 'next/headers';
 import axios from 'axios';
 
@@ -34,7 +34,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <html lang="en">
             <body className={inter.className}>
                 <StoreProvider>
-                    <AuthorizationProvider>
+                    <AuthTokenProvider>
                         <OffersListContextProvider>
                             <Column minWidth={360} height="100%">
                                 <Header />
@@ -54,7 +54,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                                 </Row>
                             </Column>
                         </OffersListContextProvider>
-                    </AuthorizationProvider>
+                    </AuthTokenProvider>
                 </StoreProvider>
             </body>
         </html>

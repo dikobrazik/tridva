@@ -1,5 +1,15 @@
-import {BasketItem} from '@/types/basket';
 import axios from 'axios';
 
-export const createAnonymousUser = (): Promise<{access_token: string}> =>
-    axios.post('auth/anonymous').then(response => response.data);
+type GetCodePayload = {phone: string};
+type CheckCodePayload = {phone: string; code: string};
+
+export type CheckTokenResponse = {isAnonymous: boolean};
+
+export const checkToken = (): Promise<CheckTokenResponse> =>
+    axios.post('auth/check').then(response => response.data);
+
+export const getCode = (payload: GetCodePayload): Promise<void> =>
+    axios.post('auth/get-code', payload).then(response => response.data);
+
+export const checkCode = (payload: CheckCodePayload): Promise<void> =>
+    axios.post('auth/check-code', payload).then(response => response.data);

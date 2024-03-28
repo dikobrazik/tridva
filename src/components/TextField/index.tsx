@@ -6,14 +6,21 @@ import css from './TextField.module.scss';
 type Props = {
     size?: 's' | 'm';
     icon?: IconName;
-} & Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>;
+    onChange?: (value: string) => void;
+} & Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange'>;
 
 export const TextField = (props: Props) => {
-    const {icon, size = 's', ...inputProps} = props;
+    const {icon, size = 's', onChange = () => {}, ...inputProps} = props;
 
     return (
         <span className={css.container}>
-            <input {...inputProps} className={cn(css.input, css[`size-${size}`])} name="search" type="search" />
+            <input
+                {...inputProps}
+                onChange={e => onChange(e.target.value)}
+                className={cn(css.input, css[`size-${size}`])}
+                name="search"
+                type="search"
+            />
             {icon && <Icon className={css.icon} name={icon} />}
         </span>
     );

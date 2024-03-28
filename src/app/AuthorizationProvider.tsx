@@ -1,10 +1,13 @@
 'use client';
 import React, {useEffect} from 'react';
-import {createAnonymousUser} from '@/api';
+import {checkTokenAction} from '@/lib/features/user';
+import {useAppDispatch} from '@/lib/hooks';
 
-export default function AuthorizationProvider({children}: {children: React.ReactNode}) {
+export default function AuthTokenProvider({children}: {children: React.ReactNode}) {
+    const dispatch = useAppDispatch();
+
     useEffect(() => {
-        createAnonymousUser();
+        dispatch(checkTokenAction());
     }, []);
 
     return <>{children}</>;
