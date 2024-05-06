@@ -1,16 +1,17 @@
 'use client';
 
-import {createSingleGroup} from '@/api';
+import {putOfferToBasket} from '@/api';
 import {Button} from '@/components/Button';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
+import {CreateGroupDrawer} from './CreateGroupDrawer';
+import {Offer} from '@/types/offers';
 
-export default function Footer({offerId}: {offerId: number}) {
+export default function Footer({offer}: {offer: Offer}) {
     const onCreateSingleGroupClick = () => {
-        createSingleGroup({offerId});
+        putOfferToBasket({offerId: offer.id});
     };
-    const onCreateGroupClick = () => {};
 
     return (
         <Column background="#fff" padding="8px 16px" gap="2">
@@ -28,8 +29,6 @@ export default function Footer({offerId}: {offerId: number}) {
                                 </Text>
                             </Text>
                         </Column>
-
-                        {/* <Button size="m" icon="chevronRight" iconSize="xs" padding="6px" /> */}
                     </Row>
                 </Button>
             </Row>
@@ -40,20 +39,11 @@ export default function Footer({offerId}: {offerId: number}) {
                             Купить в розницу
                         </Text>
                         <Text size={12} weight={600} height={14}>
-                            2499 ₽
+                            {offer.price} ₽
                         </Text>
                     </Column>
                 </Button>
-                <Button size="m" flex="1" onClick={onCreateGroupClick}>
-                    <Column>
-                        <Text size={12} weight={600} height={14}>
-                            Создать группу
-                        </Text>
-                        <Text size={12} weight={600} height={14}>
-                            1499 ₽
-                        </Text>
-                    </Column>
-                </Button>
+                <CreateGroupDrawer offer={offer} />
             </Row>
         </Column>
     );

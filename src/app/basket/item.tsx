@@ -11,7 +11,12 @@ import Link from 'next/link';
 import {Button} from '@/components/Button';
 import {removeItemFromBasket} from '@/api';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
-import {basketActions, basketSelectors} from '@/lib/features/basket';
+import {
+    basketActions,
+    basketSelectors,
+    decreaseBasketItemCountAction,
+    increaseBasketItemCountAction,
+} from '@/lib/features/basket';
 import {useEffect} from 'react';
 
 type Props = {
@@ -21,12 +26,24 @@ type Props = {
     offer: Offer;
 };
 
-const Counter = ({count}: {count: number}) => {
+const Counter = ({id, count}: {id: number; count: number}) => {
+    const dispatch = useAppDispatch();
+
+    const increaseCount = () => {
+        dispatch(increaseBasketItemCountAction({id}));
+    };
+
+    const decreaseCount = () => {
+        dispatch(decreaseBasketItemCountAction({id}));
+    };
+
     return (
-        <Row className={css.counter} alignItems="center" gap="2">
-            <Button size="xs" variant="action-white" icon="minus" />
-            {count}
-            <Button size="xs" variant="action-white" icon="plus" />
+        <Row className={css.counter} alignItems="center" gap="1">
+            <Button onClick={decreaseCount} size="xs" variant="action-white" icon="minus" />
+            <Row width="30px" justifyContent="center">
+                {count}
+            </Row>
+            <Button onClick={increaseCount} size="xs" variant="action-white" icon="plus" />
         </Row>
     );
 };
@@ -71,7 +88,7 @@ export const BasketItem = ({id, capacity, offer, count}: Props) => {
                 <Checkbox name="select" checked={selected} onChange={toggleItemSelect} />
             </Row>
             <Row justifyContent="space-between">
-                <Counter count={count} />
+                <Counter id={id} count={count} />
                 <Button size="xs" icon="trash" variant="normal" onClick={onRemoveClick} />
             </Row>
         </Column>

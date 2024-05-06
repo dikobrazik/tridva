@@ -4,4 +4,5 @@ export type BasketItem = {
     id: number;
     capacity: number;
     offer: Offer;
+    count: number;
 };

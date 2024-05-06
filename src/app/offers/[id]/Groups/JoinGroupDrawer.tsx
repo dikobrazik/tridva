@@ -102,7 +102,7 @@ const GroupJoinedContent = () => {
                 </Text>
             </Column>
             <Button width="full">
-                <Link href="/cart">Перейти в корзину и оплатить</Link>
+                <Link href="/basket">Перейти в корзину и оплатить</Link>
             </Button>
         </Column>
     );

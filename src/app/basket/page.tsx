@@ -15,12 +15,14 @@ import {Loader} from '@/components/Loader';
 import {AuthorizationModal} from '../authorization/authorizationModal';
 import {userSelectors} from '@/lib/features/user';
 import Link from 'next/link';
+import {sum} from '@/shared/utils/sum';
 
 export default function Basket() {
     const dispatch = useAppDispatch();
     const isUserAuthorized = useAppSelector(userSelectors.selectIsAuthorized);
     const basketItems = useAppSelector(basketSelectors.selectAll);
     const areBasketItemsLoading = useAppSelector(basketSelectors.selectAreBasketItemsLoading);
+    const selectedBasketItems = useAppSelector(basketSelectors.selectSelectedBasketItems);
     const selectedItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
     const formattedSelectedItemsCost = selectedItemsCost.toFixed(2);
 
@@ -39,9 +41,9 @@ export default function Basket() {
                         <Loader />
                     </Row>
                 )}
-                {basketItems.map(({id, capacity, offer}) => (
+                {basketItems.map(({id, capacity, count, offer}) => (
                     <Block key={id}>
-                        <BasketItem id={id} capacity={capacity} count={1} offer={offer} />
+                        <BasketItem id={id} capacity={capacity} count={count} offer={offer} />
                     </Block>
                 ))}
                 {Boolean(itemsCount) && (
@@ -52,7 +54,7 @@ export default function Basket() {
                         <Column gap="2">
                             <Row justifyContent="space-between">
                                 <Text size={10} weight={400} color="#303234A3">
-                                    Товары ({basketItems.length})
+                                    Товары ({sum(selectedBasketItems.map(item => item.count))})
                                 </Text>
                                 <Text size={10} weight={400}>
                                     {selectedItemsCost} ₽
