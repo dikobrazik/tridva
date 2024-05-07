@@ -21,6 +21,7 @@ import {useEffect} from 'react';
 
 type Props = {
     id: number;
+    owner?: boolean;
     capacity: number;
     count: number;
     offer: Offer;
@@ -48,7 +49,7 @@ const Counter = ({id, count}: {id: number; count: number}) => {
     );
 };
 
-export const BasketItem = ({id, capacity, offer, count}: Props) => {
+export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
     const dispatch = useAppDispatch();
     const selected = useAppSelector(state => basketSelectors.selectIsBasketItemSelected(state, id));
 
@@ -70,18 +71,23 @@ export const BasketItem = ({id, capacity, offer, count}: Props) => {
                 <Row gap="3">
                     <Image src={getOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
                     <Column gap="2">
+                        <Text size={14} weight={600}>
+                            {offer.price} ₽
+                        </Text>
                         <Link href={`/offers/${offer.id}`}>
                             <Text size={12} weight={400} height={16}>
                                 {offer.title}
                             </Text>
                         </Link>
-                        <Text size={14} weight={600}>
-                            {offer.price} ₽
-                        </Text>
-                        {capacity !== 1 && (
-                            <Text size={10} weight={400} color="#303234A3">
-                                Оплатите товар, чтобы подтвердить участие.
-                            </Text>
+                        {capacity > 1 && (
+                            <Column gap="1">
+                                <Text size={12} weight={500} color="#F4B30C">
+                                    {owner ? 'Группа создана' : 'Группа собрана'}
+                                </Text>
+                                <Text size={10} weight={400} color="#303234A3">
+                                    Оплатите товар, чтобы подтвердить участие.
+                                </Text>
+                            </Column>
                         )}
                     </Column>
                 </Row>

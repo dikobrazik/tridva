@@ -1,4 +1,4 @@
-import {configureStore, createAsyncThunk} from '@reduxjs/toolkit';
+import {configureStore} from '@reduxjs/toolkit';
 import {offersReducer} from './features/offers';
 import {reviewsReducer} from './features/reviews';
 import {basketReducer} from './features/basket';
@@ -21,4 +21,4 @@ export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore['getState']>;
 export type AppDispatch = AppStore['dispatch'];
 
-export const createTypedAsyncThunk = createAsyncThunk.withTypes<{state: RootState; dispatch: AppDispatch}>();
+export type ThunkConfig = {state: RootState; dispatch: AppDispatch};

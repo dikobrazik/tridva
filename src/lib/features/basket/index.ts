@@ -1,12 +1,14 @@
 import {changeBasketItemCount, getBasketItems} from '@/api';
-import {RootState, createTypedAsyncThunk} from '@/lib/store';
+import {RootState, ThunkConfig} from '@/lib/store';
 import {sum} from '@/shared/utils/sum';
 import {BasketItem} from '@/types/basket';
-import {EntityState, createEntityAdapter, createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createEntityAdapter, createSelector, createSlice} from '@reduxjs/toolkit';
 
 const NAMESPACE = 'basket';
 
 const basketItemAdapter = createEntityAdapter<BasketItem>();
+
+export const createTypedAsyncThunk = createAsyncThunk.withTypes<ThunkConfig>();
 
 export const loadBasketItemsAction = createTypedAsyncThunk<BasketItem[]>(`${NAMESPACE}/load-items`, () => {
     return getBasketItems();
@@ -36,21 +38,25 @@ export const decreaseBasketItemCountAction = createTypedAsyncThunk<{id: number; 
     },
 );
 
-const selectSelectedBasketItems = (state: {
-    selectedBasketItems: Record<number, boolean>;
-    basketItems: EntityState<BasketItem, number>;
-}) =>
-    Object.entries(state.selectedBasketItems)
-        .filter(([, isSelected]) => isSelected)
-        .map(([id]) => basketItemAdapter.getSelectors().selectById(state.basketItems, Number(id)));
+const initialState = {
+    loading: true,
+    basketItems: basketItemAdapter.getInitialState(),
+    selectedBasketItems: {} as Record<number, boolean>,
+};
+
+type BasketState = typeof initialState;
+
+const selectSelectedBasketItems = createSelector(
+    [(state: BasketState) => state.selectedBasketItems, (state: BasketState) => state.basketItems],
+    (selectedBasketItems, basketItems) =>
+        Object.entries(selectedBasketItems)
+            .filter(([, isSelected]) => isSelected)
+            .map(([id]) => basketItemAdapter.getSelectors().selectById(basketItems, Number(id))),
+);
 
 const basketSlice = createSlice({
     name: NAMESPACE,
-    initialState: {
-        loading: true,
-        basketItems: basketItemAdapter.getInitialState(),
-        selectedBasketItems: {} as Record<number, boolean>,
-    },
+    initialState,
     reducers: {
         toggleBasketItem: (state, {payload}) => {
             state.selectedBasketItems[payload] = !state.selectedBasketItems[payload];
@@ -67,7 +73,10 @@ const basketSlice = createSlice({
     selectors: {
         selectAreBasketItemsLoading: state => state.loading,
         selectSelectedBasketItems,
-        selectSelectedBasketItemsList: state => Object.values(selectSelectedBasketItems(state)),
+        selectSelectedBasketItemsList: createSelector(
+            state => selectSelectedBasketItems(state),
+            selectedBasketItems => Object.values(selectedBasketItems),
+        ),
         selectIsBasketItemSelected: (state, itemId: number) => Boolean(state.selectedBasketItems[itemId]),
         selectIsAllBasketItemsSelected: state =>
             !state.loading && Object.values(state.selectedBasketItems).every(Boolean),

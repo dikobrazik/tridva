@@ -16,6 +16,7 @@ import {AuthorizationModal} from '../authorization/authorizationModal';
 import {userSelectors} from '@/lib/features/user';
 import Link from 'next/link';
 import {sum} from '@/shared/utils/sum';
+import css from './Page.module.scss';
 
 export default function Basket() {
     const dispatch = useAppDispatch();
@@ -41,9 +42,15 @@ export default function Basket() {
                         <Loader />
                     </Row>
                 )}
-                {basketItems.map(({id, capacity, count, offer}) => (
+                {basketItems.map(({id, group, count, offer}) => (
                     <Block key={id}>
-                        <BasketItem id={id} capacity={capacity} count={count} offer={offer} />
+                        <BasketItem
+                            id={id}
+                            capacity={group?.capacity ?? 0}
+                            owner={group?.owner}
+                            count={count}
+                            offer={offer}
+                        />
                     </Block>
                 ))}
                 {Boolean(itemsCount) && (
@@ -94,7 +101,7 @@ export default function Basket() {
                     </Column>
 
                     {isUserAuthorized ? (
-                        <Link href="/basket/checkout">
+                        <Link className={css.checkoutLink} href="/basket/checkout">
                             <Button width="full">Оформить</Button>
                         </Link>
                     ) : (

@@ -20,11 +20,11 @@ export default function CheckoutPage() {
     const selectedBasketItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
     const selectedBasketItemsCount = selectedBasketItemsList.length;
 
-    // useEffect(() => {
-    //     if (Object.values(selectedBasketItemsList).length === 0) {
-    //         redirect('/basket');
-    //     }
-    // }, []);
+    useEffect(() => {
+        if (Object.values(selectedBasketItemsList).length === 0) {
+            redirect('/basket');
+        }
+    }, []);
 
     return (
         <Column height="100%" justifyContent="space-between">

@@ -20,24 +20,24 @@ jobs:
 
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: 'Create env file'
               run: |
                   echo "${{ secrets.ENV }}" > .env
 
             - name: Login to Dockerhub
-              uses: docker/login-action@v2
+              uses: docker/login-action@v3
               with:
                   registry: cr.yandex
                   username: ${{ secrets.DOCKER_HUB_USERNAME }}
                   password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
             - name: Setup Buildx
-              uses: docker/setup-buildx-action@v2
+              uses: docker/setup-buildx-action@v3
 
             - name: Build Frontend
-              uses: docker/build-push-action@v3
+              uses: docker/build-push-action@v5
               with:
                   context: .
                   file: ./configs/deploy/Dockerfile
@@ -48,20 +48,20 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Login to Dockerhub
-              uses: docker/login-action@v2
+              uses: docker/login-action@v3
               with:
                   registry: cr.yandex
                   username: ${{ secrets.DOCKER_HUB_USERNAME }}
                   password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
             - name: Setup Buildx
-              uses: docker/setup-buildx-action@v2
+              uses: docker/setup-buildx-action@v3
 
             - name: Build Nginx for together composing
-              uses: docker/build-push-action@v3
+              uses: docker/build-push-action@v5
               with:
                   context: ./configs/nginx
                   file: ./configs/nginx/Dockerfile
@@ -73,7 +73,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v3
+              uses: actions/checkout@v4
 
             - name: Copy docker-compose
               uses: appleboy/scp-action@master
