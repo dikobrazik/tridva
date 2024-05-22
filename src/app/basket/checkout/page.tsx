@@ -1,5 +1,6 @@
 'use client';
 
+import {processOrder} from '@/api';
 import {Button} from '@/components/Button';
 import {Header} from '@/components/Header';
 import {Separator} from '@/components/Separator';
@@ -10,12 +11,15 @@ import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {basketSelectors} from '@/lib/features/basket';
+import {userSelectors} from '@/lib/features/user';
 import {useAppSelector} from '@/lib/hooks';
 import {pluralize} from '@/shared/utils/pluralize';
 import {redirect} from 'next/navigation';
-import {useEffect} from 'react';
+import {FormEventHandler, useEffect} from 'react';
 
 export default function CheckoutPage() {
+    const phone = useAppSelector(userSelectors.selectPhone);
+    const profile = useAppSelector(userSelectors.selectProfile);
     const selectedBasketItemsList = useAppSelector(basketSelectors.selectSelectedBasketItemsList);
     const selectedBasketItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
     const selectedBasketItemsCount = selectedBasketItemsList.length;
@@ -26,8 +30,26 @@ export default function CheckoutPage() {
         }
     }, []);
 
+    const onCheckoutClick: FormEventHandler<HTMLFormElement> = e => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target as HTMLFormElement);
+
+        formData.forEach(console.log);
+
+        processOrder({
+            userInfo: {
+                name: formData.get('name') ?? '',
+                email: formData.get('email') ?? '',
+                phone: formData.get('phone') ?? '',
+            },
+            pickupPointId: Number(formData.get('pickupPointId')) ?? -1,
+            basketItemsIds: selectedBasketItemsList.map(item => item.id),
+        });
+    };
+
     return (
-        <Column height="100%" justifyContent="space-between">
+        <Column as="form" onSubmit={onCheckoutClick} height="100%" justifyContent="space-between">
             <Column height="100%" overflowY="auto" gap="2">
                 <Header withBackArrow>Оформление заказа</Header>
 
@@ -45,9 +67,9 @@ export default function CheckoutPage() {
                         <Text size={12} weight={600}>
                             Укажите адрес доставки
                         </Text>
-                        <select disabled defaultValue={3}>
-                            <option>Казань</option>
-                            <option>Екатеринбург</option>
+                        <select name="city" defaultValue={3}>
+                            <option value={1}>Казань</option>
+                            <option value={2}>Екатеринбург</option>
                             <option value={3}>Самара</option>
                         </select>
                     </Column>
@@ -70,7 +92,7 @@ export default function CheckoutPage() {
                         </Column>
                     </Column>
 
-                    <select required>
+                    <select name="pickupPointId" required>
                         <option value={1}>Первый пункт выдачи</option>
                         <option value={2}>Второй пункт выдачи</option>
                         <option value={3}>Третий пункт выдачи</option>
@@ -87,10 +109,10 @@ export default function CheckoutPage() {
                     </Text>
 
                     <Column gap="2">
-                        <TextField placeholder="Имя*" />
-                        <TextField placeholder="Фамилия*" />
-                        <TextField placeholder="E-mail" />
-                        <TextField placeholder="Номер телефона" />
+                        <TextField placeholder="Имя*" name="name" value={profile?.name} />
+                        {/* <TextField placeholder="Фамилия*" value={} /> */}
+                        <TextField placeholder="E-mail" type="email" name="email" value={profile?.email} />
+                        <TextField placeholder="Номер телефона" name="phone" value={phone} />
                         <Text size={10} weight={400} color="#303234A3">
                             Пришлем статус заказа по e-mail и в SMS
                         </Text>
@@ -116,7 +138,7 @@ export default function CheckoutPage() {
                                 Скидка
                             </Text>
                             <Text size={10} weight={400}>
-                                -800 ₽
+                                -{selectedBasketItemsCost / 10} ₽
                             </Text>
                         </Row>
                         <Separator />
@@ -135,7 +157,9 @@ export default function CheckoutPage() {
             </Column>
 
             <Row background="#fff" padding="8px 16px">
-                <Button width="full">Перейти к оплате ({selectedBasketItemsCost} ₽)</Button>
+                <Button width="full" type="submit">
+                    Перейти к оплате ({selectedBasketItemsCost} ₽)
+                </Button>
             </Row>
         </Column>
     );

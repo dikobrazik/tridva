@@ -74,7 +74,7 @@ const basketSlice = createSlice({
         selectAreBasketItemsLoading: state => state.loading,
         selectSelectedBasketItems,
         selectSelectedBasketItemsList: createSelector(
-            state => selectSelectedBasketItems(state),
+            [state => selectSelectedBasketItems(state)],
             selectedBasketItems => Object.values(selectedBasketItems),
         ),
         selectIsBasketItemSelected: (state, itemId: number) => Boolean(state.selectedBasketItems[itemId]),

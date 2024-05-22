@@ -13,8 +13,6 @@ import css from './Layout.module.scss';
 import {ru} from 'date-fns/locale';
 import {setDefaultOptions} from 'date-fns';
 import AuthTokenProvider from './AuthorizationProvider';
-import {cookies} from 'next/headers';
-import axios from 'axios';
 
 setDefaultOptions({locale: ru});
 

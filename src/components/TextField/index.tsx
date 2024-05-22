@@ -15,11 +15,11 @@ export const TextField = (props: Props) => {
     return (
         <span className={css.container}>
             <input
-                {...inputProps}
-                onChange={e => onChange(e.target.value)}
-                className={cn(css.input, css[`size-${size}`])}
                 name="search"
                 type="search"
+                onChange={e => onChange(e.target.value)}
+                className={cn(css.input, css[`size-${size}`])}
+                {...inputProps}
             />
             {icon && <Icon className={css.icon} name={icon} />}
         </span>
