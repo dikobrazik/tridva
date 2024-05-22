@@ -105,7 +105,13 @@ export default function Basket() {
                             <Button width="full">Оформить</Button>
                         </Link>
                     ) : (
-                        <AuthorizationModal />
+                        <AuthorizationModal
+                            Toggler={({onClick}: {onClick: () => void}) => (
+                                <Button onClick={onClick} width="full">
+                                    Оформить
+                                </Button>
+                            )}
+                        />
                     )}
                 </Row>
             )}

@@ -6,9 +6,13 @@ import {Text} from '@/components/Text';
 import {TextField} from '@/components/TextField';
 import {Column} from '@/components/layout/Column';
 import {useToggler} from '@/hooks/useToggler';
-import {useState} from 'react';
+import React, {useState} from 'react';
 
-export const AuthorizationModal = () => {
+type Props = {
+    Toggler: (props: {onClick: () => void}) => React.JSX.Element;
+};
+
+export const AuthorizationModal = ({Toggler}: Props) => {
     const {isActive, toggle} = useToggler();
 
     const [phone, setPhone] = useState('');
@@ -30,9 +34,7 @@ export const AuthorizationModal = () => {
 
     return (
         <>
-            <Button onClick={toggle} width="full">
-                Оформить
-            </Button>
+            <Toggler onClick={toggle} />
             <Modal isOpen={isActive} onClose={toggle}>
                 <Column gap="6">
                     <Text size={16} weight={600}>

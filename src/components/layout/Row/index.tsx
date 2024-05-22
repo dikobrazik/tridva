@@ -7,7 +7,11 @@ export const Row = <As extends AsTags = 'div'>({children, ...props}: UnitProps<A
     const {otherProps, styles} = extractStyles(props);
 
     return (
-        <div {...otherProps} className={cn(css.row, otherProps.className)} style={styles}>
+        <div
+            {...otherProps}
+            className={cn(css.row, otherProps.className, {[css.clickable]: !!props.onClick})}
+            style={styles}
+        >
             {children}
         </div>
     );
