@@ -1,7 +1,8 @@
+'use client';
+
 import {PropsWithChildren, ReactNode} from 'react';
 import {Row} from '../layout/Row';
 import {Text} from '../Text';
-import Link from 'next/link';
 import {Icon} from '../Icon';
 import {useRouter} from 'next/navigation';
 import {Box} from '../layout/Box';

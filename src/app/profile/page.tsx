@@ -114,7 +114,7 @@ export default function ProfilePage() {
                     <Row gap="2">
                         <Box flex="1 0 0">
                             <LinkCard
-                                href="#"
+                                href="/profile/groups"
                                 icon="usersProfiles"
                                 title="Группы"
                                 description="3 группы. Отслеживайте статус сбора группы"
@@ -129,7 +129,7 @@ export default function ProfilePage() {
                             />
                         </Box>
                     </Row>
-                    <LinkCard href="#" icon="bag" title="Купленные товары" />
+                    <LinkCard href="/profile/orders-history" icon="bag" title="Купленные товары" />
                 </Column>
             </Block>
 
