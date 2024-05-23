@@ -11,7 +11,13 @@ import Link from 'next/link';
 import {Row} from '@/components/layout/Row';
 import {usePathname} from 'next/navigation';
 
-const pagesWithoutHeader = [/[/]offers[/]\d+[/]reviews/, /[/]basket/, /[/]profile[/]edit/, /[/]profile[/]orders/];
+const pagesWithoutHeader = [
+    /[/]offers[/]\d+[/]reviews/,
+    /[/]basket/,
+    /[/]profile[/]edit/,
+    /[/]profile[/]orders/,
+    /[/]profile[/]favorites/,
+];
 
 export const Header = () => {
     const pathname = usePathname();

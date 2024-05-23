@@ -12,6 +12,8 @@ import Link from 'next/link';
 import {useSelector} from 'react-redux';
 import {userSelectors} from '@/lib/features/user';
 import {Avatar} from '@/components/Avatar';
+import {Box} from '@/components/layout/Box';
+import css from './Page.module.scss';
 
 type LinkCardProps = {
     href: string;
@@ -22,7 +24,7 @@ type LinkCardProps = {
 };
 
 const LinkCard = (props: LinkCardProps) => (
-    <Link href={props.href}>
+    <Link href={props.href} className={css.linkCard}>
         <Column
             flex="1 0 0"
             borderRadius="3"
@@ -75,6 +77,7 @@ const LinkButton = (props: LinkCardProps) => (
 
 export default function ProfilePage() {
     const profile = useSelector(userSelectors.selectProfile);
+    const phone = useSelector(userSelectors.selectPhone);
 
     return (
         <Column gap="2">
@@ -90,7 +93,7 @@ export default function ProfilePage() {
                                         {profile?.name}
                                     </Text>
                                     <Text size={10} weight={400} color="#303234A3">
-                                        +7 999 888-77-66
+                                        {phone}
                                     </Text>
                                 </Column>
                             </Row>
@@ -109,22 +112,31 @@ export default function ProfilePage() {
                     />
 
                     <Row gap="2">
-                        <LinkCard
-                            href="#"
-                            icon="usersProfiles"
-                            title="Группы"
-                            description="3 группы. Отслеживайте статус сбора группы"
-                        />
-                        <LinkCard href="#" icon="heart" title="Избранное" description="66 товаров" />
+                        <Box flex="1 0 0">
+                            <LinkCard
+                                href="#"
+                                icon="usersProfiles"
+                                title="Группы"
+                                description="3 группы. Отслеживайте статус сбора группы"
+                            />
+                        </Box>
+                        <Box flex="1 0 0">
+                            <LinkCard
+                                href="/profile/favorites"
+                                icon="heart"
+                                title="Избранное"
+                                description="0 товаров"
+                            />
+                        </Box>
                     </Row>
                     <LinkCard href="#" icon="bag" title="Купленные товары" />
                 </Column>
             </Block>
 
-            <Block gap="2">
+            {/* <Block gap="2">
                 <LinkButton href="#" icon="marker" title="Город" description="Екатеринбург" />
                 <LinkButton href="#" icon="map" title="Пункты выдачи на карте" />
-            </Block>
+            </Block> */}
 
             <Block gap="2">
                 <LinkButton href="#" icon="help" title="Справка" />

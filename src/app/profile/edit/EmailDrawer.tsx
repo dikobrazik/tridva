@@ -27,8 +27,10 @@ export const EmailDrawer = ({isOpen, toggle}: Props) => {
     }, [profile.email]);
 
     const onSaveClick = () => {
-        dispatch(updateProfileEmailAction(value)).then(() => {
-            toggle();
+        dispatch(updateProfileEmailAction(value)).then(({type}) => {
+            if (type === updateProfileEmailAction.fulfilled.type) {
+                toggle();
+            }
         });
     };
 

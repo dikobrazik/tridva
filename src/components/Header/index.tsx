@@ -3,6 +3,8 @@ import {Row} from '../layout/Row';
 import {Text} from '../Text';
 import Link from 'next/link';
 import {Icon} from '../Icon';
+import {useRouter} from 'next/navigation';
+import {Box} from '../layout/Box';
 
 type Props = PropsWithChildren<{
     left?: ReactNode;
@@ -11,12 +13,14 @@ type Props = PropsWithChildren<{
 }>;
 
 export const Header = (props: Props) => {
+    const router = useRouter();
+
     const {left, right, children, withBackArrow} = props;
 
     const leftDefaultComponent = withBackArrow ? (
-        <Link href="..">
+        <Box onClick={() => router.back()}>
             <Icon size="m" name="chevronLeft" />
-        </Link>
+        </Box>
     ) : (
         <span />
     );

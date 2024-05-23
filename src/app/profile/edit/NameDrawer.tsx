@@ -27,8 +27,10 @@ export const NameDrawer = ({isOpen, toggle}: Props) => {
     }, [profile.name]);
 
     const onSaveClick = () => {
-        dispatch(updateProfileNameAction(value)).then(() => {
-            toggle();
+        dispatch(updateProfileNameAction(value)).then(({type}) => {
+            if (type === updateProfileNameAction.fulfilled.type) {
+                toggle();
+            }
         });
     };
 

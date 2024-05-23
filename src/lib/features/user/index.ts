@@ -13,11 +13,13 @@ const NAMESPACE = 'user';
 
 export const checkTokenAction = createAsyncThunk<CheckTokenResponse>(`${NAMESPACE}/check`, () => checkToken());
 
-export const updateProfileNameAction = createAsyncThunk<void, string>(`${NAMESPACE}/update-user-name`, (name: string) =>
-    updateProfileName({name}),
+export const updateProfileNameAction = createAsyncThunk<void, string>(
+    `${NAMESPACE}/update-user-name`,
+    (name: string, {rejectWithValue}) => updateProfileName({name}).catch(() => rejectWithValue(0)),
 );
-export const updateProfileEmailAction = createAsyncThunk<void, string>(`${NAMESPACE}/update-email`, (email: string) =>
-    updateProfileEmail({email}),
+export const updateProfileEmailAction = createAsyncThunk<void, string>(
+    `${NAMESPACE}/update-email`,
+    (email: string, {rejectWithValue}) => updateProfileEmail({email}).catch(() => rejectWithValue(0)),
 );
 
 export const checkCodeAction = createAsyncThunk<Profile, CheckCodePayload>(`${NAMESPACE}/check-code`, payload =>

@@ -9,13 +9,7 @@ type UpdateEmailPayload = {
 };
 
 export const updateProfileName = (payload: UpdateNamePayload): Promise<void> =>
-    axios
-        .patch(`profile`, payload)
-        .then(() => undefined)
-        .catch(() => undefined);
+    axios.patch(`profile`, payload).then(() => undefined);
 
 export const updateProfileEmail = (payload: UpdateEmailPayload): Promise<void> =>
-    axios
-        .patch(`profile`, payload)
-        .then(() => undefined)
-        .catch(() => undefined);
+    axios.patch(`profile`, payload).then(() => undefined);
