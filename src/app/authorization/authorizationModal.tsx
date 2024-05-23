@@ -1,4 +1,4 @@
-import {checkCode, getCode} from '@/api';
+import {getCode} from '@/api';
 import {Button} from '@/components/Button';
 import {Label} from '@/components/Label';
 import {Modal} from '@/components/Modal';
@@ -6,18 +6,27 @@ import {Text} from '@/components/Text';
 import {TextField} from '@/components/TextField';
 import {Column} from '@/components/layout/Column';
 import {useToggler} from '@/hooks/useToggler';
-import React, {useState} from 'react';
+import {checkCodeAction, userSelectors} from '@/lib/features/user';
+import {useAppDispatch, useAppSelector} from '@/lib/hooks';
+import React, {useEffect, useState} from 'react';
 
 type Props = {
     Toggler: (props: {onClick: () => void}) => React.JSX.Element;
 };
 
 export const AuthorizationModal = ({Toggler}: Props) => {
+    const dispatch = useAppDispatch();
     const {isActive, toggle} = useToggler();
 
-    const [phone, setPhone] = useState('');
+    const initialPhone = useAppSelector(userSelectors.selectPhone);
+
+    const [phone, setPhone] = useState(initialPhone ?? '');
     const [code, setCode] = useState('');
     const [isCodeSent, setIsCodeSent] = useState(false);
+
+    useEffect(() => {
+        setPhone(initialPhone ?? '');
+    }, [initialPhone]);
 
     const onSendCodeClick = async () => {
         await getCode({phone});
@@ -26,10 +35,10 @@ export const AuthorizationModal = ({Toggler}: Props) => {
     };
 
     const onCheckCodeClick = async () => {
-        await checkCode({phone, code});
-
-        setIsCodeSent(false);
-        toggle();
+        dispatch(checkCodeAction({phone, code})).then(() => {
+            setIsCodeSent(false);
+            toggle();
+        });
     };
 
     return (

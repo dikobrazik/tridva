@@ -4,7 +4,6 @@ import {Block} from '@/components/layout/Block';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import Image from 'next/image';
-import emptyAvatar from './EmptyAvatar.svg';
 import {Text} from '@/components/Text';
 import {Icon, IconName} from '@/components/Icon';
 import telegramIcon from './telegram.svg';

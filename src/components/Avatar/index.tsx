@@ -29,13 +29,13 @@ const avatars = [
 ];
 
 type Props = {
-    id: number;
+    id?: number;
 };
 
 export const Avatar = (props: Props) => {
     return (
         <Box>
-            <Image height={76} width={76} alt="avatar" src={avatars[props.id % (avatars.length - 1)]} />
+            <Image height={76} width={76} alt="avatar" src={avatars[(props.id ?? 0) % (avatars.length - 1)]} />
         </Box>
     );
 };

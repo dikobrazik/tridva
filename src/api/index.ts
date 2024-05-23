@@ -7,6 +7,7 @@ export * from './reviews';
 export * from './basket';
 export * from './groups';
 export * from './orders';
+export * from './profile';
 
 axios.defaults.withCredentials = true;
 axios.defaults.baseURL = `${process.env.NEXT_PUBLIC_HOST}/api`;
