@@ -38,10 +38,12 @@ export const decreaseBasketItemCountAction = createTypedAsyncThunk<{id: number; 
     },
 );
 
+type SelectedBasketItems = Record<number, boolean>;
+
 const initialState = {
     loading: true,
     basketItems: basketItemAdapter.getInitialState(),
-    selectedBasketItems: {} as Record<number, boolean>,
+    selectedBasketItems: {} as SelectedBasketItems,
 };
 
 type BasketState = typeof initialState;
@@ -79,7 +81,9 @@ const basketSlice = createSlice({
         ),
         selectIsBasketItemSelected: (state, itemId: number) => Boolean(state.selectedBasketItems[itemId]),
         selectIsAllBasketItemsSelected: state =>
-            !state.loading && Object.values(state.selectedBasketItems).every(Boolean),
+            !state.loading &&
+            Boolean(Object.values(state.selectedBasketItems).length) &&
+            Object.values(state.selectedBasketItems).every(Boolean),
         selectSelectedOffersCost: (state): number =>
             sum(
                 Object.entries(state.selectedBasketItems)
@@ -101,6 +105,10 @@ const basketSlice = createSlice({
                 state.loading = false;
 
                 basketItemAdapter.upsertMany(state.basketItems, payload);
+                state.selectedBasketItems = payload.reduce<SelectedBasketItems>((selectedBasketItems, basketItem) => {
+                    selectedBasketItems[basketItem.id] = true;
+                    return selectedBasketItems;
+                }, {});
             })
             .addCase(loadBasketItemsAction.rejected, state => {
                 state.loading = false;

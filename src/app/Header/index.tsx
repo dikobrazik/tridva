@@ -19,6 +19,7 @@ const pagesWithoutHeader = [
     /[/]profile[/]favorites/,
     /[/]profile[/]groups/,
     /[/]profile[/]orders-history/,
+    /[/]basket[/]checkout[/]pickup-points/,
 ];
 
 export const Header = () => {

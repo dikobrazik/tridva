@@ -14,6 +14,7 @@ import {basketSelectors} from '@/lib/features/basket';
 import {userSelectors} from '@/lib/features/user';
 import {useAppSelector} from '@/lib/hooks';
 import {pluralize} from '@/shared/utils/pluralize';
+import Link from 'next/link';
 import {redirect} from 'next/navigation';
 import {FormEventHandler, useEffect} from 'react';
 
@@ -39,9 +40,9 @@ export default function CheckoutPage() {
 
         processOrder({
             userInfo: {
-                name: formData.get('name') ?? '',
-                email: formData.get('email') ?? '',
-                phone: formData.get('phone') ?? '',
+                name: String(formData.get('name') ?? ''),
+                email: String(formData.get('email') ?? ''),
+                phone: String(formData.get('phone') ?? ''),
             },
             pickupPointId: Number(formData.get('pickupPointId')) ?? -1,
             basketItemsIds: selectedBasketItemsList.map(item => item.id),
@@ -92,15 +93,11 @@ export default function CheckoutPage() {
                         </Column>
                     </Column>
 
-                    <select name="pickupPointId" required>
-                        <option value={1}>Первый пункт выдачи</option>
-                        <option value={2}>Второй пункт выдачи</option>
-                        <option value={3}>Третий пункт выдачи</option>
-                    </select>
-
-                    {/* <Button variant="outline" icon="plus">
-                        Добавить пункт выдачи
-                    </Button> */}
+                    <Link href="/basket/checkout/pickup-points">
+                        <Button variant="outline" icon="plus">
+                            Выбрать пункт выдачи
+                        </Button>
+                    </Link>
                 </Block>
 
                 <Block gap="4">
