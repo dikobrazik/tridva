@@ -11,6 +11,7 @@ import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {basketSelectors} from '@/lib/features/basket';
+import {checkoutSelectors} from '@/lib/features/checkout';
 import {userSelectors} from '@/lib/features/user';
 import {useAppSelector} from '@/lib/hooks';
 import {pluralize} from '@/shared/utils/pluralize';
@@ -19,6 +20,8 @@ import {redirect} from 'next/navigation';
 import {FormEventHandler, useEffect} from 'react';
 
 export default function CheckoutPage() {
+    const selectedPickupPoint = useAppSelector(checkoutSelectors.selectSelectedPickupPoint);
+
     const phone = useAppSelector(userSelectors.selectPhone);
     const profile = useAppSelector(userSelectors.selectProfile);
     const selectedBasketItemsList = useAppSelector(basketSelectors.selectSelectedBasketItemsList);
@@ -44,7 +47,7 @@ export default function CheckoutPage() {
                 email: String(formData.get('email') ?? ''),
                 phone: String(formData.get('phone') ?? ''),
             },
-            pickupPointId: Number(formData.get('pickupPointId')) ?? -1,
+            pickupPointId: selectedPickupPoint?.id,
             basketItemsIds: selectedBasketItemsList.map(item => item.id),
         });
     };
@@ -93,9 +96,20 @@ export default function CheckoutPage() {
                         </Column>
                     </Column>
 
+                    {selectedPickupPoint && (
+                        <Column gap={1}>
+                            <Text weight={400} size={12}>
+                                Пункт выдачи г. Самара, {selectedPickupPoint.address}
+                            </Text>
+                            <Text weight={400} size={10} color="#303234A3">
+                                Хранение 5 дней, ежедневно с 10:00 до 21-00
+                            </Text>
+                        </Column>
+                    )}
+
                     <Link href="/basket/checkout/pickup-points">
                         <Button variant="outline" icon="plus">
-                            Выбрать пункт выдачи
+                            {selectedPickupPoint ? 'Изменить' : 'Выбрать'} пункт выдачи
                         </Button>
                     </Link>
                 </Block>

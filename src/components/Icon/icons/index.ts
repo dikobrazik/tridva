@@ -20,6 +20,9 @@ export {default as map} from './map.svg';
 export {default as messageChat} from './message-chat.svg';
 export {default as camera} from './camera.svg';
 export {default as plusCircle} from './plus-circle.svg';
+export {default as informationCircle} from './information-circle.svg';
+export {default as phone} from './phone.svg';
+export {default as calendar} from './calendar.svg';
 
 export {default as home} from './home.svg';
 export {default as homeActive} from './home-active.svg';

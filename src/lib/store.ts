@@ -3,6 +3,7 @@ import {offersReducer} from './features/offers';
 import {reviewsReducer} from './features/reviews';
 import {basketReducer} from './features/basket';
 import {userReducer} from './features/user';
+import {checkoutReducer} from './features/checkout';
 
 export const makeStore = () => {
     return configureStore({
@@ -11,6 +12,7 @@ export const makeStore = () => {
             offers: offersReducer,
             reviews: reviewsReducer,
             user: userReducer,
+            checkout: checkoutReducer,
         },
     });
 };

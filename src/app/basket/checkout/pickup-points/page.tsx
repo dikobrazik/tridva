@@ -2,66 +2,72 @@
 
 import {Header} from '@/components/Header';
 import {Column} from '@/components/layout/Column';
+import {checkoutActions, loadPickupPointsAction} from '@/lib/features/checkout';
+import {useAppDispatch} from '@/lib/hooks';
+import {PickupPoint} from '@/types/geo';
 import * as ol from 'ol';
 import {Circle} from 'ol/geom';
+import {Select, defaults} from 'ol/interaction';
 import TileLayer from 'ol/layer/Tile';
 import VectorLayer from 'ol/layer/Vector';
+import 'ol/ol.css';
 import {fromLonLat, toLonLat} from 'ol/proj';
 import {default as OSM} from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
-import Style from 'ol/style/Style';
-import {useEffect, useRef} from 'react';
-import {defaults} from 'ol/interaction';
-import 'ol/ol.css';
+import {useEffect, useRef, useState} from 'react';
+import {pickupPointCircleSelectStyle, pickupPointCircleStyle} from './helpers';
+import {click} from 'ol/events/condition';
+import {Drawer} from '@/components/Drawer';
+import {Text} from '@/components/Text';
+import {Row} from '@/components/layout/Row';
+import {Icon} from '@/components/Icon';
+import {Button} from '@/components/Button';
+import {useRouter} from 'next/navigation';
 
 export default function PickupPointsPage() {
+    const dispatch = useAppDispatch();
+    const router = useRouter();
+
+    const [selectedPickupPoint, setSelectedPickupPoint] = useState<PickupPoint>();
+
     const ref = useRef<HTMLDivElement>(null);
     const mapRef = useRef<ol.Map | null>(null);
+    const selectClickRef = useRef<Select | null>(null);
 
-    useEffect(() => {
-        if (ref.current && !mapRef.current) {
-            const circleGeometry = new Circle(fromLonLat([50.20626, 53.22545]), 50);
+    const onPickupPointsLoaded = (pickupPoints: PickupPoint[]) => {
+        const features = pickupPoints.map(pickupPoint => {
+            const circleGeometry = new Circle(
+                fromLonLat([Number(pickupPoint.longitude), Number(pickupPoint.latitude)]),
+                150,
+            );
 
             const circleFeature = new ol.Feature({
                 geometry: circleGeometry,
+                pickupPoint,
             });
 
-            circleFeature.setStyle(
-                new Style({
-                    renderer(coordinates, state) {
-                        const [[x, y], [x1, y1]] = coordinates;
-                        const ctx = state.context;
-                        const dx = x1 - x;
-                        const dy = y1 - y;
-                        const radius = Math.sqrt(dx * dx + dy * dy);
+            circleFeature.setStyle(pickupPointCircleStyle);
 
-                        const innerRadius = 0;
-                        const outerRadius = radius * 1.4;
+            return circleFeature;
+        });
 
-                        // const gradient = ctx.createRadialGradient(x, y, innerRadius, x, y, outerRadius);
-                        // gradient.addColorStop(0, 'rgba(255,0,0,0)');
-                        // gradient.addColorStop(0.6, 'rgba(255,0,0,0.2)');
-                        // gradient.addColorStop(1, 'rgba(255,0,0,0.8)');
-                        ctx.beginPath();
-                        ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
-                        ctx.fillStyle = 'rgba(255,0,0,1)';
-                        ctx.fill();
-
-                        ctx.beginPath();
-                        ctx.arc(x, y, radius * 0.9, 0, 2 * Math.PI, true);
-                        ctx.arc(x, y, radius * 0.8, 0, 2 * Math.PI, true);
-                        ctx.fillStyle = 'rgba(255,255,255,1)';
-                        ctx.fill();
-
-                        ctx.beginPath();
-                        ctx.arc(x, y, radius * 0.7, 0, 2 * Math.PI, true);
-                        ctx.arc(x, y, radius * 0.6, 0, 2 * Math.PI, true);
-                        ctx.fillStyle = 'rgba(255,0,0,1)';
-                        ctx.fill();
-                    },
+        mapRef.current?.addLayer(
+            new VectorLayer({
+                source: new VectorSource({
+                    features,
                 }),
-            );
+            }),
+        );
+    };
 
+    useEffect(() => {
+        dispatch(loadPickupPointsAction()).then(({payload, meta}) => {
+            if (meta.requestStatus === 'fulfilled') {
+                onPickupPointsLoaded(payload);
+            }
+        });
+
+        if (ref.current && !mapRef.current) {
             mapRef.current = new ol.Map({
                 target: ref.current,
                 interactions: defaults({dragPan: true, mouseWheelZoom: true}),
@@ -69,16 +75,10 @@ export default function PickupPointsPage() {
                     new TileLayer({
                         source: new OSM(),
                     }),
-                    new VectorLayer({
-                        source: new VectorSource({
-                            features: [circleFeature],
-                        }),
-                    }),
                 ],
                 view: new ol.View({
                     center: fromLonLat([50.20626, 53.22545]),
-                    zoom: 18,
-                    // zoom: 11,
+                    zoom: 11,
                 }),
             });
 
@@ -90,20 +90,89 @@ export default function PickupPointsPage() {
             let currZoom = mapRef.current.getView().getZoom();
 
             mapRef.current.on('moveend', function () {
-                const newZoom = mapRef.current.getView().getZoom();
+                const newZoom = mapRef.current?.getView().getZoom();
                 if (currZoom != newZoom) {
                     console.log('zoom end, new zoom: ' + newZoom);
                     currZoom = newZoom;
                 }
             });
+
+            selectClickRef.current = new Select({
+                condition: click,
+                style: pickupPointCircleSelectStyle,
+                toggleCondition: function (mbe) {
+                    return mbe.type == 'click';
+                },
+            });
+
+            mapRef.current.addInteraction(selectClickRef.current);
+
+            selectClickRef.current.on('select', function (e) {
+                if (e.selected.length) {
+                    if (selectClickRef.current?.getFeatures().getLength() > 1) {
+                        selectClickRef.current?.getFeatures().removeAt(0);
+                    }
+                    setSelectedPickupPoint(e.selected[0].get('pickupPoint'));
+                } else {
+                    setSelectedPickupPoint(undefined);
+                }
+            });
         }
     }, []);
+
+    const onSelect = () => {
+        dispatch(checkoutActions.setSelectedPickupPointId(selectedPickupPoint.id));
+        router.back();
+    };
 
     return (
         <Column>
             <Header withBackArrow>Пункты выдачи</Header>
 
-            <div ref={ref} style={{width: '100%', height: '550px'}}></div>
+            <div ref={ref} style={{width: '100%', height: '450px'}}></div>
+
+            <Drawer
+                isOpen={Boolean(selectedPickupPoint?.id)}
+                onClose={() => {
+                    setSelectedPickupPoint(undefined);
+                    selectClickRef.current?.getFeatures().clear();
+                }}
+                withoutBlackout
+            >
+                <Column gap={6}>
+                    <Column gap={2}>
+                        <Text weight={600} size={16}>
+                            {selectedPickupPoint?.address}
+                        </Text>
+                        <Text weight={400} size={10} color="#303234A3">
+                            Пункт выдачи
+                        </Text>
+                    </Column>
+
+                    <Row gap={1} alignItems="center">
+                        <Icon name="informationCircle" />
+                        <Text weight={500} size={10} color="#4FDE38">
+                            Доставим бесплатно
+                        </Text>
+                    </Row>
+
+                    <Row gap={1}>
+                        <Icon name="phone" />
+                        <Text weight={500} size={10}>
+                            {selectedPickupPoint?.phone}
+                        </Text>
+                    </Row>
+
+                    <Row gap={1}>
+                        <Icon name="calendar" />
+                        <Text weight={500} size={10}>
+                            Срок хранения заказа 5 дней
+                        </Text>
+                    </Row>
+
+                    <Button onClick={onSelect}>Забрать отсюда</Button>
+                </Column>
+            </Drawer>
         </Column>
     );
 }
