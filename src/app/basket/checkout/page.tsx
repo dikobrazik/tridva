@@ -10,16 +10,17 @@ import {Block} from '@/components/layout/Block';
 import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
-import {basketSelectors} from '@/lib/features/basket';
+import {basketSelectors, loadBasketItemsAction} from '@/lib/features/basket';
 import {checkoutSelectors} from '@/lib/features/checkout';
 import {userSelectors} from '@/lib/features/user';
-import {useAppSelector} from '@/lib/hooks';
+import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 import {pluralize} from '@/shared/utils/pluralize';
 import Link from 'next/link';
 import {redirect} from 'next/navigation';
 import {FormEventHandler, useEffect} from 'react';
 
 export default function CheckoutPage() {
+    const dispatch = useAppDispatch();
     const selectedPickupPoint = useAppSelector(checkoutSelectors.selectSelectedPickupPoint);
 
     const phone = useAppSelector(userSelectors.selectPhone);
@@ -29,6 +30,8 @@ export default function CheckoutPage() {
     const selectedBasketItemsCount = selectedBasketItemsList.length;
 
     useEffect(() => {
+        dispatch(loadBasketItemsAction());
+
         if (Object.values(selectedBasketItemsList).length === 0) {
             redirect('/basket');
         }

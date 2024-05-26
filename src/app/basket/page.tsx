@@ -17,6 +17,8 @@ import {userSelectors} from '@/lib/features/user';
 import Link from 'next/link';
 import {sum} from '@/shared/utils/sum';
 import css from './Page.module.scss';
+import {checkoutActions} from '@/lib/features/checkout';
+import {SELECTED_BASKET_ITEMS_FOR_CHECKOUT} from '@/lib/constants';
 
 export default function Basket() {
     const dispatch = useAppDispatch();
@@ -30,6 +32,12 @@ export default function Basket() {
     useEffect(() => {
         dispatch(loadBasketItemsAction());
     }, []);
+
+    const onCheckoutClick = () => {
+        const selectedBasketItemsIds = selectedBasketItems.map(({id}) => id);
+        dispatch(checkoutActions.setSelectedBasketItems(selectedBasketItemsIds));
+        localStorage.setItem(SELECTED_BASKET_ITEMS_FOR_CHECKOUT, JSON.stringify(selectedBasketItemsIds));
+    };
 
     const itemsCount = basketItems.length;
 
@@ -101,7 +109,7 @@ export default function Basket() {
                     </Column>
 
                     {isUserAuthorized ? (
-                        <Link className={css.checkoutLink} href="/basket/checkout">
+                        <Link className={css.checkoutLink} href="/basket/checkout" onClick={onCheckoutClick}>
                             <Button width="full">Оформить</Button>
                         </Link>
                     ) : (

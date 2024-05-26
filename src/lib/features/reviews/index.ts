@@ -16,7 +16,7 @@ export const loadReviewsAction = createAsyncThunk<Review[], {offerId: number}, {
 
 const EMPTY_ARRAY = [] as number[];
 
-const reviewsSlice = createSlice({
+export const reviewsSlice = createSlice({
     name: NAMESPACE,
     initialState: reviewsAdapter.getInitialState({
         page: 1,

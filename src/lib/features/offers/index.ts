@@ -20,7 +20,7 @@ export const searchOffersAction = createAsyncThunk<Offer[], {search: string}, {s
     payload => loadOffers(payload),
 );
 
-const offersSlice = createSlice({
+export const offersSlice = createSlice({
     name: NAMESPACE,
     initialState: offerAdapter.getInitialState({
         page: 2,

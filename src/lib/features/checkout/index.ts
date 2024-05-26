@@ -15,21 +15,26 @@ const initialState = {
     pickupPoints: pickupPointAdapter.getInitialState(),
 
     selectedPickupPointId: undefined as number | undefined,
+    selectedBasketItems: [] as number[],
 };
 
 type CheckoutState = typeof initialState;
 
 const pickupPointAdapterSelectors = pickupPointAdapter.getSelectors((state: CheckoutState) => state.pickupPoints);
 
-const checkoutSlice = createSlice({
+export const checkoutSlice = createSlice({
     name: NAMESPACE,
     initialState,
     reducers: {
         setSelectedPickupPointId: (state, {payload}: PayloadAction<number>) => {
             state.selectedPickupPointId = payload;
         },
+        setSelectedBasketItems: (state, {payload}: PayloadAction<number[]>) => {
+            state.selectedBasketItems = payload;
+        },
     },
     selectors: {
+        selectSelectedBasketItems: state => state.selectedBasketItems,
         selectArePickupPointsLoading: state => state.arePickupPointsLoading,
         selectPickupPoints: state => pickupPointAdapterSelectors.selectAll(state),
         selectSelectedPickupPoint: state =>

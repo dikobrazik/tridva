@@ -56,7 +56,7 @@ const selectSelectedBasketItems = createSelector(
             .map(([id]) => basketItemAdapter.getSelectors().selectById(basketItems, Number(id))),
 );
 
-const basketSlice = createSlice({
+export const basketSlice = createSlice({
     name: NAMESPACE,
     initialState,
     reducers: {
@@ -74,6 +74,8 @@ const basketSlice = createSlice({
     },
     selectors: {
         selectAreBasketItemsLoading: state => state.loading,
+        selectBasketItemsByIds: (state, itemsIds: number[]) =>
+            itemsIds.map(itemId => basketItemAdapter.getSelectors().selectById(state.basketItems, itemId)),
         selectSelectedBasketItems,
         selectSelectedBasketItemsList: createSelector(
             [state => selectSelectedBasketItems(state)],
@@ -90,7 +92,10 @@ const basketSlice = createSlice({
                     .filter(([, isSelected]) => isSelected)
                     .map(([id]) => {
                         const item = basketItemAdapter.getSelectors().selectById(state.basketItems, Number(id));
-                        return Number(item.offer.price) * item.count;
+                        if (item) {
+                            return Number(item.offer.price) * item.count;
+                        }
+                        return 0;
                     }),
             ),
     },
