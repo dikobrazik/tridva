@@ -5,6 +5,10 @@ services:
         image: cr.yandex/crpkv40doqi2snrfmq1e/tridva-nginx-front
         ports:
             - '80:80'
+            - '443:443'
+        volumes:
+            - /etc/ssl/certs/nginx-selfsigned.crt:/etc/ssl/certs/nginx-selfsigned.crt
+            - /etc/ssl/private/nginx-selfsigned.key:/etc/ssl/private/nginx-selfsigned.key
         restart: always
         depends_on:
             - frontend
@@ -13,4 +17,8 @@ services:
         image: cr.yandex/crpkv40doqi2snrfmq1e/tridva-front
         volumes:
             - /usr/app/.next/cache/images:/var/tmp/next-images
+        restart: always
+
+    backend:
+        image: cr.yandex/crpkv40doqi2snrfmq1e/tridva-api
         restart: always
