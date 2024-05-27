@@ -7,7 +7,7 @@ import {checkoutReducer, checkoutSlice} from './features/checkout';
 import {SELECTED_BASKET_ITEMS_FOR_CHECKOUT} from './constants';
 
 const reHydrateStore = () => {
-    if (localStorage.getItem(SELECTED_BASKET_ITEMS_FOR_CHECKOUT) !== null) {
+    if (typeof window !== 'undefined' && localStorage.getItem(SELECTED_BASKET_ITEMS_FOR_CHECKOUT) !== null) {
         const selectedBasketItemsIds = JSON.parse(
             localStorage.getItem(SELECTED_BASKET_ITEMS_FOR_CHECKOUT) ?? '[]',
         ) as number[];
