@@ -11,7 +11,7 @@ export * from './profile';
 export * from './geo';
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = `${process.env.NEXT_PUBLIC_HOST}/api`;
+axios.defaults.baseURL = `/api`;
 
 axios.interceptors.request.use(function (config) {
     // Говнохак, пока не посадим сервер и клиент на один домен
