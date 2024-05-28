@@ -33,11 +33,15 @@ export const offersSlice = createSlice({
         incrementPage: state => {
             state.page += 1;
         },
+        resetFoundOffersId: state => {
+            state.foundOffersIds = [];
+        },
     },
     selectors: {
         selectIsLoading: state => state.loading,
         selectCurrentPage: state => state.page,
         selectLoadedOffersIds: state => state.loadedOffersIds,
+        selectFoundOffersIds: state => state.foundOffersIds,
         selectOffersIdsByCategoryIds: state => state.offersIdsByCategoryIds,
     },
     extraReducers: builder => {
@@ -68,8 +72,7 @@ export const offersSlice = createSlice({
             })
             .addCase(searchOffersAction.fulfilled, (state, {payload}) => {
                 state.loading = false;
-                state.foundOffersIds.push(...payload.map(offerAdapter.selectId));
-                state.foundOffersIds = uniq(state.foundOffersIds);
+                state.foundOffersIds = payload.map(offerAdapter.selectId);
 
                 offerAdapter.addMany(state, payload);
             })
@@ -94,6 +97,10 @@ export const offersSelectors = {
     ...offerAdapterSelectors,
     selectLoadedOffers: createSelector(
         [offersSliceSelectors.selectLoadedOffersIds, (state: RootState) => state],
+        (ids, state) => ids.map(id => offerAdapterSelectors.selectById(state, id)),
+    ),
+    selectFoundOffers: createSelector(
+        [offersSliceSelectors.selectFoundOffersIds, (state: RootState) => state],
         (ids, state) => ids.map(id => offerAdapterSelectors.selectById(state, id)),
     ),
     selectCategoryOffers: createSelector(

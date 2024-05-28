@@ -7,8 +7,18 @@ export const useToggler = (initialValue: boolean = false) => {
         setIsActive(active => !active);
     }, []);
 
+    const toggleOn = useCallback(() => {
+        setIsActive(true);
+    }, []);
+
+    const toggleOff = useCallback(() => {
+        setIsActive(false);
+    }, []);
+
     return {
         isActive,
         toggle,
+        toggleOn,
+        toggleOff,
     };
 };

@@ -15,3 +15,7 @@
     -webkit-animation: fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     animation: fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
+
+.foundItem:not(:last-child) > :first-child {
+    border-bottom: 1px solid #9CA3AA52;
+}
