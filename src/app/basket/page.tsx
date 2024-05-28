@@ -18,7 +18,7 @@ import Link from 'next/link';
 import {sum} from '@/shared/utils/sum';
 import css from './Page.module.scss';
 import {checkoutActions} from '@/lib/features/checkout';
-import {SELECTED_BASKET_ITEMS_FOR_CHECKOUT} from '@/lib/constants';
+import {LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT} from '@/lib/constants';
 
 export default function Basket() {
     const dispatch = useAppDispatch();
@@ -36,7 +36,7 @@ export default function Basket() {
     const onCheckoutClick = () => {
         const selectedBasketItemsIds = selectedBasketItems.map(({id}) => id);
         dispatch(checkoutActions.setSelectedBasketItems(selectedBasketItemsIds));
-        localStorage.setItem(SELECTED_BASKET_ITEMS_FOR_CHECKOUT, JSON.stringify(selectedBasketItemsIds));
+        localStorage.setItem(LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT, JSON.stringify(selectedBasketItemsIds));
     };
 
     const itemsCount = basketItems.length;

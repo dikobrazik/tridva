@@ -110,10 +110,16 @@ export const basketSlice = createSlice({
                 state.loading = false;
 
                 basketItemAdapter.upsertMany(state.basketItems, payload);
-                state.selectedBasketItems = payload.reduce<SelectedBasketItems>((selectedBasketItems, basketItem) => {
-                    selectedBasketItems[basketItem.id] = true;
-                    return selectedBasketItems;
-                }, {});
+
+                if (JSON.stringify(state.selectedBasketItems) === '{}') {
+                    state.selectedBasketItems = payload.reduce<SelectedBasketItems>(
+                        (selectedBasketItems, basketItem) => {
+                            selectedBasketItems[basketItem.id] = true;
+                            return selectedBasketItems;
+                        },
+                        {},
+                    );
+                }
             })
             .addCase(loadBasketItemsAction.rejected, state => {
                 state.loading = false;

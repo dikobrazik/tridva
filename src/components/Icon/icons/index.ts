@@ -2,6 +2,7 @@ export {default as bag} from './bag.svg';
 export {default as search} from './search.svg';
 export {default as message} from './message.svg';
 export {default as hanger} from './hanger.svg';
+export {default as chevronDown} from './chevron-down.svg';
 export {default as chevronRight} from './chevron-right.svg';
 export {default as chevronLeft} from './chevron-left.svg';
 export {default as switch} from './arrow-switch.svg';

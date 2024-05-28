@@ -1,4 +1,5 @@
-import {getCityPickupPoints} from '@/api';
+import {getCityPickupPoints, processOrder} from '@/api';
+import {RootState} from '@/lib/store';
 import {PickupPoint} from '@/types/geo';
 import {PayloadAction, createAsyncThunk, createEntityAdapter, createSlice} from '@reduxjs/toolkit';
 
@@ -9,6 +10,15 @@ const pickupPointAdapter = createEntityAdapter<PickupPoint>();
 export const loadPickupPointsAction = createAsyncThunk(`${NAMESPACE}/load-pickup-points`, () =>
     getCityPickupPoints({cityId: 0}),
 );
+
+export const processOrderAction = createAsyncThunk(`${NAMESPACE}/process-order`, (_, {getState}) => {
+    const state = getState() as RootState;
+
+    const selectedPickupPoint = checkoutSelectors.selectSelectedPickupPoint(state);
+    const selectedBasketItemsIds = checkoutSelectors.selectSelectedBasketItems(state);
+
+    processOrder({pickupPointId: selectedPickupPoint?.id, basketItemsIds: selectedBasketItemsIds});
+});
 
 const initialState = {
     arePickupPointsLoading: false,
