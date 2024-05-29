@@ -1,6 +1,5 @@
 import type {Metadata} from 'next';
 import './globals.scss';
-import {Row} from '@/components/layout/Row';
 import {Column} from '@/components/layout/Column';
 import {Inter} from 'next/font/google';
 import {Box} from '@/components/layout/Box';
@@ -8,12 +7,12 @@ import React from 'react';
 import StoreProvider from './StoreProvider';
 import {Header} from './Header';
 import {OffersListContextProvider} from './OffersList/context';
-import {FooterButton} from './FooterButton';
 import css from './Layout.module.scss';
-import {ru} from 'date-fns/locale';
-import {setDefaultOptions} from 'date-fns';
 import AuthTokenProvider from './AuthorizationProvider';
 import classNames from 'classnames';
+import {Footer} from './Footer';
+import {ru} from 'date-fns/locale';
+import {setDefaultOptions} from 'date-fns';
 
 setDefaultOptions({locale: ru});
 
@@ -40,17 +39,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                                 <Box className={css.content} overflowY="auto" height="100%">
                                     {children}
                                 </Box>
-                                <Row className={css.footer} padding="8px 16px" justifyContent="space-between">
-                                    <FooterButton icon="home" activeIcon="homeActive" title="Главная" href="/" />
-                                    <FooterButton
-                                        icon="menu"
-                                        activeIcon="menuActive"
-                                        title="Категории"
-                                        href="/categories"
-                                    />
-                                    <FooterButton icon="cart" activeIcon="cartActive" title="Корзина" href="/basket" />
-                                    <FooterButton icon="user" activeIcon="userActive" title="Профиль" href="/profile" />
-                                </Row>
+                                <Footer />
                             </Column>
                         </OffersListContextProvider>
                     </AuthTokenProvider>

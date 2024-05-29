@@ -18,6 +18,15 @@ export const loadCategories = (payload: LoadCategoriesPayload = {level: 1}): Pro
             return [];
         });
 
+export const loadPopularCategories = (): Promise<Category[]> =>
+    axios<Category[]>('categories/popular')
+        .then(response => response.data)
+        .catch(e => {
+            console.log(e);
+
+            return [];
+        });
+
 export const loadCategory = (payload: LoadCategoryPayload): Promise<Category> =>
     axios<Category>(`categories/${payload.categoryId}`, {params: payload})
         .then(response => response.data)

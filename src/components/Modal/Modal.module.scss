@@ -15,12 +15,18 @@
 
     background: #fff;
     position: absolute;
-    left: 10vw;
-    right: 10vw;
+    left: 0; 
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+    margin-left: auto; 
+    margin-right: auto; 
     top: 30%;
     padding: 40px 16px 16px 16px;
     border-radius: 24px;
     color: #303234;
+
+    max-width: 360px;
 
     -webkit-animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;

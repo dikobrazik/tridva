@@ -11,14 +11,16 @@ export const FooterButton = ({
     activeIcon,
     title,
     href,
+    strictActiveMatch,
 }: {
     icon: IconName;
     activeIcon: IconName;
     title: string;
     href: string;
+    strictActiveMatch?: boolean;
 }) => {
     const pathname = usePathname();
-    const isActive = pathname === href;
+    const isActive = strictActiveMatch ? pathname === href : pathname.startsWith(href);
     const iconName = isActive ? activeIcon : icon;
 
     return (

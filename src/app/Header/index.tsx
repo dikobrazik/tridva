@@ -38,7 +38,7 @@ export const Header = () => {
         dispatch(searchOffersAction({search}));
     }, 500);
 
-    const onCancelClick = () => {
+    const resetSearchState = () => {
         toggle();
         setSearch('');
         dispatch(offersActions.resetFoundOffersId());
@@ -74,7 +74,7 @@ export const Header = () => {
                     onIconClick={onIconClick}
                 />
                 {isActive && (
-                    <Button variant="pseudo" onClick={onCancelClick}>
+                    <Button variant="pseudo" onClick={resetSearchState}>
                         <Text weight={500} size={12}>
                             Отменить
                         </Text>
@@ -89,7 +89,7 @@ export const Header = () => {
                                         className={css.foundItem}
                                         key={offer.id}
                                         href={`/offers/${offer.id}`}
-                                        onClick={toggle}
+                                        onClick={resetSearchState}
                                     >
                                         <Row justifyContent="space-between" paddingY={3}>
                                             <Text weight={500} size={14}>
@@ -101,7 +101,6 @@ export const Header = () => {
                                 </>
                             ))}
                         </Column>
-                        {/* <Button onClick={onSearchClick}>Найти</Button> */}
                     </Column>
                 )}
             </Row>

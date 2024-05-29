@@ -88,7 +88,7 @@ export default async function Offer(props: Props) {
                                 'группы',
                                 'групп',
                             ])}`}
-                            description="присоединитесь сейчас"
+                            description={offer.groupsCount > 0 ? 'присоединитесь сейчас' : 'создайте свою с друзьями'}
                         />
                     </Row>
                     <Row className={css.tab} justifyContent="space-between" paddingX={2} paddingY={1}>
