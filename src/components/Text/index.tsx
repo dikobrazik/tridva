@@ -10,6 +10,7 @@ type Props = {
     color?: CSSProperties['color'];
     marginRight?: CSSProperties['marginRight'];
     wrap?: CSSProperties['textWrap'];
+    block?: boolean;
 };
 
 export const Text = (props: PropsWithChildren<Props>) => {
@@ -25,6 +26,7 @@ export const Text = (props: PropsWithChildren<Props>) => {
                 color: props.color,
                 marginRight: props.marginRight,
                 textWrap: props.wrap,
+                display: props.block ? 'inline-block' : undefined,
             }}
         >
             {props.children}

@@ -14,7 +14,7 @@ const InformationList = [
         titleTag: 'h1' as const,
         title: (
             <>
-                О{'\u00A0'}совместных покупках в{' '}
+                Cовместные покупки в{' '}
                 <Text weight={500} color="#F40C43">
                     Tridva shop
                 </Text>
@@ -48,8 +48,8 @@ export default function InformationRow() {
                     key={index}
                 >
                     <Box height={48} width={48} className={css.box} borderRadius={4} />
-                    <Box as={information.titleTag}>
-                        <Text size={8} align="center">
+                    <Box as={information.titleTag} width="100%" display="flex" justifyContent="center">
+                        <Text block size={8} align="center">
                             {information.title}
                         </Text>
                     </Box>
