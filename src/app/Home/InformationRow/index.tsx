@@ -11,7 +11,15 @@ import {Modal} from '@/components/Modal';
 
 const InformationList = [
     {
-        title: 'О\u00A0групповых покупках',
+        titleTag: 'h1' as const,
+        title: (
+            <>
+                О{'\u00A0'}совместных покупках в{' '}
+                <Text weight={500} color="#F40C43">
+                    Tridva shop
+                </Text>
+            </>
+        ),
         description: `Принцип организации покупки, который появился в середине 2000-х годов на стыке новых возможностей
     интернет-коммуникаций по удалению избыточных посредников и неформальной системы местных
     потребительских связей определённого города и региона. При совершении совместной покупки несколько
@@ -40,9 +48,11 @@ export default function InformationRow() {
                     key={index}
                 >
                     <Box height={48} width={48} className={css.box} borderRadius={4} />
-                    <Text size={8} align="center">
-                        {information.title}
-                    </Text>
+                    <Box as={information.titleTag}>
+                        <Text size={8} align="center">
+                            {information.title}
+                        </Text>
+                    </Box>
                 </Column>
             ))}
 

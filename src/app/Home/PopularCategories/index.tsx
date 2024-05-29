@@ -11,11 +11,13 @@ export const PopularCategories = async () => {
         <Row gap={2} overflowX="auto" paddingBottom="8px">
             {popularCategories.map(category => (
                 <Link key={category.id} href={`/categories/${category.id}`}>
-                    <Button size="m" variant="normal">
-                        <Text wrap="nowrap" size={12}>
-                            {category.name}
-                        </Text>
-                    </Button>
+                    <h2>
+                        <Button size="m" variant="normal">
+                            <Text wrap="nowrap" size={12}>
+                                {category.name}
+                            </Text>
+                        </Button>
+                    </h2>
                 </Link>
             ))}
         </Row>

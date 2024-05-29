@@ -4,9 +4,10 @@ import {Row} from '@/components/layout/Row';
 import css from './PopUp.module.scss';
 import {Text} from '@/components/Text';
 import {Icon} from '@/components/Icon';
+import {ReactNode} from 'react';
 
 type PopUpProps = {
-    title?: string;
+    title?: ReactNode;
     description?: string;
 };
 

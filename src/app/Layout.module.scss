@@ -16,4 +16,10 @@
     justify-content: center;
 
     background-color: #f3dbdb;
+
+
+    & h1, h2 {
+        font-size: unset;
+        font-weight: unset;
+    }
 }
