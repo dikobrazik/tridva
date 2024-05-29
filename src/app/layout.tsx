@@ -34,7 +34,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 <StoreProvider>
                     <AuthTokenProvider>
                         <OffersListContextProvider>
-                            <Column className={css.container} minWidth={360} height="100%">
+                            <Column className={css.container} width={460} minWidth={360} height="100%">
                                 <Header />
                                 <Box className={css.content} overflowY="auto" height="100%">
                                     {children}
