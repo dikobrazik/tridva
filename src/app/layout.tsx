@@ -13,6 +13,7 @@ import css from './Layout.module.scss';
 import {ru} from 'date-fns/locale';
 import {setDefaultOptions} from 'date-fns';
 import AuthTokenProvider from './AuthorizationProvider';
+import classNames from 'classnames';
 
 setDefaultOptions({locale: ru});
 
@@ -30,13 +31,13 @@ export const metadata: Metadata = {
 export default function RootLayout({children}: {children: React.ReactNode}) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={classNames(inter.className, css.body)}>
                 <StoreProvider>
                     <AuthTokenProvider>
                         <OffersListContextProvider>
-                            <Column minWidth={360} height="100%">
+                            <Column className={css.container} minWidth={360} height="100%">
                                 <Header />
-                                <Box className={css.container} overflowY="auto" height="100%">
+                                <Box className={css.content} overflowY="auto" height="100%">
                                     {children}
                                 </Box>
                                 <Row className={css.footer} padding="8px 16px" justifyContent="space-between">

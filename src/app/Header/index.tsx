@@ -59,7 +59,7 @@ export const Header = () => {
 
     return (
         <>
-            <Row alignItems="center" gap="2" paddingX={4} paddingY={4}>
+            <Row backgroundColor="#fff" alignItems="center" gap="2" paddingX={4} paddingY={4}>
                 {!isActive && (
                     <Link href="/">
                         <Logo />
