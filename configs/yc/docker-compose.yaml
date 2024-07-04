@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
     nginx:
-        image: cr.yandex/crpkv40doqi2snrfmq1e/tridva-nginx-front
+        image: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-nginx-front
         ports:
             - '80:80'
             - '443:443'
@@ -14,11 +14,11 @@ services:
             - frontend
 
     frontend:
-        image: cr.yandex/crpkv40doqi2snrfmq1e/tridva-front
+        image: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-front
         volumes:
             - /usr/app/.next/cache/images:/var/tmp/next-images
         restart: always
 
     backend:
-        image: cr.yandex/crpkv40doqi2snrfmq1e/tridva-api
+        image: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-api
         restart: always
