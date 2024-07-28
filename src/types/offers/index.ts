@@ -10,3 +10,9 @@ export type Offer = {
     reviewsCount: number;
     groupsCount: number;
 };
+
+export type OfferAttribute = {
+    id: number;
+    attributeName: string;
+    value: string;
+};

@@ -1,5 +1,5 @@
 import {Group} from '@/types/group';
-import {Offer} from '@/types/offers';
+import {Offer, OfferAttribute} from '@/types/offers';
 import axios from 'axios';
 
 type LoadOffersPayload = {
@@ -17,6 +17,9 @@ export const loadOffers = (payload?: LoadOffersPayload): Promise<Offer[]> =>
 
 export const loadOffer = (payload: LoadOfferPayload): Promise<Offer> =>
     axios<Offer>(`offers/${payload.id}`).then(response => response.data);
+
+export const loadOfferAttributes = (payload: LoadOfferPayload): Promise<OfferAttribute[]> =>
+    axios<OfferAttribute[]>(`offers/${payload.id}/attributes`).then(response => response.data);
 
 export const loadOfferGroups = (payload: LoadOfferPayload): Promise<Group[]> =>
     axios<Group[]>(`offers/${payload.id}/groups`)
