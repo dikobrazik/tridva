@@ -41,12 +41,6 @@ export default async function Reviews({offerId, reviewsCount, rating = 0}: Props
                         {reviewsCount}
                     </Text>
                 </Text>
-
-                {/* <Button variant="pseudo" icon="pen" paddingY={0}>
-                    <Text weight="500" size="12px" height={14}>
-                        Написать отзыв
-                    </Text>
-                </Button> */}
             </Row>
             <Row alignItems="center" gap={2}>
                 <Text size="12px" weight={400}>

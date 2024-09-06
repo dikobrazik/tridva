@@ -71,16 +71,22 @@ export default async function Offer(props: Props) {
 
                 <Column gap={2}>
                     <Row gap={2} className={css.cards}>
-                        <Card
-                            href={`/offers/${offerId}/reviews`}
-                            title={
-                                <Row gap={1}>
-                                    <Icon name="star" />
-                                    {rating}
-                                </Row>
-                            }
-                            description={`${reviewsCount} ${pluralize(reviewsCount, ['отзыв', 'отзыва', 'отзывов'])}`}
-                        />
+                        {rating !== undefined && rating > 0 && (
+                            <Card
+                                href={`/offers/${offerId}/reviews`}
+                                title={
+                                    <Row gap={1}>
+                                        <Icon name="star" />
+                                        {rating}
+                                    </Row>
+                                }
+                                description={`${reviewsCount} ${pluralize(reviewsCount, [
+                                    'отзыв',
+                                    'отзыва',
+                                    'отзывов',
+                                ])}`}
+                            />
+                        )}
                         <Card title="300 заказов" description="за последние 30 дней" />
                         <Card
                             href="#groups"

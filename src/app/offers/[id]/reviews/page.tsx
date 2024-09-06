@@ -69,12 +69,6 @@ export default async function Reviews(props: Props) {
                 </Row>
 
                 <NewReviewDrawer offer={offer} />
-
-                {/* <Row>
-                    <Button variant="pseudo" icon="switch">
-                        По дате
-                    </Button>
-                </Row> */}
             </Column>
 
             <Column gap="2" overflowY="scroll">

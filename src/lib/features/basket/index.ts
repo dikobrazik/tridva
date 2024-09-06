@@ -1,4 +1,4 @@
-import {changeBasketItemCount, getBasketItems} from '@/api';
+import {changeBasketItemCount, getBasketItems, putOfferToBasket} from '@/api';
 import {RootState, ThunkConfig} from '@/lib/store';
 import {sum} from '@/shared/utils/sum';
 import {BasketItem} from '@/types/basket';
@@ -13,6 +13,11 @@ export const createTypedAsyncThunk = createAsyncThunk.withTypes<ThunkConfig>();
 export const loadBasketItemsAction = createTypedAsyncThunk<BasketItem[]>(`${NAMESPACE}/load-items`, () => {
     return getBasketItems();
 });
+
+export const putOfferToBasketAction = createTypedAsyncThunk<BasketItem, {offerId: number}>(
+    `${NAMESPACE}/put-offer-to-basket`,
+    async ({offerId}) => putOfferToBasket({offerId}),
+);
 
 export const increaseBasketItemCountAction = createTypedAsyncThunk<{id: number; count: number}, {id: number}>(
     `${NAMESPACE}/increase-item-count`,
@@ -48,12 +53,14 @@ const initialState = {
 
 type BasketState = typeof initialState;
 
+const basketItemAdapterSelectors = basketItemAdapter.getSelectors();
+
 const selectSelectedBasketItems = createSelector(
     [(state: BasketState) => state.selectedBasketItems, (state: BasketState) => state.basketItems],
     (selectedBasketItems, basketItems) =>
         Object.entries(selectedBasketItems)
             .filter(([, isSelected]) => isSelected)
-            .map(([id]) => basketItemAdapter.getSelectors().selectById(basketItems, Number(id))),
+            .map(([id]) => basketItemAdapterSelectors.selectById(basketItems, Number(id))),
 );
 
 export const basketSlice = createSlice({
@@ -75,7 +82,7 @@ export const basketSlice = createSlice({
     selectors: {
         selectAreBasketItemsLoading: state => state.loading,
         selectBasketItemsByIds: (state, itemsIds: number[]) =>
-            itemsIds.map(itemId => basketItemAdapter.getSelectors().selectById(state.basketItems, itemId)),
+            itemsIds.map(itemId => basketItemAdapterSelectors.selectById(state.basketItems, itemId)),
         selectSelectedBasketItems,
         selectSelectedBasketItemsList: createSelector(
             [state => selectSelectedBasketItems(state)],
@@ -86,12 +93,17 @@ export const basketSlice = createSlice({
             !state.loading &&
             Boolean(Object.values(state.selectedBasketItems).length) &&
             Object.values(state.selectedBasketItems).every(Boolean),
+        selectBasketItemByOfferId: (state, offerId: number) =>
+            basketItemAdapterSelectors.selectAll(state.basketItems).find(basketItem => basketItem.offer.id === offerId),
+        selectBasketItemCountByOfferId: (state, offerId: number) =>
+            basketItemAdapterSelectors.selectAll(state.basketItems).find(basketItem => basketItem.offer.id === offerId)
+                ?.count || 0,
         selectSelectedOffersCost: (state): number =>
             sum(
                 Object.entries(state.selectedBasketItems)
                     .filter(([, isSelected]) => isSelected)
                     .map(([id]) => {
-                        const item = basketItemAdapter.getSelectors().selectById(state.basketItems, Number(id));
+                        const item = basketItemAdapterSelectors.selectById(state.basketItems, Number(id));
                         if (item) {
                             return Number(item.offer.price) * item.count;
                         }
@@ -133,12 +145,19 @@ export const basketSlice = createSlice({
                 });
             })
             .addCase(decreaseBasketItemCountAction.fulfilled, (state, {payload: {id, count}}) => {
-                basketItemAdapter.updateOne(state.basketItems, {
-                    id,
-                    changes: {
-                        count,
-                    },
-                });
+                if (count > 0) {
+                    basketItemAdapter.updateOne(state.basketItems, {
+                        id,
+                        changes: {
+                            count,
+                        },
+                    });
+                } else {
+                    basketItemAdapter.removeOne(state.basketItems, id);
+                }
+            })
+            .addCase(putOfferToBasketAction.fulfilled, (state, {payload: basketItem}) => {
+                basketItemAdapter.addOne(state.basketItems, basketItem);
             });
     },
 });
