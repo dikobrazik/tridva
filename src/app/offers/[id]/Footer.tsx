@@ -30,7 +30,7 @@ const CreateSingleGroupButton = ({offer}: {offer: Offer}) => {
                     Купить в розницу
                 </Text>
                 <Text size={12} weight={600} height={14}>
-                    {offer.price} ₽
+                    {Math.ceil(Number(offer.price))} ₽
                 </Text>
             </Column>
         </Button>

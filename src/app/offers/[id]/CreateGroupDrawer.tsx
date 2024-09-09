@@ -105,7 +105,7 @@ export const CreateGroupDrawer = ({offer}: {offer: Offer}) => {
                         Создать группу
                     </Text>
                     <Text size={12} weight={600} height={14}>
-                        {offer.price} ₽
+                        {Math.ceil(Number(offer.price))} ₽
                     </Text>
                 </Column>
             </Button>

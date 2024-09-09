@@ -11,6 +11,7 @@ type Props = {
     marginRight?: CSSProperties['marginRight'];
     wrap?: CSSProperties['textWrap'];
     block?: boolean;
+    className?: HTMLSpanElement['className'];
 };
 
 export const Text = (props: PropsWithChildren<Props>) => {
@@ -28,6 +29,7 @@ export const Text = (props: PropsWithChildren<Props>) => {
                 textWrap: props.wrap,
                 display: props.block ? 'inline-block' : undefined,
             }}
+            className={props.className}
         >
             {props.children}
         </span>

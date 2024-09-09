@@ -12,7 +12,13 @@ export const PopularCategories = async () => {
             {popularCategories.map(category => (
                 <Link key={category.id} href={`/categories/${category.id}`}>
                     <h2>
-                        <Button size="m" variant="normal">
+                        <Button
+                            style={{whiteSpace: 'nowrap'}}
+                            size="m"
+                            variant="normal"
+                            backgroundColor="#f5f5f5"
+                            border="1px solid #E1A6B414"
+                        >
                             <Text wrap="nowrap" size={12}>
                                 {category.name}
                             </Text>

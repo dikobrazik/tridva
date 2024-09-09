@@ -63,7 +63,7 @@ export default async function Offer(props: Props) {
                     <Box className={css.category}>{category.name}</Box>
                 </Row>
                 <Text weight="600" size="24px">
-                    {price} ₽
+                    {Math.ceil(Number(price))} ₽
                 </Text>
                 <Text weight="600" size="16px">
                     {title}

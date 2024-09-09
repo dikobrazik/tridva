@@ -28,10 +28,10 @@ export const OfferCard = (props: Offer) => {
                 {discount ? (
                     <Row alignItems="center">
                         <Text size={16} weight={600}>
-                            {Math.round((Number(price) * discount) / 100)} ₽
+                            {Math.ceil((Number(price) * discount) / 100)} ₽
                         </Text>
                         <Text color="#303234A3" decoration="line-through" size={12} weight={400}>
-                            {price} ₽
+                            {Math.ceil(Number(price))} ₽
                         </Text>
                         <Text color="#F40C43" size={12} weight={400}>
                             -{discount}%
@@ -39,12 +39,12 @@ export const OfferCard = (props: Offer) => {
                     </Row>
                 ) : (
                     <Text size={16} weight={600}>
-                        {price} ₽
+                        {Math.ceil(Number(price))} ₽
                     </Text>
                 )}
 
                 <Column gap={1}>
-                    <Text>{title}</Text>
+                    <Text className={css.title}>{title}</Text>
                     <Row gap={2} alignItems="center">
                         {rating && (
                             <Row gap={1} alignItems="center">

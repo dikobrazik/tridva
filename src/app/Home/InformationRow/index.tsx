@@ -47,9 +47,9 @@ export default function InformationRow() {
                     className={css.information}
                     key={index}
                 >
-                    <Box height={48} width={48} className={css.box} borderRadius={4} />
+                    <Box height={58} width={58} className={css.box} borderRadius={4} />
                     <Box as={information.titleTag} width="100%" display="flex" justifyContent="center">
-                        <Text block size={8} align="center">
+                        <Text block size={8} weight={600} align="center">
                             {information.title}
                         </Text>
                     </Box>
