@@ -8,14 +8,14 @@ import {Icon} from '../Icon';
 import Link from 'next/link';
 import {pluralize} from '@/shared/utils/pluralize';
 import {getOfferPhoto} from '@/shared/photos';
-import {addSpacesToNumber} from '@/shared/utils/numberWithSpaces';
+import {formatPrice} from '@/shared/utils/formatPrice';
 
 export const OfferCard = (props: Offer) => {
     const {id, title, price, discount, rating, photos, reviewsCount} = props;
 
     const imageSrc = getOfferPhoto(photos, 280);
 
-    const finalPrice = addSpacesToNumber(Math.ceil(discount ? (Number(price) * discount) / 100 : Number(price)));
+    const finalPrice = formatPrice(price, discount);
 
     return (
         <Link href={`/offers/${id}`}>
@@ -30,19 +30,21 @@ export const OfferCard = (props: Offer) => {
 
                 <Column gap={2} paddingX={1}>
                     {discount ? (
-                        <Row alignItems="center">
-                            <Text size={16} weight={600}>
+                        <Row gap={2} alignItems="center">
+                            <Text color="#F40C43" size={16} weight={600}>
                                 {finalPrice} ₽
                             </Text>
-                            <Text color="#303234A3" decoration="line-through" size={12} weight={400}>
-                                {Math.ceil(Number(price))} ₽
-                            </Text>
-                            <Text color="#F40C43" size={12} weight={400}>
-                                -{discount}%
-                            </Text>
+                            <Row gap={1}>
+                                <Text color="#303234A3" decoration="line-through" size={12} weight={400}>
+                                    {Math.ceil(Number(price))} ₽
+                                </Text>
+                                <Text color="#F40C43" size={12} weight={400}>
+                                    -{discount}%
+                                </Text>
+                            </Row>
                         </Row>
                     ) : (
-                        <Text size={16} weight={600}>
+                        <Text color="#F40C43" size={16} weight={600}>
                             {finalPrice} ₽
                         </Text>
                     )}

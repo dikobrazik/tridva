@@ -19,6 +19,7 @@ import {sum} from '@/shared/utils/sum';
 import css from './Page.module.scss';
 import {checkoutActions} from '@/lib/features/checkout';
 import {LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT} from '@/lib/constants';
+import {formatPrice} from '@/shared/utils/formatPrice';
 
 export default function Basket() {
     const dispatch = useAppDispatch();
@@ -27,7 +28,7 @@ export default function Basket() {
     const areBasketItemsLoading = useAppSelector(basketSelectors.selectAreBasketItemsLoading);
     const selectedBasketItems = useAppSelector(basketSelectors.selectSelectedBasketItems);
     const selectedItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
-    const formattedSelectedItemsCost = selectedItemsCost.toFixed(2);
+    const formattedSelectedItemsCost = formatPrice(selectedItemsCost);
 
     useEffect(() => {
         dispatch(loadBasketItemsAction());

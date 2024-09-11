@@ -15,7 +15,7 @@ import {ReactNode} from 'react';
 import {Block} from '@/components/layout/Block';
 import {getOfferPhoto} from '@/shared/photos';
 import About from './About';
-import {addSpacesToNumber} from '@/shared/utils/numberWithSpaces';
+import {formatPrice} from '@/shared/utils/formatPrice';
 
 type Props = {
     params: {id: string};
@@ -56,7 +56,7 @@ export default async function Offer(props: Props) {
 
     const imageSrc = getOfferPhoto(photos);
 
-    const finalPrice = addSpacesToNumber(Math.ceil(discount ? (Number(price) * discount) / 100 : Number(price)));
+    const finalPrice = formatPrice(price, discount);
 
     return (
         <Column gap="2">
@@ -65,9 +65,25 @@ export default async function Offer(props: Props) {
                 <Row>
                     <Box className={css.category}>{category.name}</Box>
                 </Row>
-                <Text weight="600" size="24px">
-                    {finalPrice} ₽
-                </Text>
+                {discount ? (
+                    <Row gap={2} alignItems="center">
+                        <Text color="#F40C43" size={24} weight={600}>
+                            {finalPrice} ₽
+                        </Text>
+                        <Row gap={1}>
+                            <Text color="#303234A3" decoration="line-through" size={14} weight={400}>
+                                {Math.ceil(Number(price))} ₽
+                            </Text>
+                            <Text color="#F40C43" size={14} weight={400}>
+                                -{discount}%
+                            </Text>
+                        </Row>
+                    </Row>
+                ) : (
+                    <Text color="#F40C43" size={24} weight={600}>
+                        {finalPrice} ₽
+                    </Text>
+                )}
                 <Text weight="600" size="16px">
                     {title}
                 </Text>

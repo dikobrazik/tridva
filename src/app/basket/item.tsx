@@ -18,6 +18,7 @@ import {
     removeBasketItemAction,
 } from '@/lib/features/basket';
 import {useEffect} from 'react';
+import {formatPrice} from '@/shared/utils/formatPrice';
 
 type Props = {
     id: number;
@@ -71,9 +72,16 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
                 <Row gap="3">
                     <Image src={getOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
                     <Column gap="2">
-                        <Text size={14} weight={600}>
-                            {offer.price} ₽
-                        </Text>
+                        <Row gap={2} alignItems="center">
+                            <Text size={14} weight={600}>
+                                {formatPrice(offer.price, offer.discount)} ₽
+                            </Text>
+                            {offer.discount && (
+                                <Text color="#303234A3" decoration="line-through" size={10} weight={400}>
+                                    {offer.price} ₽
+                                </Text>
+                            )}
+                        </Row>
                         <Link href={`/offers/${offer.id}`}>
                             <Text size={12} weight={400} height={16}>
                                 {offer.title}
