@@ -1,4 +1,4 @@
-import {changeBasketItemCount, getBasketItems, putOfferToBasket} from '@/api';
+import {changeBasketItemCount, getBasketItems, putOfferToBasket, removeItemFromBasket} from '@/api';
 import {RootState, ThunkConfig} from '@/lib/store';
 import {sum} from '@/shared/utils/sum';
 import {BasketItem} from '@/types/basket';
@@ -40,6 +40,13 @@ export const decreaseBasketItemCountAction = createTypedAsyncThunk<{id: number; 
         await changeBasketItemCount({id, count: basketItemCount});
 
         return {id, count: basketItemCount};
+    },
+);
+
+export const removeBasketItemAction = createTypedAsyncThunk<void, {id: number}>(
+    `${NAMESPACE}/remove-basket-item`,
+    async ({id}) => {
+        await removeItemFromBasket({id});
     },
 );
 
@@ -158,6 +165,9 @@ export const basketSlice = createSlice({
             })
             .addCase(putOfferToBasketAction.fulfilled, (state, {payload: basketItem}) => {
                 basketItemAdapter.addOne(state.basketItems, basketItem);
+            })
+            .addCase(removeBasketItemAction.fulfilled, (state, {meta}) => {
+                basketItemAdapter.removeOne(state.basketItems, meta.arg.id);
             });
     },
 });

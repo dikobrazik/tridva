@@ -9,13 +9,13 @@ import Image from 'next/image';
 import css from './Item.module.scss';
 import Link from 'next/link';
 import {Button} from '@/components/Button';
-import {removeItemFromBasket} from '@/api';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 import {
     basketActions,
     basketSelectors,
     decreaseBasketItemCountAction,
     increaseBasketItemCountAction,
+    removeBasketItemAction,
 } from '@/lib/features/basket';
 import {useEffect} from 'react';
 
@@ -62,7 +62,7 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
     }, []);
 
     const onRemoveClick = () => {
-        removeItemFromBasket({id});
+        dispatch(removeBasketItemAction({id}));
     };
 
     return (

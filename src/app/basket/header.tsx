@@ -8,14 +8,23 @@ import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 
 export const BasketHeader = ({count}: {count: number}) => {
     const dispatch = useAppDispatch();
+    const basketItemsCount = useAppSelector(basketSelectors.selectAll).length;
     const isAllItemsSelected = useAppSelector(basketSelectors.selectIsAllBasketItemsSelected);
+
+    const isBasketEmpty = basketItemsCount === 0;
 
     const onToggleAllSelected = () => {
         dispatch(basketActions.toggleAllBasketItems());
     };
 
     return (
-        <Header right={<Checkbox name="all-selected" checked={isAllItemsSelected} onChange={onToggleAllSelected} />}>
+        <Header
+            right={
+                isBasketEmpty ? null : (
+                    <Checkbox name="all-selected" checked={isAllItemsSelected} onChange={onToggleAllSelected} />
+                )
+            }
+        >
             Корзина{' '}
             <Text size={16} weight={600} color="#3032347A">
                 {count}

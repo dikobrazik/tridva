@@ -15,6 +15,7 @@ import {ReactNode} from 'react';
 import {Block} from '@/components/layout/Block';
 import {getOfferPhoto} from '@/shared/photos';
 import About from './About';
+import {addSpacesToNumber} from '@/shared/utils/numberWithSpaces';
 
 type Props = {
     params: {id: string};
@@ -51,9 +52,11 @@ export default async function Offer(props: Props) {
     const offer = await loadOffer({id: offerId});
     const category = await loadCategory({categoryId: Number(offer.categoryId)});
 
-    const {title, photos, price, reviewsCount, rating} = offer;
+    const {title, photos, price, discount, reviewsCount, rating} = offer;
 
     const imageSrc = getOfferPhoto(photos);
+
+    const finalPrice = addSpacesToNumber(Math.ceil(discount ? (Number(price) * discount) / 100 : Number(price)));
 
     return (
         <Column gap="2">
@@ -63,7 +66,7 @@ export default async function Offer(props: Props) {
                     <Box className={css.category}>{category.name}</Box>
                 </Row>
                 <Text weight="600" size="24px">
-                    {Math.ceil(Number(price))} ₽
+                    {finalPrice} ₽
                 </Text>
                 <Text weight="600" size="16px">
                     {title}
