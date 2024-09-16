@@ -9,7 +9,7 @@ import {Block} from '@/components/layout/Block';
 import {PopularCategories} from './Home/PopularCategories';
 
 export default async function Home() {
-    const offers = await loadOffers();
+    const {offers} = await loadOffers();
 
     return (
         <OffersListContainer gap="2">

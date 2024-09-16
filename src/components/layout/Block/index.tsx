@@ -2,6 +2,7 @@ import cn from 'classnames';
 import {UnitProps} from '../types';
 import css from './Block.module.scss';
 import {Column} from '../Column';
+import React from 'react';
 
 type BlockProps = Omit<UnitProps<'div'>, 'as'>;
 

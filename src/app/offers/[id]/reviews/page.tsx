@@ -68,7 +68,14 @@ export default async function Reviews(props: Props) {
                     <Rating rating={offer.rating ?? 0} />
                 </Row>
 
-                <NewReviewDrawer offer={offer} />
+                <NewReviewDrawer
+                    offer={offer}
+                    Toggler={({onClick}) => (
+                        <Button paddingY="2" variant="outline" onClick={onClick}>
+                            Написать отзыв
+                        </Button>
+                    )}
+                />
             </Column>
 
             <Column gap="2" overflowY="scroll">

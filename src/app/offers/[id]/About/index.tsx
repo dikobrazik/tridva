@@ -9,7 +9,7 @@ export default async function About({offerId}: {offerId: number}) {
 
     return (
         <Column className={css.about} gap={3}>
-            <Text weight="600" size="16px" height={20}>
+            <Text weight={600} size={16} height={20}>
                 О товаре
             </Text>
             <ExpandableList attributes={attributes} />

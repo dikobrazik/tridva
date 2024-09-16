@@ -1,4 +1,4 @@
-import {loadCategory, loadOffer} from '@/api';
+import {loadCategory, loadOffer, loadOfferAttributesCount} from '@/api';
 import {Column} from '@/components/layout/Column';
 import Image from 'next/image';
 import css from './Page.module.scss';
@@ -51,6 +51,7 @@ export default async function Offer(props: Props) {
     const offerId = Number(props.params.id);
     const offer = await loadOffer({id: offerId});
     const category = await loadCategory({categoryId: Number(offer.categoryId)});
+    const attributesCount = await loadOfferAttributesCount({id: offerId});
 
     const {title, photos, price, discount, reviewsCount, rating} = offer;
 
@@ -143,15 +144,15 @@ export default async function Offer(props: Props) {
                 </Block>
             )}
 
-            <Block>
-                <About offerId={offerId} />
-            </Block>
-
-            {reviewsCount > 0 && (
+            {attributesCount > 0 && (
                 <Block>
-                    <Reviews offerId={offerId} reviewsCount={reviewsCount} rating={rating} />
+                    <About offerId={offerId} />
                 </Block>
             )}
+
+            <Block>
+                <Reviews offer={offer} reviewsCount={reviewsCount} rating={rating} />
+            </Block>
         </Column>
     );
 }

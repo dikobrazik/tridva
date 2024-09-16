@@ -1,7 +1,6 @@
 import {Offer} from '@/types/offers';
 import {Column} from '../layout/Column';
 import {Text} from '../Text';
-import Image from 'next/image';
 import css from './OfferCard.module.scss';
 import {Row} from '../layout/Row';
 import {Icon} from '../Icon';
@@ -9,23 +8,26 @@ import Link from 'next/link';
 import {pluralize} from '@/shared/utils/pluralize';
 import {getOfferPhoto} from '@/shared/photos';
 import {formatPrice} from '@/shared/utils/formatPrice';
+import ImageWithFallback from '../Image';
 
 export const OfferCard = (props: Offer) => {
     const {id, title, price, discount, rating, photos, reviewsCount} = props;
 
     const imageSrc = getOfferPhoto(photos, 280);
+    const fallbackImageSrc = typeof imageSrc === 'string' ? imageSrc.replace('280.jpg', '400.jpg') : undefined;
 
     const finalPrice = formatPrice(price, discount);
 
     return (
         <Link href={`/offers/${id}`}>
             <Column gap={2}>
-                <Image
+                <ImageWithFallback
                     width="150"
                     height="150"
                     className={css.image}
                     alt={`image for offer named ${title}`}
                     src={imageSrc}
+                    fallbackSrc={fallbackImageSrc}
                 />
 
                 <Column gap={2} paddingX={1}>

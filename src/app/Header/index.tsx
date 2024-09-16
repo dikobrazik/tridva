@@ -5,15 +5,16 @@ import {useToggler} from '@/hooks/useToggler';
 import css from './Search.module.scss';
 import {Button} from '@/components/Button';
 import {useState} from 'react';
-import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 import {Logo} from '@/components/Logo';
 import Link from 'next/link';
 import {Row} from '@/components/layout/Row';
-import {usePathname} from 'next/navigation';
+import {usePathname, useSearchParams} from 'next/navigation';
 import {Text} from '@/components/Text';
-import {offersActions, offersSelectors, searchOffersAction} from '@/lib/features/offers';
 import {Icon} from '@/components/Icon';
 import {useDebounce} from '@/hooks/useDebounce';
+import {loadCategoriesByName} from '@/api';
+import {Category} from '@/types/category';
+import {Loader} from '@/components/Loader';
 
 const pagesWithoutHeader = [
     /[/]offers[/]\d+[/]reviews/,
@@ -26,22 +27,30 @@ const pagesWithoutHeader = [
     /[/]basket[/]checkout[/]pickup-points/,
 ];
 
+const SEARCH_PARAM_NAME = 'name';
+
 export const Header = () => {
     const pathname = usePathname();
-    const dispatch = useAppDispatch();
-    const [search, setSearch] = useState('');
+    const searchParams = useSearchParams();
+    const [foundCategories, setFoundCategories] = useState<Category[]>([]);
+    const [search, setSearch] = useState(searchParams.get(SEARCH_PARAM_NAME) ?? '');
+    const [isLoading, setIsLoading] = useState(false);
     const {isActive, toggle, toggleOn} = useToggler();
 
-    const foundOffers = useAppSelector(offersSelectors.selectFoundOffers);
-
     const searchDebounced = useDebounce(() => {
-        dispatch(searchOffersAction({search}));
-    }, 500);
+        setIsLoading(true);
+        setFoundCategories([]);
+        loadCategoriesByName({name: search})
+            .then(categories => setFoundCategories(categories))
+            .finally(() => setIsLoading(false));
+    }, 1000);
 
-    const resetSearchState = () => {
+    const resetSearchState = (clearInput?: boolean) => () => {
+        if (clearInput) {
+            setSearch('');
+        }
         toggle();
-        setSearch('');
-        dispatch(offersActions.resetFoundOffersId());
+        setFoundCategories([]);
     };
 
     const onIconClick = () => {
@@ -52,7 +61,9 @@ export const Header = () => {
 
     const onInputChange = (value: string) => {
         setSearch(value);
-        searchDebounced();
+        if (value) {
+            searchDebounced();
+        }
     };
 
     if (pagesWithoutHeader.find(pageRe => pageRe.test(pathname))) return;
@@ -74,7 +85,7 @@ export const Header = () => {
                     onIconClick={onIconClick}
                 />
                 {isActive && (
-                    <Button variant="pseudo" onClick={resetSearchState}>
+                    <Button variant="pseudo" onClick={resetSearchState(true)}>
                         <Text weight={500} size={12}>
                             Отменить
                         </Text>
@@ -83,17 +94,37 @@ export const Header = () => {
                 {isActive && (
                     <Column padding="16px" gap={3} className={css.layover} justifyContent="space-between">
                         <Column height="100%" overflowY="scroll">
-                            {foundOffers.map(offer => (
+                            {search && (
+                                <Link
+                                    className={css.foundItem}
+                                    key="search"
+                                    href={`/search?${SEARCH_PARAM_NAME}=${search}`}
+                                    onClick={resetSearchState(false)}
+                                >
+                                    <Row justifyContent="space-between" paddingY={3}>
+                                        <Text weight={500} size={14}>
+                                            {search}
+                                        </Text>
+                                        <Icon name="search" size="m" />
+                                    </Row>
+                                </Link>
+                            )}
+                            {isLoading && (
+                                <Row paddingY={3} justifyContent="center">
+                                    <Loader />
+                                </Row>
+                            )}
+                            {foundCategories.map(category => (
                                 <>
                                     <Link
                                         className={css.foundItem}
-                                        key={offer.id}
-                                        href={`/offers/${offer.id}`}
-                                        onClick={resetSearchState}
+                                        key={category.id}
+                                        href={`/categories/${category.id}`}
+                                        onClick={resetSearchState(true)}
                                     >
                                         <Row justifyContent="space-between" paddingY={3}>
                                             <Text weight={500} size={14}>
-                                                {offer.title}
+                                                {category.name}
                                             </Text>
                                             <Icon name="chevronRight" size="m" />
                                         </Row>

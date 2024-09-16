@@ -9,6 +9,8 @@ import {Rating} from '@/components/Rating';
 import Link from 'next/link';
 import {Button} from '@/components/Button';
 import {omitCurrentYear} from '@/shared/date/omitCurrentYear';
+import {Offer} from '@/types/offers';
+import {ReviewsBlockHeader} from './Header';
 
 function ReviewsItem(review: Review) {
     return (
@@ -24,44 +26,48 @@ function ReviewsItem(review: Review) {
 }
 
 type Props = {
-    offerId: number;
+    offer: Offer;
     reviewsCount: number;
     rating?: number;
 };
 
-export default async function Reviews({offerId, reviewsCount, rating = 0}: Props) {
-    const reviews = await loadReviews({offerId});
+export default async function Reviews({offer, reviewsCount, rating = 0}: Props) {
+    const reviews = await loadReviews({offerId: offer.id});
 
     return (
         <Column gap={3}>
-            <Row alignItems="center" justifyContent="space-between">
-                <Text weight="600" size="16px" height={20}>
-                    Отзывы{' '}
-                    <Text weight="600" size="16px" height={20} color="#3032347A">
-                        {reviewsCount}
+            <ReviewsBlockHeader offer={offer} reviewsCount={reviewsCount} />
+            {rating && (
+                <Row alignItems="center" gap={2}>
+                    <Text size="12px" weight={400}>
+                        {rating}
                     </Text>
-                </Text>
-            </Row>
-            <Row alignItems="center" gap={2}>
-                <Text size="12px" weight={400}>
-                    {rating}
-                </Text>
-                <Rating rating={rating} />
-            </Row>
-            <Row className={css.reviewsList} gap={2}>
-                {reviews.slice(0, 3).map(review => (
-                    <ReviewsItem key={review.id} {...review} />
-                ))}
-            </Row>
-            <Link href={`/offers/${offerId}/reviews`}>
-                <Row justifyContent="center">
-                    <Button variant="pseudo">
-                        <Text weight="500" size="12px" height={14} decoration="underline">
-                            Все отзывы
-                        </Text>
-                    </Button>
+                    <Rating rating={rating} />
                 </Row>
-            </Link>
+            )}
+            {reviews.length > 0 && (
+                <Row className={css.reviewsList} gap={2}>
+                    {reviews.slice(0, 3).map(review => (
+                        <ReviewsItem key={review.id} {...review} />
+                    ))}
+                </Row>
+            )}
+            {reviews.length === 0 && (
+                <Text align="center" weight="500" size="12px" height={14}>
+                    Будьте первым кто оставил отзыв
+                </Text>
+            )}
+            {reviews.length > 0 && (
+                <Link href={`/offers/${offer.id}/reviews`}>
+                    <Row justifyContent="center">
+                        <Button variant="pseudo">
+                            <Text weight="500" size="12px" height={14} decoration="underline">
+                                Все отзывы
+                            </Text>
+                        </Button>
+                    </Row>
+                </Link>
+            )}
         </Column>
     );
 }

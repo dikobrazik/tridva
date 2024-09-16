@@ -38,11 +38,13 @@ export const ExpandableList = ({attributes}: {attributes: OfferAttribute[]}) => 
                     </li>
                 ))}
             </ul>
-            <button onClick={() => setIsExpanded(value => !value)} className={css.btn}>
-                <Text weight="500" size="12px" height={14} decoration="underline">
-                    {isExpanded ? 'Скрыть в' : 'В'}се характеристики и описание
-                </Text>
-            </button>
+            {attributes.length > 3 ? (
+                <button onClick={() => setIsExpanded(value => !value)} className={css.btn}>
+                    <Text weight="500" size="12px" height={14} decoration="underline">
+                        {isExpanded ? 'Скрыть в' : 'В'}се характеристики и описание
+                    </Text>
+                </button>
+            ) : null}
         </>
     );
 };

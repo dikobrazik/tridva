@@ -4,12 +4,24 @@ import axios from 'axios';
 type LoadCategoriesPayload = {
     level?: number;
 };
+type LoadCategoriesByNamePayload = {
+    name: string;
+};
 
 type LoadCategoryPayload = {
     categoryId: number;
 };
 
 export const loadCategories = (payload: LoadCategoriesPayload = {level: 1}): Promise<Category[]> =>
+    axios<Category[]>('categories', {params: payload})
+        .then(response => response.data)
+        .catch(e => {
+            console.log(e);
+
+            return [];
+        });
+
+export const loadCategoriesByName = (payload: LoadCategoriesByNamePayload): Promise<Category[]> =>
     axios<Category[]>('categories', {params: payload})
         .then(response => response.data)
         .catch(e => {

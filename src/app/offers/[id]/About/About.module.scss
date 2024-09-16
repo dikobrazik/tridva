@@ -1,12 +1,9 @@
-
 .about {
-    border-top: 1px solid;
-
     &List {
         list-style: none;
-    
+
         & li:not(:last-child) {
-            border-bottom: 1px solid #9CA3AA52
+            border-bottom: 1px solid #9ca3aa52;
         }
     }
 }

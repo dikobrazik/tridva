@@ -7,11 +7,12 @@ import {useOffers} from '../useOffers';
 import {OffersListContext} from './context';
 import {PropsWithChildren, useContext, useEffect} from 'react';
 import {Column} from '@/components/layout/Column';
-import {offersSelectors} from '@/lib/features/offers';
 import {useAppSelector} from '@/lib/hooks';
+import {offersSelectors} from '@/lib/features/offers';
 
 type Props = {
     categoryId?: number;
+    name?: string;
 };
 
 export function OffersList(props: Props) {
@@ -20,7 +21,7 @@ export function OffersList(props: Props) {
 
     useEffect(() => {
         setOnScroll(onScroll);
-    }, []);
+    }, [onScroll]);
 
     return offers.map((offer, index) => <OfferCard key={index} {...offer} />);
 }
@@ -38,14 +39,15 @@ export function OffersListContainer({
     );
 }
 
+// показываем перманентно, пока не дошли до последней страницы
 export function OffersListLoader() {
-    const areOffersLoading = useAppSelector(offersSelectors.selectIsLoading);
+    const isLastPageReached = useAppSelector(offersSelectors.selectIsLastPageReached);
 
-    if (areOffersLoading) {
-        <Box display="flex" justifyContent="center">
+    if (isLastPageReached) return null;
+
+    return (
+        <Box paddingY={3} display="flex" justifyContent="center">
             <Loader />
-        </Box>;
-    }
-
-    return null;
+        </Box>
+    );
 }

@@ -9,13 +9,18 @@ import {Row} from '@/components/layout/Row';
 import {useToggler} from '@/hooks/useToggler';
 import {Offer} from '@/types/offers';
 import Image from 'next/image';
-import {useState} from 'react';
+import React, {useState} from 'react';
 import css from './Reviews.module.scss';
 import {TextArea} from '@/components/TextArea';
 import {createReview} from '@/api';
 import {getOfferPhoto} from '@/shared/photos';
 
-export const NewReviewDrawer = ({offer}: {offer: Offer}) => {
+type Props = {
+    Toggler: (props: {onClick: () => void}) => React.ReactNode;
+    offer: Offer;
+};
+
+export const NewReviewDrawer = ({offer, Toggler}: Props) => {
     const [rating, setRating] = useState(1);
     const [text, setText] = useState('');
     const {isActive, toggle} = useToggler();
@@ -36,9 +41,7 @@ export const NewReviewDrawer = ({offer}: {offer: Offer}) => {
 
     return (
         <>
-            <Button paddingY="2" variant="outline" onClick={toggle}>
-                Написать отзыв
-            </Button>
+            <Toggler onClick={toggle} />
 
             <Drawer isOpen={isActive} onClose={toggle}>
                 <Column gap="6">

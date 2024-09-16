@@ -1,10 +1,11 @@
-import {loadOffersAction, offersActions, offersSelectors} from '@/lib/features/offers';
+import {loadOffersAction, offersActions, offersSelectors, searchOffersAction} from '@/lib/features/offers';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 import {RootState} from '@/lib/store';
 import {debounce} from '@/shared/utils/debounce';
-import {UIEventHandler, useEffect, useMemo} from 'react';
+import {UIEventHandler, useCallback, useEffect, useMemo} from 'react';
 
 type Props = {
+    name?: string;
     categoryId?: number;
 };
 
@@ -13,28 +14,40 @@ export const useOffers = (props?: Props) => {
 
     const offersSelector = useMemo(() => {
         const categoryId = props?.categoryId;
-        return categoryId
-            ? (state: RootState) => offersSelectors.selectCategoryOffers(state, categoryId)
+        if (categoryId) {
+            return (state: RootState) => offersSelectors.selectCategoryOffers(state, categoryId);
+        }
+        return props?.name
+            ? (state: RootState) => offersSelectors.selectFoundOffers(state)
             : offersSelectors.selectLoadedOffers;
-    }, [props?.categoryId]);
+    }, [props?.name, props?.categoryId]);
 
     const offers = useAppSelector(offersSelector);
     const areOffersLoading = useAppSelector(offersSelectors.selectIsLoading);
+    const isLastPageReached = useAppSelector(offersSelectors.selectIsLastPageReached);
 
     useEffect(() => {
-        dispatch(loadOffersAction({categoryId: props?.categoryId}));
+        dispatch(offersActions.resetPage());
+        dispatch(offersActions.resetFoundOffersId());
+        dispatch(loadOffersAction({categoryId: props?.categoryId, search: props?.name}));
     }, []);
 
     const onScroll: UIEventHandler<HTMLDivElement> = debounce(e => {
         const container = e.target as HTMLDivElement;
 
         if (container.scrollTop >= container.scrollHeight - 1.5 * container.offsetHeight) {
-            if (!areOffersLoading) {
+            if (!areOffersLoading && !isLastPageReached) {
                 dispatch(offersActions.incrementPage());
-                dispatch(loadOffersAction({categoryId: props?.categoryId}));
+                if (props?.name) {
+                    dispatch(searchOffersAction({search: props?.name}));
+                } else {
+                    dispatch(loadOffersAction({categoryId: props?.categoryId, search: props?.name}));
+                }
             }
         }
-    }, 500);
+    }, 150);
 
-    return {areOffersLoading, offers, onScroll};
+    const memoizedOnScroll = useCallback(onScroll, [areOffersLoading, isLastPageReached]);
+
+    return {areOffersLoading, offers, onScroll: memoizedOnScroll};
 };

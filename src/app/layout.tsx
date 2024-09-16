@@ -25,6 +25,7 @@ export const metadata: Metadata = {
         yandex: '08f5e449ef421774',
         google: 'kOMBcuVi1F7zH0Rj3nyl0v3HiIyN2OUJwcvY99xFYpY',
     },
+    appleWebApp: {capable: true, title: 'tridva', statusBarStyle: 'default'},
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {

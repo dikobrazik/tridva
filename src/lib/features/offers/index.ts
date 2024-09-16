@@ -8,16 +8,24 @@ const NAMESPACE = 'offers';
 
 const offerAdapter = createEntityAdapter<Offer>();
 
-export const loadOffersAction = createAsyncThunk<Offer[], {categoryId?: number}, {state: RootState}>(
-    `${NAMESPACE}/load`,
-    (payload, {getState}) => {
-        return loadOffers({page: offersSelectors.selectCurrentPage(getState()), category: payload.categoryId});
-    },
-);
+export const loadOffersAction = createAsyncThunk<
+    {offers: Offer[]; pagesCount: number},
+    {categoryId?: number; search?: string},
+    {state: RootState}
+>(`${NAMESPACE}/load`, (payload, {getState}) => {
+    return loadOffers({
+        page: offersSelectors.selectCurrentPage(getState()),
+        search: payload.search,
+        category: payload.categoryId,
+    });
+});
 
-export const searchOffersAction = createAsyncThunk<Offer[], {search: string}, {state: RootState}>(
-    `${NAMESPACE}/search`,
-    payload => loadOffers(payload),
+export const searchOffersAction = createAsyncThunk<
+    {offers: Offer[]; pagesCount: number},
+    {search: string},
+    {state: RootState}
+>(`${NAMESPACE}/search`, (payload, {getState}) =>
+    loadOffers({page: offersSelectors.selectCurrentPage(getState()), ...payload}),
 );
 
 export const offersSlice = createSlice({
@@ -28,10 +36,15 @@ export const offersSlice = createSlice({
         foundOffersIds: [] as number[],
         offersIdsByCategoryIds: {} as Record<number, number[]>,
         loading: false,
+        lastPage: null as number | null,
     }),
     reducers: {
         incrementPage: state => {
             state.page += 1;
+        },
+        resetPage: state => {
+            state.page = 2;
+            state.lastPage = null;
         },
         resetFoundOffersId: state => {
             state.foundOffersIds = [];
@@ -39,6 +52,7 @@ export const offersSlice = createSlice({
     },
     selectors: {
         selectIsLoading: state => state.loading,
+        selectIsLastPageReached: state => state.lastPage !== null && state.page === state.lastPage,
         selectCurrentPage: state => state.page,
         selectLoadedOffersIds: state => state.loadedOffersIds,
         selectFoundOffersIds: state => state.foundOffersIds,
@@ -49,20 +63,21 @@ export const offersSlice = createSlice({
             .addCase(loadOffersAction.pending, state => {
                 state.loading = true;
             })
-            .addCase(loadOffersAction.fulfilled, (state, {payload, meta}) => {
+            .addCase(loadOffersAction.fulfilled, (state, {payload: {offers, pagesCount}, meta}) => {
                 state.loading = false;
-                const offersIds = payload.map(offerAdapter.selectId);
+                const offersIds = offers.map(offerAdapter.selectId);
                 const categoryId = meta.arg.categoryId;
                 if (categoryId) {
                     state.offersIdsByCategoryIds[categoryId] = uniq(
                         (state.offersIdsByCategoryIds[categoryId] ?? []).concat(offersIds),
                     );
                 } else {
-                    state.loadedOffersIds.push(...payload.map(offerAdapter.selectId));
+                    state.loadedOffersIds.push(...offers.map(offerAdapter.selectId));
                     state.loadedOffersIds = uniq(state.loadedOffersIds);
                 }
 
-                offerAdapter.addMany(state, payload);
+                state.lastPage = pagesCount;
+                offerAdapter.addMany(state, offers);
             })
             .addCase(loadOffersAction.rejected, state => {
                 state.loading = false;
@@ -70,11 +85,12 @@ export const offersSlice = createSlice({
             .addCase(searchOffersAction.pending, state => {
                 state.loading = true;
             })
-            .addCase(searchOffersAction.fulfilled, (state, {payload}) => {
+            .addCase(searchOffersAction.fulfilled, (state, {payload: {offers, pagesCount}}) => {
                 state.loading = false;
-                state.foundOffersIds = payload.map(offerAdapter.selectId);
+                state.foundOffersIds = state.foundOffersIds.concat(offers.map(offerAdapter.selectId));
 
-                offerAdapter.addMany(state, payload);
+                state.lastPage = pagesCount;
+                offerAdapter.addMany(state, offers);
             })
             .addCase(searchOffersAction.rejected, state => {
                 state.loading = false;
