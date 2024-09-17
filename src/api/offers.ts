@@ -12,11 +12,10 @@ type LoadOfferPayload = {
     id: number;
 };
 
-export const loadOffers = (payload?: LoadOffersPayload): Promise<{offers: Offer[]; pagesCount: number}> =>
+export const loadOffers = (
+    payload?: LoadOffersPayload,
+): Promise<{offers: Offer[]; total: number; pagesCount: number}> =>
     axios('offers', {params: payload}).then(response => response.data);
-
-export const loadOffersTotal = (payload?: LoadOffersPayload): Promise<number> =>
-    axios<number>('offers/total', {params: payload}).then(response => response.data);
 
 export const loadOffer = (payload: LoadOfferPayload): Promise<Offer> =>
     axios<Offer>(`offers/${payload.id}`).then(response => response.data);
