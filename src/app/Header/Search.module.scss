@@ -1,14 +1,14 @@
 @import 'animation/fade-in';
 
 .layover {
-    width: 460px;
+    margin-top: -8px;
 
     left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;
 
-    position: fixed;
+    position: absolute;
     z-index: 2;
 
     background-color: white;
@@ -22,5 +22,5 @@
 }
 
 .foundItem:not(:last-child) > :first-child {
-    border-bottom: 1px solid #9CA3AA52;
+    border-bottom: 1px solid #9ca3aa52;
 }

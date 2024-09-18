@@ -4,7 +4,7 @@ import {Column} from '@/components/layout/Column';
 import {useToggler} from '@/hooks/useToggler';
 import css from './Search.module.scss';
 import {Button} from '@/components/Button';
-import {FormEventHandler, useState} from 'react';
+import {FormEventHandler, useEffect, useState} from 'react';
 import {Logo} from '@/components/Logo';
 import Link from 'next/link';
 import {Row} from '@/components/layout/Row';
@@ -77,6 +77,12 @@ export const Header = () => {
         router.push(`/search?${SEARCH_PARAM_NAME}=${search}`);
     };
 
+    useEffect(() => {
+        if (!/[/]search/.test(pathname)) {
+            setSearch('');
+        }
+    }, [pathname]);
+
     if (pagesWithoutHeader.find(pageRe => pageRe.test(pathname))) return;
 
     return (
@@ -107,7 +113,7 @@ export const Header = () => {
                     </Button>
                 )}
                 {isActive && (
-                    <Column padding="16px" gap={3} className={css.layover} justifyContent="space-between">
+                    <Column paddingX={4} gap={3} className={css.layover} justifyContent="space-between">
                         <Column height="100%" overflowY="scroll">
                             {search && (
                                 <Link

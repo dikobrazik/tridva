@@ -5,6 +5,8 @@
 
 .container {
     max-width: 460px;
+
+    position: relative;
 }
 
 .content {
@@ -17,8 +19,8 @@
 
     background-color: #f3dbdb;
 
-
-    & h1, h2 {
+    & h1,
+    h2 {
         font-size: unset;
         font-weight: unset;
     }
