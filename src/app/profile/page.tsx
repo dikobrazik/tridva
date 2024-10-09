@@ -149,7 +149,7 @@ export default function ProfilePage() {
                     <Image width={40} height={40} alt="telegram" src={telegramIcon} />
                     <Image width={40} height={40} alt="whatsapp" src={whatsappIcon} />
                 </Row>
-                <Link href="#">
+                <Link href="/privacy">
                     <Text decoration="underline">Политика Конфиденциальности</Text>
                 </Link>
                 <Link href="#">
