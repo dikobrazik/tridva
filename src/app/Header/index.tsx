@@ -39,12 +39,14 @@ export const Header = () => {
     const [isLoading, setIsLoading] = useState(false);
     const {isActive, toggleOn, toggleOff} = useToggler();
 
-    const searchDebounced = useDebounce(() => {
-        setIsLoading(true);
+    const searchDebounced = useDebounce((value: string) => {
         setFoundCategories([]);
-        loadCategoriesByName({name: search})
-            .then(categories => setFoundCategories(categories))
-            .finally(() => setIsLoading(false));
+        if (value) {
+            setIsLoading(true);
+            loadCategoriesByName({name: value})
+                .then(categories => setFoundCategories(categories))
+                .finally(() => setIsLoading(false));
+        }
     }, 1000);
 
     const resetSearchState = (clearInput?: boolean) => () => {
@@ -63,9 +65,7 @@ export const Header = () => {
 
     const onInputChange = (value: string) => {
         setSearch(value);
-        if (value) {
-            searchDebounced();
-        }
+        searchDebounced(value);
     };
 
     const onSubmit: FormEventHandler<HTMLFormElement> = e => {
