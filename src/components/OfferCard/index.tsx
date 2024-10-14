@@ -6,14 +6,14 @@ import {Row} from '../layout/Row';
 import {Icon} from '../Icon';
 import Link from 'next/link';
 import {pluralize} from '@/shared/utils/pluralize';
-import {getOfferPhoto} from '@/shared/photos';
+import {getFirstOfferPhoto} from '@/shared/photos';
 import {formatPrice} from '@/shared/utils/formatPrice';
 import ImageWithFallback from '../Image';
 
 export const OfferCard = (props: Offer) => {
     const {id, title, price, discount, rating, photos, reviewsCount} = props;
 
-    const imageSrc = getOfferPhoto(photos, 280);
+    const imageSrc = getFirstOfferPhoto(photos, 280);
     const fallbackImageSrc = typeof imageSrc === 'string' ? imageSrc.replace('280.jpg', '400.jpg') : undefined;
 
     const finalPrice = formatPrice(price, discount);

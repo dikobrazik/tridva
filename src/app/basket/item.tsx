@@ -3,7 +3,7 @@ import {Checkbox} from '@/components/Checkbox';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
-import {getOfferPhoto} from '@/shared/photos';
+import {getFirstOfferPhoto} from '@/shared/photos';
 import {Offer} from '@/types/offers';
 import Image from 'next/image';
 import css from './Item.module.scss';
@@ -70,7 +70,7 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
         <Column className={css.item} gap="2">
             <Row gap="3" justifyContent="space-between">
                 <Row gap="3">
-                    <Image src={getOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
+                    <Image src={getFirstOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
                     <Column gap="2">
                         <Row gap={2} alignItems="center">
                             <Text size={14} weight={600}>

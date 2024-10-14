@@ -1,9 +1,20 @@
-.image {
+.imagesContainer {
     width: 100%;
+
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+}
+
+.image {
+    width: 460px;
+    min-width: 360px;
     height: auto;
 
     max-height: 30vh;
     object-fit: contain;
+
+    position: relative;
+    scroll-snap-align: center;
 }
 
 .category {

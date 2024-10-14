@@ -13,7 +13,7 @@ import React, {useState} from 'react';
 import css from './Reviews.module.scss';
 import {TextArea} from '@/components/TextArea';
 import {createReview} from '@/api';
-import {getOfferPhoto} from '@/shared/photos';
+import {getFirstOfferPhoto} from '@/shared/photos';
 
 type Props = {
     Toggler: (props: {onClick: () => void}) => React.ReactNode;
@@ -27,7 +27,7 @@ export const NewReviewDrawer = ({offer, Toggler}: Props) => {
 
     const {photos, title} = offer;
 
-    const offerImageSrc = getOfferPhoto(photos);
+    const offerImageSrc = getFirstOfferPhoto(photos);
 
     const onCreateReviewClick = async () => {
         await createReview({

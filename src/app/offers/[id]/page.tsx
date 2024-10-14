@@ -13,7 +13,7 @@ import {pluralize} from '@/shared/utils/pluralize';
 import Link from 'next/link';
 import {ReactNode} from 'react';
 import {Block} from '@/components/layout/Block';
-import {getOfferPhoto} from '@/shared/photos';
+import {getFirstOfferPhoto, formatOfferPhotoLink} from '@/shared/photos';
 import About from './About';
 import {formatPrice} from '@/shared/utils/formatPrice';
 
@@ -58,14 +58,27 @@ export default async function Offer(props: Props) {
 
     const {title, photos, price, discount, reviewsCount, rating} = offer;
 
-    const imageSrc = getOfferPhoto(photos);
-
+    const imageSrc = getFirstOfferPhoto(photos);
     const finalPrice = formatPrice(price, discount);
 
     return (
         <Column gap="2">
             <Block gap="3">
+                {/* <Row className={css.imagesContainer} width="100%" maxWidth="100%">
+                    {photos?.map((photo, index) => (
+                        <Image
+                            key={index}
+                            className={css.image}
+                            src={formatOfferPhotoLink(photo)}
+                            width={700}
+                            height={700}
+                            priority={index < 2}
+                            alt="offer image"
+                        />
+                    ))}
+                </Row> */}
                 {imageSrc && <Image className={css.image} src={imageSrc} width={700} height={700} alt="offer image" />}
+
                 <Row gap={1}>
                     <Link href={`/categories/${categoryAncestors[0].id}`}>
                         <Row className={css.category} alignItems="center">
@@ -102,7 +115,6 @@ export default async function Offer(props: Props) {
                 <Text weight="600" size="16px">
                     {title}
                 </Text>
-
                 <Column gap={2}>
                     <Row gap={2} className={css.cards}>
                         {rating !== undefined && rating > 0 && (

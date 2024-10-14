@@ -61,11 +61,11 @@ export const useOffers = (props?: Props) => {
     }, []);
 
     useEffect(() => {
-        document.removeEventListener('scroll', memoizedOnScroll);
-        document.addEventListener('scroll', memoizedOnScroll, {passive: true});
+        document.removeEventListener('scrollend', memoizedOnScroll);
+        document.addEventListener('scrollend', memoizedOnScroll, {passive: true});
 
         return () => {
-            document.removeEventListener('scroll', memoizedOnScroll);
+            document.removeEventListener('scrollend', memoizedOnScroll);
         };
     }, [memoizedOnScroll]);
 

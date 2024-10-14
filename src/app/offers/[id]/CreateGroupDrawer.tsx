@@ -10,14 +10,14 @@ import {Offer} from '@/types/offers';
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
 import css from './CreateGroupDrawser.module.scss';
-import {getOfferPhoto} from '@/shared/photos';
+import {getFirstOfferPhoto} from '@/shared/photos';
 import Image from 'next/image';
 import {createGroup} from '@/api';
 
 const OfferBlock = ({offer}: {offer: Offer}) => {
     return (
         <Row className={css.offerBlock} padding="4px">
-            <Image src={getOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
+            <Image src={getFirstOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
             <Column gap="2">
                 <Link href={`/offers/${offer.id}`}>
                     <Text size={12} weight={400} height={16}>
