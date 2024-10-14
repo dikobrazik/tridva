@@ -9,7 +9,7 @@ export default async function Layout(props: PropsWithChildren<{params: {id: stri
 
     return (
         <Column height="100%">
-            <Column height="100%" overflowY="auto">
+            <Column height="100%" overflowY="auto" paddingBottom={112}>
                 {props.children}
             </Column>
             <Footer offer={offer} />

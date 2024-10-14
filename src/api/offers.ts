@@ -5,6 +5,7 @@ import axios from 'axios';
 type LoadOffersPayload = {
     search?: string;
     page?: number;
+    pageSize?: number;
     category?: number;
 };
 

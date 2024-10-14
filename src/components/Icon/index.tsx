@@ -27,6 +27,7 @@ export const Icon = (props: IconProps) => {
             alt={`icon ${name}`}
             src={icons[name]}
             onClick={onClick}
+            unoptimized
         />
     );
 };

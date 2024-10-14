@@ -1,10 +1,11 @@
-import {configureStore} from '@reduxjs/toolkit';
-import {offersReducer, offersSlice} from './features/offers';
+import {configureStore, createListenerMiddleware} from '@reduxjs/toolkit';
+import {offersReducer, offersSlice, PAGE_QUERY_PARAM_KEY} from './features/offers';
 import {reviewsReducer, reviewsSlice} from './features/reviews';
 import {basketReducer, basketSlice} from './features/basket';
 import {userReducer, userSlice} from './features/user';
 import {checkoutReducer, checkoutSlice} from './features/checkout';
 import {LAST_SELECTED_PICKUP_POINT_ID, LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT} from './constants';
+import {appRouter} from '@/shared/router';
 
 const reHydrateStore = () => {
     if (typeof window !== 'undefined' && localStorage.getItem(LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT) !== null) {
@@ -41,6 +42,21 @@ const reHydrateStore = () => {
     };
 };
 
+const listenerMiddleware = createListenerMiddleware();
+
+listenerMiddleware.startListening({
+    actionCreator: offersSlice.actions.incrementPage,
+    effect: async (action, listenerApi) => {
+        listenerApi.cancelActiveListeners();
+
+        const page = offersSlice.getSelectors().selectCurrentPage((listenerApi.getState() as RootState).offers);
+        const params = new URLSearchParams(window.location.search);
+        params.set(PAGE_QUERY_PARAM_KEY, `${page}`);
+
+        appRouter.replace(window.location.pathname + `?${params.toString()}`, {scroll: false});
+    },
+});
+
 export const makeStore = () => {
     return configureStore({
         preloadedState: reHydrateStore(),
@@ -51,6 +67,7 @@ export const makeStore = () => {
             user: userReducer,
             checkout: checkoutReducer,
         },
+        middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(listenerMiddleware.middleware),
     });
 };
 

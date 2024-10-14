@@ -16,6 +16,7 @@ const nextConfig = {
         includePaths: [path.join(__dirname, 'src/styles')],
     },
     images: {
+        minimumCacheTTL: 60,
         remotePatterns: [
             {
                 protocol: 'https',

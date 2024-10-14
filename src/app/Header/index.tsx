@@ -2,7 +2,7 @@
 import {TextField} from '@/components/TextField';
 import {Column} from '@/components/layout/Column';
 import {useToggler} from '@/hooks/useToggler';
-import css from './Search.module.scss';
+import css from './Header.module.scss';
 import {Button} from '@/components/Button';
 import {FormEventHandler, useEffect, useState} from 'react';
 import {Logo} from '@/components/Logo';
@@ -87,7 +87,7 @@ export const Header = () => {
 
     return (
         <>
-            <Row backgroundColor="#fff" alignItems="center" gap="2" paddingX={4} paddingY={4}>
+            <Row className={css.container} backgroundColor="#fff" alignItems="center" gap="2" paddingX={4} paddingY={4}>
                 {!isActive && (
                     <Link href="/">
                         <Logo />

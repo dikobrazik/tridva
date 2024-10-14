@@ -6,7 +6,6 @@ import {Box} from '@/components/layout/Box';
 import React from 'react';
 import StoreProvider from './StoreProvider';
 import {Header} from './Header';
-import {OffersListContextProvider} from './OffersList/context';
 import css from './Layout.module.scss';
 import AuthTokenProvider from './AuthorizationProvider';
 import classNames from 'classnames';
@@ -25,7 +24,9 @@ export const metadata: Metadata = {
         yandex: '08f5e449ef421774',
         google: 'kOMBcuVi1F7zH0Rj3nyl0v3HiIyN2OUJwcvY99xFYpY',
     },
-    appleWebApp: {capable: true, title: 'tridva', statusBarStyle: 'default'},
+    other: {
+        'mobile-web-app-capable': 'true',
+    },
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
@@ -34,15 +35,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             <body className={classNames(inter.className, css.body)}>
                 <StoreProvider>
                     <AuthTokenProvider>
-                        <OffersListContextProvider>
-                            <Column className={css.container} width={460} minWidth={360} height="100%">
-                                <Header />
-                                <Box className={css.content} overflowY="auto" height="100%">
-                                    {children}
-                                </Box>
-                                <Footer />
-                            </Column>
-                        </OffersListContextProvider>
+                        <Column className={css.container} width={460} minWidth={360} paddingBottom="59px">
+                            <Header />
+                            <Box className={css.content}>{children}</Box>
+                            <Footer />
+                        </Column>
                     </AuthTokenProvider>
                 </StoreProvider>
             </body>

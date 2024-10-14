@@ -20,10 +20,11 @@ export const OfferCard = (props: Offer) => {
 
     return (
         <Link href={`/offers/${id}`}>
-            <Column gap={2}>
+            <Column gap={2} maxHeight={296}>
                 <ImageWithFallback
                     width="150"
                     height="150"
+                    priority={false}
                     className={css.image}
                     alt={`image for offer named ${title}`}
                     src={imageSrc}

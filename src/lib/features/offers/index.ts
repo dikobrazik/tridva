@@ -2,9 +2,11 @@ import {loadOffers} from '@/api';
 import {RootState} from '@/lib/store';
 import {uniq} from '@/shared/utils/uniq';
 import {Offer} from '@/types/offers';
-import {createSlice, createEntityAdapter, createAsyncThunk, createSelector} from '@reduxjs/toolkit';
+import {createSlice, createEntityAdapter, createAsyncThunk, createSelector, PayloadAction} from '@reduxjs/toolkit';
 
 const NAMESPACE = 'offers';
+
+export const PAGE_QUERY_PARAM_KEY = 'p';
 
 const offerAdapter = createEntityAdapter<Offer>();
 
@@ -31,7 +33,7 @@ export const searchOffersAction = createAsyncThunk<
 export const offersSlice = createSlice({
     name: NAMESPACE,
     initialState: offerAdapter.getInitialState({
-        page: 2,
+        page: 1,
         loadedOffersIds: [] as number[],
         foundOffersIds: [] as number[],
         offersIdsByCategoryIds: {} as Record<number, number[]>,
@@ -42,8 +44,8 @@ export const offersSlice = createSlice({
         incrementPage: state => {
             state.page += 1;
         },
-        resetPage: state => {
-            state.page = 2;
+        resetPage: (state, action: PayloadAction<number | undefined>) => {
+            state.page = action.payload ?? 1;
             state.lastPage = null;
         },
         resetFoundOffersId: state => {
