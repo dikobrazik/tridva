@@ -1,4 +1,4 @@
-import {loadCategory, loadOffer, loadOfferAttributesCount} from '@/api';
+import {loadCategory, loadCategoryAncestors, loadOffer, loadOfferAttributesCount} from '@/api';
 import {Column} from '@/components/layout/Column';
 import Image from 'next/image';
 import css from './Page.module.scss';
@@ -50,8 +50,11 @@ const Card = ({href, title, description}: CardProps) => {
 export default async function Offer(props: Props) {
     const offerId = Number(props.params.id);
     const offer = await loadOffer({id: offerId});
-    const category = await loadCategory({categoryId: Number(offer.categoryId)});
-    const attributesCount = await loadOfferAttributesCount({id: offerId});
+    const [categoryAncestors, category, attributesCount] = await Promise.all([
+        loadCategoryAncestors({categoryId: Number(offer.categoryId)}),
+        loadCategory({categoryId: Number(offer.categoryId)}),
+        loadOfferAttributesCount({id: offerId}),
+    ]);
 
     const {title, photos, price, discount, reviewsCount, rating} = offer;
 
@@ -63,8 +66,19 @@ export default async function Offer(props: Props) {
         <Column gap="2">
             <Block gap="3">
                 {imageSrc && <Image className={css.image} src={imageSrc} width={700} height={700} alt="offer image" />}
-                <Row>
-                    <Box className={css.category}>{category.name}</Box>
+                <Row gap={1}>
+                    <Link href={`/categories/${categoryAncestors[0].id}`}>
+                        <Row className={css.category} alignItems="center">
+                            {categoryAncestors[0].name}
+                            <Icon size="xs" name="chevronRight" />
+                        </Row>
+                    </Link>
+                    <Link href={`/categories/${category.id}`}>
+                        <Row className={css.category} alignItems="center">
+                            {category.name}
+                            <Icon size="xs" name="chevronRight" />
+                        </Row>
+                    </Link>
                 </Row>
                 {discount ? (
                     <Row gap={2} alignItems="center">

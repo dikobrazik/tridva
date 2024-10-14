@@ -43,3 +43,8 @@ export const loadCategory = (payload: LoadCategoryPayload): Promise<Category> =>
     axios<Category>(`categories/${payload.categoryId}`, {params: payload})
         .then(response => response.data)
         .catch(() => ({} as Category));
+
+export const loadCategoryAncestors = (payload: LoadCategoryPayload): Promise<Category[]> =>
+    axios<Category[]>(`categories/${payload.categoryId}/ancestors`, {params: payload})
+        .then(response => response.data)
+        .catch(() => [] as Category[]);
