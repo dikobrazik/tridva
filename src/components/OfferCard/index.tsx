@@ -9,71 +9,77 @@ import {pluralize} from '@/shared/utils/pluralize';
 import {getFirstOfferPhoto} from '@/shared/photos';
 import {formatPrice} from '@/shared/utils/formatPrice';
 import ImageWithFallback from '../Image';
+import {memo} from 'react';
 
-export const OfferCard = (props: Offer) => {
-    const {id, title, price, discount, rating, photos, reviewsCount} = props;
+export const OfferCard = memo(
+    (props: Offer) => {
+        const {id, title, price, discount, rating, photos, reviewsCount} = props;
 
-    const imageSrc = getFirstOfferPhoto(photos, 280);
-    const fallbackImageSrc = typeof imageSrc === 'string' ? imageSrc.replace('280.jpg', '400.jpg') : undefined;
+        const imageSrc = getFirstOfferPhoto(photos, 280);
+        const fallbackImageSrc = typeof imageSrc === 'string' ? imageSrc.replace('280.jpg', '400.jpg') : undefined;
 
-    const finalPrice = formatPrice(price, discount);
+        const finalPrice = formatPrice(price, discount);
 
-    return (
-        <Link href={`/offers/${id}`}>
-            <Column gap={2} maxHeight={296}>
-                <ImageWithFallback
-                    width="150"
-                    height="150"
-                    priority={false}
-                    className={css.image}
-                    alt={`image for offer named ${title}`}
-                    src={imageSrc}
-                    fallbackSrc={fallbackImageSrc}
-                />
+        return (
+            <Link href={`/offers/${id}`}>
+                <Column gap={2} maxHeight={296}>
+                    <ImageWithFallback
+                        width="150"
+                        height="150"
+                        priority={false}
+                        className={css.image}
+                        alt={`image for offer named ${title}`}
+                        src={imageSrc}
+                        fallbackSrc={fallbackImageSrc}
+                    />
 
-                <Column gap={2} paddingX={1}>
-                    {discount ? (
-                        <Row gap={2} alignItems="center">
+                    <Column gap={2} paddingX={1}>
+                        {discount ? (
+                            <Row gap={2} alignItems="center">
+                                <Text color="#F40C43" size={16} weight={600}>
+                                    {finalPrice} ₽
+                                </Text>
+                                <Row gap={1}>
+                                    <Text color="#303234A3" decoration="line-through" size={12} weight={400}>
+                                        {Math.ceil(Number(price))} ₽
+                                    </Text>
+                                    <Text color="#F40C43" size={12} weight={400}>
+                                        -{discount}%
+                                    </Text>
+                                </Row>
+                            </Row>
+                        ) : (
                             <Text color="#F40C43" size={16} weight={600}>
                                 {finalPrice} ₽
                             </Text>
-                            <Row gap={1}>
-                                <Text color="#303234A3" decoration="line-through" size={12} weight={400}>
-                                    {Math.ceil(Number(price))} ₽
-                                </Text>
-                                <Text color="#F40C43" size={12} weight={400}>
-                                    -{discount}%
-                                </Text>
-                            </Row>
-                        </Row>
-                    ) : (
-                        <Text color="#F40C43" size={16} weight={600}>
-                            {finalPrice} ₽
-                        </Text>
-                    )}
+                        )}
 
-                    <Column gap={1}>
-                        <Text className={css.title}>{title}</Text>
-                        <Row gap={2} alignItems="center">
-                            {rating && (
+                        <Column gap={1}>
+                            <Text className={css.title}>{title}</Text>
+                            <Row gap={2} alignItems="center">
+                                {rating && (
+                                    <Row gap={1} alignItems="center">
+                                        <Icon name="star" />
+                                        <Text size={10}>{rating}</Text>
+                                    </Row>
+                                )}
                                 <Row gap={1} alignItems="center">
-                                    <Icon name="star" />
-                                    <Text size={10}>{rating}</Text>
+                                    <Icon name="message" />
+                                    <Text size={10}>
+                                        {reviewsCount} {pluralize(reviewsCount, ['отзыв', 'отзыва', 'отзывов'])}
+                                    </Text>
                                 </Row>
-                            )}
-                            <Row gap={1} alignItems="center">
-                                <Icon name="message" />
-                                <Text size={10}>
-                                    {reviewsCount} {pluralize(reviewsCount, ['отзыв', 'отзыва', 'отзывов'])}
-                                </Text>
                             </Row>
-                        </Row>
-                        <Row justifyContent="space-between">
-                            <Text size={10}>Купили 256 {pluralize(256, ['раз', 'раза', 'раз'])}</Text>
-                        </Row>
+                            <Row justifyContent="space-between">
+                                <Text size={10}>Купили 256 {pluralize(256, ['раз', 'раза', 'раз'])}</Text>
+                            </Row>
+                        </Column>
                     </Column>
                 </Column>
-            </Column>
-        </Link>
-    );
-};
+            </Link>
+        );
+    },
+    (prevProps, nextProps) => prevProps.id === nextProps.id,
+);
+
+OfferCard.displayName = 'OfferCard';
