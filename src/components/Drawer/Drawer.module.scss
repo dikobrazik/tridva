@@ -5,7 +5,9 @@
     left: 0;
     bottom: 0;
     right: 0;
-    
+
+    z-index: 2;
+
     &.blackout {
         top: 0;
         background: #38343a52;

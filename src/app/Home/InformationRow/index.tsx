@@ -8,10 +8,18 @@ import {Text} from '@/components/Text';
 import PopUp from '../PopUp';
 import {useState} from 'react';
 import {Modal} from '@/components/Modal';
+import Image from 'next/image';
+
+import first from './images/1.jpeg';
+import second from './images/2.png';
+import third from './images/3.png';
+import fourth from './images/4.png';
+import fithe from './images/5.png';
 
 const InformationList = [
     {
         titleTag: 'h1' as const,
+        image: first,
         title: (
             <>
                 Cовместные покупки в{' '}
@@ -27,10 +35,26 @@ const InformationList = [
     от страны его расположения. Такая покупка делается организатором нередко через интернет-магазин или
     онлайн-аукцион.`,
     },
-    {title: 'Доставка', description: ''},
-    {title: 'Помощь', description: ''},
-    {title: 'Получи бесплатно', description: ''},
-    {title: 'Выгодные товары дня', description: ''},
+    {
+        title: 'Доставка',
+        image: second,
+        description: '',
+    },
+    {
+        title: 'Помощь',
+        image: third,
+        description: '',
+    },
+    {
+        title: 'Получи бесплатно',
+        image: fourth,
+        description: '',
+    },
+    {
+        title: 'Выгодные товары дня',
+        image: fithe,
+        description: '',
+    },
 ];
 
 export default function InformationRow() {
@@ -47,7 +71,15 @@ export default function InformationRow() {
                     className={css.information}
                     key={index}
                 >
-                    <Box height={58} width={58} className={css.box} borderRadius={4} />
+                    <Box height={58} width={58} className={css.box} borderRadius={4}>
+                        <Image
+                            className={css.image}
+                            src={information.image}
+                            width={58}
+                            height={58}
+                            alt="tridva store"
+                        />
+                    </Box>
                     <Box as={information.titleTag} width="100%" display="flex" justifyContent="center">
                         <Text block size={8} weight={600} align="center">
                             {information.title}
