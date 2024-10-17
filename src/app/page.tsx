@@ -23,6 +23,7 @@ export default async function Home(params: Props) {
         <Column gap="2" id="offers-list-container">
             <Block paddingTop="0">
                 <PopularCategories />
+
                 <InformationRow />
             </Block>
 
