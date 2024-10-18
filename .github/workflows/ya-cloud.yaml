@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Frontend deployment
 
 on:
     push:
@@ -14,7 +14,6 @@ on:
 
 env:
     FRONTEND_IMAGE: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-front
-    NGINX_IMAGE: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-nginx-front
 
 jobs:
     build-frontend:
