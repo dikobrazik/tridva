@@ -12,7 +12,6 @@ on:
                 default: 'just for fun'
 
 env:
-    FRONTEND_IMAGE: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-front
     NGINX_IMAGE: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-nginx-front
 
 jobs:
