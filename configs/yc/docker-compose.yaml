@@ -7,6 +7,8 @@ services:
             - '80:80'
             - '443:443'
         volumes:
+            - /home/ilnarik/cert.pem:/home/ilnarik/cert.pem
+            - /home/ilnarik/key.pem:/home/ilnarik/key.pem
             - /etc/ssl/certs/nginx-selfsigned.crt:/etc/ssl/certs/nginx-selfsigned.crt
             - /etc/ssl/private/nginx-selfsigned.key:/etc/ssl/private/nginx-selfsigned.key
         restart: always
