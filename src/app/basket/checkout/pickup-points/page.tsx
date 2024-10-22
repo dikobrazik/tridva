@@ -64,7 +64,7 @@ export default function PickupPointsPage() {
     useEffect(() => {
         dispatch(loadPickupPointsAction()).then(({payload, meta}) => {
             if (meta.requestStatus === 'fulfilled') {
-                onPickupPointsLoaded(payload);
+                onPickupPointsLoaded(payload as PickupPoint[]);
             }
         });
 
@@ -110,7 +110,7 @@ export default function PickupPointsPage() {
 
             selectClickRef.current.on('select', function (e) {
                 if (e.selected.length) {
-                    if (selectClickRef.current?.getFeatures().getLength() > 1) {
+                    if ((selectClickRef.current?.getFeatures().getLength() || 0) > 1) {
                         selectClickRef.current?.getFeatures().removeAt(0);
                     }
                     setSelectedPickupPoint(e.selected[0].get('pickupPoint'));
@@ -122,9 +122,11 @@ export default function PickupPointsPage() {
     }, []);
 
     const onSelect = () => {
-        dispatch(checkoutActions.setSelectedPickupPointId(selectedPickupPoint.id));
-        localStorage.setItem(LAST_SELECTED_PICKUP_POINT_ID, selectedPickupPoint.id);
-        router.back();
+        if (selectedPickupPoint) {
+            dispatch(checkoutActions.setSelectedPickupPointId(selectedPickupPoint.id));
+            localStorage.setItem(LAST_SELECTED_PICKUP_POINT_ID, String(selectedPickupPoint.id));
+            router.back();
+        }
     };
 
     return (

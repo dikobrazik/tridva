@@ -3,6 +3,7 @@ import {UnitProps} from './types';
 
 export const InlineCssProperties = [
     'display',
+    'position',
     'padding',
     'paddingBottom',
     'paddingTop',

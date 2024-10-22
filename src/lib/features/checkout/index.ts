@@ -8,7 +8,7 @@ const NAMESPACE = 'checkout';
 const pickupPointAdapter = createEntityAdapter<PickupPoint>();
 
 export const loadPickupPointsAction = createAsyncThunk(`${NAMESPACE}/load-pickup-points`, () =>
-    getCityPickupPoints({cityId: 0}),
+    getCityPickupPoints({cityId: 1}),
 );
 
 export const processOrderAction = createAsyncThunk(`${NAMESPACE}/process-order`, (_, {getState}) => {
@@ -17,7 +17,11 @@ export const processOrderAction = createAsyncThunk(`${NAMESPACE}/process-order`,
     const selectedPickupPoint = checkoutSelectors.selectSelectedPickupPoint(state);
     const selectedBasketItemsIds = checkoutSelectors.selectSelectedBasketItems(state);
 
-    processOrder({pickupPointId: selectedPickupPoint?.id, basketItemsIds: selectedBasketItemsIds});
+    if (selectedPickupPoint) {
+        processOrder({pickupPointId: selectedPickupPoint.id, basketItemsIds: selectedBasketItemsIds});
+    } else {
+        window.alert('не выбран пункт выдачи!');
+    }
 });
 
 const initialState = {

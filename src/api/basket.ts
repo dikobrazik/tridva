@@ -32,6 +32,12 @@ export const getBasketItems = (): Promise<BasketItem[]> =>
         .then(response => response.data)
         .catch(() => []);
 
+export const getBasketItemsCount = (): Promise<number> =>
+    axios
+        .get(`basket/count`)
+        .then(response => response.data)
+        .catch(() => 0);
+
 export const getBasketItem = ({offerId}: GetBasketItemByOfferIdPayload): Promise<BasketItem> =>
     axios
         .get(`basket/${offerId}`)

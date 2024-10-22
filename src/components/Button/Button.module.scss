@@ -36,6 +36,10 @@
         &:hover {
             background: #e00c3d;
         }
+
+        &:disabled {
+            background: #7a6e71;
+        }
     }
 
     &.variant-normal {

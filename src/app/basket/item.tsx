@@ -17,7 +17,6 @@ import {
     increaseBasketItemCountAction,
     removeBasketItemAction,
 } from '@/lib/features/basket';
-import {useEffect} from 'react';
 import {formatPrice} from '@/shared/utils/formatPrice';
 
 type Props = {
@@ -58,10 +57,6 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
         dispatch(basketActions.toggleBasketItem(id));
     };
 
-    useEffect(() => {
-        dispatch(basketActions.setBasketItem({id, checked: false}));
-    }, []);
-
     const onRemoveClick = () => {
         dispatch(removeBasketItemAction({id}));
     };
@@ -73,12 +68,12 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
                     <Image src={getFirstOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
                     <Column gap="2">
                         <Row gap={2} alignItems="center">
-                            <Text size={14} weight={600}>
+                            <Text color="#F40C43" size={14} weight={600}>
                                 {formatPrice(offer.price, offer.discount)} ₽
                             </Text>
                             {offer.discount && (
                                 <Text color="#303234A3" decoration="line-through" size={10} weight={400}>
-                                    {offer.price} ₽
+                                    {Math.ceil(Number(offer.price))} ₽
                                 </Text>
                             )}
                         </Row>

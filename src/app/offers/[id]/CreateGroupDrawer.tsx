@@ -13,19 +13,28 @@ import css from './CreateGroupDrawser.module.scss';
 import {getFirstOfferPhoto} from '@/shared/photos';
 import Image from 'next/image';
 import {createGroup} from '@/api';
+import {formatPrice} from '@/shared/utils/formatPrice';
 
 const OfferBlock = ({offer}: {offer: Offer}) => {
+    const finalPrice = formatPrice(offer.price, offer.discount);
+
     return (
-        <Row className={css.offerBlock} padding="4px">
-            <Image src={getFirstOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
-            <Column gap="2">
+        <Row className={css.offerBlock} padding="4px" gap="2">
+            <Image
+                className={css.offerBlockImage}
+                src={getFirstOfferPhoto(offer.photos, 140)}
+                width="56"
+                height="56"
+                alt="offer image"
+            />
+            <Column justifyContent="center" gap="1">
                 <Link href={`/offers/${offer.id}`}>
                     <Text size={12} weight={400} height={16}>
                         {offer.title}
                     </Text>
                 </Link>
-                <Text size={14} weight={600}>
-                    {offer.price} ₽
+                <Text color="#F40C43" size={14} weight={600}>
+                    {finalPrice} ₽
                 </Text>
             </Column>
         </Row>
@@ -45,7 +54,7 @@ const CreateGroupContent = ({onGroupCreated, offer}: {onGroupCreated: (joined: b
                     Хотите создать групповую покупку?
                 </Text>
             </Column>
-            <Column gap="4" alignItems="center">
+            <Column gap="4">
                 <Column gap="2">
                     <Column gap="1" alignItems="center">
                         <Text size={12} weight={500}>
@@ -97,6 +106,8 @@ export const CreateGroupDrawer = ({offer}: {offer: Offer}) => {
         }
     }, [isActive]);
 
+    const finalPrice = formatPrice(offer.price, offer.discount);
+
     return (
         <>
             <Button size="m" flex="1" onClick={toggle}>
@@ -105,7 +116,7 @@ export const CreateGroupDrawer = ({offer}: {offer: Offer}) => {
                         Создать группу
                     </Text>
                     <Text size={12} weight={600} height={14}>
-                        {Math.ceil(Number(offer.price))} ₽
+                        {finalPrice} ₽
                     </Text>
                 </Column>
             </Button>

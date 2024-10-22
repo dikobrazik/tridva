@@ -1,5 +1,6 @@
 import {changeBasketItemCount, getBasketItems, putOfferToBasket, removeItemFromBasket} from '@/api';
 import {RootState, ThunkConfig} from '@/lib/store';
+import {calculatePrice} from '@/shared/utils/formatPrice';
 import {sum} from '@/shared/utils/sum';
 import {BasketItem} from '@/types/basket';
 import {createAsyncThunk, createEntityAdapter, createSelector, createSlice} from '@reduxjs/toolkit';
@@ -95,6 +96,7 @@ export const basketSlice = createSlice({
             [state => selectSelectedBasketItems(state)],
             selectedBasketItems => Object.values(selectedBasketItems),
         ),
+        selectBasketItemsCount: state => basketItemAdapterSelectors.selectAll(state.basketItems).length,
         selectIsBasketItemSelected: (state, itemId: number) => Boolean(state.selectedBasketItems[itemId]),
         selectIsAllBasketItemsSelected: state =>
             !state.loading &&
@@ -112,7 +114,19 @@ export const basketSlice = createSlice({
                     .map(([id]) => {
                         const item = basketItemAdapterSelectors.selectById(state.basketItems, Number(id));
                         if (item) {
-                            return Number(item.offer.price) * item.count;
+                            return calculatePrice(item.offer.price, item.offer.discount) * item.count;
+                        }
+                        return 0;
+                    }),
+            ),
+        selectSelectedBasketItemsCostBeforeDiscount: (state): number =>
+            sum(
+                Object.entries(state.selectedBasketItems)
+                    .filter(([, isSelected]) => isSelected)
+                    .map(([id]) => {
+                        const item = basketItemAdapterSelectors.selectById(state.basketItems, Number(id));
+                        if (item) {
+                            return Math.ceil(Number(item.offer.price)) * item.count;
                         }
                         return 0;
                     }),
@@ -130,14 +144,10 @@ export const basketSlice = createSlice({
 
                 basketItemAdapter.upsertMany(state.basketItems, payload);
 
-                if (JSON.stringify(state.selectedBasketItems) === '{}') {
-                    state.selectedBasketItems = payload.reduce<SelectedBasketItems>(
-                        (selectedBasketItems, basketItem) => {
-                            selectedBasketItems[basketItem.id] = true;
-                            return selectedBasketItems;
-                        },
-                        {},
-                    );
+                for (const basketItem of payload) {
+                    if (state.selectedBasketItems[basketItem.id] === undefined) {
+                        state.selectedBasketItems[basketItem.id] = false;
+                    }
                 }
             })
             .addCase(loadBasketItemsAction.rejected, state => {

@@ -10,6 +10,23 @@
     min-width: 360px;
 }
 
+.footerButtonCount {
+    position: absolute;
+
+    right: 0;
+    background: #f40c43;
+    color: white;
+    border-radius: 12px;
+
+    padding: 2px;
+    min-width: 20px;
+    aspect-ratio: 1 / 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .container {
     max-width: 460px;
 

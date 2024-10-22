@@ -5,21 +5,20 @@ import {Column} from '@/components/layout/Column';
 import {BasketItem} from './item';
 import {Text} from '@/components/Text';
 import {Row} from '@/components/layout/Row';
-import {Separator} from '@/components/Separator';
 import {BasketHeader} from './header';
 import {Button} from '@/components/Button';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
-import {useEffect} from 'react';
-import {basketSelectors, loadBasketItemsAction} from '@/lib/features/basket';
+import {basketSelectors} from '@/lib/features/basket';
 import {Loader} from '@/components/Loader';
 import {AuthorizationModal} from '../authorization/authorizationModal';
 import {userSelectors} from '@/lib/features/user';
 import Link from 'next/link';
-import {sum} from '@/shared/utils/sum';
 import css from './Page.module.scss';
 import {checkoutActions} from '@/lib/features/checkout';
 import {LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT} from '@/lib/constants';
 import {formatPrice} from '@/shared/utils/formatPrice';
+import {Summary} from './component/Summary';
+import {sum} from '@/shared/utils/sum';
 
 export default function Basket() {
     const dispatch = useAppDispatch();
@@ -29,10 +28,6 @@ export default function Basket() {
     const selectedBasketItems = useAppSelector(basketSelectors.selectSelectedBasketItems);
     const selectedItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
     const formattedSelectedItemsCost = formatPrice(selectedItemsCost);
-
-    useEffect(() => {
-        dispatch(loadBasketItemsAction());
-    }, []);
 
     const onCheckoutClick = () => {
         const selectedBasketItemsIds = selectedBasketItems.map(({id}) => id);
@@ -63,38 +58,7 @@ export default function Basket() {
                     </Block>
                 ))}
                 {Boolean(itemsCount) && (
-                    <Block gap="4">
-                        <Text size={12} weight={600}>
-                            Ваш заказ
-                        </Text>
-                        <Column gap="2">
-                            <Row justifyContent="space-between">
-                                <Text size={10} weight={400} color="#303234A3">
-                                    Товары ({sum(selectedBasketItems.map(item => item.count))})
-                                </Text>
-                                <Text size={10} weight={400}>
-                                    {selectedItemsCost} ₽
-                                </Text>
-                            </Row>
-                            <Row justifyContent="space-between">
-                                <Text size={10} weight={400} color="#303234A3">
-                                    Скидка
-                                </Text>
-                                <Text size={10} weight={600}>
-                                    {Number(selectedItemsCost) / 10} ₽
-                                </Text>
-                            </Row>
-                            <Separator />
-                            <Row justifyContent="space-between">
-                                <Text size={12} weight={400} color="#303234A3">
-                                    Итого
-                                </Text>
-                                <Text size={10} weight={600}>
-                                    {formattedSelectedItemsCost} ₽
-                                </Text>
-                            </Row>
-                        </Column>
-                    </Block>
+                    <Summary selectedItemsCount={sum(selectedBasketItems.map(item => item.count))} />
                 )}
             </Column>
 

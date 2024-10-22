@@ -3,7 +3,6 @@
 import {Button} from '@/components/Button';
 import {Header} from '@/components/Header';
 import {Select} from '@/components/Select';
-import {Separator} from '@/components/Separator';
 import {Text} from '@/components/Text';
 import {TextField} from '@/components/TextField';
 import {Block} from '@/components/layout/Block';
@@ -19,6 +18,7 @@ import {format} from 'date-fns';
 import Link from 'next/link';
 import {redirect} from 'next/navigation';
 import {FormEventHandler, useEffect} from 'react';
+import {Summary} from '../component/Summary';
 
 export default function CheckoutPage() {
     const dispatch = useAppDispatch();
@@ -58,7 +58,7 @@ export default function CheckoutPage() {
                                 'товаров',
                             ])} на сумму `}
                         </Text>
-                        <Text size={12} weight={600}>
+                        <Text color="#F40C43" size={12} weight={600}>
                             {selectedBasketItemsCost} ₽
                         </Text>
                     </Row>
@@ -129,45 +129,13 @@ export default function CheckoutPage() {
                     </Column>
                 </Block>
 
-                <Block gap="4">
-                    <Text size={12} weight={600}>
-                        Ваш заказ
-                    </Text>
-
-                    <Column gap="2">
-                        <Row justifyContent="space-between">
-                            <Text size={10} weight={400} color="#303234A3">
-                                Товары ({selectedBasketItemsCount})
-                            </Text>
-                            <Text size={10} weight={400}>
-                                {selectedBasketItemsCost} ₽
-                            </Text>
-                        </Row>
-                        <Row justifyContent="space-between">
-                            <Text size={10} weight={400} color="#303234A3">
-                                Скидка
-                            </Text>
-                            <Text size={10} weight={400}>
-                                -{selectedBasketItemsCost / 10} ₽
-                            </Text>
-                        </Row>
-                        <Separator />
-                        <Row justifyContent="space-between">
-                            <Text size={12} weight={600}>
-                                Итого
-                            </Text>
-                            <Text size={12} weight={600}>
-                                {selectedBasketItemsCost} ₽
-                            </Text>
-                        </Row>
-                    </Column>
-                </Block>
+                <Summary selectedItemsCount={selectedBasketItemsCount} />
 
                 <Box minHeight="40px" />
             </Column>
 
             <Row background="#fff" padding="8px 16px">
-                <Button disabled={selectedPickupPoint === undefined} width="full" type="submit">
+                <Button width="full" type="submit">
                     Перейти к оплате ({selectedBasketItemsCost} ₽)
                 </Button>
             </Row>
