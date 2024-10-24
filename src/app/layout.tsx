@@ -37,7 +37,9 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                     <AuthTokenProvider>
                         <Column className={css.container} width={460} minWidth={360} paddingBottom="59px">
                             <Header />
-                            <Box className={css.content}>{children}</Box>
+                            <Box id="content" className={css.content}>
+                                {children}
+                            </Box>
                             <Footer />
                         </Column>
                     </AuthTokenProvider>
