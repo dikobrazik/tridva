@@ -14,9 +14,9 @@ export const PhotosCarousel = ({photos}: Props) => {
     const {refCallback, scrollPosition} = useScrollPosition();
 
     return (
-        <Box position="relative">
+        <Box position="relative" margin="0 -16px">
             <div ref={refCallback} className={css.imagesContainer}>
-                {photos?.map((photo, index) => (
+                {photos.map((photo, index) => (
                     <Image
                         key={index}
                         aria-colindex={index}

@@ -61,7 +61,7 @@ export default async function Offer(props: Props) {
 
     return (
         <Column gap="2">
-            <Block gap="3">
+            <Block gap="3" paddingTop={0}>
                 {photos ? <PhotosCarousel photos={photos} /> : null}
 
                 <Row gap={1}>
