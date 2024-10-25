@@ -1,13 +1,14 @@
-import Image from 'next/image';
 import {Row} from '../layout/Row';
+import {Text} from '../Text';
+import {Avatar} from '../Avatar';
 
-type Props = {name: string};
+type Props = {id?: number; name: string};
 
 export const Profile = (props: Props) => {
     return (
         <Row gap="2" alignItems="center">
-            <Image src="https://cdn-icons-png.flaticon.com/128/4128/4128176.png" width="24" height="24" alt="avatar" />
-            {props.name}
+            <Avatar id={props.id} width={24} height={24} />
+            <Text weight={500}>{props.name}</Text>
         </Row>
     );
 };

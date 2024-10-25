@@ -11,29 +11,28 @@ import {JoinGroupDrawer} from './JoinGroupDrawer';
 
 type ItemProps = {
     groupId: number;
+    ownerId: number;
     ownerName: string;
     count: number;
     createdAt: string;
 };
 
 function GroupsItem(props: ItemProps) {
-    const {groupId, ownerName, count, createdAt} = props;
+    const {groupId, ownerId, ownerName, count, createdAt} = props;
 
     return (
         <Row className={css.groupItem} alignItems="flex-start" justifyContent="space-between" paddingY={3}>
             <Column gap={1}>
                 <Row>
-                    <Profile name={ownerName} />
+                    <Profile id={ownerId} name={ownerName} />
                 </Row>
                 <Text weight="400" size={10} height={12}>
-                    Для покупки{' '}
-                    {pluralize(count, [
-                        `нужен еще ${count} человек`,
-                        `нужено еще ${count} человека`,
-                        `нужено еще ${count} человек`,
-                    ])}
+                    Для покупки {pluralize(count, [`нужен `, `нужено `, `нужено `])} еще
+                    <Text color="#f40c43">
+                        {pluralize(count, [` ${count} человек`, ` ${count} человека`, ` ${count} человек`])}
+                    </Text>
                 </Text>
-                <Text weight="400" size={10} height={12}>
+                <Text weight="400" size={10} height={12} color="#303234A3">
                     Закрытие группы через: {formatDistanceToNow(new Date(createdAt))}
                 </Text>
             </Column>
@@ -54,21 +53,21 @@ export default async function Groups(props: Props) {
         <Column className={css.groups} gap={2}>
             <Column gap={1}>
                 <Row justifyContent="space-between">
-                    <Text weight="600" size="16px" height={12}>
+                    <Text weight="600" size={16} height={12}>
                         {/* @ts-expect-error TS2322 почему то name не определен в HtmlAnchoreElement */}
                         <a name="groups">Группы </a>
-                        <Text weight="600" size="16px" height={12} color="#3032347A">
+                        <Text weight="600" size={16} height={12} color="#3032347A">
                             {props.count}
                         </Text>
                     </Text>
                     <Row alignItems="center" gap={1}>
-                        <Text weight="400" size="10px" height={12}>
+                        <Text weight="400" size={10} height={12} color="#303234A6">
                             Как это работает
                         </Text>
                         <Icon name="help" />
                     </Row>
                 </Row>
-                <Text weight="400" size="10px" height={12}>
+                <Text weight="400" size={10} height={12}>
                     {props.count} {pluralize(props.count, ['человек создал', 'человека создали', 'человек создали'])}{' '}
                     групповую покупку.
                     <br />
@@ -80,6 +79,7 @@ export default async function Groups(props: Props) {
                 <GroupsItem
                     key={group.id}
                     groupId={group.id}
+                    ownerId={group.ownerId}
                     ownerName={group.ownerName}
                     count={group.capacity - group.participantsCount}
                     createdAt={group.createdAt}

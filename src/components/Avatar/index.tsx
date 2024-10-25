@@ -30,12 +30,20 @@ const avatars = [
 
 type Props = {
     id?: number;
+
+    height?: number;
+    width?: number;
 };
 
 export const Avatar = (props: Props) => {
     return (
         <Box>
-            <Image height={76} width={76} alt="avatar" src={avatars[(props.id ?? 0) % (avatars.length - 1)]} />
+            <Image
+                height={props.height ?? 76}
+                width={props.width ?? 76}
+                alt="avatar"
+                src={avatars[(props.id ?? 0) % (avatars.length - 1)]}
+            />
         </Box>
     );
 };

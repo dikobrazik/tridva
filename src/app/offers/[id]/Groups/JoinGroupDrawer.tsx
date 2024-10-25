@@ -127,7 +127,7 @@ export const JoinGroupDrawer = ({ownerName, groupId}: Props) => {
     return (
         <>
             <Button onClick={toggle} size="m">
-                Присоединиться
+                <Text size={12}>Присоединиться</Text>
             </Button>
             <Drawer isOpen={isActive} onClose={toggle}>
                 {isGroupJoined ? (
