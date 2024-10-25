@@ -10,8 +10,8 @@ export async function generateMetadata({params}: PageParams<null, {id: string}>)
     const offer = await loadOffer({id: offerId});
 
     return {
-        title: offer.title,
-        description: offer.description,
+        title: `${offer.title} купить по низкой цене`,
+        description: `${offer.description}. совместная покупка, низкие цены, низкая цена, купить, дешево, недорого`,
     };
 }
 
