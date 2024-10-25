@@ -2,6 +2,18 @@ import {Column} from '@/components/layout/Column';
 import {PropsWithChildren} from 'react';
 import Footer from './Footer';
 import {loadOffer} from '@/api';
+import {PageParams} from '@/shared/types/next';
+import {Metadata} from 'next';
+
+export async function generateMetadata({params}: PageParams<null, {id: string}>): Promise<Metadata> {
+    const offerId = Number(params.id);
+    const offer = await loadOffer({id: offerId});
+
+    return {
+        title: offer.title,
+        description: offer.description,
+    };
+}
 
 export default async function Layout(props: PropsWithChildren<{params: {id: string}}>) {
     const offerId = Number(props.params.id);

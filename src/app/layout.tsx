@@ -4,12 +4,12 @@ import {Column} from '@/components/layout/Column';
 import {Inter} from 'next/font/google';
 import {Box} from '@/components/layout/Box';
 import React from 'react';
-import StoreProvider from './StoreProvider';
-import {Header} from './Header';
+import StoreProvider from '@/lib/StoreProvider';
+import {Header} from './rootLayout/Header';
 import css from './Layout.module.scss';
-import AuthTokenProvider from './AuthorizationProvider';
+import AuthTokenProvider from './authorization/AuthorizationProvider';
 import classNames from 'classnames';
-import {Footer} from './Footer';
+import {Footer} from './rootLayout/Footer';
 import {ru} from 'date-fns/locale';
 import {setDefaultOptions} from 'date-fns';
 

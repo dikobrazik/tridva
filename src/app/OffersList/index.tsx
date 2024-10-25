@@ -3,7 +3,7 @@
 import {Loader} from '@/components/Loader';
 import {OfferCard} from '@/components/OfferCard';
 import {Box} from '@/components/layout/Box';
-import {useOffers} from '../useOffers';
+import {useOffers} from './useOffers';
 import {useAppSelector} from '@/lib/hooks';
 import {offersSelectors} from '@/lib/features/offers';
 

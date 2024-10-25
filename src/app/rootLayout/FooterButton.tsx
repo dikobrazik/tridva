@@ -6,7 +6,7 @@ import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
-import css from './Layout.module.scss';
+import css from './Footer.module.scss';
 
 export const FooterButton = ({
     icon,

@@ -2,7 +2,7 @@
 
 import {Row} from '@/components/layout/Row';
 import {FooterButton} from './FooterButton';
-import css from './Layout.module.scss';
+import css from './Footer.module.scss';
 import {useAppSelector} from '@/lib/hooks';
 import {basketSelectors} from '@/lib/features/basket';
 

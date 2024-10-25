@@ -1,0 +1,35 @@
+.footer {
+    background-color: #fff;
+    box-shadow: 0px -4px 16px 0px #3f3e431f;
+
+    position: fixed;
+
+    bottom: 0;
+
+    @media (max-width: 460px) {
+        left: 0;
+        right: 0;
+    }
+
+    @media (min-width: 461px) {
+        width: 460px;
+        min-width: 360px;
+    }
+}
+
+.footerButtonCount {
+    position: absolute;
+
+    right: 0;
+    background: #f40c43;
+    color: white;
+    border-radius: 12px;
+
+    padding: 2px;
+    min-width: 20px;
+    aspect-ratio: 1 / 1;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
