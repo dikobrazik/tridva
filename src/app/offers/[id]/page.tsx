@@ -15,6 +15,8 @@ import {Block} from '@/components/layout/Block';
 import About from './About';
 import {formatPrice} from '@/shared/utils/formatPrice';
 import {PhotosCarousel} from './PhotosCarousel';
+import {BackButton} from './BackButton';
+import {LikeButton} from './LikeButton';
 
 type Props = {
     params: {id: string};
@@ -62,7 +64,11 @@ export default async function Offer(props: Props) {
     return (
         <Column gap="2">
             <Block gap="3" paddingTop={0}>
-                {photos ? <PhotosCarousel photos={photos} /> : null}
+                <Box position="relative">
+                    <BackButton />
+                    <LikeButton />
+                    {photos ? <PhotosCarousel photos={photos} /> : null}
+                </Box>
 
                 <Row gap={1}>
                     <Link href={`/categories/${categoryAncestors[0].id}`}>

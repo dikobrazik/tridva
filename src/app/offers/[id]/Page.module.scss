@@ -62,3 +62,25 @@
     border: none;
     padding: 8px 0px;
 }
+
+.customButton {
+    position: absolute;
+
+    &.back {
+        top: 12px;
+        left: 16px;
+    }
+
+    &.like {
+        top: 12px;
+        right: 16px;
+    }
+
+    z-index: 2;
+
+    & > button.customRadius {
+        padding: 4px;
+        border-radius: 50%;
+        border: 1px solid #9ca3aa52;
+    }
+}
