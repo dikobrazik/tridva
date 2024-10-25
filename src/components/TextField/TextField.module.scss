@@ -11,7 +11,14 @@
 
     width: 100%;
 
-    border: 1px solid #9ca3aa7a;
+    &.variant-default {
+        border: 1px solid #9ca3aa7a;
+    }
+
+    &.variant-red {
+        border: 2px solid #f40c43;
+    }
+
     border-radius: 10px;
 
     padding-right: 40px;

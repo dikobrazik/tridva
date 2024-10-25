@@ -1,0 +1,29 @@
+.container {
+    background-color: #ffffff;
+}
+
+.content {
+    max-width: 1320px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.categoriesButton.customSize {
+    color: #ffffff;
+    background: linear-gradient(93.58deg, #f40c43 0.6%, #fd6e55 51%, #ffaf60 99.68%);
+
+    height: 40px;
+    border-radius: 12px;
+}
+
+.searchButton {
+    position: absolute;
+
+    right: 0;
+    top: 0;
+}
+
+.textField.custom {
+    padding: 9px 12px;
+}

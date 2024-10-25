@@ -6,14 +6,15 @@ import {setDefaultOptions} from 'date-fns';
 import {ru} from 'date-fns/locale/ru';
 import type {Metadata} from 'next';
 import {Inter} from 'next/font/google';
-import React, {Suspense} from 'react';
+import React from 'react';
+import * as RootMobileLayout from './rootLayout/mobile';
+import * as RootDesktopLayout from './rootLayout/desktop';
 import css from './Layout.module.scss';
 import {Metrika} from './Metrika';
 import AuthTokenProvider from './authorization/AuthorizationProvider';
 import './globals.scss';
-import {Footer} from './rootLayout/Footer';
-import {Header} from './rootLayout/Header';
 import {NotificationsContainer} from './notifications';
+import {isMobileDevice} from './utils/isMobileDevice';
 
 setDefaultOptions({locale: ru});
 
@@ -32,6 +33,28 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
+    const isMobile = isMobileDevice();
+
+    if (isMobile) {
+        return (
+            <html lang="en">
+                <body className={classNames(inter.className, css.body)}>
+                    <StoreProvider>
+                        <AuthTokenProvider>
+                            <Column className={css.container} width={460} minWidth={360} paddingBottom="59px">
+                                <RootMobileLayout.Header />
+                                <Box id="content" className={css.content}>
+                                    {children}
+                                </Box>
+                                <RootMobileLayout.Footer />
+                            </Column>
+                        </AuthTokenProvider>
+                    </StoreProvider>
+                </body>
+            </html>
+        );
+    }
+
     return (
         <html lang="en">
             <head>
@@ -49,16 +72,11 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 <StoreProvider>
                     <AuthTokenProvider>
                         <Column className={css.container} width={460} minWidth={360} paddingBottom="59px">
-                            <Suspense>
-                                <Header />
-                            </Suspense>
+                            <RootDesktopLayout.Header />
                             <NotificationsContainer />
                             <Box id="content" className={css.content}>
                                 {children}
                             </Box>
-                            <Suspense>
-                                <Footer />
-                            </Suspense>
                         </Column>
                     </AuthTokenProvider>
                 </StoreProvider>

@@ -1,5 +1,9 @@
+@import 'mixins/device-query';
+
 .container {
-    max-width: 460px;
+    @include mobile {
+        max-width: 460px;
+    }
 
     position: relative;
 
@@ -14,10 +18,15 @@
     min-height: 100%;
     height: auto;
 
-    display: flex;
-    justify-content: center;
+    @include mobile {
+        background-color: mintcream;
+        display: flex;
+        justify-content: center;
+    }
 
-    background-color: mintcream;
+    @include desktop {
+        background-color: #f5f5f5;
+    }
 
     & h1,
     h2 {

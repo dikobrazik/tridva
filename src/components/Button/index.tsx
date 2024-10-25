@@ -6,7 +6,7 @@ import {Box} from '../layout/Box';
 import {UnitProps} from '../layout/types';
 import Link from 'next/link';
 
-export type ButtonVariant = 'action' | 'action-white' | 'normal' | 'pseudo' | 'outline' | 'alert' | 'green';
+export type ButtonVariant = 'action' | 'action-white' | 'normal' | 'pseudo' | 'outline' | 'alert' | 'green' | 'custom';
 
 type ButtonProps = {
     variant?: ButtonVariant;
