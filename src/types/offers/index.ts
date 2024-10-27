@@ -8,6 +8,7 @@ export type Offer = {
     discount?: number;
     photos?: string[];
     categoryId: number;
+    ordersCount: number;
     rating?: number;
     reviewsCount: number;
     groupsCount: number;

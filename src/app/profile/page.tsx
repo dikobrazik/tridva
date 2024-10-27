@@ -14,6 +14,8 @@ import {userSelectors} from '@/lib/features/user';
 import {Avatar} from '@/components/Avatar';
 import {Box} from '@/components/layout/Box';
 import css from './Page.module.scss';
+import {offersSelectors} from '@/lib/features/offers';
+import {pluralize} from '@/shared/utils/pluralize';
 
 type LinkCardProps = {
     href: string;
@@ -78,6 +80,7 @@ const LinkButton = (props: LinkCardProps) => (
 export default function ProfilePage() {
     const profile = useSelector(userSelectors.selectProfile);
     const phone = useSelector(userSelectors.selectPhone);
+    const favoriteOffersCount = useSelector(offersSelectors.selectFavoriteOffersCount);
 
     return (
         <Column gap="2">
@@ -125,7 +128,11 @@ export default function ProfilePage() {
                                 href="/profile/favorites"
                                 icon="heart"
                                 title="Избранное"
-                                description="0 товаров"
+                                description={`${favoriteOffersCount} ${pluralize(favoriteOffersCount, [
+                                    'товар',
+                                    'товара',
+                                    'товаров',
+                                ])}`}
                             />
                         </Box>
                     </Row>

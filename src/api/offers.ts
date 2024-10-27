@@ -21,8 +21,16 @@ export const loadOffers = (
 export const loadOffer = (payload: LoadOfferPayload): Promise<Offer> =>
     axios<Offer>(`offers/${payload.id}`).then(response => response.data);
 
-export const addOfferToFavourites = (payload: LoadOfferPayload): Promise<unknown> =>
-    axios.post(`offers/${payload.id}/like`).then(response => response.data);
+export const loadIsFavoriteOffer = (payload: LoadOfferPayload): Promise<boolean> =>
+    axios<boolean>(`offers/${payload.id}/favorite`).then(response => response.data);
+
+export const toggleFavoriteOffer = (payload: LoadOfferPayload): Promise<unknown> =>
+    axios.post(`offers/${payload.id}/favorite`).then(response => response.data);
+
+export const loadFavoriteOffers = (): Promise<Offer[]> => axios(`offers/favorite`).then(response => response.data);
+
+export const loadFavoriteOffersIds = (): Promise<number[]> =>
+    axios(`offers/favorite/ids`).then(response => response.data);
 
 export const loadOfferAttributes = (payload: LoadOfferPayload): Promise<OfferAttribute[]> =>
     axios<OfferAttribute[]>(`offers/${payload.id}/attributes`).then(response => response.data);

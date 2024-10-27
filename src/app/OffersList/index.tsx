@@ -6,11 +6,17 @@ import {Box} from '@/components/layout/Box';
 import {useOffers} from './useOffers';
 import {useAppSelector} from '@/lib/hooks';
 import {offersSelectors} from '@/lib/features/offers';
+import {PropsWithChildren} from 'react';
+import css from './OffersList.module.scss';
 
 type Props = {
     categoryId?: number;
     name?: string;
 };
+
+export function OffersListContainer(props: PropsWithChildren<{}>) {
+    return <Box className={css.grid}>{props.children}</Box>;
+}
 
 export function OffersList(props: Props) {
     const {offers} = useOffers(props);

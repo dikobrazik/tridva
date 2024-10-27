@@ -1,4 +1,4 @@
-import {loadOffers} from '@/api';
+import {toggleFavoriteOffer, loadFavoriteOffersIds, loadOffers} from '@/api';
 import {RootState} from '@/lib/store';
 import {uniq} from '@/shared/utils/uniq';
 import {Offer} from '@/types/offers';
@@ -22,6 +22,15 @@ export const loadOffersAction = createAsyncThunk<
     });
 });
 
+export const loadFavoriteOffersAction = createAsyncThunk<number[]>(`${NAMESPACE}/load-favorite-ids`, () =>
+    loadFavoriteOffersIds(),
+);
+
+export const toggleFavoriteOfferAction = createAsyncThunk<unknown, {offerId: number}>(
+    `${NAMESPACE}/toggle-favorite-offer`,
+    payload => toggleFavoriteOffer({id: payload.offerId}),
+);
+
 export const searchOffersAction = createAsyncThunk<
     {offers: Offer[]; pagesCount: number},
     {search: string},
@@ -34,6 +43,7 @@ export const offersSlice = createSlice({
     name: NAMESPACE,
     initialState: offerAdapter.getInitialState({
         page: 1,
+        favoriteOffersIds: [] as number[],
         loadedOffersIds: [] as number[],
         foundOffersIds: [] as number[],
         offersIdsByCategoryIds: {} as Record<number, number[]>,
@@ -59,6 +69,8 @@ export const offersSlice = createSlice({
         selectLoadedOffersIds: state => state.loadedOffersIds,
         selectFoundOffersIds: state => state.foundOffersIds,
         selectOffersIdsByCategoryIds: state => state.offersIdsByCategoryIds,
+        selectIsOfferFavorite: (state, offerId: number) => state.favoriteOffersIds.includes(offerId),
+        selectFavoriteOffersCount: state => state.favoriteOffersIds.length,
     },
     extraReducers: builder => {
         builder
@@ -83,6 +95,30 @@ export const offersSlice = createSlice({
             })
             .addCase(loadOffersAction.rejected, state => {
                 state.loading = false;
+            })
+            .addCase(loadFavoriteOffersAction.pending, state => {
+                state.loading = true;
+            })
+            .addCase(loadFavoriteOffersAction.fulfilled, (state, {payload}) => {
+                state.loading = false;
+                state.favoriteOffersIds = payload;
+            })
+            .addCase(loadFavoriteOffersAction.rejected, state => {
+                state.loading = false;
+            })
+            .addCase(toggleFavoriteOfferAction.pending, (state, {meta}) => {
+                if (state.favoriteOffersIds.includes(meta.arg.offerId)) {
+                    state.favoriteOffersIds = state.favoriteOffersIds.filter(id => id !== meta.arg.offerId);
+                } else {
+                    state.favoriteOffersIds.push(meta.arg.offerId);
+                }
+            })
+            .addCase(toggleFavoriteOfferAction.rejected, (state, {meta}) => {
+                if (state.favoriteOffersIds.includes(meta.arg.offerId)) {
+                    state.favoriteOffersIds = state.favoriteOffersIds.filter(id => id !== meta.arg.offerId);
+                } else {
+                    state.favoriteOffersIds.push(meta.arg.offerId);
+                }
             })
             .addCase(searchOffersAction.pending, state => {
                 state.loading = true;

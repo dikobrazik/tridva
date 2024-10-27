@@ -57,7 +57,7 @@ export default async function Offer(props: Props) {
         loadOfferAttributesCount({id: offerId}),
     ]);
 
-    const {title, photos, price, discount, reviewsCount, rating} = offer;
+    const {title, photos, price, ordersCount, discount, reviewsCount, rating} = offer;
 
     const finalPrice = formatPrice(price, discount);
 
@@ -66,7 +66,7 @@ export default async function Offer(props: Props) {
             <Block gap="3" paddingTop={0}>
                 <Box position="relative">
                     <BackButton />
-                    <LikeButton />
+                    <LikeButton id={offerId} />
                     {photos ? <PhotosCarousel photos={photos} /> : null}
                 </Box>
 
@@ -128,7 +128,10 @@ export default async function Offer(props: Props) {
                                 ])}`}
                             />
                         )}
-                        <Card title="300 заказов" description="за последние 30 дней" />
+                        <Card
+                            title={`${ordersCount} ${pluralize(ordersCount, ['заказ', 'заказа', 'заказов'])}`}
+                            description="за последние 30 дней"
+                        />
                         <Card
                             href="#groups"
                             title={`${offer.groupsCount} ${pluralize(offer.groupsCount, [

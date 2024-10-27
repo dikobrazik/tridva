@@ -13,7 +13,7 @@ import {memo} from 'react';
 
 export const OfferCard = memo(
     (props: Offer) => {
-        const {id, title, price, discount, rating, photos, reviewsCount} = props;
+        const {id, title, price, ordersCount, discount, rating, photos, reviewsCount} = props;
 
         const imageSrc = getFirstOfferPhoto(photos, 280);
         const fallbackImageSrc = typeof imageSrc === 'string' ? imageSrc.replace('280.jpg', '400.jpg') : undefined;
@@ -71,7 +71,9 @@ export const OfferCard = memo(
                                 </Row>
                             </Row>
                             <Row justifyContent="space-between">
-                                <Text size={10}>Купили 256 {pluralize(256, ['раз', 'раза', 'раз'])}</Text>
+                                <Text size={10}>
+                                    Купили {ordersCount} {pluralize(ordersCount, ['раз', 'раза', 'раз'])}
+                                </Text>
                             </Row>
                         </Column>
                     </Column>

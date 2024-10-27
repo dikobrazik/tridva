@@ -7,6 +7,7 @@ import {ru} from 'date-fns/locale';
 import {setDefaultOptions} from 'date-fns';
 import {loadBasketItemsAction} from '@/lib/features/basket';
 import {useSaveAppRouter} from '@/shared/router';
+import {loadFavoriteOffersAction} from '@/lib/features/offers';
 
 export default function AuthTokenProvider({children}: {children: React.ReactNode}) {
     const isRendered = useRef(false);
@@ -20,6 +21,7 @@ export default function AuthTokenProvider({children}: {children: React.ReactNode
             setDefaultOptions({locale: ru});
             dispatch(checkTokenAction());
             dispatch(loadBasketItemsAction());
+            dispatch(loadFavoriteOffersAction());
         }
 
         isRendered.current = true;

@@ -1,5 +1,4 @@
 import {Text} from '@/components/Text';
-import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import css from './Page.module.scss';
@@ -7,10 +6,11 @@ import {OfferCard} from '@/components/OfferCard';
 import Filter from '../../components/Filter';
 import {loadCategory, loadOffers} from '@/api';
 import {pluralize} from '@/shared/utils/pluralize';
-import {OffersList, OffersListLoader} from '@/app/OffersList';
+import {OffersList, OffersListContainer, OffersListLoader} from '@/app/OffersList';
 import {Sorting} from '../../components/Sorting';
 import {DEFAUL_PAGE_SIZE} from '@/shared/constants';
 import {PageParams} from '@/shared/types/next';
+import {PopularCategories} from '@/app/Home/PopularCategories';
 
 type Props = PageParams<{p: string}, {category: string}>;
 
@@ -25,7 +25,9 @@ export default async function Catalog(props: Props) {
     const category = await loadCategory({categoryId});
 
     return (
-        <Column className={css.offerList} paddingY={2} paddingX={4} id="offers-list-container">
+        <Column className={css.offerList} paddingX={4} id="offers-list-container">
+            <PopularCategories />
+
             <Column gap={2}>
                 <Text size={24} weight={600}>
                     {category?.name}
@@ -38,12 +40,12 @@ export default async function Catalog(props: Props) {
                 <Sorting />
                 <Filter />
             </Row>
-            <Box className={css.grid}>
+            <OffersListContainer>
                 {offers.map(offer => (
                     <OfferCard key={`${offer.id}`} {...offer} />
                 ))}
                 <OffersList categoryId={categoryId} />
-            </Box>
+            </OffersListContainer>
             <OffersListLoader />
         </Column>
     );
