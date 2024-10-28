@@ -5,7 +5,6 @@ import {Box} from '@/components/layout/Box';
 import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
 import {Icon} from '@/components/Icon';
-import cn from 'classnames';
 import Groups from './Groups';
 import Reviews from './_reviewsBlock';
 import {pluralize} from '@/shared/utils/pluralize';
@@ -17,7 +16,8 @@ import {formatPrice} from '@/shared/utils/formatPrice';
 import {PhotosCarousel} from './PhotosCarousel';
 import {BackButton} from './BackButton';
 import {LikeButton} from './LikeButton';
-import {Delivery} from './Delivery';
+import {AboutDelivery} from './Delivery';
+import {AboutGroup} from './AboutGroup';
 
 type Props = {
     params: {id: string};
@@ -143,13 +143,8 @@ export default async function Offer(props: Props) {
                             description={offer.groupsCount > 0 ? 'присоединитесь сейчас' : 'создайте свою с друзьями'}
                         />
                     </Row>
-                    <Delivery />
-                    <Row className={cn(css.tab, css.greentab)} alignItems="center" gap={2} paddingX={2} paddingY={1}>
-                        <Icon name="crown" />
-                        <Text weight="400" size="10px" height={12}>
-                            Гарантия 100% сбора группы на первую созданную группу
-                        </Text>
-                    </Row>
+                    <AboutDelivery />
+                    <AboutGroup />
                 </Column>
             </Block>
 

@@ -1,37 +1,36 @@
 'use client';
 
 import {Icon} from '@/components/Icon';
-import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
-import {Modal} from '@/components/Modal';
 import {Text} from '@/components/Text';
+import classNames from 'classnames';
+import css from './Page.module.scss';
 import {useToggler} from '@/hooks/useToggler';
+import {Modal} from '@/components/Modal';
+import {Column} from '@/components/layout/Column';
 
-export const AboutDelivery = () => {
+export const AboutGroup = () => {
     const {toggle, isActive} = useToggler();
     return (
         <>
             <Row
                 onClick={toggle}
-                border="1px solid #9ca3aa7a"
-                borderRadius={3}
-                justifyContent="space-between"
+                className={classNames(css.tab, css.greentab)}
+                alignItems="center"
+                gap={2}
                 paddingX={2}
                 paddingY={1}
             >
-                <Row alignItems="center" gap={1}>
-                    <Icon name="delivery" />
-                    <Text weight="400" size="10px" height={12}>
-                        17 ноября, бесплатная доставка до пункта выдачи
-                    </Text>
-                </Row>
-                <Icon name="help" />
+                <Icon name="crown" />
+                <Text weight="400" size="10px" height={12}>
+                    Гарантия 100% сбора группы на первую созданную группу
+                </Text>
             </Row>
 
             <Modal isOpen={isActive} withLine={false} onClose={toggle}>
                 <Column gap={3} paddingX={4}>
                     <Text align="center" size={16} weight={600}>
-                        Доставка
+                        Групповая покупка
                     </Text>
 
                     <Text size={12}>
