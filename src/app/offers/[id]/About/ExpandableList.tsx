@@ -7,6 +7,7 @@ import {Text} from '@/components/Text';
 import {OfferAttribute} from '@/types/offers';
 import {useToggler} from '@/hooks/useToggler';
 import {Column} from '@/components/layout/Column';
+import {Box} from '@/components/layout/Box';
 
 type AboutItemProps = {
     name: string;
@@ -17,11 +18,12 @@ function AboutItem(props: AboutItemProps) {
     const {name, value} = props;
 
     return (
-        <Row className={css.aboutItem} justifyContent="space-between">
-            <Text weight="400" size="10px" height={12}>
+        <Row gap={1} justifyContent="space-between">
+            <Text wrap="nowrap" weight="400" size="10px" height={12}>
                 {name}
             </Text>
-            <Text weight="400" size="10px" height={12}>
+            <Box flex="1" className={css.underline}></Box>
+            <Text wrap="nowrap" weight="400" size="10px" height={12}>
                 {value}
             </Text>
         </Row>
