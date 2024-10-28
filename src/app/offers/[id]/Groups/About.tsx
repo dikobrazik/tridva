@@ -7,31 +7,21 @@ import {Modal} from '@/components/Modal';
 import {Text} from '@/components/Text';
 import {useToggler} from '@/hooks/useToggler';
 
-export const AboutDelivery = () => {
-    const {toggle, isActive} = useToggler();
+export const AboutGroups = () => {
+    const {isActive, toggle} = useToggler();
     return (
         <>
-            <Row
-                onClick={toggle}
-                border="1px solid #9ca3aa7a"
-                borderRadius={3}
-                justifyContent="space-between"
-                paddingX={2}
-                paddingY={1}
-            >
-                <Row alignItems="center" gap={1}>
-                    <Icon name="delivery" />
-                    <Text weight="400" size="10px" height={12}>
-                        <Text color="#42C52D">17 ноября</Text>, бесплатная доставка до пункта выдачи
-                    </Text>
-                </Row>
+            <Row onClick={toggle} alignItems="center" gap={1}>
+                <Text weight="400" size={10} height={12} color="#303234A6">
+                    Как это работает
+                </Text>
                 <Icon name="help" />
             </Row>
 
             <Modal isOpen={isActive} withLine={false} onClose={toggle}>
                 <Column gap={3} paddingX={4}>
                     <Text align="center" size={16} weight={600}>
-                        Доставка
+                        Групповая покупка
                     </Text>
 
                     <Text size={12}>

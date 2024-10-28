@@ -2,44 +2,10 @@ import css from './Groups.module.scss';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
-import {Icon} from '@/components/Icon';
 import {loadOfferGroups} from '@/api';
-import {formatDistanceToNow} from 'date-fns';
 import {pluralize} from '@/shared/utils/pluralize';
-import {Profile} from '@/components/Profile';
-import {JoinGroupDrawer} from './JoinGroupDrawer';
-
-type ItemProps = {
-    groupId: number;
-    ownerId: number;
-    ownerName: string;
-    count: number;
-    createdAt: string;
-};
-
-function GroupsItem(props: ItemProps) {
-    const {groupId, ownerId, ownerName, count, createdAt} = props;
-
-    return (
-        <Row className={css.groupItem} alignItems="flex-start" justifyContent="space-between" paddingY={3}>
-            <Column gap={1}>
-                <Row>
-                    <Profile id={ownerId} name={ownerName} />
-                </Row>
-                <Text weight="400" size={10} height={12}>
-                    Для покупки {pluralize(count, [`нужен `, `нужено `, `нужено `])} еще
-                    <Text color="#f40c43">
-                        {pluralize(count, [` ${count} человек`, ` ${count} человека`, ` ${count} человек`])}
-                    </Text>
-                </Text>
-                <Text weight="400" size={10} height={12} color="#303234A3">
-                    Закрытие группы через: {formatDistanceToNow(new Date(createdAt))}
-                </Text>
-            </Column>
-            <JoinGroupDrawer groupId={groupId} ownerName={ownerName} />
-        </Row>
-    );
-}
+import {AboutGroups} from './About';
+import {GroupsList} from './GroupsList';
 
 type Props = {
     count: number;
@@ -60,12 +26,7 @@ export default async function Groups(props: Props) {
                             {props.count}
                         </Text>
                     </Text>
-                    <Row alignItems="center" gap={1}>
-                        <Text weight="400" size={10} height={12} color="#303234A6">
-                            Как это работает
-                        </Text>
-                        <Icon name="help" />
-                    </Row>
+                    <AboutGroups />
                 </Row>
                 <Text weight="400" size={10} height={12}>
                     {props.count} {pluralize(props.count, ['человек создал', 'человека создали', 'человек создали'])}{' '}
@@ -75,16 +36,7 @@ export default async function Groups(props: Props) {
                 </Text>
             </Column>
 
-            {groups.map(group => (
-                <GroupsItem
-                    key={group.id}
-                    groupId={group.id}
-                    ownerId={group.ownerId}
-                    ownerName={group.ownerName}
-                    count={group.capacity - group.participantsCount}
-                    createdAt={group.createdAt}
-                />
-            ))}
+            <GroupsList groups={groups} />
         </Column>
     );
 }
