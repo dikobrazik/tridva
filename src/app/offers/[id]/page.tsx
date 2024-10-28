@@ -156,7 +156,7 @@ export default async function Offer(props: Props) {
 
             {attributesCount > 0 && (
                 <Block>
-                    <About offerId={offerId} />
+                    <About offerId={offerId} offerDescription={offer.description} />
                 </Block>
             )}
 

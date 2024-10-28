@@ -4,7 +4,7 @@ import {Text} from '@/components/Text';
 import css from './About.module.scss';
 import {ExpandableList} from './ExpandableList';
 
-export default async function About({offerId}: {offerId: number}) {
+export default async function About({offerId, offerDescription}: {offerId: number; offerDescription: string}) {
     const attributes = await loadOfferAttributes({id: offerId});
 
     return (
@@ -12,7 +12,7 @@ export default async function About({offerId}: {offerId: number}) {
             <Text weight={600} size={16} height={20}>
                 О товаре
             </Text>
-            <ExpandableList attributes={attributes} />
+            <ExpandableList description={offerDescription} attributes={attributes} />
         </Column>
     );
 }

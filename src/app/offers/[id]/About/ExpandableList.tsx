@@ -1,10 +1,12 @@
 'use client';
 
+import {Button} from '@/components/Button';
 import css from './About.module.scss';
 import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
 import {OfferAttribute} from '@/types/offers';
-import {useState} from 'react';
+import {useToggler} from '@/hooks/useToggler';
+import {Column} from '@/components/layout/Column';
 
 type AboutItemProps = {
     name: string;
@@ -15,7 +17,7 @@ function AboutItem(props: AboutItemProps) {
     const {name, value} = props;
 
     return (
-        <Row justifyContent="space-between" paddingY={2}>
+        <Row className={css.aboutItem} justifyContent="space-between">
             <Text weight="400" size="10px" height={12}>
                 {name}
             </Text>
@@ -26,25 +28,26 @@ function AboutItem(props: AboutItemProps) {
     );
 }
 
-export const ExpandableList = ({attributes}: {attributes: OfferAttribute[]}) => {
-    const [isExpanded, setIsExpanded] = useState(false);
+export const ExpandableList = ({attributes, description}: {attributes: OfferAttribute[]; description: string}) => {
+    const {isActive: isExpanded, toggle} = useToggler();
 
     return (
         <>
-            <ul className={css.aboutList}>
+            <Column gap={2}>
                 {attributes.slice(0, isExpanded ? undefined : 3).map(attribute => (
-                    <li key={attribute.id}>
-                        <AboutItem name={attribute.attributeName} value={attribute.value} />
-                    </li>
+                    <AboutItem key={attribute.id} name={attribute.attributeName} value={attribute.value} />
                 ))}
-            </ul>
+            </Column>
             {attributes.length > 3 ? (
-                <button onClick={() => setIsExpanded(value => !value)} className={css.btn}>
-                    <Text weight="500" size="12px" height={14} decoration="underline">
+                <Button variant="pseudo" onClick={toggle}>
+                    <Text weight={500} size={12} height={14} decoration="underline">
                         {isExpanded ? 'Скрыть в' : 'В'}се характеристики и описание
                     </Text>
-                </button>
+                </Button>
             ) : null}
+            <Text size={10} weight={400}>
+                {description}
+            </Text>
         </>
     );
 };
