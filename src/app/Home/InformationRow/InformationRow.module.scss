@@ -14,3 +14,21 @@
 .image {
     border-radius: 16px;
 }
+
+.iconBox {
+    padding: 4px;
+    border: 1px solid #303234;
+    line-height: 0;
+    border-radius: 50%;
+    color: #f40c43;
+
+    &:first-child {
+        margin-right: 8px;
+        transform: rotate(180deg);
+    }
+
+    &:last-child {
+        border-color: #f40c43;
+        margin-left: 8px;
+    }
+}

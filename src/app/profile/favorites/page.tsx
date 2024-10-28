@@ -3,6 +3,7 @@ import {OffersListContainer} from '@/app/OffersList';
 import {Header} from '@/components/Header';
 import {OfferCard} from '@/components/OfferCard';
 import {Text} from '@/components/Text';
+import {TextField} from '@/components/TextField';
 import {Column} from '@/components/layout/Column';
 
 export default async function FavoritesPage() {
@@ -18,6 +19,8 @@ export default async function FavoritesPage() {
             </Header>
 
             <Column paddingX={4}>
+                <TextField placeholder="Искать товары в избранном" icon="search" />
+
                 <OffersListContainer>
                     {offers.map(offer => (
                         <OfferCard key={offer.id} {...offer} />

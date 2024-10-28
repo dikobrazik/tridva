@@ -15,6 +15,7 @@ import second from './images/2.png';
 import third from './images/3.png';
 import fourth from './images/4.png';
 import fithe from './images/5.png';
+import {Icon} from '@/components/Icon';
 
 const InformationList = [
     {
@@ -34,6 +35,31 @@ const InformationList = [
     лиц приобретают товары непосредственно у поставщика или производителя по оптовым ценам, независимо
     от страны его расположения. Такая покупка делается организатором нередко через интернет-магазин или
     онлайн-аукцион.`,
+        withImage: true,
+        bottomRow: (
+            <Row justifyContent="space-between">
+                <a className={css.link} href="/">
+                    <Row alignItems="center">
+                        <Box className={css.iconBox}>
+                            <Icon name="chevronLeft" size="s" />
+                        </Box>
+                        <Text size={12} height={16} weight={600}>
+                            О сервисе
+                        </Text>
+                    </Row>
+                </a>
+                <a className={css.link} href="/">
+                    <Row alignItems="center">
+                        <Text size={12} height={16} weight={600}>
+                            Пригласи друзей
+                        </Text>
+                        <Box className={css.iconBox}>
+                            <Icon name="chevronRight" size="s" />
+                        </Box>
+                    </Row>
+                </a>
+            </Row>
+        ),
     },
     {
         title: 'Доставка',
@@ -93,7 +119,12 @@ export default function InformationRow() {
                 withLine={false}
                 onClose={() => setSelectedInformationIndex(undefined)}
             >
-                <PopUp title={selectedInformation?.title} description={selectedInformation?.description} />
+                <PopUp
+                    image={selectedInformation?.withImage ? selectedInformation?.image : undefined}
+                    title={selectedInformation?.title}
+                    description={selectedInformation?.description}
+                    bottomRow={selectedInformation?.bottomRow}
+                />
             </Modal>
         </Row>
     );

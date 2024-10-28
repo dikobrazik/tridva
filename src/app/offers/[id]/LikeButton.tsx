@@ -26,7 +26,7 @@ export const LikeButton = (props: Props) => {
                 className={css.customRadius}
                 size="m"
                 variant={isFavoriteOffer ? 'action' : 'action-white'}
-                icon="heart"
+                icon={isFavoriteOffer ? 'heartWhite' : 'heart'}
                 iconSize="m"
             />
         </Box>

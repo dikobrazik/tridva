@@ -13,7 +13,7 @@
 .wrapper {
     width: calc(100% - 32px);
     max-width: 360px;
-    background: #FFFFFF;
+    background: #ffffff;
     position: absolute;
     left: 50%;
     top: 180px;
@@ -22,34 +22,10 @@
     border-radius: 24px;
 }
 
-.imgBox {
-    border: 2px solid #FFFFFF;
-    background: linear-gradient(300.11deg, #F40C43 6.73%, #FFE2C6 107.75%);
+.image {
     position: absolute;
-    left: 50%;
-    transform: translate(-50%, -64px);
-}
+    left: 44%;
+    top: -24px;
 
-.link {
-    &:last-child {
-        color: #F40C43;
-    }
-}
-
-.iconBox {
-    padding: 4px;
-    border: 1px solid #303234;
-    line-height: 0;
-    border-radius: 50%;
-    color: #F40C43;
-
-    &:first-child {
-        margin-right: 8px;
-        transform: rotate(180deg);
-}
-
-    &:last-child {
-        border-color: #F40C43;
-        margin-left: 8px;
-    }
+    border-radius: 16px;
 }

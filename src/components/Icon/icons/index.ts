@@ -16,6 +16,7 @@ export {default as minus} from './minus.svg';
 export {default as plus} from './plus.svg';
 export {default as trash} from './trash.svg';
 export {default as heart} from './heart.svg';
+export {default as heartWhite} from './heart-white.svg';
 export {default as marker} from './marker.svg';
 export {default as map} from './map.svg';
 export {default as messageChat} from './message-chat.svg';

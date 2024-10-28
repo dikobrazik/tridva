@@ -17,6 +17,7 @@ import {formatPrice} from '@/shared/utils/formatPrice';
 import {PhotosCarousel} from './PhotosCarousel';
 import {BackButton} from './BackButton';
 import {LikeButton} from './LikeButton';
+import {Delivery} from './Delivery';
 
 type Props = {
     params: {id: string};
@@ -142,17 +143,7 @@ export default async function Offer(props: Props) {
                             description={offer.groupsCount > 0 ? 'присоединитесь сейчас' : 'создайте свою с друзьями'}
                         />
                     </Row>
-                    <Row className={css.tab} justifyContent="space-between" paddingX={2} paddingY={1}>
-                        <Row alignItems="center" gap={1}>
-                            <Icon name="delivery" />
-                            <Text weight="400" size="10px" height={12}>
-                                17 ноября, бесплатная доставка до пункта выдачи
-                            </Text>
-                        </Row>
-                        <Box className={css.iconBox}>
-                            <Icon name="help" />
-                        </Box>
-                    </Row>
+                    <Delivery />
                     <Row className={cn(css.tab, css.greentab)} alignItems="center" gap={2} paddingX={2} paddingY={1}>
                         <Icon name="crown" />
                         <Text weight="400" size="10px" height={12}>
