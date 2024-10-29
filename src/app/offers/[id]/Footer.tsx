@@ -88,16 +88,18 @@ export default function Footer({offer}: {offer: Offer}) {
                 <Button flex="1" variant="outline" size="m">
                     <Row flex="1" justifyContent="space-between">
                         <Column>
-                            <Text align="start" size={10} weight={600} height={10}>
+                            <Text align="start" size={10} weight={600} height={10} color="#303234">
                                 Присоединиться к группе с Владимиром М.
                             </Text>
-                            <Text align="start" size={8} weight={400} height={12}>
+                            <Text align="start" size={8} weight={400} height={12} color="#303234A3">
                                 Нужен еще 1 человек для покупки, до конца сбора:{' '}
                                 <Text size={8} weight={600} height={12}>
                                     23:20:59
                                 </Text>
                             </Text>
                         </Column>
+
+                        <Button as="a" size="s" icon="chevronRightWhite" iconSize="xs" />
                     </Row>
                 </Button>
             </Row>
