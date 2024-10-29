@@ -15,7 +15,7 @@ import {setDefaultOptions} from 'date-fns';
 
 setDefaultOptions({locale: ru});
 
-const inter = Inter({subsets: ['latin']});
+const inter = Inter({weight: ['400', '500', '600'], subsets: ['latin', 'cyrillic']});
 
 export const metadata: Metadata = {
     title: 'Tridva - интернет-магазин. Дешевые совместные покупки товаров',

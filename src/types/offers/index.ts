@@ -10,6 +10,7 @@ export type Offer = {
     categoryId: number;
     ordersCount: number;
     rating?: number;
+    ratingsCount: number;
     reviewsCount: number;
     groupsCount: number;
 };

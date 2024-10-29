@@ -7,10 +7,11 @@ import {Review} from '@/types/review';
 import css from './Reviews.module.scss';
 import {format} from 'date-fns';
 import {loadOffer, loadReviews} from '@/api';
-import {NewReviewDrawer} from './NewReviewDrawer';
 import Link from 'next/link';
 import {Profile} from '@/components/Profile';
 import {omitCurrentYear} from '@/shared/date/omitCurrentYear';
+import {NewReviewButton} from './NewReviewButton';
+import {pluralize} from '@/shared/utils/pluralize';
 
 const ReviewItem = (review: Review) => {
     return (
@@ -43,9 +44,11 @@ export default async function Reviews(props: Props) {
     const offer = await loadOffer({id: offerId});
     const reviews = await loadReviews({offerId: Number(props.params.id)});
 
+    const {reviewsCount, ratingsCount, rating = 0} = offer;
+
     return (
         <Column className={css.container} height="100%" gap={2}>
-            <Column className={css.topContent} gap="2">
+            <Column className={css.topContent} gap="3">
                 <Row className={css.header} paddingTop="16px" justifyContent="space-between" alignItems="center">
                     <Link href={`/offers/${offerId}`}>
                         <Button variant="pseudo" icon="chevronLeft" iconSize="m" />
@@ -54,7 +57,7 @@ export default async function Reviews(props: Props) {
                     <Text weight="600" size="16px" height={20}>
                         Отзывы{' '}
                         <Text weight="600" size="16px" height={20} color="#3032347A">
-                            {offer.reviewsCount}
+                            {reviewsCount}
                         </Text>
                     </Text>
 
@@ -63,19 +66,15 @@ export default async function Reviews(props: Props) {
 
                 <Row alignItems="center" gap={2}>
                     <Text size="12px" weight={400}>
-                        {offer.rating}
+                        {rating}
                     </Text>
-                    <Rating rating={offer.rating ?? 0} />
+                    <Rating rating={rating} />
+                    <Text size={10} weight={400} color="#303234A3">
+                        {ratingsCount} {pluralize(ratingsCount, ['оценка', 'оценки', 'оценок'])}
+                    </Text>
                 </Row>
 
-                <NewReviewDrawer
-                    offer={offer}
-                    Toggler={({onClick}) => (
-                        <Button paddingY="2" variant="outline" onClick={onClick}>
-                            Написать отзыв
-                        </Button>
-                    )}
-                />
+                <NewReviewButton offer={offer} />
             </Column>
 
             <Column gap="2" overflowY="scroll">

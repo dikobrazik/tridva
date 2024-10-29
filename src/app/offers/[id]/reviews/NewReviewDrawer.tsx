@@ -20,10 +20,39 @@ type Props = {
     offer: Offer;
 };
 
+const RATING_DESCRIPTIOIN: Record<number, string> = {
+    1: 'плохо',
+    2: 'хуже среднего',
+    3: 'удовлетворительно',
+    4: 'хорошо',
+    5: 'отлично',
+};
+
+const ThanksForReview = () => {
+    return (
+        <Column gap={2} alignItems="center" paddingBottom="20px">
+            <Text size={24} weight={500}>
+                ✔️
+            </Text>
+
+            <Column alignItems="center" gap={1}>
+                <Text size={16} weight={600}>
+                    Спасибо за отзыв
+                </Text>
+                <Text size={10} weight={400} color="#303234A3">
+                    Мы опубликуем его после модерации
+                </Text>
+            </Column>
+        </Column>
+    );
+};
+
 export const NewReviewDrawer = ({offer, Toggler}: Props) => {
-    const [rating, setRating] = useState(1);
+    const [rating, setRating] = useState(5);
     const [text, setText] = useState('');
     const {isActive, toggle} = useToggler();
+
+    const [isReviewCreated, setIsReviewCreated] = useState(false);
 
     const {photos, title} = offer;
 
@@ -36,6 +65,14 @@ export const NewReviewDrawer = ({offer, Toggler}: Props) => {
             text,
         });
 
+        setText('');
+        setRating(5);
+
+        setIsReviewCreated(true);
+    };
+
+    const onCloseDrawer = () => {
+        setIsReviewCreated(false);
         toggle();
     };
 
@@ -43,25 +80,39 @@ export const NewReviewDrawer = ({offer, Toggler}: Props) => {
         <>
             <Toggler onClick={toggle} />
 
-            <Drawer isOpen={isActive} onClose={toggle}>
-                <Column gap="6">
-                    <Text size="16px" weight={600}>
-                        Поделитесь впечатлением о товаре
-                    </Text>
-                    <Row className={css.newReviewOfferBox} padding="4px">
-                        <Image width={54} height={54} src={offerImageSrc} alt="offer image" />
-                        <Text>{title}</Text>
-                    </Row>
-                    <Column gap="2">
-                        <span>Ваша оценка:</span>
-                        <Rating rating={rating} onChange={setRating} />
+            <Drawer isOpen={isActive} onClose={onCloseDrawer}>
+                {isReviewCreated ? (
+                    <ThanksForReview />
+                ) : (
+                    <Column gap="6">
+                        <Text size="16px" weight={600}>
+                            Поделитесь впечатлением о товаре
+                        </Text>
+                        <Row className={css.newReviewOfferBox} padding="4px" gap={2} alignItems="center">
+                            <Image width={54} height={54} src={offerImageSrc} alt="offer image" />
+                            <Text>{title}</Text>
+                        </Row>
+                        <Column gap="2">
+                            <Text size={12} weight={500}>
+                                Ваша оценка:{' '}
+                                <Text weight={400} color="#303234A3">
+                                    {RATING_DESCRIPTIOIN[rating]}
+                                </Text>
+                            </Text>
+                            <Rating iconSize="l" rating={rating} onChange={setRating} />
+                        </Column>
+                        <Column gap="2">
+                            <Text size={12} weight={500}>
+                                Напишите отзыв
+                            </Text>
+                            <Text size={10} weight={400} color="#303234A3">
+                                Расскажите, почему товар не подошёл. Это поможет другим покупателям.
+                            </Text>
+                            <TextArea rows={4} value={text} onChange={e => setText(e.target.value)} />
+                        </Column>
+                        <Button onClick={onCreateReviewClick}>Отправить отзыв</Button>
                     </Column>
-                    <Column gap="2">
-                        <span>Напишите отзыв</span>
-                        <TextArea rows={4} value={text} onChange={e => setText(e.target.value)} />
-                    </Column>
-                    <Button onClick={onCreateReviewClick}>Отправить отзыв</Button>
-                </Column>
+                )}
             </Drawer>
         </>
     );

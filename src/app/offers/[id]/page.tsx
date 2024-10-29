@@ -161,7 +161,7 @@ export default async function Offer(props: Props) {
             )}
 
             <Block>
-                <Reviews offer={offer} reviewsCount={reviewsCount} rating={rating} />
+                <Reviews offer={offer} />
             </Block>
         </Column>
     );

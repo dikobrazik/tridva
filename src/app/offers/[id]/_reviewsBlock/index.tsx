@@ -11,6 +11,7 @@ import {Button} from '@/components/Button';
 import {omitCurrentYear} from '@/shared/date/omitCurrentYear';
 import {Offer} from '@/types/offers';
 import {ReviewsBlockHeader} from './Header';
+import {pluralize} from '@/shared/utils/pluralize';
 
 function ReviewsItem(review: Review) {
     return (
@@ -27,12 +28,12 @@ function ReviewsItem(review: Review) {
 
 type Props = {
     offer: Offer;
-    reviewsCount: number;
-    rating?: number;
 };
 
-export default async function Reviews({offer, reviewsCount, rating = 0}: Props) {
+export default async function Reviews({offer}: Props) {
     const reviews = await loadReviews({offerId: offer.id});
+
+    const {reviewsCount, ratingsCount, rating = 0} = offer;
 
     return (
         <Column gap={3}>
@@ -43,6 +44,9 @@ export default async function Reviews({offer, reviewsCount, rating = 0}: Props) 
                         {rating}
                     </Text>
                     <Rating rating={rating} />
+                    <Text size={10} weight={400} color="#303234A3">
+                        {ratingsCount} {pluralize(ratingsCount, ['оценка', 'оценки', 'оценок'])}
+                    </Text>
                 </Row>
             )}
             {reviews.length > 0 && (
