@@ -16,12 +16,15 @@ import {
     increaseBasketItemCountAction,
     putOfferToBasketAction,
 } from '@/lib/features/basket';
+import {formatPrice} from '@/shared/utils/formatPrice';
 
 const CreateSingleGroupButton = ({offer}: {offer: Offer}) => {
     const dispatch = useAppDispatch();
     const onCreateSingleGroupClick = () => {
         dispatch(putOfferToBasketAction({offerId: offer.id}));
     };
+
+    const formattedPrice = formatPrice(offer.price);
 
     return (
         <Button variant="normal" size="m" flex="1" onClick={onCreateSingleGroupClick}>
@@ -30,7 +33,7 @@ const CreateSingleGroupButton = ({offer}: {offer: Offer}) => {
                     Купить в розницу
                 </Text>
                 <Text size={12} weight={600} height={14}>
-                    {Math.ceil(Number(offer.price))} ₽
+                    {formattedPrice} ₽
                 </Text>
             </Column>
         </Button>
