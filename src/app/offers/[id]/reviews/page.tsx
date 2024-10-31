@@ -12,6 +12,7 @@ import {Profile} from '@/components/Profile';
 import {omitCurrentYear} from '@/shared/date/omitCurrentYear';
 import {NewReviewButton} from './NewReviewButton';
 import {pluralize} from '@/shared/utils/pluralize';
+import {PageParams} from '@/shared/types/next';
 
 const ReviewItem = (review: Review) => {
     return (
@@ -34,10 +35,7 @@ const ReviewItem = (review: Review) => {
     );
 };
 
-type Props = {
-    params: {id: string};
-    searchParams: unknown;
-};
+type Props = PageParams<unknown, {id: string}>;
 
 export default async function Reviews(props: Props) {
     const offerId = Number(props.params.id);

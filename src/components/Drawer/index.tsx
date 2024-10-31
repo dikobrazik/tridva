@@ -3,6 +3,7 @@ import cn from 'classnames';
 import css from './Drawer.module.scss';
 import {Icon} from '../Icon';
 import classNames from 'classnames';
+import {createPortal} from 'react-dom';
 
 type Props = PropsWithChildren<{
     isOpen: boolean;
@@ -27,7 +28,7 @@ export const Drawer = (props: Props) => {
         return null;
     }
 
-    return (
+    return createPortal(
         <div
             className={classNames(css.wrapper, {[css.blackout]: !withoutBlackout})}
             onClick={withoutBlackout ? undefined : onWrapperClick}
@@ -38,6 +39,7 @@ export const Drawer = (props: Props) => {
                 </div>
                 {children}
             </div>
-        </div>
+        </div>,
+        document.body,
     );
 };

@@ -8,10 +8,9 @@ import {Block} from '@/components/layout/Block';
 import {PopularCategories} from './Home/PopularCategories';
 import {Column} from '@/components/layout/Column';
 import {DEFAUL_PAGE_SIZE} from '@/shared/constants';
+import {PageParams} from '@/shared/types/next';
 
-type Props = {
-    searchParams: {p?: string};
-};
+type Props = PageParams<{p: string}>;
 
 export default async function Home(params: Props) {
     const page = params.searchParams.p;

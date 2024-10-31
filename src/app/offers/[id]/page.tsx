@@ -18,11 +18,10 @@ import {BackButton} from './BackButton';
 import {LikeButton} from './LikeButton';
 import {AboutDelivery} from './Delivery';
 import {AboutGroup} from './AboutGroup';
+import {SeeAlso} from './SeeAlso';
+import {PageParams} from '@/shared/types/next';
 
-type Props = {
-    params: {id: string};
-    searchParams: unknown;
-};
+type Props = PageParams<{p: string}, {id: string}>;
 
 type CardProps = {
     href?: string;
@@ -51,6 +50,7 @@ const Card = ({href, title, description}: CardProps) => {
 
 export default async function Offer(props: Props) {
     const offerId = Number(props.params.id);
+    const page = props.searchParams.p ? Number(props.searchParams.p) : undefined;
     const offer = await loadOffer({id: offerId});
     const [categoryAncestors, category, attributesCount] = await Promise.all([
         loadCategoryAncestors({categoryId: Number(offer.categoryId)}),
@@ -162,6 +162,13 @@ export default async function Offer(props: Props) {
 
             <Block>
                 <Reviews offer={offer} />
+            </Block>
+
+            <Block gap="3" id="offers-list-container">
+                <Text size={16} weight={600}>
+                    Смотрите также
+                </Text>
+                <SeeAlso categoryId={offer.categoryId} page={page} />
             </Block>
         </Column>
     );
