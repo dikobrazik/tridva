@@ -168,7 +168,7 @@ export default async function Offer(props: Props) {
                 <Text size={16} weight={600}>
                     Смотрите также
                 </Text>
-                <SeeAlso categoryId={categoryAncestors[0].id} page={page} />
+                <SeeAlso categoryId={offer.categoryId} page={page} />
             </Block>
         </Column>
     );
