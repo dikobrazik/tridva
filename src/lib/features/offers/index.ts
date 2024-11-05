@@ -64,7 +64,7 @@ export const offersSlice = createSlice({
     },
     selectors: {
         selectIsLoading: state => state.loading,
-        selectIsLastPageReached: state => state.lastPage !== null && state.page === state.lastPage,
+        selectIsLastPageReached: state => state.lastPage !== null && state.page >= state.lastPage,
         selectCurrentPage: state => state.page,
         selectLoadedOffersIds: state => state.loadedOffersIds,
         selectFoundOffersIds: state => state.foundOffersIds,

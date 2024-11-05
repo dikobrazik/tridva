@@ -114,42 +114,53 @@ export const Header = () => {
                 )}
                 {isActive && (
                     <Column paddingX={4} gap={3} className={css.layover} justifyContent="space-between">
-                        <Column height="100%" overflowY="scroll">
-                            {search && (
-                                <Link
-                                    className={css.foundItem}
-                                    key="search"
-                                    href={`/search?${SEARCH_PARAM_NAME}=${search}`}
-                                    onClick={resetSearchState(false)}
-                                >
-                                    <Row justifyContent="space-between" paddingY={3}>
-                                        <Text weight={500} size={14}>
-                                            {search}
-                                        </Text>
-                                        <Icon name="search" size="m" />
-                                    </Row>
-                                </Link>
-                            )}
+                        <Column height="100%" overflowY="scroll" gap={3}>
+                            <Column>
+                                {search && (
+                                    <Link
+                                        className={css.foundItem}
+                                        key="search"
+                                        href={`/search?${SEARCH_PARAM_NAME}=${search}`}
+                                        onClick={resetSearchState(false)}
+                                    >
+                                        <Row justifyContent="flex-start" paddingY={3} gap="3">
+                                            <Icon name="search" size="s" />
+                                            <Text weight={500} size={14}>
+                                                {search}
+                                            </Text>
+                                        </Row>
+                                    </Link>
+                                )}
+                            </Column>
+
                             {isLoading && (
                                 <Row paddingY={3} justifyContent="center">
                                     <Loader />
                                 </Row>
                             )}
-                            {foundCategories.map(category => (
-                                <Link
-                                    className={css.foundItem}
-                                    key={category.id}
-                                    href={`/categories/${category.id}`}
-                                    onClick={resetSearchState(true)}
-                                >
-                                    <Row justifyContent="space-between" paddingY={3}>
-                                        <Text weight={500} size={14}>
-                                            {category.name}
-                                        </Text>
-                                        <Icon name="chevronRight" size="m" />
-                                    </Row>
-                                </Link>
-                            ))}
+                            {foundCategories.length > 0 && (
+                                <Column>
+                                    <Text weight={400} size={10} color="#303234A3">
+                                        Категории
+                                    </Text>
+
+                                    {foundCategories.map(category => (
+                                        <Link
+                                            className={css.foundItem}
+                                            key={category.id}
+                                            href={`/categories/${category.id}`}
+                                            onClick={resetSearchState(true)}
+                                        >
+                                            <Row justifyContent="space-between" paddingY={3}>
+                                                <Text weight={500} size={14}>
+                                                    {category.name}
+                                                </Text>
+                                                <Icon name="chevronRight" size="m" />
+                                            </Row>
+                                        </Link>
+                                    ))}
+                                </Column>
+                            )}
                         </Column>
                     </Column>
                 )}
