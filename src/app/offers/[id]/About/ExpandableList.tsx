@@ -23,7 +23,7 @@ function AboutItem(props: AboutItemProps) {
                 {name}
             </Text>
             <Box flex="1" className={css.underline}></Box>
-            <Text wrap="nowrap" weight="400" size="10px" height={12}>
+            <Text weight="400" size="10px" height={12}>
                 {value}
             </Text>
         </Row>
