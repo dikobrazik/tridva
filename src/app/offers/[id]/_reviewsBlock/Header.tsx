@@ -6,7 +6,9 @@ import {NewReviewDrawer} from '../reviews/NewReviewDrawer';
 import {Button} from '@/components/Button';
 import {Offer} from '@/types/offers';
 
-export const ReviewsBlockHeader = ({offer, reviewsCount}: {offer: Offer; reviewsCount: number}) => {
+type Props = {offer: Offer; reviewsCount: number; hasReview: boolean};
+
+export const ReviewsBlockHeader = ({offer, reviewsCount, hasReview}: Props) => {
     return (
         <Row alignItems="center" justifyContent="space-between">
             <Text weight="600" size="16px" height={20}>
@@ -15,16 +17,18 @@ export const ReviewsBlockHeader = ({offer, reviewsCount}: {offer: Offer; reviews
                     {reviewsCount}
                 </Text>
             </Text>
-            <NewReviewDrawer
-                offer={offer}
-                Toggler={({onClick}) => (
-                    <Button paddingX={2} icon="pen" variant="pseudo" onClick={onClick}>
-                        <Text size={12} weight={500}>
-                            Написать отзыв
-                        </Text>
-                    </Button>
-                )}
-            />
+            {!hasReview && (
+                <NewReviewDrawer
+                    offer={offer}
+                    Toggler={({onClick}) => (
+                        <Button paddingX={2} icon="pen" variant="pseudo" onClick={onClick}>
+                            <Text size={12} weight={500}>
+                                Написать отзыв
+                            </Text>
+                        </Button>
+                    )}
+                />
+            )}
         </Row>
     );
 };

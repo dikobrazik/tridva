@@ -6,7 +6,7 @@ import {Row} from '@/components/layout/Row';
 import {Review} from '@/types/review';
 import css from './Reviews.module.scss';
 import {format} from 'date-fns';
-import {loadOffer, loadReviews} from '@/api';
+import {loadHasReview, loadOffer, loadReviews} from '@/api';
 import Link from 'next/link';
 import {Profile} from '@/components/Profile';
 import {omitCurrentYear} from '@/shared/date/omitCurrentYear';
@@ -39,8 +39,11 @@ type Props = PageParams<unknown, {id: string}>;
 
 export default async function Reviews(props: Props) {
     const offerId = Number(props.params.id);
-    const offer = await loadOffer({id: offerId});
-    const reviews = await loadReviews({offerId: Number(props.params.id)});
+    const [offer, reviews, hasReview] = await Promise.all([
+        loadOffer({id: offerId}),
+        loadReviews({offerId}),
+        loadHasReview({offerId}),
+    ]);
 
     const {reviewsCount, ratingsCount, rating = 0} = offer;
 
@@ -72,7 +75,7 @@ export default async function Reviews(props: Props) {
                     </Text>
                 </Row>
 
-                <NewReviewButton offer={offer} />
+                {!hasReview && <NewReviewButton offer={offer} />}
             </Column>
 
             <Column gap="2" overflowY="scroll">

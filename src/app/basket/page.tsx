@@ -63,7 +63,7 @@ export default function Basket() {
             </Column>
 
             {selectedItemsCost > 0 && (
-                <Row gap="6" padding="8px 16px 8px 16px" background="#fff">
+                <Row className={css.checkoutButtonContainer} gap="6" padding="8px 16px 8px 16px" background="#fff">
                     <Column justifyContent="center" gap="1">
                         <Text size={14} weight={600} wrap="nowrap">
                             {formattedSelectedItemsCost} ₽

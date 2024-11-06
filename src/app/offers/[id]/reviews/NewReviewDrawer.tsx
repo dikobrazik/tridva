@@ -105,9 +105,6 @@ export const NewReviewDrawer = ({offer, Toggler}: Props) => {
                             <Text size={12} weight={500}>
                                 Напишите отзыв
                             </Text>
-                            <Text size={10} weight={400} color="#303234A3">
-                                Расскажите, почему товар не подошёл. Это поможет другим покупателям.
-                            </Text>
                             <TextArea rows={4} value={text} onChange={e => setText(e.target.value)} />
                         </Column>
                         <Button onClick={onCreateReviewClick}>Отправить отзыв</Button>

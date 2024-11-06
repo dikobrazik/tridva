@@ -2,7 +2,7 @@ import css from './Reviews.module.scss';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
-import {loadReviews} from '@/api/reviews';
+import {loadHasReview, loadReviews} from '@/api';
 import {Review} from '@/types/review';
 import {format} from 'date-fns';
 import {Rating} from '@/components/Rating';
@@ -31,13 +31,16 @@ type Props = {
 };
 
 export default async function Reviews({offer}: Props) {
-    const reviews = await loadReviews({offerId: offer.id});
+    const [reviews, hasReview] = await Promise.all([
+        loadReviews({offerId: offer.id, pageSize: 10}),
+        loadHasReview({offerId: offer.id}),
+    ]);
 
     const {reviewsCount, ratingsCount, rating = 0} = offer;
 
     return (
         <Column gap={3}>
-            <ReviewsBlockHeader offer={offer} reviewsCount={reviewsCount} />
+            <ReviewsBlockHeader offer={offer} reviewsCount={reviewsCount} hasReview={hasReview} />
             {rating && (
                 <Row alignItems="center" gap={2}>
                     <Text size="12px" weight={400}>

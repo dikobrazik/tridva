@@ -115,7 +115,7 @@ export default async function Offer(props: Props) {
                     <Row gap={2} className={css.cards}>
                         {rating !== undefined && rating > 0 && (
                             <Card
-                                href={`/offers/${offerId}/reviews`}
+                                href={`/offers/${offerId}#reviews`}
                                 title={
                                     <Row gap={1}>
                                         <Icon name="star" />
@@ -160,7 +160,7 @@ export default async function Offer(props: Props) {
                 </Block>
             )}
 
-            <Block>
+            <Block id="reviews">
                 <Reviews offer={offer} />
             </Block>
 

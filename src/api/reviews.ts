@@ -8,6 +8,10 @@ type LoadReviewsPayload = {
     pageSize?: number;
 };
 
+type LoadHasReviewPayload = {
+    offerId: number;
+};
+
 type CreateReviewPayload = {
     offerId: number;
 
@@ -15,13 +19,22 @@ type CreateReviewPayload = {
     rating: number;
 };
 
-export const loadReviews = (payload: LoadReviewsPayload): Promise<Review[]> =>
-    axios<Review[]>(`offers/${payload.offerId}/reviews`)
+export const loadReviews = ({offerId, page, pageSize}: LoadReviewsPayload): Promise<Review[]> =>
+    axios<Review[]>(`offers/${offerId}/reviews`, {params: {page, pageSize}})
         .then(response => response.data)
         .catch(e => {
             console.log(e);
 
             return [];
+        });
+
+export const loadHasReview = ({offerId}: LoadHasReviewPayload): Promise<boolean> =>
+    axios<boolean>(`offers/${offerId}/has-review`)
+        .then(response => response.data)
+        .catch(e => {
+            console.log(e);
+
+            return false;
         });
 
 export const createReview = ({offerId, ...body}: CreateReviewPayload): Promise<Review[]> =>
