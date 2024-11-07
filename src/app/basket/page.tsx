@@ -39,8 +39,8 @@ export default function Basket() {
 
     return (
         <Column height="100%" justifyContent="space-between">
-            <Column gap="2" flex="1">
-                <BasketHeader count={itemsCount} />
+            <Column gap="2" flex="1" paddingBottom={88}>
+                <BasketHeader />
                 {areBasketItemsLoading && (
                     <Row justifyContent="center">
                         <Loader />

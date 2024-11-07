@@ -6,7 +6,7 @@ import {Text} from '@/components/Text';
 import {basketActions, basketSelectors} from '@/lib/features/basket';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 
-export const BasketHeader = ({count}: {count: number}) => {
+export const BasketHeader = () => {
     const dispatch = useAppDispatch();
     const basketItemsCount = useAppSelector(basketSelectors.selectAll).length;
     const isAllItemsSelected = useAppSelector(basketSelectors.selectIsAllBasketItemsSelected);
@@ -27,7 +27,7 @@ export const BasketHeader = ({count}: {count: number}) => {
         >
             Корзина{' '}
             <Text size={16} weight={600} color="#3032347A">
-                {count}
+                {basketItemsCount}
             </Text>
         </Header>
     );

@@ -3,9 +3,14 @@
 }
 
 .checkoutButtonContainer {
-    position: absolute;
+    max-width: 460px;
+
+    position: fixed;
 
     bottom: 58px;
     left: 0;
     right: 0;
+
+    margin-left: auto;
+    margin-right: auto;
 }
