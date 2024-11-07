@@ -9,6 +9,7 @@ services:
         volumes:
             - /etc/letsencrypt/live/tridva.store/fullchain.pem:/etc/letsencrypt/live/tridva.store/fullchain.pem
             - /etc/letsencrypt/live/tridva.store/privkey.pem:/etc/letsencrypt/live/tridva.store/privkey.pem
+            - /usr/app/sitemap.xml:/home/ilnarik/sitemap.xml
         restart: always
         depends_on:
             - frontend
@@ -21,4 +22,6 @@ services:
 
     backend:
         image: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-api
+        volumes:
+            - /usr/app/sitemap.xml:/home/ilnarik/sitemap.xml
         restart: always
