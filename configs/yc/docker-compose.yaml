@@ -23,5 +23,5 @@ services:
     backend:
         image: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-api
         volumes:
-            - /usr/app/sitemap.xml:/home/ilnarik/sitemap.xml
+            - /usr/src/app/dist/sitemap.xml:/home/ilnarik/sitemap.xml
         restart: always
