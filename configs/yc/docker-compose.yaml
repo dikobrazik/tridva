@@ -9,7 +9,7 @@ services:
         volumes:
             - /etc/letsencrypt/live/tridva.store/fullchain.pem:/etc/letsencrypt/live/tridva.store/fullchain.pem
             - /etc/letsencrypt/live/tridva.store/privkey.pem:/etc/letsencrypt/live/tridva.store/privkey.pem
-            - /usr/app/sitemap.xml:/home/ilnarik/sitemap.xml
+            - shared-volume:/var/tmp/shared-docker
         restart: always
         depends_on:
             - frontend
@@ -23,5 +23,8 @@ services:
     backend:
         image: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-api
         volumes:
-            - /usr/src/app/dist/sitemap.xml:/home/ilnarik/sitemap.xml
+            - shared-volume:/var/tmp/shared-docker
         restart: always
+
+volumes:
+    shared-volume:
