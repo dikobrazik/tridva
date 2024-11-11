@@ -9,12 +9,11 @@ type Props = PropsWithChildren<{
     isOpen: boolean;
     onClose: () => void;
 
-    withLine?: boolean;
     withoutBlackout?: boolean;
 }>;
 
 export const Drawer = (props: Props) => {
-    const {onClose, isOpen, withLine = true, withoutBlackout, children} = props;
+    const {onClose, isOpen, withoutBlackout, children} = props;
     const onWrapperClick = useCallback<MouseEventHandler<HTMLDivElement>>(
         e => {
             if (e.target === e.currentTarget) {
@@ -33,7 +32,7 @@ export const Drawer = (props: Props) => {
             className={classNames(css.wrapper, {[css.blackout]: !withoutBlackout})}
             onClick={withoutBlackout ? undefined : onWrapperClick}
         >
-            <div className={cn(css.content, {[css.withLine]: withLine})}>
+            <div className={cn(css.content, {[css.withLine]: false})}>
                 <div className={css.closeIcon}>
                     <Icon size="m" onClick={onClose} name="close" />
                 </div>

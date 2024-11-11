@@ -116,7 +116,6 @@ export default function InformationRow() {
 
             <Modal
                 isOpen={selectedInformationIndex !== undefined}
-                withLine={false}
                 onClose={() => setSelectedInformationIndex(undefined)}
             >
                 <PopUp

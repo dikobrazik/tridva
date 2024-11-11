@@ -1,4 +1,3 @@
-import {Button} from '@/components/Button';
 import {Rating} from '@/components/Rating';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
@@ -7,12 +6,12 @@ import {Review} from '@/types/review';
 import css from './Reviews.module.scss';
 import {format} from 'date-fns';
 import {loadHasReview, loadOffer, loadReviews} from '@/api';
-import Link from 'next/link';
 import {Profile} from '@/components/Profile';
 import {omitCurrentYear} from '@/shared/date/omitCurrentYear';
 import {NewReviewButton} from './NewReviewButton';
 import {pluralize} from '@/shared/utils/pluralize';
 import {PageParams} from '@/shared/types/next';
+import {BackButton} from './BackButton';
 
 const ReviewItem = (review: Review) => {
     return (
@@ -51,9 +50,7 @@ export default async function Reviews(props: Props) {
         <Column className={css.container} height="100%" gap={2}>
             <Column className={css.topContent} gap="3">
                 <Row className={css.header} paddingTop="16px" justifyContent="space-between" alignItems="center">
-                    <Link href={`/offers/${offerId}`}>
-                        <Button variant="pseudo" icon="chevronLeft" iconSize="m" />
-                    </Link>
+                    <BackButton />
 
                     <Text weight="600" size="16px" height={20}>
                         Отзывы{' '}

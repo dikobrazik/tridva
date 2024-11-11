@@ -6,12 +6,10 @@ import {Icon} from '../Icon';
 type Props = PropsWithChildren<{
     isOpen: boolean;
     onClose: () => void;
-
-    withLine?: boolean;
 }>;
 
 export const Modal = (props: Props) => {
-    const {onClose, isOpen, withLine = true, children} = props;
+    const {onClose, isOpen, children} = props;
     const onWrapperClick = useCallback<MouseEventHandler<HTMLDivElement>>(
         e => {
             if (e.target === e.currentTarget) {
@@ -27,7 +25,7 @@ export const Modal = (props: Props) => {
 
     return (
         <div className={css.wrapper} onClick={onWrapperClick}>
-            <div className={cn(css.content, {[css.withLine]: withLine})}>
+            <div className={cn(css.content)}>
                 <div className={css.closeIcon}>
                     <Icon size="m" onClick={onClose} name="close" />
                 </div>

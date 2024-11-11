@@ -42,7 +42,6 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
                 <link rel="manifest" href="/favicon/site.webmanifest" />
                 <meta name="apple-mobile-web-app-title" content="Tridva" />
-                <Metrika />
             </head>
             <body className={classNames(inter.className, css.body)}>
                 <StoreProvider>
@@ -56,6 +55,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                         </Column>
                     </AuthTokenProvider>
                 </StoreProvider>
+                <Metrika />
             </body>
         </html>
     );

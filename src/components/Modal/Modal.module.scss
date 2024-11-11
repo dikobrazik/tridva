@@ -32,19 +32,6 @@
     -webkit-animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
     animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 
-    &.withLine {
-        // полоска сверху дровера
-        &::after {
-            content: '';
-            position: absolute;
-            width: 74px;
-            height: 3px;
-            background: #efebf1;
-            top: 8px;
-            left: calc(50% - 37px);
-        }
-    }
-
     & .closeIcon {
         cursor: pointer;
         position: absolute;

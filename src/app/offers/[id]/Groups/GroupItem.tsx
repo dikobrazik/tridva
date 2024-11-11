@@ -34,7 +34,7 @@ export const GroupsItem = (props: ItemProps) => {
                     Закрытие группы через: {formatDistanceToNow(new Date(createdAt))}
                 </Text>
             </Column>
-            <JoinGroupDrawer groupId={groupId} ownerName={ownerName} />
+            <JoinGroupDrawer ownerId={ownerId} groupId={groupId} ownerName={ownerName} />
         </Row>
     );
 };

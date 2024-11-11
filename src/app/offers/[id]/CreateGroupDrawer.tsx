@@ -117,7 +117,7 @@ export const CreateGroupDrawer = ({offer}: {offer: Offer}) => {
 
     return (
         <>
-            <Button size="m" flex="1" onClick={toggle}>
+            <Button size="m" flex="1 1 50%" onClick={toggle}>
                 <Column>
                     <Text size={12} weight={600} height={14}>
                         Создать группу

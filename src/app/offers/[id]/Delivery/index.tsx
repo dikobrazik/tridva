@@ -28,7 +28,7 @@ export const AboutDelivery = () => {
                 <Icon name="help" />
             </Row>
 
-            <Modal isOpen={isActive} withLine={false} onClose={toggle}>
+            <Modal isOpen={isActive} onClose={toggle}>
                 <Column gap={3} paddingX={4}>
                     <Text align="center" size={16} weight={600}>
                         Доставка
