@@ -25,7 +25,7 @@ export const GroupsItem = (props: ItemProps) => {
                     <Profile id={ownerId} name={ownerName} />
                 </Row>
                 <Text weight="400" size={10} height={12}>
-                    Для покупки {pluralize(count, [`нужен `, `нужено `, `нужено `])} еще
+                    Для покупки {pluralize(count, [`нужен `, `нужно `, `нужно `])} еще
                     <Text color="#f40c43">
                         {pluralize(count, [` ${count} человек`, ` ${count} человека`, ` ${count} человек`])}
                     </Text>
