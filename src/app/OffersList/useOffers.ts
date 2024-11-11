@@ -1,3 +1,4 @@
+import {useIsEventSupported} from '@/hooks/useIsEventSupported';
 import {
     loadOffersAction,
     offersActions,
@@ -19,6 +20,7 @@ type Props = {
 export const useOffers = (props?: Props) => {
     const dispatch = useAppDispatch();
     const searchParams = useSearchParams();
+    const isOnScrollEndEventSupported = useIsEventSupported('scrollend');
 
     const offersSelector = useMemo(() => {
         const categoryId = props?.categoryId;
@@ -38,7 +40,7 @@ export const useOffers = (props?: Props) => {
         const container = (e.target as Document).documentElement;
 
         // костыль, потому что при переходе на карточку, onScroll не успевает отписаться
-        const isOffersListVisible = Boolean(document.querySelector('#offers-list-container')?.checkVisibility());
+        const isOffersListVisible = Boolean(document.querySelector('#offers-list-container'));
 
         if (isOffersListVisible && container.scrollTop >= container.scrollHeight - 1.5 * container.offsetHeight) {
             if (!areOffersLoading && !isLastPageReached) {
@@ -61,11 +63,13 @@ export const useOffers = (props?: Props) => {
     }, []);
 
     useEffect(() => {
-        document.removeEventListener('scrollend', memoizedOnScroll);
-        document.addEventListener('scrollend', memoizedOnScroll, {passive: true});
+        document.removeEventListener(isOnScrollEndEventSupported ? 'scrollend' : 'scroll', memoizedOnScroll);
+        document.addEventListener(isOnScrollEndEventSupported ? 'scrollend' : 'scroll', memoizedOnScroll, {
+            passive: true,
+        });
 
         return () => {
-            document.removeEventListener('scrollend', memoizedOnScroll);
+            document.removeEventListener(isOnScrollEndEventSupported ? 'scrollend' : 'scroll', memoizedOnScroll);
         };
     }, [memoizedOnScroll]);
 

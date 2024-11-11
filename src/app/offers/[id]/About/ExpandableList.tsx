@@ -19,7 +19,7 @@ function AboutItem(props: AboutItemProps) {
 
     return (
         <Row gap={1} justifyContent="space-between">
-            <Text wrap="nowrap" weight="400" size="10px" height={12}>
+            <Text whiteSpace="nowrap" weight="400" size="10px" height={12}>
                 {name}
             </Text>
             <Box flex="1" className={css.underline}></Box>

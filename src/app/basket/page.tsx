@@ -19,6 +19,7 @@ import {LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT} from '@/lib/constants';
 import {formatPrice} from '@/shared/utils/formatPrice';
 import {Summary} from './component/Summary';
 import {sum} from '@/shared/utils/sum';
+import {pluralize} from '@/shared/utils/pluralize';
 
 export default function Basket() {
     const dispatch = useAppDispatch();
@@ -65,11 +66,11 @@ export default function Basket() {
             {selectedItemsCost > 0 && (
                 <Row className={css.checkoutButtonContainer} gap="6" padding="8px 16px 8px 16px" background="#fff">
                     <Column justifyContent="center" gap="1">
-                        <Text size={14} weight={600} wrap="nowrap">
+                        <Text size={14} weight={600} whiteSpace="nowrap">
                             {formattedSelectedItemsCost} ₽
                         </Text>
                         <Text size={10} weight={400} color="#303234A3">
-                            1 товар
+                            {itemsCount} {pluralize(itemsCount, ['товар', 'товара', 'товаров'])}
                         </Text>
                     </Column>
 

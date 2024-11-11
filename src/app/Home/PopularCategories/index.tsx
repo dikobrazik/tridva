@@ -19,7 +19,7 @@ export const PopularCategories = async () => {
                             backgroundColor="#f5f5f5"
                             border="1px solid #E1A6B414"
                         >
-                            <Text wrap="nowrap" size={12}>
+                            <Text whiteSpace="nowrap" size={12}>
                                 {category.name}
                             </Text>
                         </Button>

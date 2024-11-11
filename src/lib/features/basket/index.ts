@@ -83,8 +83,9 @@ export const basketSlice = createSlice({
             state.selectedBasketItems[payload.id] = payload.checked;
         },
         toggleAllBasketItems: state => {
+            const value = Object.values(state.selectedBasketItems).includes(false) ? true : false;
             for (const itemId in state.selectedBasketItems) {
-                state.selectedBasketItems[itemId] = !state.selectedBasketItems[itemId];
+                state.selectedBasketItems[itemId] = value;
             }
         },
     },

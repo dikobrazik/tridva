@@ -5,7 +5,7 @@ type Props = {
     size?: CSSProperties['fontSize'];
     weight?: CSSProperties['fontWeight'];
     height?: CSSProperties['lineHeight'];
-    space?: CSSProperties['whiteSpace'];
+    whiteSpace?: CSSProperties['whiteSpace'];
     decoration?: CSSProperties['textDecoration'];
     color?: CSSProperties['color'];
     marginRight?: CSSProperties['marginRight'];
@@ -22,7 +22,7 @@ export const Text = (props: PropsWithChildren<Props>) => {
                 fontSize: props.size,
                 textAlign: props.align,
                 lineHeight: props.height ? `${props.height}px` : undefined,
-                whiteSpace: props.space,
+                whiteSpace: props.whiteSpace,
                 textDecoration: props.decoration,
                 color: props.color,
                 marginRight: props.marginRight,
