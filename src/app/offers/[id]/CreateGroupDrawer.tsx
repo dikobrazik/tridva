@@ -79,12 +79,19 @@ const GroupCreatedContent = ({offer}: {offer: Offer}) => {
     return (
         <Column gap="10">
             <Column gap="2" alignItems="center">
+                <Text align="center" size={24} weight={500}>
+                    🎉
+                </Text>
                 <Text align="center" size={16} weight={600} color="#4FDE38">
                     Вы создали группу!
                 </Text>
                 <Text align="center" size={10} weight={400} color="#303234A3">
-                    Для групповой покупки нужен ещё <Text color="#303234">1 человек</Text>, оплатите товар, чтобы начать
-                    сбор группы
+                    Для групповой покупки нужен ещё{' '}
+                    <Text weight={500} color="#303234">
+                        1 человек
+                    </Text>
+                    ,<br />
+                    оплатите товар, чтобы начать сбор группы
                 </Text>
             </Column>
             <OfferBlock offer={offer} />

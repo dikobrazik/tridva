@@ -16,6 +16,8 @@ import {loadCategoriesByName} from '@/api';
 import {Category} from '@/types/category';
 import {Loader} from '@/components/Loader';
 import {Box} from '@/components/layout/Box';
+import {createPortal} from 'react-dom';
+import {usePageScrollable} from '@/hooks/usePageScrollable';
 
 const pagesWithoutHeader = [
     /[/]offers[/]\d+[/]reviews/,
@@ -39,6 +41,8 @@ export const Header = () => {
     const [isLoading, setIsLoading] = useState(false);
     const {isActive, toggleOn, toggleOff} = useToggler();
 
+    const {turnOnScroll, turnOffScroll} = usePageScrollable();
+
     const searchDebounced = useDebounce((value: string) => {
         setFoundCategories([]);
         if (value) {
@@ -54,6 +58,7 @@ export const Header = () => {
             setSearch('');
         }
         toggleOff();
+        turnOnScroll();
         setFoundCategories([]);
     };
 
@@ -68,10 +73,17 @@ export const Header = () => {
         searchDebounced(value);
     };
 
+    const onInputFocus = () => {
+        toggleOn();
+
+        turnOffScroll();
+    };
+
     const onSubmit: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
         // почему то resetSearchState не работает, поэтому закостылил след 2 строки
         toggleOff();
+        turnOnScroll();
         (e.currentTarget.querySelector('input[name="search"]') as HTMLInputElement).blur();
         resetSearchState(false);
         router.push(`/search?${SEARCH_PARAM_NAME}=${search}`);
@@ -100,7 +112,7 @@ export const Header = () => {
                         icon={search ? 'close' : 'search'}
                         value={search}
                         onChange={onInputChange}
-                        onFocus={toggleOn}
+                        onFocus={onInputFocus}
                         onIconClick={onIconClick}
                     />
                     <input type="submit" hidden tabIndex={-1} />
@@ -112,58 +124,60 @@ export const Header = () => {
                         </Text>
                     </Button>
                 )}
-                {isActive && (
-                    <Column paddingX={4} gap={3} className={css.layover} justifyContent="space-between">
-                        <Column height="100%" overflowY="scroll" gap={3}>
-                            <Column>
-                                {search && (
-                                    <Link
-                                        className={css.foundItem}
-                                        key="search"
-                                        href={`/search?${SEARCH_PARAM_NAME}=${search}`}
-                                        onClick={resetSearchState(false)}
-                                    >
-                                        <Row justifyContent="flex-start" paddingY={3} gap="3">
-                                            <Icon name="search" size="s" />
-                                            <Text weight={500} size={14}>
-                                                {search}
-                                            </Text>
-                                        </Row>
-                                    </Link>
-                                )}
-                            </Column>
-
-                            {isLoading && (
-                                <Row paddingY={3} justifyContent="center">
-                                    <Loader />
-                                </Row>
-                            )}
-                            {foundCategories.length > 0 && (
+                {isActive &&
+                    createPortal(
+                        <Column paddingX={4} gap={3} className={css.layover} justifyContent="space-between">
+                            <Column height="100%" overflowY="scroll" gap={3}>
                                 <Column>
-                                    <Text weight={400} size={10} color="#303234A3">
-                                        Категории
-                                    </Text>
-
-                                    {foundCategories.map(category => (
+                                    {search && (
                                         <Link
                                             className={css.foundItem}
-                                            key={category.id}
-                                            href={`/categories/${category.id}`}
-                                            onClick={resetSearchState(true)}
+                                            key="search"
+                                            href={`/search?${SEARCH_PARAM_NAME}=${search}`}
+                                            onClick={resetSearchState(false)}
                                         >
-                                            <Row justifyContent="space-between" paddingY={3}>
+                                            <Row justifyContent="flex-start" paddingY={3} gap="3">
+                                                <Icon name="search" size="s" />
                                                 <Text weight={500} size={14}>
-                                                    {category.name}
+                                                    {search}
                                                 </Text>
-                                                <Icon name="chevronRight" size="m" />
                                             </Row>
                                         </Link>
-                                    ))}
+                                    )}
                                 </Column>
-                            )}
-                        </Column>
-                    </Column>
-                )}
+
+                                {isLoading && (
+                                    <Row paddingY={3} justifyContent="center">
+                                        <Loader />
+                                    </Row>
+                                )}
+                                {foundCategories.length > 0 && (
+                                    <Column>
+                                        <Text weight={400} size={10} color="#303234A3">
+                                            Категории
+                                        </Text>
+
+                                        {foundCategories.map(category => (
+                                            <Link
+                                                className={css.foundItem}
+                                                key={category.id}
+                                                href={`/categories/${category.id}`}
+                                                onClick={resetSearchState(true)}
+                                            >
+                                                <Row justifyContent="space-between" paddingY={3}>
+                                                    <Text weight={500} size={14}>
+                                                        {category.name}
+                                                    </Text>
+                                                    <Icon name="chevronRight" size="m" />
+                                                </Row>
+                                            </Link>
+                                        ))}
+                                    </Column>
+                                )}
+                            </Column>
+                        </Column>,
+                        document.body,
+                    )}
             </Row>
         </>
     );

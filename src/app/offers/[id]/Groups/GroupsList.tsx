@@ -29,13 +29,15 @@ export const GroupsList = ({groups}: Props) => {
                 ))}
             </Column>
 
-            <Button variant="pseudo" onClick={toggleList} icon={isFullListVisible ? 'chevronUp' : 'chevronDown'}>
-                <Row paddingY={2}>
-                    <Text weight={500} size={12} decoration="underline">
-                        {isFullListVisible ? 'Скрыть' : 'Все группы'}
-                    </Text>
-                </Row>
-            </Button>
+            {groups.length > 2 ? (
+                <Button variant="pseudo" onClick={toggleList} icon={isFullListVisible ? 'chevronUp' : 'chevronDown'}>
+                    <Row paddingY={2}>
+                        <Text weight={500} size={12} decoration="underline">
+                            {isFullListVisible ? 'Скрыть' : 'Все группы'}
+                        </Text>
+                    </Row>
+                </Button>
+            ) : null}
         </>
     );
 };
