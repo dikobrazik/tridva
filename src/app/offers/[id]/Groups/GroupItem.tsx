@@ -6,17 +6,19 @@ import {formatDistanceToNow} from 'date-fns';
 import {pluralize} from '@/shared/utils/pluralize';
 import {Profile} from '@/components/Profile';
 import {JoinGroupDrawer} from './JoinGroupDrawer';
+import {Offer} from '@/types/offers';
 
 type ItemProps = {
     groupId: number;
     ownerId: number;
+    offer: Offer;
     ownerName: string;
     count: number;
     createdAt: string;
 };
 
 export const GroupsItem = (props: ItemProps) => {
-    const {groupId, ownerId, ownerName, count, createdAt} = props;
+    const {groupId, ownerId, ownerName, count, createdAt, offer} = props;
 
     return (
         <Row className={css.groupItem} alignItems="flex-start" justifyContent="space-between" paddingY={3}>
@@ -34,7 +36,7 @@ export const GroupsItem = (props: ItemProps) => {
                     Закрытие группы через: {formatDistanceToNow(new Date(createdAt))}
                 </Text>
             </Column>
-            <JoinGroupDrawer ownerId={ownerId} groupId={groupId} ownerName={ownerName} />
+            <JoinGroupDrawer offer={offer} ownerId={ownerId} groupId={groupId} ownerName={ownerName} />
         </Row>
     );
 };

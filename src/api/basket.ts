@@ -56,5 +56,5 @@ export const changeBasketItemCount = ({id, count}: ChangeBasketItemCountPayload)
 export const getOfferInBasketCount = ({offerId}: GetOfferInBasketCountPayload): Promise<number> =>
     axios.get(`basket/${offerId}/count`).then(response => response.data);
 
-export const removeItemFromBasket = ({id}: RemoveItemPayload): Promise<BasketItem[]> =>
+export const removeItemFromBasket = ({id}: RemoveItemPayload): Promise<void> =>
     axios.delete(`basket/${id}`).then(response => response.data);

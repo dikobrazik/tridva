@@ -4,7 +4,7 @@ import {Button} from '@/components/Button';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
-import {CreateGroupDrawer} from './CreateGroupDrawer';
+import {CreateGroupDrawer} from './Groups/CreateGroupDrawer';
 import {Offer} from '@/types/offers';
 import css from './Footer.module.scss';
 import {Box} from '@/components/layout/Box';

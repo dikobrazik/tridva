@@ -46,9 +46,7 @@ export const decreaseBasketItemCountAction = createTypedAsyncThunk<{id: number; 
 
 export const removeBasketItemAction = createTypedAsyncThunk<void, {id: number}>(
     `${NAMESPACE}/remove-basket-item`,
-    async ({id}) => {
-        await removeItemFromBasket({id});
-    },
+    ({id}) => removeItemFromBasket({id}),
 );
 
 type SelectedBasketItems = Record<number, boolean>;

@@ -14,12 +14,14 @@ type Props = {
 
 export const GroupsList = ({groups}: Props) => {
     const {toggle: toggleList, isActive: isFullListVisible} = useToggler();
+
     return (
         <>
             <Column gap={2}>
                 {groups.slice(0, isFullListVisible ? undefined : 2).map(group => (
                     <GroupsItem
                         key={group.id}
+                        offer={group.offer}
                         groupId={group.id}
                         ownerId={group.ownerId}
                         ownerName={group.ownerName}

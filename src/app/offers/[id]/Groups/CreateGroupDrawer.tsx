@@ -4,47 +4,20 @@ import {Button} from '@/components/Button';
 import {Drawer} from '@/components/Drawer';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
-import {Row} from '@/components/layout/Row';
 import {useToggler} from '@/hooks/useToggler';
 import {Offer} from '@/types/offers';
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
-import css from './CreateGroupDrawser.module.scss';
-import {getFirstOfferPhoto} from '@/shared/photos';
-import Image from 'next/image';
 import {createGroup} from '@/api';
 import {formatPrice} from '@/shared/utils/formatPrice';
+import {OfferBlock} from '@/components/OfferCard/OfferBlock';
+import {useAppDispatch} from '@/lib/hooks';
+import {loadBasketItemsAction} from '@/lib/features/basket';
 
-const OfferBlock = ({offer}: {offer: Offer}) => {
-    const finalPrice = formatPrice(offer.price, offer.discount);
-
-    return (
-        <Row className={css.offerBlock} padding="4px" gap="2">
-            <Image
-                className={css.offerBlockImage}
-                src={getFirstOfferPhoto(offer.photos, 140)}
-                width="56"
-                height="56"
-                alt="offer image"
-            />
-            <Column justifyContent="center" gap="1">
-                <Link href={`/offers/${offer.id}`}>
-                    <Text size={12} weight={400} lineHeight={16}>
-                        {offer.title}
-                    </Text>
-                </Link>
-                <Text color="#F40C43" size={14} weight={600}>
-                    {finalPrice} ₽
-                </Text>
-            </Column>
-        </Row>
-    );
-};
-
-const CreateGroupContent = ({onGroupCreated, offer}: {onGroupCreated: (joined: boolean) => void; offer: Offer}) => {
+const CreateGroupContent = ({onGroupCreated, offer}: {onGroupCreated: () => void; offer: Offer}) => {
     const onJoinGroupClick = async () => {
         await createGroup({offerId: offer.id});
-        onGroupCreated(true);
+        onGroupCreated();
     };
 
     return (
@@ -103,9 +76,15 @@ const GroupCreatedContent = ({offer}: {offer: Offer}) => {
 };
 
 export const CreateGroupDrawer = ({offer}: {offer: Offer}) => {
+    const dispatch = useAppDispatch();
     const [isGroupCreated, setGroupCreated] = useState(false);
 
     const {isActive, toggle} = useToggler();
+
+    const onGroupCreated = () => {
+        dispatch(loadBasketItemsAction());
+        setGroupCreated(true);
+    };
 
     useEffect(() => {
         if (isActive) {
@@ -131,7 +110,7 @@ export const CreateGroupDrawer = ({offer}: {offer: Offer}) => {
                 {isGroupCreated ? (
                     <GroupCreatedContent offer={offer} />
                 ) : (
-                    <CreateGroupContent offer={offer} onGroupCreated={setGroupCreated} />
+                    <CreateGroupContent offer={offer} onGroupCreated={onGroupCreated} />
                 )}
             </Drawer>
         </>

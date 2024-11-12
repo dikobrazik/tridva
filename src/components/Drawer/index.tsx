@@ -1,9 +1,10 @@
-import {MouseEventHandler, PropsWithChildren, useCallback} from 'react';
+import {MouseEventHandler, PropsWithChildren, useCallback, useEffect} from 'react';
 import cn from 'classnames';
 import css from './Drawer.module.scss';
 import {Icon} from '../Icon';
 import classNames from 'classnames';
 import {createPortal} from 'react-dom';
+import {usePageScrollable} from '@/hooks/usePageScrollable';
 
 type Props = PropsWithChildren<{
     isOpen: boolean;
@@ -22,6 +23,15 @@ export const Drawer = (props: Props) => {
         },
         [onClose],
     );
+
+    const {turnOffScroll, turnOnScroll} = usePageScrollable();
+
+    useEffect(() => {
+        if (isOpen) turnOffScroll();
+        else turnOnScroll();
+
+        return turnOnScroll;
+    }, [isOpen]);
 
     if (!isOpen) {
         return null;

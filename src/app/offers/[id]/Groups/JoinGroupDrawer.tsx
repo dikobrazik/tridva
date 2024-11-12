@@ -12,6 +12,10 @@ import Link from 'next/link';
 import {useEffect, useState} from 'react';
 import {joinGroup} from '@/api';
 import {Avatar} from '@/components/Avatar';
+import {Offer} from '@/types/offers';
+import {OfferBlock} from '@/components/OfferCard/OfferBlock';
+import {loadBasketItemsAction} from '@/lib/features/basket';
+import {useAppDispatch} from '@/lib/hooks';
 
 const GroupHost = ({ownerId, ownerName}: {ownerId: number; ownerName: string}) => {
     return (
@@ -54,11 +58,11 @@ const JoinGroupContent = ({
     ownerId: number;
     groupId: number;
     ownerName: string;
-    onGroupJoined: (joined: boolean) => void;
+    onGroupJoined: () => void;
 }) => {
     const onJoinGroupClick = async () => {
         await joinGroup({groupId});
-        onGroupJoined(true);
+        onGroupJoined();
     };
 
     return (
@@ -87,11 +91,13 @@ const JoinGroupContent = ({
     );
 };
 
-const GroupJoinedContent = () => {
+const GroupJoinedContent = ({offer}: {offer: Offer}) => {
     return (
         <Column gap="10">
             <Column gap="2" alignItems="center">
-                🥳
+                <Text align="center" size={24} weight={500}>
+                    🥳
+                </Text>
                 <Text align="center" size={16} weight={600} color="#4FDE38">
                     Группа собрана!
                 </Text>
@@ -103,7 +109,9 @@ const GroupJoinedContent = () => {
                 <Text align="center" size={10} weight={400} color="#303234A3">
                     Оплатите товар, чтобы подтвердить участие
                 </Text>
+                <OfferBlock offer={offer} />
             </Column>
+
             <Button width="full">
                 <Link href="/basket">Перейти в корзину и оплатить</Link>
             </Button>
@@ -112,15 +120,22 @@ const GroupJoinedContent = () => {
 };
 
 type Props = {
+    offer: Offer;
     ownerId: number;
     ownerName: string;
     groupId: number;
 };
 
-export const JoinGroupDrawer = ({ownerName, groupId, ownerId}: Props) => {
+export const JoinGroupDrawer = ({offer, ownerName, groupId, ownerId}: Props) => {
+    const dispatch = useAppDispatch();
     const [isGroupJoined, setGroupJoined] = useState(false);
 
     const {isActive, toggle} = useToggler();
+
+    const onGroupJoined = () => {
+        dispatch(loadBasketItemsAction());
+        setGroupJoined(true);
+    };
 
     useEffect(() => {
         if (isActive) {
@@ -135,13 +150,13 @@ export const JoinGroupDrawer = ({ownerName, groupId, ownerId}: Props) => {
             </Button>
             <Drawer isOpen={isActive} onClose={toggle}>
                 {isGroupJoined ? (
-                    <GroupJoinedContent />
+                    <GroupJoinedContent offer={offer} />
                 ) : (
                     <JoinGroupContent
                         ownerId={ownerId}
                         groupId={groupId}
                         ownerName={ownerName}
-                        onGroupJoined={setGroupJoined}
+                        onGroupJoined={onGroupJoined}
                     />
                 )}
             </Drawer>
