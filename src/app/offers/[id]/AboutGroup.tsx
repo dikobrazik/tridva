@@ -22,7 +22,7 @@ export const AboutGroup = () => {
                 paddingY={1}
             >
                 <Icon name="crown" />
-                <Text weight="400" size="10px" height={12}>
+                <Text weight="400" size="10px" lineHeight={12}>
                     Гарантия 100% сбора группы на первую созданную группу
                 </Text>
             </Row>

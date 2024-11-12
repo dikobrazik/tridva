@@ -19,11 +19,11 @@ function AboutItem(props: AboutItemProps) {
 
     return (
         <Row gap={1} justifyContent="space-between">
-            <Text whiteSpace="nowrap" weight="400" size="10px" height={12}>
+            <Text whiteSpace="nowrap" weight="400" size="10px" lineHeight={12}>
                 {name}
             </Text>
             <Box flex="1" className={css.underline}></Box>
-            <Text weight="400" size="10px" height={12}>
+            <Text weight="400" size="10px" lineHeight={12}>
                 {value}
             </Text>
         </Row>
@@ -42,7 +42,7 @@ export const ExpandableList = ({attributes, description}: {attributes: OfferAttr
             </Column>
             {attributes.length > 3 ? (
                 <Button variant="pseudo" onClick={toggle}>
-                    <Text weight={500} size={12} height={14} decoration="underline">
+                    <Text weight={500} size={12} lineHeight={14} decoration="underline">
                         {isExpanded ? 'Скрыть в' : 'В'}се характеристики и описание
                     </Text>
                 </Button>

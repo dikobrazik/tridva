@@ -12,7 +12,7 @@ export const AboutGroups = () => {
     return (
         <>
             <Row onClick={toggle} alignItems="center" gap={1}>
-                <Text weight="400" size={10} height={12} color="#303234A6">
+                <Text weight="400" size={10} lineHeight={12} color="#303234A6">
                     Как это работает
                 </Text>
                 <Icon name="help" />

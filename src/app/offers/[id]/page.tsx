@@ -32,10 +32,10 @@ type CardProps = {
 const Card = ({href, title, description}: CardProps) => {
     const card = (
         <Column gap={1} paddingX="2" paddingY="2">
-            <Text weight="400" size="12px" height={16}>
+            <Text weight="400" size="12px" lineHeight={16}>
                 {title}
             </Text>
-            <Text weight="400" size="10px" height={12} color="#303234A3">
+            <Text weight="400" size="10px" lineHeight={12} color="#303234A3">
                 {description}
             </Text>
         </Column>

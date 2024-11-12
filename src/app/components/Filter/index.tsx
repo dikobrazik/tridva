@@ -22,14 +22,14 @@ export default function Filter() {
                     <Column gap="8">
                         <Box>
                             <Box marginBottom="12px">
-                                <Text size={16} height={20} weight={600}>
+                                <Text size={16} lineHeight={20} weight={600}>
                                     Категории
                                 </Text>
                             </Box>
 
                             <Column gap={2} paddingY={3} borderBottom="1px solid #9CA3AA52">
                                 <Row justifyContent="space-between" alignItems="center">
-                                    <Text size={14} height={18} weight={500}>
+                                    <Text size={14} lineHeight={18} weight={500}>
                                         Для кухни
                                     </Text>
                                     <Icon name="chevronRight" size="m"></Icon>
@@ -38,7 +38,7 @@ export default function Filter() {
 
                             <Column gap={2} paddingY={3} borderBottom="1px solid #9CA3AA52">
                                 <Row justifyContent="space-between" alignItems="center">
-                                    <Text size={14} height={18} weight={500}>
+                                    <Text size={14} lineHeight={18} weight={500}>
                                         Для кухни
                                     </Text>
                                     <Icon name="chevronRight" size="m"></Icon>
@@ -46,19 +46,19 @@ export default function Filter() {
                                 <Column gap={1} paddingX={4}>
                                     <label className={css.label}>
                                         <input className={css.checkbox} type="checkbox" />
-                                        <Text size={14} height={18} weight={500}>
+                                        <Text size={14} lineHeight={18} weight={500}>
                                             Кухонные комбайны
                                         </Text>
                                     </label>
                                     <label className={css.label}>
                                         <input className={css.checkbox} type="checkbox" />
-                                        <Text size={14} height={18} weight={500}>
+                                        <Text size={14} lineHeight={18} weight={500}>
                                             Кофемашины
                                         </Text>
                                     </label>
                                     <label className={css.label}>
                                         <input className={css.checkbox} type="checkbox" />
-                                        <Text size={14} height={18} weight={500}>
+                                        <Text size={14} lineHeight={18} weight={500}>
                                             Микроволновые печи
                                         </Text>
                                     </label>
@@ -68,7 +68,7 @@ export default function Filter() {
                             <Column gap={2} paddingTop="12px">
                                 <label className={css.label}>
                                     <input className={css.checkbox} type="checkbox" />
-                                    <Text size={14} height={18} weight={500}>
+                                    <Text size={14} lineHeight={18} weight={500}>
                                         Для кухни
                                     </Text>
                                 </label>
@@ -77,7 +77,7 @@ export default function Filter() {
 
                         <Column gap="4">
                             <Box>
-                                <Text size={16} height={20} weight={600}>
+                                <Text size={16} lineHeight={20} weight={600}>
                                     Цена
                                 </Text>
                             </Box>

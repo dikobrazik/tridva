@@ -60,7 +60,7 @@ export default async function Reviews({offer}: Props) {
                 </Row>
             )}
             {reviews.length === 0 && (
-                <Text align="center" weight="500" size="12px" height={14}>
+                <Text align="center" weight="500" size="12px" lineHeight={14}>
                     Будьте первым кто оставил отзыв
                 </Text>
             )}
@@ -68,7 +68,7 @@ export default async function Reviews({offer}: Props) {
                 <Link href={`/offers/${offer.id}/reviews`}>
                     <Row justifyContent="center">
                         <Button variant="pseudo">
-                            <Text weight="500" size="12px" height={14} decoration="underline">
+                            <Text weight="500" size="12px" lineHeight={14} decoration="underline">
                                 Все отзывы
                             </Text>
                         </Button>

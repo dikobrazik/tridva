@@ -1,4 +1,4 @@
-import {loadReviews} from '@/api/reviews';
+import {loadReviews} from '@/api';
 import {RootState} from '@/lib/store';
 import {Review} from '@/types/review';
 import {createSlice, createEntityAdapter, createAsyncThunk, createSelector} from '@reduxjs/toolkit';

@@ -9,7 +9,7 @@ export default async function About({offerId, offerDescription}: {offerId: numbe
 
     return (
         <Column className={css.about} gap={3}>
-            <Text weight={600} size={16} height={20}>
+            <Text weight={600} size={16} lineHeight={20}>
                 О товаре
             </Text>
             <ExpandableList description={offerDescription} attributes={attributes} />

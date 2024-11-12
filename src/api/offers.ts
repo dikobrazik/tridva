@@ -16,10 +16,13 @@ type LoadOfferPayload = {
 export const loadOffers = (
     payload?: LoadOffersPayload,
 ): Promise<{offers: Offer[]; total: number; pagesCount: number}> =>
-    axios('offers', {params: payload}).then(response => response.data);
+    axios('offers', {params: payload, headers: {cache: 'force-cache'}}).then(response => response.data);
 
 export const loadOffer = (payload: LoadOfferPayload): Promise<Offer> =>
-    axios<Offer>(`offers/${payload.id}`).then(response => response.data);
+    axios<Offer>(`offers/${payload.id}`, {headers: {cache: 'force-cache'}}).then(response => {
+        console.log(response.headers.etag, response.status, response.headers['request-duration']);
+        return response.data;
+    });
 
 export const loadIsFavoriteOffer = (payload: LoadOfferPayload): Promise<boolean> =>
     axios<boolean>(`offers/${payload.id}/favorite`).then(response => response.data);

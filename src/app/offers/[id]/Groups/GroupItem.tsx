@@ -24,13 +24,13 @@ export const GroupsItem = (props: ItemProps) => {
                 <Row>
                     <Profile id={ownerId} name={ownerName} />
                 </Row>
-                <Text weight="400" size={10} height={12}>
+                <Text weight="400" size={10} lineHeight={12}>
                     Для покупки {pluralize(count, [`нужен `, `нужно `, `нужно `])} еще
                     <Text color="#f40c43">
                         {pluralize(count, [` ${count} человек`, ` ${count} человека`, ` ${count} человек`])}
                     </Text>
                 </Text>
-                <Text weight="400" size={10} height={12} color="#303234A3">
+                <Text weight="400" size={10} lineHeight={12} color="#303234A3">
                     Закрытие группы через: {formatDistanceToNow(new Date(createdAt))}
                 </Text>
             </Column>

@@ -52,9 +52,9 @@ export default async function Reviews(props: Props) {
                 <Row className={css.header} paddingTop="16px" justifyContent="space-between" alignItems="center">
                     <BackButton />
 
-                    <Text weight="600" size="16px" height={20}>
+                    <Text weight="600" size="16px" lineHeight={20}>
                         Отзывы{' '}
-                        <Text weight="600" size="16px" height={20} color="#3032347A">
+                        <Text weight="600" size="16px" lineHeight={20} color="#3032347A">
                             {reviewsCount}
                         </Text>
                     </Text>

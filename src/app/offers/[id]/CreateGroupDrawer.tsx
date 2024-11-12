@@ -29,7 +29,7 @@ const OfferBlock = ({offer}: {offer: Offer}) => {
             />
             <Column justifyContent="center" gap="1">
                 <Link href={`/offers/${offer.id}`}>
-                    <Text size={12} weight={400} height={16}>
+                    <Text size={12} weight={400} lineHeight={16}>
                         {offer.title}
                     </Text>
                 </Link>
@@ -119,10 +119,10 @@ export const CreateGroupDrawer = ({offer}: {offer: Offer}) => {
         <>
             <Button size="m" flex="1 1 50%" onClick={toggle}>
                 <Column>
-                    <Text size={12} weight={600} height={14}>
+                    <Text size={12} weight={600} lineHeight={14}>
                         Создать группу
                     </Text>
-                    <Text size={12} weight={600} height={14}>
+                    <Text size={12} weight={600} lineHeight={14}>
                         {finalPrice} ₽
                     </Text>
                 </Column>

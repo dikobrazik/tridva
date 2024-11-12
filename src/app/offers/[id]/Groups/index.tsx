@@ -19,16 +19,16 @@ export default async function Groups(props: Props) {
         <Column className={css.groups} gap={2}>
             <Column gap={1}>
                 <Row justifyContent="space-between">
-                    <Text weight="600" size={16} height={12}>
+                    <Text weight="600" size={16} lineHeight={12}>
                         {/* @ts-expect-error TS2322 почему то name не определен в HtmlAnchoreElement */}
                         <a name="groups">Группы </a>
-                        <Text weight="600" size={16} height={12} color="#3032347A">
+                        <Text weight="600" size={16} lineHeight={12} color="#3032347A">
                             {props.count}
                         </Text>
                     </Text>
                     <AboutGroups />
                 </Row>
-                <Text weight="400" size={10} height={12}>
+                <Text weight="400" size={10} lineHeight={12}>
                     {props.count} {pluralize(props.count, ['человек создал', 'человека создали', 'человек создали'])}{' '}
                     групповую покупку.
                     <br />

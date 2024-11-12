@@ -43,14 +43,14 @@ const InformationList = [
                         <Box className={css.iconBox}>
                             <Icon name="chevronLeft" size="s" />
                         </Box>
-                        <Text size={12} height={16} weight={600}>
+                        <Text size={12} lineHeight={16} weight={600}>
                             О сервисе
                         </Text>
                     </Row>
                 </a>
                 <a className={css.link} href="/">
                     <Row alignItems="center">
-                        <Text size={12} height={16} weight={600}>
+                        <Text size={12} lineHeight={16} weight={600}>
                             Пригласи друзей
                         </Text>
                         <Box className={css.iconBox}>

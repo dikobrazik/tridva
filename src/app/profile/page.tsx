@@ -66,7 +66,7 @@ const LinkButton = (props: LinkCardProps) => (
                     {props.title}
                 </Text>
                 {props.description ? (
-                    <Text size={10} weight={400} color="#303234A3" height={16}>
+                    <Text size={10} weight={400} color="#303234A3" lineHeight={16}>
                         {props.description}
                     </Text>
                 ) : null}

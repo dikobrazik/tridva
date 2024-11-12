@@ -27,12 +27,12 @@ const CreateSingleGroupButton = ({offer}: {offer: Offer}) => {
     const formattedPrice = formatPrice(offer.price);
 
     return (
-        <Button variant="normal" size="m" flex="1" onClick={onCreateSingleGroupClick}>
+        <Button width="full" variant="normal" size="m" onClick={onCreateSingleGroupClick}>
             <Column>
-                <Text size={12} weight={600} height={14}>
+                <Text size={12} weight={600} lineHeight={14}>
                     Купить в розницу
                 </Text>
-                <Text size={12} weight={600} height={14}>
+                <Text size={12} weight={600} lineHeight={14}>
                     {formattedPrice} ₽
                 </Text>
             </Column>
@@ -55,7 +55,7 @@ const SingleGroupButton = ({offer}: {offer: Offer}) => {
     };
 
     return (
-        <Row className={css.singleGroupButton} justifyContent="space-between" padding="8px" borderRadius="2">
+        <Row flex="1" className={css.singleGroupButton} justifyContent="space-between" padding="8px" borderRadius="2">
             <Button
                 className={classNames(css.singleGroupButtons, css.padding)}
                 variant="pseudo"
@@ -64,7 +64,7 @@ const SingleGroupButton = ({offer}: {offer: Offer}) => {
                 onClick={onMinusClick}
             />
             <Column gap="1">
-                <Text size={12} weight={600} align="center">
+                <Text lineHeight={14} size={12} weight={600} align="center">
                     {basketItem.count}
                 </Text>
                 <Text color="#303234A3" size={8} weight={400}>
@@ -91,12 +91,12 @@ export default function Footer({offer}: {offer: Offer}) {
                 <Button flex="1" variant="outline" size="m">
                     <Row flex="1" justifyContent="space-between">
                         <Column>
-                            <Text align="start" size={10} weight={600} height={10} color="#303234">
+                            <Text align="start" size={10} weight={600} lineHeight={10} color="#303234">
                                 Присоединиться к группе с Владимиром М.
                             </Text>
-                            <Text align="start" size={8} weight={400} height={12} color="#303234A3">
+                            <Text align="start" size={8} weight={400} lineHeight={12} color="#303234A3">
                                 Нужен еще 1 человек для покупки, до конца сбора:{' '}
-                                <Text size={8} weight={600} height={12}>
+                                <Text size={8} weight={600} lineHeight={12}>
                                     23:20:59
                                 </Text>
                             </Text>
@@ -107,13 +107,13 @@ export default function Footer({offer}: {offer: Offer}) {
                 </Button>
             </Row>
             <Row gap="2" justifyContent="center">
-                {inBasketCount > 0 ? (
-                    <Box flex="1">
+                <Box flex="1 1 50%">
+                    {inBasketCount > 0 ? (
                         <SingleGroupButton offer={offer} />
-                    </Box>
-                ) : (
-                    <CreateSingleGroupButton offer={offer} />
-                )}
+                    ) : (
+                        <CreateSingleGroupButton offer={offer} />
+                    )}
+                </Box>
                 <CreateGroupDrawer offer={offer} />
             </Row>
         </Column>

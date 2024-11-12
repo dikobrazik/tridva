@@ -17,10 +17,10 @@ export default function PopUp(props: PopUpProps) {
             {props.image && <Image className={css.image} src={props.image} width={48} height={48} alt="tridva store" />}
 
             <Column gap={3}>
-                <Text align="center" size={16} height={18} weight={600}>
+                <Text align="center" size={16} lineHeight={18} weight={600}>
                     {props.title}
                 </Text>
-                <Text size={12} height={16} weight={400}>
+                <Text size={12} lineHeight={16} weight={400}>
                     {props.description}
                 </Text>
             </Column>

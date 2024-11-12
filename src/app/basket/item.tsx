@@ -78,7 +78,7 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
                             )}
                         </Row>
                         <Link href={`/offers/${offer.id}`}>
-                            <Text size={12} weight={400} height={16}>
+                            <Text size={12} weight={400} lineHeight={16}>
                                 {offer.title}
                             </Text>
                         </Link>
