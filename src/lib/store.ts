@@ -5,7 +5,6 @@ import {basketReducer, basketSlice} from './features/basket';
 import {userReducer, userSlice} from './features/user';
 import {checkoutReducer, checkoutSlice} from './features/checkout';
 import {LAST_SELECTED_PICKUP_POINT_ID, LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT} from './constants';
-import {appRouter} from '@/shared/router';
 
 const reHydrateStore = () => {
     if (typeof window !== 'undefined' && localStorage.getItem(LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT) !== null) {
@@ -53,7 +52,7 @@ listenerMiddleware.startListening({
         const params = new URLSearchParams(window.location.search);
         params.set(PAGE_QUERY_PARAM_KEY, `${page}`);
 
-        appRouter.replace(window.location.pathname + `?${params.toString()}`, {scroll: false});
+        window.history.replaceState({p: page}, '', `/?p=${page}`);
     },
 });
 

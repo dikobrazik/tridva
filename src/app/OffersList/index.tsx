@@ -14,7 +14,7 @@ type Props = {
     name?: string;
 };
 
-export function OffersListContainer(props: PropsWithChildren<{}>) {
+export function OffersListContainer(props: PropsWithChildren) {
     return <Box className={css.grid}>{props.children}</Box>;
 }
 
