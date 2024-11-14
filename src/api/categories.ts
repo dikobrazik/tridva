@@ -30,7 +30,7 @@ export const loadCategoriesByName = (payload: LoadCategoriesByNamePayload): Prom
             return [];
         });
 
-export const loadPopularCategories = (): Promise<Category[]> =>
+export const loadPopularCategories = (): Promise<Pick<Category, 'id' | 'name'>[]> =>
     axios<Category[]>('categories/popular')
         .then(response => response.data)
         .catch(e => {

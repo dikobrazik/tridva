@@ -15,8 +15,8 @@ export const OfferCard = memo(
     (props: Offer) => {
         const {id, title, price, ordersCount, discount, rating, photos, reviewsCount} = props;
 
-        const imageSrc = getFirstOfferPhoto(photos, 280);
-        const fallbackImageSrc = typeof imageSrc === 'string' ? imageSrc.replace('280.jpg', '400.jpg') : undefined;
+        const imageSrc = getFirstOfferPhoto(photos, 140);
+        const fallbackImageSrc = typeof imageSrc === 'string' ? imageSrc.replace('140.jpg', '280.jpg') : undefined;
 
         const finalPrice = formatPrice(price, discount);
 

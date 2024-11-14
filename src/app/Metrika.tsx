@@ -3,6 +3,8 @@
 import Script from 'next/script';
 
 export function Metrika() {
+    if (process.env.IS_DEV || process.env.NEXT_PUBLIC_IS_DEV) return null;
+
     return (
         <>
             <Script id="yandex-metrika" strategy="afterInteractive">
