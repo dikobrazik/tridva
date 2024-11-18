@@ -27,13 +27,13 @@ export const checkCodeAction = createAsyncThunk<Profile, CheckCodePayload>(`${NA
 );
 
 type UserState = {
-    isAuthorized: boolean;
+    isAnonymous: boolean;
     phone?: string;
     profile: Partial<Profile>;
 };
 
 const initialState: UserState = {
-    isAuthorized: false,
+    isAnonymous: true,
     phone: undefined,
     profile: {},
 };
@@ -43,14 +43,14 @@ export const userSlice = createSlice({
     initialState,
     reducers: {},
     selectors: {
-        selectIsAuthorized: state => state.isAuthorized,
+        selectIsAnonymous: state => state.isAnonymous,
         selectPhone: state => state.phone,
         selectProfile: state => state.profile,
     },
     extraReducers: builder => {
         builder
             .addCase(checkTokenAction.fulfilled, (state, {payload}) => {
-                state.isAuthorized = !payload.isAnonymous;
+                state.isAnonymous = payload.isAnonymous;
                 state.profile = payload.profile;
                 state.phone = payload.phone;
             })
@@ -61,7 +61,7 @@ export const userSlice = createSlice({
                 state.profile.email = meta.arg;
             })
             .addCase(checkCodeAction.fulfilled, (state, {payload, meta}) => {
-                state.isAuthorized = true;
+                state.isAnonymous = true;
                 state.phone = meta.arg.phone;
                 state.profile = {...state.profile, ...payload};
             });

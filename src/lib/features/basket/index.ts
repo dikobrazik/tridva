@@ -63,11 +63,12 @@ const basketItemAdapterSelectors = basketItemAdapter.getSelectors();
 
 const selectSelectedBasketItems = createSelector(
     [(state: BasketState) => state.selectedBasketItems, (state: BasketState) => state.basketItems],
-    (selectedBasketItems, basketItems) =>
-        Object.entries(selectedBasketItems)
+    (selectedBasketItems, basketItems) => {
+        return Object.entries(selectedBasketItems)
             .filter(([, isSelected]) => isSelected)
             .map(([id]) => basketItemAdapterSelectors.selectById(basketItems, Number(id)))
-            .filter(item => item !== undefined),
+            .filter(item => item !== undefined);
+    },
 );
 
 export const basketSlice = createSlice({

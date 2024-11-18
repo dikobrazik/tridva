@@ -9,7 +9,7 @@ import {Block} from '@/components/layout/Block';
 import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
-import {basketSelectors, loadBasketItemsAction} from '@/lib/features/basket';
+import {basketSelectors} from '@/lib/features/basket';
 import {checkoutSelectors, processOrderAction} from '@/lib/features/checkout';
 import {userSelectors} from '@/lib/features/user';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
@@ -24,19 +24,19 @@ export default function CheckoutPage() {
     const dispatch = useAppDispatch();
     const selectedPickupPoint = useAppSelector(checkoutSelectors.selectSelectedPickupPoint);
 
+    const isUserAnonymous = useAppSelector(userSelectors.selectIsAnonymous);
     const phone = useAppSelector(userSelectors.selectPhone);
     const profile = useAppSelector(userSelectors.selectProfile);
+    const areBasketItemsLoading = useAppSelector(basketSelectors.selectAreBasketItemsLoading);
     const selectedBasketItemsList = useAppSelector(basketSelectors.selectSelectedBasketItemsList);
     const selectedBasketItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
     const selectedBasketItemsCount = selectedBasketItemsList.length;
 
     useEffect(() => {
-        dispatch(loadBasketItemsAction());
-
-        if (Object.values(selectedBasketItemsList).length === 0) {
+        if ((!areBasketItemsLoading && selectedBasketItemsList.length === 0) || isUserAnonymous) {
             redirect('/basket');
         }
-    }, []);
+    }, [areBasketItemsLoading]);
 
     const onCheckoutClick: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();

@@ -1,17 +1,22 @@
+import {loadUserGroups} from '@/api';
+import {OffersListContainer} from '@/app/OffersList';
 import {Header} from '@/components/Header';
-import {Text} from '@/components/Text';
+import {OfferCard} from '@/components/OfferCard';
 import {Column} from '@/components/layout/Column';
 
-export default function GroupsPage() {
+export default async function GroupsPage() {
+    const groups = await loadUserGroups();
+    console.log(groups);
+
     return (
         <Column height="100%" backgroundColor="#fff" gap="2">
             <Header withBackArrow>Группы</Header>
 
-            <Column alignItems="center">
-                <Text size={12} weight={500} color="#303234A3">
-                    Возможно скоро здесь что-нибудь появится
-                </Text>
-            </Column>
+            <OffersListContainer>
+                {groups.map(group => (
+                    <OfferCard key={group.id} {...group.offer} />
+                ))}
+            </OffersListContainer>
         </Column>
     );
 }

@@ -5,4 +5,4 @@ type ProcessOrderPayload = {
     basketItemsIds: number[];
 };
 
-export const processOrder = (payload: ProcessOrderPayload): Promise<void> => axios.post(`orders`, payload);
+export const processOrder = (payload: ProcessOrderPayload): Promise<string> => axios.post(`orders`, payload);

@@ -23,7 +23,7 @@ import {pluralize} from '@/shared/utils/pluralize';
 
 export default function Basket() {
     const dispatch = useAppDispatch();
-    const isUserAuthorized = useAppSelector(userSelectors.selectIsAuthorized);
+    const isUserAnonymous = useAppSelector(userSelectors.selectIsAnonymous);
     const basketItems = useAppSelector(basketSelectors.selectAll);
     const areBasketItemsLoading = useAppSelector(basketSelectors.selectAreBasketItemsLoading);
     const selectedBasketItems = useAppSelector(basketSelectors.selectSelectedBasketItems);
@@ -65,16 +65,17 @@ export default function Basket() {
 
             {selectedItemsCost > 0 && (
                 <Row className={css.checkoutButtonContainer} gap="6" padding="8px 16px 8px 16px" background="#fff">
-                    <Column justifyContent="center" gap="1">
+                    <Column justifyContent="center" gap="1" width="70px">
                         <Text size={14} weight={600} whiteSpace="nowrap">
-                            {formattedSelectedItemsCost} ₽
+                            {formattedSelectedItemsCost}&nbsp;₽
                         </Text>
                         <Text size={10} weight={400} color="#303234A3">
-                            {itemsCount} {pluralize(itemsCount, ['товар', 'товара', 'товаров'])}
+                            {selectedBasketItems.length}&nbsp;
+                            {pluralize(selectedBasketItems.length, ['товар', 'товара', 'товаров'])}
                         </Text>
                     </Column>
 
-                    {isUserAuthorized ? (
+                    {!isUserAnonymous ? (
                         <Link className={css.checkoutLink} href="/basket/checkout" onClick={onCheckoutClick}>
                             <Button width="full">Оформить</Button>
                         </Link>
