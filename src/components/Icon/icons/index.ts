@@ -25,6 +25,7 @@ export {default as messageChat} from './message-chat.svg';
 export {default as camera} from './camera.svg';
 export {default as plusCircle} from './plus-circle.svg';
 export {default as informationCircle} from './information-circle.svg';
+export {default as informationCircleWhite} from './information-circle-white.svg';
 export {default as phone} from './phone.svg';
 export {default as calendar} from './calendar.svg';
 

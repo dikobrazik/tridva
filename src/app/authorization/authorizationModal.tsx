@@ -12,9 +12,10 @@ import React, {useEffect, useState} from 'react';
 
 type Props = {
     Toggler: (props: {onClick: () => void}) => React.JSX.Element;
+    onAuthorized?: () => void;
 };
 
-export const AuthorizationModal = ({Toggler}: Props) => {
+export const AuthorizationModal = ({Toggler, onAuthorized}: Props) => {
     const dispatch = useAppDispatch();
     const {isActive, toggle} = useToggler();
 
@@ -38,6 +39,7 @@ export const AuthorizationModal = ({Toggler}: Props) => {
         dispatch(checkCodeAction({phone, code})).then(() => {
             setIsCodeSent(false);
             toggle();
+            if (onAuthorized) onAuthorized();
         });
     };
 

@@ -68,7 +68,7 @@ export default async function Offer(props: Props) {
                 <Box position="relative">
                     <BackButton />
                     <LikeButton id={offerId} />
-                    {photos ? <PhotosCarousel photos={photos} /> : null}
+                    {photos.photosCount ? <PhotosCarousel photos={photos} /> : null}
                 </Box>
 
                 <Row gap={1}>

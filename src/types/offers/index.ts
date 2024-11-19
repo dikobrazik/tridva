@@ -6,7 +6,7 @@ export type Offer = {
     description: string;
     price: string;
     discount?: number;
-    photos?: string[];
+    photos: OfferPhoto;
     categoryId: number;
     ordersCount: number;
     rating?: number;
@@ -19,4 +19,11 @@ export type OfferAttribute = {
     id: number;
     attributeName: string;
     value: string;
+};
+
+export type OfferPhoto = {
+    id: number;
+    offerId: number;
+    photoBaseUrl: string;
+    photosCount: number;
 };

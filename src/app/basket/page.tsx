@@ -20,8 +20,10 @@ import {formatPrice} from '@/shared/utils/formatPrice';
 import {Summary} from './component/Summary';
 import {sum} from '@/shared/utils/sum';
 import {pluralize} from '@/shared/utils/pluralize';
+import {useRouter} from 'next/navigation';
 
 export default function Basket() {
+    const router = useRouter();
     const dispatch = useAppDispatch();
     const isUserAnonymous = useAppSelector(userSelectors.selectIsAnonymous);
     const basketItems = useAppSelector(basketSelectors.selectAll);
@@ -34,6 +36,11 @@ export default function Basket() {
         const selectedBasketItemsIds = selectedBasketItems.map(({id}) => id);
         dispatch(checkoutActions.setSelectedBasketItems(selectedBasketItemsIds));
         localStorage.setItem(LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT, JSON.stringify(selectedBasketItemsIds));
+    };
+
+    const onAuthorized = () => {
+        onCheckoutClick();
+        router.push('/basket/checkout');
     };
 
     const itemsCount = basketItems.length;
@@ -81,6 +88,7 @@ export default function Basket() {
                         </Link>
                     ) : (
                         <AuthorizationModal
+                            onAuthorized={onAuthorized}
                             Toggler={({onClick}: {onClick: () => void}) => (
                                 <Button onClick={onClick} width="full">
                                     Оформить

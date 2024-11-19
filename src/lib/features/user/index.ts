@@ -8,6 +8,8 @@ import {
 } from '@/api';
 import {Profile} from '@/types/user';
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {loadBasketItemsAction} from '../basket';
+import {ThunkConfig} from '@/lib/store';
 
 const NAMESPACE = 'user';
 
@@ -22,8 +24,15 @@ export const updateProfileEmailAction = createAsyncThunk<void, string>(
     (email: string, {rejectWithValue}) => updateProfileEmail({email}).catch(() => rejectWithValue(0)),
 );
 
-export const checkCodeAction = createAsyncThunk<Profile, CheckCodePayload>(`${NAMESPACE}/check-code`, payload =>
-    checkCode(payload),
+export const checkCodeAction = createAsyncThunk<Profile, CheckCodePayload, ThunkConfig>(
+    `${NAMESPACE}/check-code`,
+    async (payload, {dispatch}) => {
+        const profile = await checkCode(payload);
+
+        dispatch(loadBasketItemsAction());
+
+        return profile;
+    },
 );
 
 type UserState = {
@@ -61,7 +70,7 @@ export const userSlice = createSlice({
                 state.profile.email = meta.arg;
             })
             .addCase(checkCodeAction.fulfilled, (state, {payload, meta}) => {
-                state.isAnonymous = true;
+                state.isAnonymous = false;
                 state.phone = meta.arg.phone;
                 state.profile = {...state.profile, ...payload};
             });
