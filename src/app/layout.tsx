@@ -3,7 +3,7 @@ import './globals.scss';
 import {Column} from '@/components/layout/Column';
 import {Inter} from 'next/font/google';
 import {Box} from '@/components/layout/Box';
-import React from 'react';
+import React, {Suspense} from 'react';
 import StoreProvider from '@/lib/StoreProvider';
 import {Header} from './rootLayout/Header';
 import css from './Layout.module.scss';
@@ -47,11 +47,15 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 <StoreProvider>
                     <AuthTokenProvider>
                         <Column className={css.container} width={460} minWidth={360} paddingBottom="59px">
-                            <Header />
+                            <Suspense>
+                                <Header />
+                            </Suspense>
                             <Box id="content" className={css.content}>
                                 {children}
                             </Box>
-                            <Footer />
+                            <Suspense>
+                                <Footer />
+                            </Suspense>
                         </Column>
                     </AuthTokenProvider>
                 </StoreProvider>
