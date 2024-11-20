@@ -52,7 +52,7 @@ listenerMiddleware.startListening({
         const params = new URLSearchParams(window.location.search);
         params.set(PAGE_QUERY_PARAM_KEY, `${page}`);
 
-        window.history.replaceState({p: page}, '', `/?p=${page}`);
+        window.history.replaceState({p: page}, '', `${window.location.pathname}?p=${page}`);
     },
 });
 

@@ -9,6 +9,9 @@ const nextConfig = {
         // !! WARN !!
         ignoreBuildErrors: true,
     },
+    experimental: {
+        missingSuspenseWithCSRBailout: false,
+    },
     eslint: {
         ignoreDuringBuilds: true,
     },
