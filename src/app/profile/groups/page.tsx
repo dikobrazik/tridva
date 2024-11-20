@@ -6,7 +6,6 @@ import {Column} from '@/components/layout/Column';
 
 export default async function GroupsPage() {
     const groups = await loadUserGroups();
-    console.log(groups);
 
     return (
         <Column height="100%" backgroundColor="#fff" gap="2">

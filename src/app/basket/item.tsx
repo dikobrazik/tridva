@@ -50,7 +50,6 @@ const Counter = ({id, count}: {id: number; count: number}) => {
 };
 
 export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
-    console.log(offer);
     const dispatch = useAppDispatch();
     const selected = useAppSelector(state => basketSelectors.selectIsBasketItemSelected(state, id));
 
