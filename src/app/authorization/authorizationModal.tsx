@@ -31,10 +31,9 @@ export const AuthorizationModal = ({Toggler, onAuthorized}: Props) => {
     }, [initialPhone]);
 
     const onSendCodeClick = async () => {
-        console.log(phone);
-        // await getCode({phone});
+        await getCode({phone});
 
-        // setIsCodeSent(true);
+        setIsCodeSent(true);
     };
 
     const onCheckCodeClick = async () => {
