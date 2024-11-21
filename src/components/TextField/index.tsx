@@ -1,23 +1,25 @@
 'use client';
 
-import {InputHTMLAttributes} from 'react';
+import {forwardRef, InputHTMLAttributes, useEffect, useRef} from 'react';
 import cn from 'classnames';
 import {Icon, IconName} from '../Icon';
 import css from './TextField.module.scss';
+import IMask, {InputMask} from 'imask';
 
-type Props = {
+export type TextFieldProps = {
     size?: 's' | 'm';
     icon?: IconName;
     onChange?: (value: string) => void;
     onIconClick?: () => void;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange'>;
 
-export const TextField = (props: Props) => {
+export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props: TextFieldProps, ref) => {
     const {icon, size = 's', onChange = () => {}, onIconClick, ...inputProps} = props;
 
     return (
         <span className={css.container}>
             <input
+                ref={ref}
                 name="search"
                 type="search"
                 autoComplete="off"
@@ -28,4 +30,4 @@ export const TextField = (props: Props) => {
             {icon && <Icon className={css.icon} name={icon} onClick={onIconClick} />}
         </span>
     );
-};
+});

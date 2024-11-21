@@ -4,6 +4,7 @@ import {Label} from '@/components/Label';
 import {Modal} from '@/components/Modal';
 import {Text} from '@/components/Text';
 import {TextField} from '@/components/TextField';
+import {PhoneTextField} from '@/components/TextField/Phone';
 import {Column} from '@/components/layout/Column';
 import {useToggler} from '@/hooks/useToggler';
 import {checkCodeAction, userSelectors} from '@/lib/features/user';
@@ -30,9 +31,10 @@ export const AuthorizationModal = ({Toggler, onAuthorized}: Props) => {
     }, [initialPhone]);
 
     const onSendCodeClick = async () => {
-        await getCode({phone});
+        console.log(phone);
+        // await getCode({phone});
 
-        setIsCodeSent(true);
+        // setIsCodeSent(true);
     };
 
     const onCheckCodeClick = async () => {
@@ -52,13 +54,7 @@ export const AuthorizationModal = ({Toggler, onAuthorized}: Props) => {
                         Изменить номер телефона
                     </Text>
                     <Label text="Телефон">
-                        <TextField
-                            disabled={isCodeSent}
-                            value={phone}
-                            onChange={setPhone}
-                            type="tel"
-                            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-                        />
+                        <PhoneTextField disabled={isCodeSent} value={phone} onChange={setPhone} placeholder="+7" />
                     </Label>
                     {isCodeSent && (
                         <Label text="Код из СМС">
