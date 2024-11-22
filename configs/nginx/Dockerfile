@@ -1,6 +1,6 @@
 FROM ubuntu:latest
-RUN aptitude update && \
-	aptitude install -y wget tar apt-utils autoconf automake build-essential git libcurl4-openssl-dev libgeoip-dev liblmdb-dev libpcre++-dev libtool libxml2 libxml2-dev libssl-dev libyajl-dev pkgconf zlib1g-dev && \
+RUN apt-get update && \
+	apt-get install -y wget tar apt-utils autoconf automake build-essential git libcurl4-openssl-dev libgeoip-dev liblmdb-dev libpcre3-dev=2:8.39-12build1 libtool libxml2 libxml2-dev libssl-dev libyajl-dev pkgconf zlib1g-dev && \
 	git clone --depth 1 -b v3/master --single-branch https://github.com/owasp-modsecurity/ModSecurity.git && \
 	cd ModSecurity && \
 	git submodule init && \
@@ -22,8 +22,8 @@ RUN aptitude update && \
 	cp -R /usr/src/owasp-modsecurity-crs/rules/ /usr/local/nginx/conf/  && \
 	mv /usr/local/nginx/conf/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example  /usr/local/nginx/conf/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf && \
 	mv /usr/local/nginx/conf/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf.example  /usr/local/nginx/conf/rules/RESPONSE-999-EXCLUSION-RULES-AFTER-CRS.conf && \
-	aptitude remove -y --purge apt-utils autoconf automake build-essential git pkgconf && \
-	aptitude autoremove -y
+	apt-get remove -y --purge apt-utils autoconf automake build-essential git pkgconf && \
+	apt-get autoremove -y
 COPY nginx.yc.conf /usr/local/nginx/conf/nginx.conf
 COPY modsec_includes.conf /usr/local/nginx/conf/modsec_includes.conf
 COPY modsecurity.conf /usr/local/nginx/conf/modsecurity.conf
