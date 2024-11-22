@@ -3,6 +3,7 @@ version: '3.7'
 services:
     nginx:
         image: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-nginx-front
+        container_name: nginx
         ports:
             - '80:80'
             - '443:443'
