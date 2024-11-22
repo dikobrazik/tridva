@@ -53,7 +53,7 @@ export const userSlice = createSlice({
     reducers: {},
     selectors: {
         selectIsAnonymous: state => state.isAnonymous,
-        selectPhone: state => state.phone,
+        selectPhone: state => (state.phone ? `+7${state.phone}` : undefined),
         selectProfile: state => state.profile,
     },
     extraReducers: builder => {
