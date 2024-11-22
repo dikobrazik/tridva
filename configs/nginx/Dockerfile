@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 RUN apt-get update && \
-	apt-get install -y wget tar apt-utils autoconf automake build-essential git libcurl4-openssl-dev libgeoip-dev liblmdb-dev libpcre3-dev=2:8.39-12build1 libtool libxml2 libxml2-dev libssl-dev libyajl-dev pkgconf zlib1g-dev && \
+	apt-get install -y wget tar apt-utils autoconf automake build-essential git libcurl4-openssl-dev libgeoip-dev liblmdb-dev libpcre3 libtool libxml2 libxml2-dev libssl-dev libyajl-dev pkgconf zlib1g-dev && \
 	git clone --depth 1 -b v3/master --single-branch https://github.com/owasp-modsecurity/ModSecurity.git && \
 	cd ModSecurity && \
 	git submodule init && \
