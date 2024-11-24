@@ -5,8 +5,8 @@ services:
         image: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-nginx-front
         container_name: modseccrs
         environment:
-            # MODSEC_AUDIT_LOG: /var/log/modsec/audit.log
-            # MODSEC_DEBUG_LOG: /var/log/modsec/debug.log
+            MODSEC_AUDIT_LOG: /var/log/modsec/audit.log
+            MODSEC_DEBUG_LOG: /var/log/modsec/debug.log
             MANUAL_MODE: 1
         ports:
             - '80:8080'
@@ -17,8 +17,8 @@ services:
             - /etc/letsencrypt/live/default/fullchain.pem:/etc/letsencrypt/live/default/fullchain.pem
             - /etc/letsencrypt/live/default/privkey.pem:/etc/letsencrypt/live/default/privkey.pem
             - shared-volume:/var/tmp/shared-docker
-            # - ./log/nginx:/var/log/nginx:rw
-            # - ./log/modsec:/var/log/modsec:rw
+            - ./log/nginx:/var/log/nginx:rw
+            - ./log/modsec:/var/log/modsec:rw
         restart: always
         depends_on:
             - frontend
