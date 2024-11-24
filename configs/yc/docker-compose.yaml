@@ -28,7 +28,7 @@ services:
     frontend:
         image: cr.yandex/crpkimrjqc5g9hklf1c2/tridva-front
         volumes:
-            - /usr/app/.next/cache/images:/var/tmp/next-images
+            - next-images:/var/tmp/next-images
         restart: always
 
     backend:
@@ -39,3 +39,4 @@ services:
 
 volumes:
     shared-volume:
+    next-images:
