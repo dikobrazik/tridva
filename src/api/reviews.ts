@@ -1,5 +1,5 @@
 import {Review} from '@/types/review';
-import axios from 'axios';
+import axios, {AxiosError} from 'axios';
 
 type LoadReviewsPayload = {
     offerId: number;
@@ -31,18 +31,17 @@ export const loadReviews = ({offerId, page, pageSize}: LoadReviewsPayload): Prom
 export const loadHasReview = ({offerId}: LoadHasReviewPayload): Promise<boolean> =>
     axios<boolean>(`offers/${offerId}/has-review`)
         .then(response => response.data)
-        .catch(e => {
-            console.log(e);
-
+        .catch((e: AxiosError) => {
+            if (e.response?.status !== 401) {
+                console.log(e);
+            }
             return false;
         });
 
-export const createReview = ({offerId, ...body}: CreateReviewPayload): Promise<Review[]> =>
+export const createReview = ({offerId, ...body}: CreateReviewPayload): Promise<void> =>
     axios
         .post(`offers/${offerId}/reviews`, body)
         .then(response => response.data)
         .catch(e => {
             console.log(e);
-
-            return {};
         });
