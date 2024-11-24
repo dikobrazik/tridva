@@ -7,6 +7,8 @@ services:
         environment:
             MODSEC_AUDIT_LOG: /var/log/modsec/audit.log
             MODSEC_DEBUG_LOG: /var/log/modsec/debug.log
+            SSL_CERT: /etc/letsencrypt/live/tridva.store/fullchain.pem
+            SSL_CERT_KEY: /etc/letsencrypt/live/tridva.store/privkey.pem
             MANUAL_MODE: 1
         ports:
             - '80:8080'
@@ -17,8 +19,8 @@ services:
             - /etc/letsencrypt/live/default/fullchain.pem:/etc/letsencrypt/live/default/fullchain.pem
             - /etc/letsencrypt/live/default/privkey.pem:/etc/letsencrypt/live/default/privkey.pem
             - shared-volume:/var/tmp/shared-docker
-            - ./log/nginx:/var/log/nginx:rw
-            - ./log/modsec:/var/log/modsec:rw
+            - ./log/nginx:/var/log/nginx
+            - ./log/modsec:/var/log/modsec
         restart: always
         depends_on:
             - frontend
