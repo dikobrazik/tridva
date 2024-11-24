@@ -4,6 +4,7 @@ import {Label} from '@/components/Label';
 import {Modal} from '@/components/Modal';
 import {Text} from '@/components/Text';
 import {TextField} from '@/components/TextField';
+import {MaskedTextField} from '@/components/TextField/Masked';
 import {PhoneTextField} from '@/components/TextField/Phone';
 import {Column} from '@/components/layout/Column';
 import {useToggler} from '@/hooks/useToggler';
@@ -57,7 +58,7 @@ export const AuthorizationModal = ({Toggler, onAuthorized}: Props) => {
                     </Label>
                     {isCodeSent && (
                         <Label text="Код из СМС">
-                            <TextField value={code} onChange={setCode} type="number" maxLength={4} />
+                            <MaskedTextField mask="000-000" value={code} onChange={setCode} />
                         </Label>
                     )}
                     <Button onClick={isCodeSent ? onCheckCodeClick : onSendCodeClick}>
