@@ -52,7 +52,7 @@ jobs:
                   host: ${{ secrets.YC_HOST }}
                   username: ${{ secrets.YC_USERNAME }}
                   key: ${{ secrets.ID_RSA }}
-                  source: 'configs/yc/*'
+                  source: 'configs/yc/docker-compose.yaml'
                   target: '~/frontend'
 
             - name: executing remote ssh commands using password
