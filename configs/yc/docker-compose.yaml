@@ -17,8 +17,8 @@ services:
             - /etc/letsencrypt/live/default/fullchain.pem:/etc/letsencrypt/live/default/fullchain.pem
             - /etc/letsencrypt/live/default/privkey.pem:/etc/letsencrypt/live/default/privkey.pem
             - shared-volume:/var/tmp/shared-docker
-            - ~/log/nginx:/var/log/nginx:rw
-            - ~/log/modsec:/var/log/modsec:rw
+            - ./log/nginx:/var/log/nginx:rw
+            - ./log/modsec:/var/log/modsec:rw
         restart: always
         depends_on:
             - frontend
