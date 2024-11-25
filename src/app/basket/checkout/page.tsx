@@ -135,9 +135,11 @@ export default function CheckoutPage() {
             </Column>
 
             <Row background="#fff" padding="8px 16px">
-                <Button width="full" type="submit">
-                    Перейти к оплате ({selectedBasketItemsCost} ₽)
-                </Button>
+                <Link href="/basket/checkout/success">
+                    <Button width="full" type="submit">
+                        Перейти к оплате ({selectedBasketItemsCost} ₽)
+                    </Button>
+                </Link>
             </Row>
         </Column>
     );
