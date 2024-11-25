@@ -17,6 +17,8 @@ type Props<As extends 'button' | 'a'> = PropsWithChildren<{
 export const Button = <As extends 'button' | 'a'>(props: Props<As>) => {
     const {variant = 'action', size = 'l', width, children, icon, iconSize, className, ...buttonProps} = props;
 
+    const isFullWidth = width === 'full';
+
     return (
         <Box
             as="button"
@@ -26,7 +28,7 @@ export const Button = <As extends 'button' | 'a'>(props: Props<As>) => {
                 css[`variant-${variant}`],
                 css[`size-${size}`],
                 {
-                    [css.fullWidth]: width === 'full',
+                    [css.fullWidth]: isFullWidth,
                 },
                 className,
             )}

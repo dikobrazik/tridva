@@ -1,6 +1,13 @@
 .footer {
     background-color: #fff;
+
     box-shadow: 0px -4px 16px 0px #3f3e431f;
+
+    &.withoutShadow {
+        box-shadow: none;
+    }
+
+    border-top: 1px solid #9ca3aa52;
 
     position: fixed;
 

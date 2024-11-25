@@ -44,7 +44,7 @@ export const AuthorizationModal = ({title, Toggler, onAuthorized}: Props) => {
         } catch (e: unknown) {
             const response = (e as AxiosError<{leftSeconds: number}>).response;
 
-            if (response) {
+            if (response && response.data && 'leftSeconds' in response.data) {
                 startTimer(response.data.leftSeconds);
             }
         }
