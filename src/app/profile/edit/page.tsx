@@ -38,6 +38,7 @@ export default function ProfileEditPage() {
 
                 <Column gap="2">
                     <AuthorizationModal
+                        title={'Изменить номер телефона'}
                         Toggler={({onClick}) => <ValueRow onClick={onClick} name="Телефон" value={phone} />}
                     />
 

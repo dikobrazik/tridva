@@ -7,7 +7,7 @@
     bottom: 0;
     right: 0;
     z-index: 2;
-    background: #38343a52;
+    background: #38343a85;
 }
 
 .content {
@@ -22,15 +22,16 @@
     margin-right: auto;
     margin-left: auto;
     margin-right: auto;
-    top: 30%;
+    top: 50%;
+    transform: translateY(-50%);
     padding: 40px 16px 16px 16px;
     border-radius: 24px;
     color: #303234;
 
     max-width: 360px;
 
-    -webkit-animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-    animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    -webkit-animation: fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 
     & .closeIcon {
         cursor: pointer;

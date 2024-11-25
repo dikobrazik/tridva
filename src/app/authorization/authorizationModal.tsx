@@ -6,20 +6,26 @@ import {Text} from '@/components/Text';
 import {TextField} from '@/components/TextField';
 import {MaskedTextField} from '@/components/TextField/Masked';
 import {PhoneTextField} from '@/components/TextField/Phone';
+import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
+import {useTimer} from '@/hooks/useTimer';
 import {useToggler} from '@/hooks/useToggler';
 import {checkCodeAction, userSelectors} from '@/lib/features/user';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
+import {AxiosError} from 'axios';
 import React, {useEffect, useState} from 'react';
 
 type Props = {
+    title: string;
     Toggler: (props: {onClick: () => void}) => React.JSX.Element;
     onAuthorized?: () => void;
 };
 
-export const AuthorizationModal = ({Toggler, onAuthorized}: Props) => {
+export const AuthorizationModal = ({title, Toggler, onAuthorized}: Props) => {
     const dispatch = useAppDispatch();
     const {isActive, toggle} = useToggler();
+
+    const {startTimer, seconds} = useTimer();
 
     const initialPhone = useAppSelector(userSelectors.selectPhone);
 
@@ -32,7 +38,16 @@ export const AuthorizationModal = ({Toggler, onAuthorized}: Props) => {
     }, [initialPhone]);
 
     const onSendCodeClick = async () => {
-        await getCode({phone});
+        try {
+            await getCode({phone});
+            startTimer(60);
+        } catch (e: unknown) {
+            const response = (e as AxiosError<{leftSeconds: number}>).response;
+
+            if (response) {
+                startTimer(response.data.leftSeconds);
+            }
+        }
 
         setIsCodeSent(true);
     };
@@ -49,19 +64,38 @@ export const AuthorizationModal = ({Toggler, onAuthorized}: Props) => {
         <>
             <Toggler onClick={toggle} />
             <Modal isOpen={isActive} onClose={toggle}>
-                <Column gap="6">
-                    <Text size={16} weight={600}>
-                        Изменить номер телефона
-                    </Text>
+                <Column gap="4">
+                    <Column gap="2">
+                        <Text size={16} weight={600}>
+                            {title}
+                        </Text>
+                        <Text size={10} weight={400}>
+                            Введите номер телефона, мы пришлем СМС с кодом подтверждения
+                        </Text>
+                    </Column>
                     <Label text="Телефон">
                         <PhoneTextField disabled={isCodeSent} value={phone} onChange={setPhone} placeholder="+7" />
                     </Label>
                     {isCodeSent && (
-                        <Label text="Код из СМС">
-                            <MaskedTextField mask="000-000" value={code} onChange={setCode} />
-                        </Label>
+                        <Column gap="4">
+                            <Label text="Код из СМС">
+                                <MaskedTextField mask="000-000" value={code} onChange={setCode} />
+                            </Label>
+                            {seconds > 0 ? (
+                                <Text weight={400} size={10} color="#303234A3">
+                                    Отправить код повторно через {seconds}с
+                                </Text>
+                            ) : (
+                                <Box onClick={onSendCodeClick}>
+                                    <Text size={10} weight={500} color="#F40C43">
+                                        Отправить код повторно
+                                    </Text>
+                                </Box>
+                            )}
+                        </Column>
                     )}
-                    <Button onClick={isCodeSent ? onCheckCodeClick : onSendCodeClick}>
+
+                    <Button disabled={phone.length !== 10} onClick={isCodeSent ? onCheckCodeClick : onSendCodeClick}>
                         {isCodeSent ? 'Подтвердить' : 'Получить код'}
                     </Button>
                 </Column>

@@ -2,6 +2,7 @@ import {MouseEventHandler, PropsWithChildren, useCallback} from 'react';
 import cn from 'classnames';
 import css from './Modal.module.scss';
 import {Icon} from '../Icon';
+import {createPortal} from 'react-dom';
 
 type Props = PropsWithChildren<{
     isOpen: boolean;
@@ -23,7 +24,7 @@ export const Modal = (props: Props) => {
         return null;
     }
 
-    return (
+    return createPortal(
         <div className={css.wrapper} onClick={onWrapperClick}>
             <div className={cn(css.content)}>
                 <div className={css.closeIcon}>
@@ -31,6 +32,7 @@ export const Modal = (props: Props) => {
                 </div>
                 {children}
             </div>
-        </div>
+        </div>,
+        document.body,
     );
 };

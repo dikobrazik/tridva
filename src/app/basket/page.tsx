@@ -88,6 +88,7 @@ export default function Basket() {
                         </Link>
                     ) : (
                         <AuthorizationModal
+                            title="Для оформления заказа войдите или зарегистрируйтесь"
                             onAuthorized={onAuthorized}
                             Toggler={({onClick}: {onClick: () => void}) => (
                                 <Button onClick={onClick} width="full">
