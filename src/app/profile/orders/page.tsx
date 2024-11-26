@@ -39,16 +39,16 @@ export default async function OrdersPage() {
 
             {orders.length === 0 ? <NoOrders /> : undefined}
 
-            {orders.map(({id, offer, pickupPoint, createdAt}) => {
+            {orders.map(({id, order, offer}) => {
                 return (
                     <Block key={id}>
                         <Column gap={5}>
                             <Column gap="1">
                                 <Text size={12} weight={500}>
-                                    Заказ от {formatDate(createdAt, 'd MMMM')}
+                                    Заказ от {formatDate(order.createdAt, 'd MMMM')}
                                 </Text>
                                 <Text size={10} weight={400} color="#303234A3">
-                                    Пункт выдачи: {pickupPoint.address}. Ежедневно 10:00 - 21:00
+                                    Пункт выдачи: {order.pickupPoint.address}. Ежедневно 10:00 - 21:00
                                 </Text>
                             </Column>
 

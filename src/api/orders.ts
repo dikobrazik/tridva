@@ -1,4 +1,4 @@
-import {Order} from '@/types/orders';
+import {OrderOffer} from '@/types/orders';
 import axios from 'axios';
 
 type ProcessOrderPayload = {
@@ -6,6 +6,7 @@ type ProcessOrderPayload = {
     basketItemsIds: number[];
 };
 
-export const processOrder = (payload: ProcessOrderPayload): Promise<string> => axios.post(`orders`, payload);
+export const processOrder = (payload: ProcessOrderPayload): Promise<string> =>
+    axios.post(`orders`, payload).then(response => response.data);
 
-export const loadOrders = (): Promise<Order[]> => axios.get(`orders`).then(response => response.data);
+export const loadOrders = (): Promise<OrderOffer[]> => axios.get(`orders`).then(response => response.data);

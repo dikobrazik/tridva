@@ -41,7 +41,13 @@ export default function CheckoutPage() {
     const onCheckoutClick: FormEventHandler<HTMLFormElement> = e => {
         e.preventDefault();
 
-        dispatch(processOrderAction());
+        if (selectedPickupPoint) {
+            dispatch(processOrderAction()).then(({payload: paymentUrl}) => {
+                window.location.replace(paymentUrl);
+            });
+        } else {
+            window.alert('не выбран пункт выдачи!');
+        }
     };
 
     return (
@@ -135,11 +141,9 @@ export default function CheckoutPage() {
             </Column>
 
             <Row background="#fff" padding="8px 16px">
-                <Link href="/basket/checkout/success">
-                    <Button width="full" type="submit">
-                        Перейти к оплате ({selectedBasketItemsCost} ₽)
-                    </Button>
-                </Link>
+                <Button width="full" type="submit">
+                    Перейти к оплате ({selectedBasketItemsCost} ₽)
+                </Button>
             </Row>
         </Column>
     );

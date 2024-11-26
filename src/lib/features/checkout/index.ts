@@ -17,11 +17,7 @@ export const processOrderAction = createAsyncThunk(`${NAMESPACE}/process-order`,
     const selectedPickupPoint = checkoutSelectors.selectSelectedPickupPoint(state);
     const selectedBasketItemsIds = checkoutSelectors.selectSelectedBasketItems(state);
 
-    if (selectedPickupPoint) {
-        return processOrder({pickupPointId: selectedPickupPoint.id, basketItemsIds: selectedBasketItemsIds});
-    } else {
-        window.alert('не выбран пункт выдачи!');
-    }
+    return processOrder({pickupPointId: selectedPickupPoint.id, basketItemsIds: selectedBasketItemsIds});
 });
 
 const initialState = {
