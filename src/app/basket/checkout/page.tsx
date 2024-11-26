@@ -10,7 +10,7 @@ import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {basketSelectors} from '@/lib/features/basket';
-import {checkoutSelectors, processOrderAction} from '@/lib/features/checkout';
+import {checkoutSelectors, loadLastSelectedPickupPointAction, processOrderAction} from '@/lib/features/checkout';
 import {userSelectors} from '@/lib/features/user';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 import {pluralize} from '@/shared/utils/pluralize';
@@ -33,6 +33,7 @@ export default function CheckoutPage() {
     const selectedBasketItemsCount = selectedBasketItemsList.length;
 
     useEffect(() => {
+        dispatch(loadLastSelectedPickupPointAction());
         if ((!areBasketItemsLoading && selectedBasketItemsList.length === 0) || isUserAnonymous) {
             redirect('/basket');
         }

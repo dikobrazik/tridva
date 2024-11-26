@@ -11,7 +11,8 @@ const reHydrateStore = () => {
         const selectedBasketItemsIds = JSON.parse(
             localStorage.getItem(LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT) ?? '[]',
         ) as number[];
-        const selectedPickupPointId = JSON.parse(localStorage.getItem(LAST_SELECTED_PICKUP_POINT_ID) ?? '0') as number;
+        const selectedPickupPointId = (JSON.parse(localStorage.getItem(LAST_SELECTED_PICKUP_POINT_ID) ?? '0') ||
+            undefined) as number | undefined;
 
         return {
             offers: offersSlice.getInitialState(),

@@ -1,4 +1,4 @@
-import {getCityPickupPoints, processOrder} from '@/api';
+import {getCityPickupPoints, getPickupPoint, processOrder} from '@/api';
 import {RootState} from '@/lib/store';
 import {PickupPoint} from '@/types/geo';
 import {PayloadAction, createAsyncThunk, createEntityAdapter, createSlice} from '@reduxjs/toolkit';
@@ -11,11 +11,23 @@ export const loadPickupPointsAction = createAsyncThunk(`${NAMESPACE}/load-pickup
     getCityPickupPoints({cityId: 1}),
 );
 
-export const processOrderAction = createAsyncThunk(`${NAMESPACE}/process-order`, (_, {getState}) => {
+export const loadLastSelectedPickupPointAction = createAsyncThunk(`${NAMESPACE}/load-pickup-point`, (_, {getState}) => {
+    const state = getState() as RootState;
+
+    const selectedPickupPointId = checkoutSelectors.selectSelectedPickupPointId(state);
+
+    if (selectedPickupPointId) {
+        return getPickupPoint({pickupPointId: selectedPickupPointId});
+    }
+});
+
+export const processOrderAction = createAsyncThunk<string>(`${NAMESPACE}/process-order`, (_, {getState}) => {
     const state = getState() as RootState;
 
     const selectedPickupPoint = checkoutSelectors.selectSelectedPickupPoint(state);
     const selectedBasketItemsIds = checkoutSelectors.selectSelectedBasketItems(state);
+
+    if (!selectedPickupPoint) throw new Error('Pickup point not selected');
 
     return processOrder({pickupPointId: selectedPickupPoint.id, basketItemsIds: selectedBasketItemsIds});
 });
@@ -47,6 +59,7 @@ export const checkoutSlice = createSlice({
         selectSelectedBasketItems: state => state.selectedBasketItems,
         selectArePickupPointsLoading: state => state.arePickupPointsLoading,
         selectPickupPoints: state => pickupPointAdapterSelectors.selectAll(state),
+        selectSelectedPickupPointId: state => state.selectedPickupPointId,
         selectSelectedPickupPoint: state =>
             state.selectedPickupPointId
                 ? pickupPointAdapterSelectors.selectById(state, state.selectedPickupPointId)
@@ -54,6 +67,19 @@ export const checkoutSlice = createSlice({
     },
     extraReducers: builder =>
         builder
+            .addCase(loadLastSelectedPickupPointAction.pending, state => {
+                state.arePickupPointsLoading = true;
+            })
+            .addCase(loadLastSelectedPickupPointAction.fulfilled, (state, {payload}) => {
+                state.arePickupPointsLoading = false;
+
+                if (payload !== undefined) {
+                    state.pickupPoints = pickupPointAdapter.addOne(state.pickupPoints, payload);
+                }
+            })
+            .addCase(loadLastSelectedPickupPointAction.rejected, state => {
+                state.arePickupPointsLoading = false;
+            })
             .addCase(loadPickupPointsAction.pending, state => {
                 state.arePickupPointsLoading = true;
             })
