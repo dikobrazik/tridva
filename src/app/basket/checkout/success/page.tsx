@@ -29,7 +29,7 @@ export default function SuccessOrder() {
                         Вернуться к покупкам
                     </Button>
                 </Link>
-                <Link href="/orders">
+                <Link href="/profile/orders">
                     <Button width="full" variant="outline">
                         Перейти в личный кабинет
                     </Button>
