@@ -32,6 +32,9 @@ export const loadFavoriteOffers = (): Promise<Offer[]> => axios(`offers/favorite
 export const loadFavoriteOffersIds = (): Promise<number[]> =>
     axios(`offers/favorite/ids`).then(response => response.data);
 
+export const loadFavoriteOffersCount = (): Promise<number> =>
+    axios(`offers/favorite/count`).then(response => response.data);
+
 export const loadOfferAttributes = (payload: LoadOfferPayload): Promise<OfferAttribute[]> =>
     axios<OfferAttribute[]>(`offers/${payload.id}/attributes`).then(response => response.data);
 

@@ -18,3 +18,5 @@ export const cancelOrder = (payload: CancelOrderPayload): Promise<string> =>
     axios.post(`orders/cancel`, payload).then(response => response.data);
 
 export const loadOrders = (): Promise<OrderOffer[]> => axios.get(`orders`).then(response => response.data);
+
+export const loadOrdersCount = (): Promise<number> => axios.get(`orders/count`).then(response => response.data);
