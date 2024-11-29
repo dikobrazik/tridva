@@ -62,11 +62,11 @@ export default function PickupPointsPage() {
     };
 
     useEffect(() => {
-        dispatch(loadPickupPointsAction()).then(({payload, meta}) => {
-            if (meta.requestStatus === 'fulfilled') {
-                onPickupPointsLoaded(payload as PickupPoint[]);
-            }
-        });
+        dispatch(loadPickupPointsAction())
+            .unwrap()
+            .then(pickupPoints => {
+                onPickupPointsLoaded(pickupPoints);
+            });
 
         if (ref.current && !mapRef.current) {
             mapRef.current = new ol.Map({

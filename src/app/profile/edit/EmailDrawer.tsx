@@ -27,11 +27,11 @@ export const EmailDrawer = ({isOpen, toggle}: Props) => {
     }, [profile.email]);
 
     const onSaveClick = () => {
-        dispatch(updateProfileEmailAction(value)).then(({type}) => {
-            if (type === updateProfileEmailAction.fulfilled.type) {
+        dispatch(updateProfileEmailAction(value))
+            .unwrap()
+            .then(() => {
                 toggle();
-            }
-        });
+            });
     };
 
     return (

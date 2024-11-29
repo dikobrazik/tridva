@@ -19,9 +19,11 @@ import Link from 'next/link';
 import {redirect} from 'next/navigation';
 import {FormEventHandler, useEffect} from 'react';
 import {Summary} from '../component/Summary';
+import {useRouter} from 'next/navigation';
 
 export default function CheckoutPage() {
     const dispatch = useAppDispatch();
+    const router = useRouter();
     const selectedPickupPoint = useAppSelector(checkoutSelectors.selectSelectedPickupPoint);
 
     const isUserAnonymous = useAppSelector(userSelectors.selectIsAnonymous);
@@ -43,9 +45,14 @@ export default function CheckoutPage() {
         e.preventDefault();
 
         if (selectedPickupPoint) {
-            dispatch(processOrderAction()).then(({payload: paymentUrl}) => {
-                window.location.replace(paymentUrl);
-            });
+            dispatch(processOrderAction())
+                .unwrap()
+                .then(paymentUrl => {
+                    window.location.replace(paymentUrl);
+                })
+                .catch(() => {
+                    router.replace('/');
+                });
         } else {
             window.alert('не выбран пункт выдачи!');
         }

@@ -12,7 +12,6 @@ import css from './Orders.module.scss';
 import {Icon} from '@/components/Icon';
 import Link from 'next/link';
 import {Separator} from '@/components/Separator';
-import {Box} from '@/components/layout/Box';
 import {CancelOrderButton} from './components';
 
 const Status = () => {
