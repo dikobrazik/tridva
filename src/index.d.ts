@@ -19,7 +19,7 @@ interface ObjectConstructor {
      * Returns an array of key/values of the enumerable properties of an object
      * @param o Object that contains the properties and methods. This can be an object that you created or an existing Document Object Model (DOM) object.
      */
-    entries(o: {}): [string, any][];
+    entries(o: object): [string, any][];
 
     /**
      * Returns an object containing all own property descriptors of an object

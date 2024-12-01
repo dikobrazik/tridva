@@ -2,23 +2,18 @@
 
 import {Button} from '@/components/Button';
 import {Header} from '@/components/Header';
-import {Separator} from '@/components/Separator';
 import {Text} from '@/components/Text';
 import {TextField} from '@/components/TextField';
 import {Block} from '@/components/layout/Block';
-import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {basketSelectors} from '@/lib/features/basket';
 import {useAppSelector} from '@/lib/hooks';
-import {pluralize} from '@/shared/utils/pluralize';
-import {redirect} from 'next/navigation';
-import {useEffect} from 'react';
 
 export default function PaymentPage() {
-    const selectedBasketItemsList = useAppSelector(basketSelectors.selectSelectedBasketItemsList);
+    // const selectedBasketItemsList = useAppSelector(basketSelectors.selectSelectedBasketItemsList);
     const selectedBasketItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
-    const selectedBasketItemsCount = selectedBasketItemsList.length;
+    // const selectedBasketItemsCount = selectedBasketItemsList.length;
 
     // useEffect(() => {
     //     if (Object.values(selectedBasketItemsList).length === 0) {

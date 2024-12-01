@@ -28,9 +28,11 @@ const OPTIONS = {
 
 export const Sorting = () => {
     const {isActive, toggle} = useToggler();
+    // eslint-disable-next-line no-undef
     const [selected, setSelected] = useState<Values<typeof SORTING>>(SORTING.POPULAR);
 
     const onOptionClick = useCallback(
+        // eslint-disable-next-line no-undef
         (option: Values<typeof SORTING>) => {
             toggle();
             setSelected(option);

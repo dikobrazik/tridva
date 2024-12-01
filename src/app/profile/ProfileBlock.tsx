@@ -5,7 +5,7 @@ import {Icon} from '@/components/Icon';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
-import {offersSelectors} from '@/lib/features/offers';
+// import {offersSelectors} from '@/lib/features/offers';
 import {userSelectors} from '@/lib/features/user';
 import Link from 'next/link';
 import {useSelector} from 'react-redux';
@@ -13,7 +13,7 @@ import {useSelector} from 'react-redux';
 export const ProfileBlock = () => {
     const profile = useSelector(userSelectors.selectProfile);
     const phone = useSelector(userSelectors.selectPhone);
-    const favoriteOffersCount = useSelector(offersSelectors.selectFavoriteOffersCount);
+    // const favoriteOffersCount = useSelector(offersSelectors.selectFavoriteOffersCount);
 
     return (
         <Link href="/profile/edit">

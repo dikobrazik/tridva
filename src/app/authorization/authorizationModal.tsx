@@ -3,7 +3,6 @@ import {Button} from '@/components/Button';
 import {Label} from '@/components/Label';
 import {Modal} from '@/components/Modal';
 import {Text} from '@/components/Text';
-import {TextField} from '@/components/TextField';
 import {MaskedTextField} from '@/components/TextField/Masked';
 import {PhoneTextField} from '@/components/TextField/Phone';
 import {Box} from '@/components/layout/Box';

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {Category} from '@/types/category';
 import axios from 'axios';
 
@@ -42,7 +43,7 @@ export const loadPopularCategories = (): Promise<Pick<Category, 'id' | 'name'>[]
 export const loadCategory = (payload: LoadCategoryPayload): Promise<Category> =>
     axios<Category>(`categories/${payload.categoryId}`, {params: payload})
         .then(response => response.data)
-        .catch(() => ({} as Category));
+        .catch(() => ({}) as Category);
 
 export const loadCategoryAncestors = (payload: LoadCategoryPayload): Promise<Category[]> =>
     axios<Category[]>(`categories/${payload.categoryId}/ancestors`, {params: payload})

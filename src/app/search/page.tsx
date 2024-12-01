@@ -1,16 +1,15 @@
+import {loadOffers} from '@/api';
+import {OffersList, OffersListContainer, OffersListLoader} from '@/app/OffersList';
+import {OfferCard} from '@/components/OfferCard';
 import {Text} from '@/components/Text';
-import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
-import css from './Page.module.scss';
-import {OfferCard} from '@/components/OfferCard';
-import Filter from '../components/Filter';
-import {loadOffers} from '@/api';
-import {pluralize} from '@/shared/utils/pluralize';
-import {OffersList, OffersListContainer, OffersListLoader} from '@/app/OffersList';
-import {Sorting} from '../components/Sorting';
 import {DEFAUL_PAGE_SIZE} from '@/shared/constants';
 import {PageParams} from '@/shared/types/next';
+import {pluralize} from '@/shared/utils/pluralize';
+import Filter from '../components/Filter';
+import {Sorting} from '../components/Sorting';
+import css from './Page.module.scss';
 
 type Props = PageParams<{p: string; name: string}>;
 

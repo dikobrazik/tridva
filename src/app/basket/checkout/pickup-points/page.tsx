@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use client';
 
 import {Header} from '@/components/Header';

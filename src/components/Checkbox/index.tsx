@@ -12,7 +12,7 @@ type Props = {
 };
 
 export const Checkbox = (props: Props) => {
-    const {name, checked, onChange} = props;
+    const {checked, onChange} = props;
 
     return (
         <label className={cn(css.label, {[css.cheked]: Boolean(checked)})}>

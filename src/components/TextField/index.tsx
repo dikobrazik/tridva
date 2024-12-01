@@ -1,10 +1,9 @@
 'use client';
 
-import {forwardRef, InputHTMLAttributes, useEffect, useRef} from 'react';
 import cn from 'classnames';
+import {forwardRef, InputHTMLAttributes} from 'react';
 import {Icon, IconName} from '../Icon';
 import css from './TextField.module.scss';
-import IMask, {InputMask} from 'imask';
 
 export type TextFieldProps = {
     size?: 's' | 'm';
@@ -31,3 +30,5 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props: Te
         </span>
     );
 });
+
+TextField.displayName = 'TextField';

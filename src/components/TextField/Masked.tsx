@@ -21,7 +21,7 @@ export const MaskedTextField = ({onChange, mask, ...props}: Props) => {
 
             maskedRef.current.updateValue();
 
-            maskedRef.current.on('accept', e => {
+            maskedRef.current.on('accept', () => {
                 if (maskedRef.current !== null) {
                     if (onChange) {
                         onChange(maskedRef.current.unmaskedValue);

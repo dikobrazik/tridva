@@ -22,10 +22,13 @@ const reHydrateStore = () => {
             },
             basket: {
                 ...basketSlice.getInitialState(),
-                selectedBasketItems: selectedBasketItemsIds.reduce((map, id) => {
-                    map[id] = true;
-                    return map;
-                }, {} as Record<number, boolean>),
+                selectedBasketItems: selectedBasketItemsIds.reduce(
+                    (map, id) => {
+                        map[id] = true;
+                        return map;
+                    },
+                    {} as Record<number, boolean>,
+                ),
             },
         };
     }

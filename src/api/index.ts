@@ -20,7 +20,7 @@ if (typeof window === 'undefined') {
 axios.interceptors.request.use(function (config) {
     // Говнохак, пока не посадим сервер и клиент на один домен
     if (typeof window === 'undefined') {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
         const token = require('next/headers').cookies().get('token');
         config.headers.Authorization = `Bearer ${token?.value}`;
     }

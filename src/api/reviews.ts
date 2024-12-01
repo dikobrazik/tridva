@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {Review} from '@/types/review';
 import axios, {AxiosError} from 'axios';
 
