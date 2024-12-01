@@ -15,12 +15,12 @@ import {userSelectors} from '@/lib/features/user';
 import Link from 'next/link';
 import css from './Page.module.scss';
 import {checkoutActions} from '@/lib/features/checkout';
-import {LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT} from '@/lib/constants';
 import {formatPrice} from '@/shared/utils/formatPrice';
 import {Summary} from './component/Summary';
 import {sum} from '@/shared/utils/sum';
 import {pluralize} from '@/shared/utils/pluralize';
 import {useRouter} from 'next/navigation';
+import {selectedBasketItemsStorage} from '@/shared/utils/local-storage/storages';
 
 export default function Basket() {
     const router = useRouter();
@@ -35,7 +35,7 @@ export default function Basket() {
     const onCheckoutClick = () => {
         const selectedBasketItemsIds = selectedBasketItems.map(({id}) => id);
         dispatch(checkoutActions.setSelectedBasketItems(selectedBasketItemsIds));
-        localStorage.setItem(LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT, JSON.stringify(selectedBasketItemsIds));
+        selectedBasketItemsStorage.set(selectedBasketItemsIds);
     };
 
     const onAuthorized = () => {

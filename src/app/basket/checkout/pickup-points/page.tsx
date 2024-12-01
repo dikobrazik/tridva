@@ -23,7 +23,7 @@ import {Row} from '@/components/layout/Row';
 import {Icon} from '@/components/Icon';
 import {Button} from '@/components/Button';
 import {useRouter} from 'next/navigation';
-import {LAST_SELECTED_PICKUP_POINT_ID} from '@/lib/constants';
+import {lastSelectedPickupPointIdStorage} from '@/shared/utils/local-storage/storages';
 
 export default function PickupPointsPage() {
     const dispatch = useAppDispatch();
@@ -124,7 +124,7 @@ export default function PickupPointsPage() {
     const onSelect = () => {
         if (selectedPickupPoint) {
             dispatch(checkoutActions.setSelectedPickupPointId(selectedPickupPoint.id));
-            localStorage.setItem(LAST_SELECTED_PICKUP_POINT_ID, String(selectedPickupPoint.id));
+            lastSelectedPickupPointIdStorage.set(selectedPickupPoint.id);
             router.back();
         }
     };

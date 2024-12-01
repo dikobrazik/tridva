@@ -4,15 +4,12 @@ import {reviewsReducer, reviewsSlice} from './features/reviews';
 import {basketReducer, basketSlice} from './features/basket';
 import {userReducer, userSlice} from './features/user';
 import {checkoutReducer, checkoutSlice} from './features/checkout';
-import {LAST_SELECTED_PICKUP_POINT_ID, LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT} from './constants';
+import {lastSelectedPickupPointIdStorage, selectedBasketItemsStorage} from '@/shared/utils/local-storage/storages';
 
 const reHydrateStore = () => {
-    if (typeof window !== 'undefined' && localStorage.getItem(LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT) !== null) {
-        const selectedBasketItemsIds = JSON.parse(
-            localStorage.getItem(LAST_SELECTED_BASKET_ITEMS_FOR_CHECKOUT) ?? '[]',
-        ) as number[];
-        const selectedPickupPointId = (JSON.parse(localStorage.getItem(LAST_SELECTED_PICKUP_POINT_ID) ?? '0') ||
-            undefined) as number | undefined;
+    if (typeof window !== 'undefined') {
+        const selectedBasketItemsIds = selectedBasketItemsStorage.get() ?? [];
+        const selectedPickupPointId = lastSelectedPickupPointIdStorage.get();
 
         return {
             offers: offersSlice.getInitialState(),

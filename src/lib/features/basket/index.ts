@@ -1,6 +1,7 @@
 import {changeBasketItemCount, getBasketItems, putOfferToBasket, removeItemFromBasket} from '@/api';
 import {RootState, ThunkConfig} from '@/lib/store';
 import {calculatePrice} from '@/shared/utils/formatPrice';
+import {selectedBasketItemsStorage} from '@/shared/utils/local-storage/storages';
 import {sum} from '@/shared/utils/sum';
 import {BasketItem} from '@/types/basket';
 import {createAsyncThunk, createEntityAdapter, createSelector, createSlice} from '@reduxjs/toolkit';
@@ -17,7 +18,13 @@ export const loadBasketItemsAction = createTypedAsyncThunk<BasketItem[]>(`${NAME
 
 export const putOfferToBasketAction = createTypedAsyncThunk<BasketItem, {offerId: number}>(
     `${NAMESPACE}/put-offer-to-basket`,
-    async ({offerId}) => putOfferToBasket({offerId}),
+    async ({offerId}) => {
+        const basketItem = await putOfferToBasket({offerId});
+
+        selectedBasketItemsStorage.set(selectedBasketItemsIds => (selectedBasketItemsIds ?? []).concat(basketItem.id));
+
+        return basketItem;
+    },
 );
 
 export const increaseBasketItemCountAction = createTypedAsyncThunk<{id: number; count: number}, {id: number}>(
@@ -46,7 +53,13 @@ export const decreaseBasketItemCountAction = createTypedAsyncThunk<{id: number; 
 
 export const removeBasketItemAction = createTypedAsyncThunk<void, {id: number}>(
     `${NAMESPACE}/remove-basket-item`,
-    ({id}) => removeItemFromBasket({id}),
+    async ({id}) => {
+        await removeItemFromBasket({id});
+
+        selectedBasketItemsStorage.set(selectedBasketItemsIds =>
+            (selectedBasketItemsIds ?? []).filter(id => id !== id),
+        );
+    },
 );
 
 type SelectedBasketItems = Record<number, boolean>;
@@ -175,6 +188,7 @@ export const basketSlice = createSlice({
                 }
             })
             .addCase(putOfferToBasketAction.fulfilled, (state, {payload: basketItem}) => {
+                state.selectedBasketItems[basketItem.id] = true;
                 basketItemAdapter.addOne(state.basketItems, basketItem);
             })
             .addCase(removeBasketItemAction.fulfilled, (state, {meta}) => {

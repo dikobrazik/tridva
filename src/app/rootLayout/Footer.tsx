@@ -9,13 +9,13 @@ import {Column} from '@/components/layout/Column';
 import classNames from 'classnames';
 import {usePathname} from 'next/navigation';
 
-const pagesWithLocalFooter = ['/basket/checkout/success'];
+const pageWithLocalFooterRe = /([/]basket[/]checkout[/]success)|([/]basket)|([/]offers[/]\d)/;
 
 export const Footer = () => {
     const pathname = usePathname();
     const basketItemsCount = useAppSelector(basketSelectors.selectBasketItemsCount);
 
-    const isPageWithLocalFooter = pagesWithLocalFooter.includes(pathname);
+    const isPageWithLocalFooter = pageWithLocalFooterRe.test(pathname);
 
     return (
         <Column className={classNames(css.footer, {[css.withoutShadow]: isPageWithLocalFooter})} padding="8px 16px">

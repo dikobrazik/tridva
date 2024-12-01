@@ -65,11 +65,15 @@ export default async function ProfilePage() {
                                 href="/profile/favorites"
                                 icon="heart"
                                 title="Избранное"
-                                description={`${favoriteOffersCount} ${pluralize(favoriteOffersCount, [
-                                    'товар',
-                                    'товара',
-                                    'товаров',
-                                ])}`}
+                                description={
+                                    favoriteOffersCount > 0
+                                        ? `${favoriteOffersCount} ${pluralize(favoriteOffersCount, [
+                                              'товар',
+                                              'товара',
+                                              'товаров',
+                                          ])}`
+                                        : 'У вас пока нет ни одного товара в избранных'
+                                }
                             />
                         </Box>
                     </Row>

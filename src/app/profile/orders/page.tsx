@@ -12,7 +12,7 @@ import css from './Orders.module.scss';
 import {Icon} from '@/components/Icon';
 import Link from 'next/link';
 import {Separator} from '@/components/Separator';
-import {CancelOrderButton} from './components';
+import {CancelOrderButton} from './CancelOrderButton';
 
 const Status = () => {
     return (
