@@ -2,6 +2,7 @@ import {Group} from '@/types/group';
 import {Offer, OfferAttribute} from '@/types/offers';
 import axios from 'axios';
 import {appFetch, getSearchParams} from './fetch';
+import {notFound} from 'next/navigation';
 
 type LoadOffersPayload = {
     search?: string;
@@ -20,7 +21,12 @@ export const loadOffers = (
     appFetch(`offers?${getSearchParams(payload)}`).then(r => r.json());
 
 export const loadOffer = (payload: LoadOfferPayload): Promise<Offer> =>
-    appFetch(`offers/${payload.id}`).then(r => r.json());
+    appFetch(`offers/${payload.id}`).then(r => {
+        if (r.status === 404) {
+            notFound();
+        }
+        return r.json();
+    });
 
 export const loadIsFavoriteOffer = (payload: LoadOfferPayload): Promise<boolean> =>
     axios<boolean>(`offers/${payload.id}/favorite`).then(response => response.data);
