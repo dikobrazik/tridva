@@ -14,7 +14,7 @@
     "lint-staged": {
         "**/*.{ts,tsx}": [
             "prettier --write",
-            "eslint src/ --fix",
+            "eslint --fix",
             "jest --bail --findRelatedTests --passWithNoTests",
             "git add"
         ]
