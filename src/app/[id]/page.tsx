@@ -1,6 +1,10 @@
 import {PageParams} from '@/shared/types/next';
-import {redirect} from 'next/navigation';
+import {isNumber} from '@/shared/utils/isNumber';
+import {notFound, redirect} from 'next/navigation';
 
 export default async function OfferPage({params}: PageParams<unknown, {id: string}>) {
-    redirect(`/offers/${params.id}`);
+    if (isNumber(params.id)) {
+        redirect(`/offers/${params.id}`);
+    }
+    notFound();
 }

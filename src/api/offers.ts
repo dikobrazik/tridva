@@ -1,6 +1,7 @@
 import {Group} from '@/types/group';
 import {Offer, OfferAttribute} from '@/types/offers';
 import axios from 'axios';
+import {appFetch, getSearchParams} from './fetch';
 
 type LoadOffersPayload = {
     search?: string;
@@ -16,10 +17,10 @@ type LoadOfferPayload = {
 export const loadOffers = (
     payload?: LoadOffersPayload,
 ): Promise<{offers: Offer[]; total: number; pagesCount: number}> =>
-    axios('offers', {params: payload, headers: {cache: 'force-cache'}}).then(response => response.data);
+    appFetch(`offers?${getSearchParams(payload)}`).then(r => r.json());
 
 export const loadOffer = (payload: LoadOfferPayload): Promise<Offer> =>
-    axios<Offer>(`offers/${payload.id}`, {headers: {cache: 'force-cache'}}).then(response => response.data);
+    appFetch(`offers/${payload.id}`).then(r => r.json());
 
 export const loadIsFavoriteOffer = (payload: LoadOfferPayload): Promise<boolean> =>
     axios<boolean>(`offers/${payload.id}/favorite`).then(response => response.data);
