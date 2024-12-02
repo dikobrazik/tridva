@@ -72,14 +72,16 @@ export default async function Offer(props: Props) {
                 </Box>
 
                 <Row gap={1}>
-                    <Link href={`/categories/${categoryAncestors[0].id}`}>
-                        <Row className={css.category} alignItems="center">
-                            <Text size={12} weight={400}>
-                                {categoryAncestors[0].name}
-                            </Text>
-                            <Icon size="xs" name="chevronRight" />
-                        </Row>
-                    </Link>
+                    {categoryAncestors[0] && (
+                        <Link href={`/categories/${categoryAncestors[0].id}`}>
+                            <Row className={css.category} alignItems="center">
+                                <Text size={12} weight={400}>
+                                    {categoryAncestors[0].name}
+                                </Text>
+                                <Icon size="xs" name="chevronRight" />
+                            </Row>
+                        </Link>
+                    )}
                     <Link href={`/categories/${category.id}`}>
                         <Row className={css.category} alignItems="center">
                             <Text size={12} weight={400}>
