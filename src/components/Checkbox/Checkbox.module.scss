@@ -1,7 +1,7 @@
 .label {
-    min-width: 14px;
-    width: 14px;
-    height: 14px;
+    min-width: 22px;
+    width: 22px;
+    height: 22px;
     border: 1px solid #9ca3aa7a;
     border-radius: 4px;
 
@@ -11,13 +11,16 @@
 
     &.cheked {
         border: 1px solid #f40c43;
+        background-color: #f40c43;
     }
 
     & > img {
         position: absolute;
 
-        left: 4px;
-        top: 4px;
+        left: 50%;
+        top: 50%;
+
+        transform: translate(-50%, -50%);
     }
 
     & > input {

@@ -17,7 +17,7 @@ export const Checkbox = (props: Props) => {
     return (
         <label className={cn(css.label, {[css.cheked]: Boolean(checked)})}>
             <input type="checkbox" checked={checked} onChange={e => onChange(e.target.checked)} />
-            {checked && <Image src={checkImg} width={5} height={4} alt="checked" />}
+            {checked && <Image src={checkImg} width={10} height={8} alt="checked" />}
         </label>
     );
 };

@@ -40,11 +40,11 @@ const Counter = ({id, count}: {id: number; count: number}) => {
 
     return (
         <Row className={css.counter} alignItems="center" gap="1">
-            <Button onClick={decreaseCount} size="xs" variant="action-white" icon="minus" />
+            <Button onClick={decreaseCount} size="s" variant="action-white" icon="minus" />
             <Row width="30px" justifyContent="center">
                 {count}
             </Row>
-            <Button onClick={increaseCount} size="xs" variant="action-white" icon="plus" />
+            <Button onClick={increaseCount} size="s" variant="action-white" icon="plus" />
         </Row>
     );
 };
@@ -64,41 +64,39 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
     return (
         <Column className={css.item} gap="2">
             <Row gap="3" justifyContent="space-between">
-                <Row gap="3">
-                    <Image src={getFirstOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
-                    <Column gap="2">
-                        <Row gap={2} alignItems="center">
-                            <Text color="#F40C43" size={14} weight={600}>
-                                {formatPrice(offer.price, offer.discount)} ₽
+                <Image src={getFirstOfferPhoto(offer.photos, 140)} width="56" height="56" alt="offer image" />
+                <Column flex="1" gap="2">
+                    <Row gap={2} alignItems="center">
+                        <Text color="#F40C43" size={14} weight={600}>
+                            {formatPrice(offer.price, offer.discount)} ₽
+                        </Text>
+                        {offer.discount && (
+                            <Text color="#303234A3" decoration="line-through" size={10} weight={400}>
+                                {Math.ceil(Number(offer.price))} ₽
                             </Text>
-                            {offer.discount && (
-                                <Text color="#303234A3" decoration="line-through" size={10} weight={400}>
-                                    {Math.ceil(Number(offer.price))} ₽
-                                </Text>
-                            )}
-                        </Row>
-                        <Link href={`/offers/${offer.id}`}>
-                            <Text size={12} weight={400} lineHeight={16}>
-                                {offer.title}
-                            </Text>
-                        </Link>
-                        {capacity > 1 && (
-                            <Column gap="1">
-                                <Text size={12} weight={500} color="#F4B30C">
-                                    {owner ? 'Группа создана' : 'Группа собрана'}
-                                </Text>
-                                <Text size={10} weight={400} color="#303234A3">
-                                    Оплатите товар, чтобы подтвердить участие.
-                                </Text>
-                            </Column>
                         )}
-                    </Column>
-                </Row>
+                    </Row>
+                    <Link href={`/offers/${offer.id}`}>
+                        <Text size={12} weight={400} lineHeight={16}>
+                            {offer.title}
+                        </Text>
+                    </Link>
+                    {capacity > 1 && (
+                        <Column gap="1">
+                            <Text size={12} weight={500} color="#F4B30C">
+                                {owner ? 'Группа создана' : 'Группа собрана'}
+                            </Text>
+                            <Text size={10} weight={400} color="#303234A3">
+                                Оплатите товар, чтобы подтвердить участие.
+                            </Text>
+                        </Column>
+                    )}
+                    <Row gap={6}>
+                        <Button size="s" icon="trash" variant="normal" onClick={onRemoveClick} />
+                        <Counter id={id} count={count} />
+                    </Row>
+                </Column>
                 <Checkbox name="select" checked={selected} onChange={toggleItemSelect} />
-            </Row>
-            <Row justifyContent="space-between">
-                <Counter id={id} count={count} />
-                <Button size="xs" icon="trash" variant="normal" onClick={onRemoveClick} />
             </Row>
         </Column>
     );

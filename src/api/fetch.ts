@@ -19,6 +19,8 @@ export const getSearchParams = (params?: Record<string, any>) => {
     }
 
     return new URLSearchParams(
-        Object.fromEntries(Object.entries(params).filter(([, v]) => v !== undefined)),
+        Object.fromEntries(
+            Object.entries(params).filter(([, v]) => ['string', 'number', 'boolean'].includes(typeof v)),
+        ),
     ).toString();
 };

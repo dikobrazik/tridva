@@ -21,7 +21,7 @@ export const putOfferToBasketAction = createTypedAsyncThunk<BasketItem, {offerId
     async ({offerId}) => {
         const basketItem = await putOfferToBasket({offerId});
 
-        selectedBasketItemsStorage.set(selectedBasketItemsIds => (selectedBasketItemsIds ?? []).concat(basketItem.id));
+        // selectedBasketItemsStorage.set(selectedBasketItemsIds => (selectedBasketItemsIds ?? []).concat(basketItem.id));
 
         return basketItem;
     },
