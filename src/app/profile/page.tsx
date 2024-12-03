@@ -12,13 +12,21 @@ import {LinkCard} from './components/LinkCard';
 import {LinkButton} from './components/LinkButton';
 import {ProfileBlock} from './ProfileBlock';
 import {loadFavoriteOffersCount, loadOrdersCount, loadUserGroupsCount} from '@/api';
+import {AxiosError} from 'axios';
+import {redirect} from 'next/navigation';
 
 export default async function ProfilePage() {
     const [groupsCount, favoriteOffersCount, ordersCount] = await Promise.all([
         loadUserGroupsCount(),
         loadFavoriteOffersCount(),
         loadOrdersCount(),
-    ]);
+    ]).catch((e: AxiosError) => {
+        if (e.response?.status === 401) {
+            redirect('/');
+        }
+
+        return [0, 0, 0];
+    });
 
     return (
         <Column gap="2">
