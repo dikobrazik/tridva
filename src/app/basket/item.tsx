@@ -18,6 +18,7 @@ import {
     removeBasketItemAction,
 } from '@/lib/features/basket';
 import {formatPrice} from '@/shared/utils/formatPrice';
+import classNames from 'classnames';
 
 type Props = {
     id: number;
@@ -40,7 +41,13 @@ const Counter = ({id, count}: {id: number; count: number}) => {
 
     return (
         <Row className={css.counter} alignItems="center" gap="1">
-            <Button onClick={decreaseCount} size="s" variant="action-white" icon="minus" />
+            <Button
+                disabled={count === 1}
+                onClick={decreaseCount}
+                size="s"
+                variant="action-white"
+                icon={count === 1 ? 'minusDisabled' : 'minus'}
+            />
             <Row width="30px" justifyContent="center">
                 {count}
             </Row>
@@ -92,7 +99,13 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
                         </Column>
                     )}
                     <Row gap={6}>
-                        <Button size="s" icon="trash" variant="normal" onClick={onRemoveClick} />
+                        <Button
+                            className={classNames(css.deleteButton, css.deleteButtonCustomPadding, css.customButton)}
+                            size="s"
+                            icon="trash"
+                            variant="normal"
+                            onClick={onRemoveClick}
+                        />
                         <Counter id={id} count={count} />
                     </Row>
                 </Column>

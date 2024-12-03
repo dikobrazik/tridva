@@ -1,4 +1,6 @@
+import classNames from 'classnames';
 import {CSSProperties, PropsWithChildren} from 'react';
+import css from './Text.module.scss';
 
 type Props = {
     align?: CSSProperties['textAlign'];
@@ -12,9 +14,10 @@ type Props = {
     wrap?: CSSProperties['textWrap'];
     block?: boolean;
     className?: HTMLSpanElement['className'];
+    selectable?: boolean;
 };
 
-export const Text = (props: PropsWithChildren<Props>) => {
+export const Text = ({selectable = true, ...props}: PropsWithChildren<Props>) => {
     return (
         <span
             style={{
@@ -29,7 +32,7 @@ export const Text = (props: PropsWithChildren<Props>) => {
                 textWrap: props.wrap,
                 display: props.block ? 'inline-block' : undefined,
             }}
-            className={props.className}
+            className={classNames(props.className, css.text, {[css.selectable]: selectable})}
         >
             {props.children}
         </span>

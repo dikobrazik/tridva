@@ -8,7 +8,7 @@ import {Row} from '@/components/layout/Row';
 import {BasketHeader} from './header';
 import {Button} from '@/components/Button';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
-import {basketSelectors} from '@/lib/features/basket';
+import {basketActions, basketSelectors} from '@/lib/features/basket';
 import {Loader} from '@/components/Loader';
 import {AuthorizationModal} from '../authorization/authorizationModal';
 import {userSelectors} from '@/lib/features/user';
@@ -21,6 +21,8 @@ import {sum} from '@/shared/utils/sum';
 import {pluralize} from '@/shared/utils/pluralize';
 import {useRouter} from 'next/navigation';
 import {selectedBasketItemsStorage} from '@/shared/utils/local-storage/storages';
+import {Box} from '@/components/layout/Box';
+import {Checkbox} from '@/components/Checkbox';
 
 export default function Basket() {
     const router = useRouter();
@@ -31,6 +33,13 @@ export default function Basket() {
     const selectedBasketItems = useAppSelector(basketSelectors.selectSelectedBasketItems);
     const selectedItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
     const formattedSelectedItemsCost = formatPrice(selectedItemsCost);
+    const isAllItemsSelected = useAppSelector(basketSelectors.selectIsAllBasketItemsSelected);
+
+    const isBasketEmpty = basketItems.length === 0;
+
+    const onToggleAllSelected = () => {
+        dispatch(basketActions.toggleAllBasketItems());
+    };
 
     const onCheckoutClick = () => {
         const selectedBasketItemsIds = selectedBasketItems.map(({id}) => id);
@@ -49,6 +58,20 @@ export default function Basket() {
         <Column height="100%" justifyContent="space-between">
             <Column gap="2" flex="1" paddingBottom={88}>
                 <BasketHeader />
+                {!isBasketEmpty && (
+                    <Row paddingX={4} justifyContent="flex-end">
+                        <Row alignItems="center" gap={2} onClick={onToggleAllSelected}>
+                            <Text selectable={false} size={14} weight={400} color="#303234A3">
+                                Выбрать всё
+                            </Text>
+                            <Checkbox
+                                name="all-selected"
+                                checked={isAllItemsSelected}
+                                onChange={onToggleAllSelected}
+                            ></Checkbox>
+                        </Row>
+                    </Row>
+                )}
                 {areBasketItemsLoading && (
                     <Row justifyContent="center">
                         <Loader />
@@ -72,31 +95,35 @@ export default function Basket() {
 
             {selectedItemsCost > 0 && (
                 <Row className={css.checkoutButtonContainer} gap="6" padding="8px 16px 8px 16px" background="#fff">
-                    <Column justifyContent="center" gap="1" width="70px">
-                        <Text size={14} weight={600} whiteSpace="nowrap">
-                            {formattedSelectedItemsCost}&nbsp;₽
-                        </Text>
-                        <Text size={10} weight={400} color="#303234A3">
-                            {selectedBasketItems.length}&nbsp;
-                            {pluralize(selectedBasketItems.length, ['товар', 'товара', 'товаров'])}
-                        </Text>
-                    </Column>
+                    <Box display="flex" flex="1">
+                        <Column justifyContent="center" gap="1" width="70px">
+                            <Text size={14} weight={600} whiteSpace="nowrap">
+                                {formattedSelectedItemsCost}&nbsp;₽
+                            </Text>
+                            <Text size={10} weight={400} color="#303234A3">
+                                {selectedBasketItems.length}&nbsp;
+                                {pluralize(selectedBasketItems.length, ['товар', 'товара', 'товаров'])}
+                            </Text>
+                        </Column>
+                    </Box>
 
-                    {!isUserAnonymous ? (
-                        <Link className={css.checkoutLink} href="/basket/checkout" onClick={onCheckoutClick}>
-                            <Button width="full">Оформить</Button>
-                        </Link>
-                    ) : (
-                        <AuthorizationModal
-                            title="Для оформления заказа войдите или зарегистрируйтесь"
-                            onAuthorized={onAuthorized}
-                            Toggler={({onClick}: {onClick: () => void}) => (
-                                <Button onClick={onClick} width="full">
-                                    Оформить
-                                </Button>
-                            )}
-                        />
-                    )}
+                    <Box flex="2">
+                        {!isUserAnonymous ? (
+                            <Link className={css.checkoutLink} href="/basket/checkout" onClick={onCheckoutClick}>
+                                <Button width="full">Оформить</Button>
+                            </Link>
+                        ) : (
+                            <AuthorizationModal
+                                title="Для оформления заказа войдите или зарегистрируйтесь"
+                                onAuthorized={onAuthorized}
+                                Toggler={({onClick}: {onClick: () => void}) => (
+                                    <Button width="full" onClick={onClick}>
+                                        Оформить
+                                    </Button>
+                                )}
+                            />
+                        )}
+                    </Box>
                 </Row>
             )}
         </Column>
