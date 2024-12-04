@@ -22,13 +22,14 @@ axios.interceptors.request.use(function (config) {
     if (typeof window === 'undefined') {
         // eslint-disable-next-line @typescript-eslint/no-require-imports
         const token = require('next/headers').cookies().get('token');
+
         config.headers.Authorization = `Bearer ${token?.value}`;
     }
 
     return config;
 });
 
-if (process.env.IS_DEV === 'true') {
+if (process.env.IS_DEV === 'true' && process.env.NEXT_RUNTIME !== 'edge') {
     axios.interceptors.request.use(config => {
         config.headers['request-startTime'] = process.hrtime();
         return config;

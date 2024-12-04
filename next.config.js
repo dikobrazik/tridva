@@ -19,6 +19,9 @@ const nextConfig = {
     experimental: {
         instrumentationHook: !process.env.IS_DEV,
     },
+    devIndicators: {
+        buildActivity: true,
+    },
     images: {
         minimumCacheTTL: 60,
         remotePatterns: [
@@ -76,6 +79,4 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
 });
 
-module.exports = process.env.IS_DEV
-    ? withBundleAnalyzer(nextConfig)
-    : withSentryConfig(withBundleAnalyzer(nextConfig), sentryConfig);
+module.exports = withSentryConfig(withBundleAnalyzer(nextConfig), sentryConfig);

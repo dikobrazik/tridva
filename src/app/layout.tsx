@@ -1,18 +1,18 @@
-import type {Metadata} from 'next';
-import './globals.scss';
-import {Column} from '@/components/layout/Column';
-import {Inter} from 'next/font/google';
 import {Box} from '@/components/layout/Box';
-import React, {Suspense} from 'react';
+import {Column} from '@/components/layout/Column';
 import StoreProvider from '@/lib/StoreProvider';
-import {Header} from './rootLayout/Header';
-import css from './Layout.module.scss';
-import AuthTokenProvider from './authorization/AuthorizationProvider';
 import classNames from 'classnames';
-import {Footer} from './rootLayout/Footer';
-import {ru} from 'date-fns/locale';
 import {setDefaultOptions} from 'date-fns';
+import {ru} from 'date-fns/locale';
+import type {Metadata} from 'next';
+import {Inter} from 'next/font/google';
+import React, {Suspense} from 'react';
+import css from './Layout.module.scss';
 import {Metrika} from './Metrika';
+import AuthTokenProvider from './authorization/AuthorizationProvider';
+import './globals.scss';
+import {Footer} from './rootLayout/Footer';
+import {Header} from './rootLayout/Header';
 
 setDefaultOptions({locale: ru});
 

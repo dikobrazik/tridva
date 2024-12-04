@@ -1,5 +1,6 @@
 import {Profile} from '@/types/user';
 import axios from 'axios';
+import {appFetch} from './fetch';
 
 type GetCodePayload = {phone: string};
 export type CheckCodePayload = {phone: string; code: string};
@@ -7,6 +8,9 @@ export type CheckCodePayload = {phone: string; code: string};
 export type CheckTokenResponse = {isAnonymous: boolean; phone: string; profile: Profile};
 
 export const checkToken = (): Promise<CheckTokenResponse> => axios.post('auth/check').then(response => response.data);
+
+export const createAnonymous = (): Promise<{token: string}> =>
+    appFetch('auth/create-anonymous', {method: 'POST'}).then(response => response.json());
 
 export const getCode = (payload: GetCodePayload): Promise<void> =>
     axios.post('auth/get-code', payload).then(response => response.data);
