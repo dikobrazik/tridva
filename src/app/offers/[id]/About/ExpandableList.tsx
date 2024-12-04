@@ -23,7 +23,7 @@ function AboutItem(props: AboutItemProps) {
                 {name}
             </Text>
             <Box flex="1" className={css.underline}></Box>
-            <Text weight="400" size="10px" lineHeight={12}>
+            <Text weight="400" size="10px" lineHeight={12} align="end">
                 {value}
             </Text>
         </Row>
