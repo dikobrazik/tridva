@@ -16,6 +16,9 @@ const nextConfig = {
     sassOptions: {
         includePaths: [path.join(__dirname, 'src/styles')],
     },
+    experimental: {
+        instrumentationHook: !process.env.IS_DEV,
+    },
     images: {
         minimumCacheTTL: 60,
         remotePatterns: [
@@ -73,4 +76,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
     enabled: process.env.ANALYZE === 'true',
 });
 
-module.exports = withSentryConfig(withBundleAnalyzer(nextConfig), sentryConfig);
+module.exports = process.env.IS_DEV
+    ? withBundleAnalyzer(nextConfig)
+    : withSentryConfig(withBundleAnalyzer(nextConfig), sentryConfig);
