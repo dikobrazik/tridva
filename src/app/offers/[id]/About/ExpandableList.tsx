@@ -30,7 +30,7 @@ function AboutItem(props: AboutItemProps) {
     );
 }
 
-export const ExpandableList = ({attributes, description}: {attributes: OfferAttribute[]; description: string}) => {
+export const ExpandableList = ({attributes}: {attributes: OfferAttribute[]}) => {
     const {isActive: isExpanded, toggle} = useToggler();
 
     return (
@@ -47,9 +47,6 @@ export const ExpandableList = ({attributes, description}: {attributes: OfferAttr
                     </Text>
                 </Button>
             ) : null}
-            <Text size={10} weight={400}>
-                {description}
-            </Text>
         </>
     );
 };
