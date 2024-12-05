@@ -19,6 +19,7 @@ import {
 } from '@/lib/features/basket';
 import {formatPrice} from '@/shared/utils/formatPrice';
 import classNames from 'classnames';
+import {Confirm} from '@/components/Confirm';
 
 type Props = {
     id: number;
@@ -99,12 +100,24 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
                         </Column>
                     )}
                     <Row gap={6}>
-                        <Button
-                            className={classNames(css.deleteButton, css.deleteButtonCustomPadding, css.customButton)}
-                            size="s"
-                            icon="trash"
-                            variant="normal"
-                            onClick={onRemoveClick}
+                        <Confirm
+                            title={'Вы уверены, что хотите удалить?'}
+                            onAcceptClick={onRemoveClick}
+                            acceptButtonText="Удалить товар"
+                            cancelButtonText="Отменить"
+                            renderButton={({onClick}) => (
+                                <Button
+                                    className={classNames(
+                                        css.deleteButton,
+                                        css.deleteButtonCustomPadding,
+                                        css.customButton,
+                                    )}
+                                    size="s"
+                                    icon="trash"
+                                    variant="normal"
+                                    onClick={onClick}
+                                />
+                            )}
                         />
                         <Counter id={id} count={count} />
                     </Row>
