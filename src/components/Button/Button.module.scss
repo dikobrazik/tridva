@@ -57,6 +57,32 @@
         }
     }
 
+    &.variant-alert {
+        color: #303234;
+        background: #fff7b8;
+
+        // &:hover {
+        //     background: #e00c3d;
+        // }
+
+        &:disabled {
+            background: #c1c1c1;
+        }
+    }
+
+    &.variant-green {
+        color: #ffffff;
+        background: #4fde38;
+
+        &:hover {
+            background: #3cd324;
+        }
+
+        &:disabled {
+            background: #c1c1c1;
+        }
+    }
+
     &.variant-normal {
         color: #303234;
         background: #e9e9e9;

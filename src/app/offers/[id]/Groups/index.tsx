@@ -8,35 +8,51 @@ import {AboutGroups} from './About';
 import {GroupsList} from './GroupsList';
 
 type Props = {
-    count: number;
     offerId: number;
+};
+
+const NoGroups = () => {
+    return (
+        <Column alignItems="center" className={css.noGroups} padding="12px 8px" gap={2}>
+            <Text size={14} weight={500}>
+                Группы еще не созданы
+            </Text>
+            <Text size={12} weight={400}>
+                Создайте группу, чтобы&nbsp;купить&nbsp;дешевле&nbsp;сразу
+            </Text>
+        </Column>
+    );
 };
 
 export default async function Groups(props: Props) {
     const groups = await loadOfferGroups({id: props.offerId});
 
+    const groupsCount = groups.length;
+
     return (
-        <Column className={css.groups} gap={2}>
+        <Column className={css.groups} gap={groupsCount > 0 ? 2 : 4}>
             <Column gap={1}>
                 <Row justifyContent="space-between">
                     <Text weight="600" size={16} lineHeight={12}>
-                        {/* @ts-expect-error TS2322 почему то name не определен в HtmlAnchoreElement */}
-                        <a name="groups">Группы </a>
+                        <a id="groups">Группы </a>
                         <Text weight="600" size={16} lineHeight={12} color="#3032347A">
-                            {props.count}
+                            {groupsCount}
                         </Text>
                     </Text>
                     <AboutGroups />
                 </Row>
-                <Text weight="400" size={10} lineHeight={12}>
-                    {props.count} {pluralize(props.count, ['человек создал', 'человека создали', 'человек создали'])}{' '}
-                    групповую покупку.
-                    <br />
-                    Если вы присоединитесь сейчас, то купите дешевле сразу
-                </Text>
+                {groupsCount > 0 && (
+                    <Text weight="400" size={12} lineHeight={12}>
+                        {groupsCount}{' '}
+                        {pluralize(groupsCount, ['человек создал', 'человека создали', 'человек создали'])} групповую
+                        покупку.
+                        <br />
+                        Если вы присоединитесь сейчас, то купите дешевле сразу
+                    </Text>
+                )}
             </Column>
 
-            <GroupsList groups={groups} />
+            {groupsCount > 0 ? <GroupsList groups={groups} /> : <NoGroups />}
         </Column>
     );
 }

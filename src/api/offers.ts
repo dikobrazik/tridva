@@ -15,18 +15,34 @@ type LoadOfferPayload = {
     id: number;
 };
 
+type OfferBestGroupResponse = {
+    id: number;
+    offer: Offer;
+    leftCapacity: number;
+    ownerId: number;
+    ownerName: string;
+    createdAt: Date;
+};
+
 export const loadOffers = (
     payload?: LoadOffersPayload,
 ): Promise<{offers: Offer[]; total: number; pagesCount: number}> =>
-    appFetch(`offers?${getSearchParams(payload)}`).then(r => r.json());
+    appFetch<{offers: Offer[]; total: number; pagesCount: number}>(`offers?${getSearchParams(payload)}`).then(
+        r => r.data,
+    );
 
 export const loadOffer = (payload: LoadOfferPayload): Promise<Offer> =>
-    appFetch(`offers/${payload.id}`).then(r => {
+    appFetch<Offer>(`offers/${payload.id}`).then(r => {
         if (r.status === 404) {
             notFound();
         }
-        return r.json();
+        return r.data;
     });
+
+export const loadOfferGroup = (payload: LoadOfferPayload): Promise<OfferBestGroupResponse | null> =>
+    appFetch<OfferBestGroupResponse | null>(`offers/${payload.id}/group`, {method: 'GET'}).then(r =>
+        r.status === 404 ? null : r.data,
+    );
 
 export const loadIsFavoriteOffer = (payload: LoadOfferPayload): Promise<boolean> =>
     axios<boolean>(`offers/${payload.id}/favorite`).then(response => response.data);
@@ -52,3 +68,8 @@ export const loadOfferGroups = (payload: LoadOfferPayload): Promise<Group[]> =>
     axios<Group[]>(`offers/${payload.id}/groups`)
         .then(response => response.data)
         .catch(() => []);
+
+export const loadOfferGroupsCount = (payload: LoadOfferPayload): Promise<number> =>
+    appFetch<number>(`offers/${payload.id}/groups/count`)
+        .then(response => response.data)
+        .catch(() => 0);

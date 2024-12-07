@@ -7,10 +7,11 @@ export type CheckCodePayload = {phone: string; code: string};
 
 export type CheckTokenResponse = {isAnonymous: boolean; phone: string; profile: Profile};
 
-export const checkToken = (): Promise<CheckTokenResponse> => axios.post('auth/check').then(response => response.data);
+export const checkToken = async (): Promise<CheckTokenResponse> =>
+    axios.post('auth/check').then(response => response.data);
 
 export const createAnonymous = (): Promise<{token: string}> =>
-    appFetch('auth/create-anonymous', {method: 'POST'}).then(response => response.json());
+    appFetch<{token: string}>('auth/create-anonymous', {method: 'POST'}).then(response => response.data);
 
 export const getCode = (payload: GetCodePayload): Promise<void> =>
     axios.post('auth/get-code', payload).then(response => response.data);

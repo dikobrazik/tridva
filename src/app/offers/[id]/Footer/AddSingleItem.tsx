@@ -4,7 +4,6 @@ import {Button} from '@/components/Button';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
-import {CreateGroupDrawer} from './Groups/CreateGroupDrawer';
 import {Offer} from '@/types/offers';
 import css from './Footer.module.scss';
 import {Box} from '@/components/layout/Box';
@@ -18,7 +17,7 @@ import {
 } from '@/lib/features/basket';
 import {formatPrice} from '@/shared/utils/formatPrice';
 
-const CreateSingleGroupButton = ({offer}: {offer: Offer}) => {
+export const CreateSingleGroupButton = ({offer}: {offer: Offer}) => {
     const dispatch = useAppDispatch();
     const onCreateSingleGroupClick = () => {
         dispatch(putOfferToBasketAction({offerId: offer.id}));
@@ -40,7 +39,7 @@ const CreateSingleGroupButton = ({offer}: {offer: Offer}) => {
     );
 };
 
-const SingleGroupButton = ({offer}: {offer: Offer}) => {
+export const SingleGroupButton = ({offer}: {offer: Offer}) => {
     const dispatch = useAppDispatch();
     const basketItem = useAppSelector(state => basketSelectors.selectBasketItemByOfferId(state, offer.id));
 
@@ -82,40 +81,20 @@ const SingleGroupButton = ({offer}: {offer: Offer}) => {
     );
 };
 
-export default function Footer({offer}: {offer: Offer}) {
-    const inBasketCount = useAppSelector(state => basketSelectors.selectBasketItemCountByOfferId(state, offer.id));
+export const AddSignleItemButton = ({offer}: {offer: Offer}) => {
+    const basketItem = useAppSelector(state => basketSelectors.selectBasketItemByOfferId(state, offer.id));
+
+    if (basketItem?.group) {
+        return null;
+    }
 
     return (
-        <Column className={css.container} background="#fff" padding="8px 16px" gap="2">
-            <Row>
-                <Button flex="1" variant="outline" size="m">
-                    <Row flex="1" justifyContent="space-between">
-                        <Column>
-                            <Text align="start" size={10} weight={600} lineHeight={10} color="#303234">
-                                Присоединиться к группе с Владимиром М.
-                            </Text>
-                            <Text align="start" size={8} weight={400} lineHeight={12} color="#303234A3">
-                                Нужен еще 1 человек для покупки, до конца сбора:{' '}
-                                <Text size={8} weight={600} lineHeight={12}>
-                                    23:20:59
-                                </Text>
-                            </Text>
-                        </Column>
-
-                        <Button as="a" size="s" icon="chevronRightWhite" iconSize="xs" />
-                    </Row>
-                </Button>
-            </Row>
-            <Row gap="2" justifyContent="center">
-                <Box flex="1 1 50%">
-                    {inBasketCount > 0 ? (
-                        <SingleGroupButton offer={offer} />
-                    ) : (
-                        <CreateSingleGroupButton offer={offer} />
-                    )}
-                </Box>
-                <CreateGroupDrawer offer={offer} />
-            </Row>
-        </Column>
+        <Box flex="1 1 50%">
+            {basketItem && basketItem.count > 0 ? (
+                <SingleGroupButton offer={offer} />
+            ) : (
+                <CreateSingleGroupButton offer={offer} />
+            )}
+        </Box>
     );
-}
+};

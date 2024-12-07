@@ -12,7 +12,6 @@ export type Offer = {
     rating?: number;
     ratingsCount: number;
     reviewsCount: number;
-    groupsCount: number;
 };
 
 export type OfferAttribute = {

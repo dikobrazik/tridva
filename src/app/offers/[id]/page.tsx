@@ -1,4 +1,4 @@
-import {loadCategory, loadCategoryAncestors, loadOffer, loadOfferAttributesCount} from '@/api';
+import {loadCategory, loadCategoryAncestors, loadOffer, loadOfferAttributesCount, loadOfferGroupsCount} from '@/api';
 import {Column} from '@/components/layout/Column';
 import css from './Page.module.scss';
 import {Box} from '@/components/layout/Box';
@@ -52,7 +52,8 @@ export default async function Offer(props: Props) {
     const offerId = Number(props.params.id);
     const page = props.searchParams.p ? Number(props.searchParams.p) : undefined;
     const offer = await loadOffer({id: offerId});
-    const [categoryAncestors, category, attributesCount] = await Promise.all([
+    const [groupsCount, categoryAncestors, category, attributesCount] = await Promise.all([
+        loadOfferGroupsCount({id: offerId}),
         loadCategoryAncestors({categoryId: Number(offer.categoryId)}),
         loadCategory({categoryId: Number(offer.categoryId)}),
         loadOfferAttributesCount({id: offerId}),
@@ -137,12 +138,8 @@ export default async function Offer(props: Props) {
                         />
                         <Card
                             href="#groups"
-                            title={`${offer.groupsCount} ${pluralize(offer.groupsCount, [
-                                'группа',
-                                'группы',
-                                'групп',
-                            ])}`}
-                            description={offer.groupsCount > 0 ? 'присоединитесь сейчас' : 'создайте свою с друзьями'}
+                            title={`${groupsCount} ${pluralize(groupsCount, ['группа', 'группы', 'групп'])}`}
+                            description={groupsCount > 0 ? 'присоединитесь сейчас' : 'создайте свою с друзьями'}
                         />
                     </Row>
                     <AboutDelivery />
@@ -150,11 +147,9 @@ export default async function Offer(props: Props) {
                 </Column>
             </Block>
 
-            {offer.groupsCount > 0 && (
-                <Block>
-                    <Groups offerId={offerId} count={offer.groupsCount} />
-                </Block>
-            )}
+            <Block>
+                <Groups offerId={offerId} />
+            </Block>
 
             {attributesCount > 0 && (
                 <Block>

@@ -101,10 +101,10 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
                     )}
                     <Row gap={6}>
                         <Confirm
-                            title={'Вы уверены, что хотите удалить?'}
+                            title="Удалить товар"
+                            description={`Вы точно хотите удалить выбранный товар?\nОтменить действие будет невозможно`}
                             onAcceptClick={onRemoveClick}
-                            acceptButtonText="Удалить товар"
-                            cancelButtonText="Отменить"
+                            acceptButtonText="Удалить"
                             renderButton={({onClick}) => (
                                 <Button
                                     className={classNames(

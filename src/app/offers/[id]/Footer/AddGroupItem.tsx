@@ -11,8 +11,8 @@ import {useEffect, useState} from 'react';
 import {createGroup} from '@/api';
 import {formatPrice} from '@/shared/utils/formatPrice';
 import {OfferBlock} from '@/components/OfferCard/OfferBlock';
-import {useAppDispatch} from '@/lib/hooks';
-import {loadBasketItemsAction} from '@/lib/features/basket';
+import {useAppDispatch, useAppSelector} from '@/lib/hooks';
+import {basketSelectors, loadBasketItemsAction} from '@/lib/features/basket';
 
 const CreateGroupContent = ({onGroupCreated, offer}: {onGroupCreated: () => void; offer: Offer}) => {
     const onJoinGroupClick = async () => {
@@ -75,8 +75,9 @@ const GroupCreatedContent = ({offer}: {offer: Offer}) => {
     );
 };
 
-export const CreateGroupDrawer = ({offer}: {offer: Offer}) => {
+export const CreateGroup = ({offer}: {offer: Offer}) => {
     const dispatch = useAppDispatch();
+    const basketItem = useAppSelector(state => basketSelectors.selectBasketItemByOfferId(state, offer.id));
     const [isGroupCreated, setGroupCreated] = useState(false);
 
     const {isActive, toggle} = useToggler();
@@ -93,6 +94,23 @@ export const CreateGroupDrawer = ({offer}: {offer: Offer}) => {
     }, [isActive]);
 
     const finalPrice = formatPrice(offer.price, offer.discount);
+
+    if (basketItem?.group) {
+        return (
+            <Link style={{flex: '1'}} href="/basket">
+                <Button variant="green" width="full" size="m">
+                    <Column>
+                        <Text size={12} weight={600} lineHeight={14}>
+                            Группа создана
+                        </Text>
+                        <Text size={12} weight={400} lineHeight={14}>
+                            Оплатите, чтобы подтвердить
+                        </Text>
+                    </Column>
+                </Button>
+            </Link>
+        );
+    }
 
     return (
         <>

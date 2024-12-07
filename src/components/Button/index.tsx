@@ -5,7 +5,7 @@ import {Icon, IconName, IconProps} from '../Icon';
 import {Box} from '../layout/Box';
 import {UnitProps} from '../layout/types';
 
-export type ButtonVariant = 'action' | 'action-white' | 'normal' | 'pseudo' | 'outline';
+export type ButtonVariant = 'action' | 'action-white' | 'normal' | 'pseudo' | 'outline' | 'alert' | 'green';
 
 type Props<As extends 'button' | 'a'> = PropsWithChildren<{
     variant?: ButtonVariant;

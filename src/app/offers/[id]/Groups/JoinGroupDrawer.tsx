@@ -9,13 +9,14 @@ import {useToggler} from '@/hooks/useToggler';
 import Image from 'next/image';
 import participantImage from './participant.svg';
 import Link from 'next/link';
-import {useEffect, useState} from 'react';
+import {ReactNode, useEffect, useState} from 'react';
 import {joinGroup} from '@/api';
 import {Avatar} from '@/components/Avatar';
 import {Offer} from '@/types/offers';
 import {OfferBlock} from '@/components/OfferCard/OfferBlock';
 import {loadBasketItemsAction} from '@/lib/features/basket';
 import {useAppDispatch} from '@/lib/hooks';
+import {LeftTime} from './LeftTime';
 
 const GroupHost = ({ownerId, ownerName}: {ownerId: number; ownerName: string}) => {
     return (
@@ -54,10 +55,12 @@ const JoinGroupContent = ({
     ownerName,
     groupId,
     ownerId,
+    createdAt,
 }: {
     ownerId: number;
     groupId: number;
     ownerName: string;
+    createdAt: Date;
     onGroupJoined: () => void;
 }) => {
     const onJoinGroupClick = async () => {
@@ -81,7 +84,10 @@ const JoinGroupContent = ({
             </Row>
             <Column gap="4" alignItems="center">
                 <Text size={12} weight={500}>
-                    Закрытие группы через: <Text color="#F40C43">23:19:00</Text>
+                    Закрытие группы через:{' '}
+                    <Text color="#F40C43">
+                        <LeftTime createdAt={createdAt} />
+                    </Text>
                 </Text>
                 <Button width="full" onClick={onJoinGroupClick}>
                     Присоединиться к этой группе
@@ -124,9 +130,11 @@ type Props = {
     ownerId: number;
     ownerName: string;
     groupId: number;
+    createdAt: Date;
+    renderTrigger?: (props: {onClick: () => void}) => ReactNode;
 };
 
-export const JoinGroupDrawer = ({offer, ownerName, groupId, ownerId}: Props) => {
+export const JoinGroupDrawer = ({renderTrigger, offer, ownerName, createdAt, groupId, ownerId}: Props) => {
     const dispatch = useAppDispatch();
     const [isGroupJoined, setGroupJoined] = useState(false);
 
@@ -145,9 +153,13 @@ export const JoinGroupDrawer = ({offer, ownerName, groupId, ownerId}: Props) => 
 
     return (
         <>
-            <Button onClick={toggle} size="m">
-                <Text size={12}>Присоединиться</Text>
-            </Button>
+            {renderTrigger ? (
+                renderTrigger({onClick: toggle})
+            ) : (
+                <Button onClick={toggle} size="m">
+                    <Text size={12}>Присоединиться</Text>
+                </Button>
+            )}
             <Drawer isOpen={isActive} onClose={toggle}>
                 {isGroupJoined ? (
                     <GroupJoinedContent offer={offer} />
@@ -156,6 +168,7 @@ export const JoinGroupDrawer = ({offer, ownerName, groupId, ownerId}: Props) => 
                         ownerId={ownerId}
                         groupId={groupId}
                         ownerName={ownerName}
+                        createdAt={createdAt}
                         onGroupJoined={onGroupJoined}
                     />
                 )}

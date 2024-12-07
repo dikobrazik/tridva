@@ -8,7 +8,7 @@ import {Row} from '@/components/layout/Row';
 import {BasketHeader} from './header';
 import {Button} from '@/components/Button';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
-import {basketActions, basketSelectors} from '@/lib/features/basket';
+import {basketActions, basketSelectors, removeBasketItemAction} from '@/lib/features/basket';
 import {Loader} from '@/components/Loader';
 import {AuthorizationModal} from '../authorization/authorizationModal';
 import {userSelectors} from '@/lib/features/user';
@@ -23,6 +23,7 @@ import {useRouter} from 'next/navigation';
 import {selectedBasketItemsStorage} from '@/shared/utils/local-storage/storages';
 import {Box} from '@/components/layout/Box';
 import {Checkbox} from '@/components/Checkbox';
+import {Confirm} from '@/components/Confirm';
 
 export default function Basket() {
     const router = useRouter();
@@ -36,6 +37,10 @@ export default function Basket() {
     const isAllItemsSelected = useAppSelector(basketSelectors.selectIsAllBasketItemsSelected);
 
     const isBasketEmpty = basketItems.length === 0;
+
+    const onDeleteAllSelected = () => {
+        selectedBasketItems.forEach(({id}) => dispatch(removeBasketItemAction({id})));
+    };
 
     const onToggleAllSelected = () => {
         dispatch(basketActions.toggleAllBasketItems());
@@ -59,7 +64,20 @@ export default function Basket() {
             <Column gap="2" flex="1" paddingBottom={88}>
                 <BasketHeader />
                 {!isBasketEmpty && (
-                    <Row paddingX={4} justifyContent="flex-end">
+                    <Row paddingX={4} justifyContent="space-between">
+                        <Box height={28}>
+                            {selectedBasketItems.length > 0 && (
+                                <Confirm
+                                    title="Удалить товары"
+                                    description={`Вы точно хотите удалить выбранные товары?\nОтменить действие будет невозможно`}
+                                    onAcceptClick={onDeleteAllSelected}
+                                    acceptButtonText="Удалить"
+                                    renderButton={({onClick}) => (
+                                        <Button size="s" icon="trash" variant="normal" onClick={onClick} />
+                                    )}
+                                />
+                            )}
+                        </Box>
                         <Row alignItems="center" gap={2} onClick={onToggleAllSelected}>
                             <Text selectable={false} size={14} weight={400} color="#303234A3">
                                 Выбрать всё
