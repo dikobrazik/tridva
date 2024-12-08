@@ -1,3 +1,10 @@
 .underline {
     border-bottom: 1px solid #9ca3aa52;
 }
+
+.description {
+    & > img {
+        object-fit: contain;
+        width: 100%;
+    }
+}

@@ -14,7 +14,10 @@ export default async function About({offerId, offerDescription = ''}: {offerId: 
             </Text>
             <ExpandableList attributes={attributes} />
             <Text size={10} weight={400}>
-                <div dangerouslySetInnerHTML={{__html: offerDescription.replace(/\s/g, ' ')}}></div>
+                <div
+                    className={css.description}
+                    dangerouslySetInnerHTML={{__html: offerDescription.replace(/\s/g, ' ')}}
+                ></div>
             </Text>
         </Column>
     );
