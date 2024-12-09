@@ -30,13 +30,9 @@ export const InlineCssProperties = [
     'flex',
     'background',
     'backgroundColor',
-] satisfies Array<keyof CSSProperties>;
+] as const satisfies Array<keyof CSSProperties>;
 
-const NumericProps = [
-    'gap',
-    'borderRadius',
-    // @ts-expect-error some description
-] satisfies Array<keyof UnitProps>;
+const NumericProps = ['gap', 'borderRadius'] as const satisfies Array<keyof CSSProperties>;
 
 // @ts-expect-error some description
 export const extractStyles = (props: UnitProps) => {
@@ -46,7 +42,6 @@ export const extractStyles = (props: UnitProps) => {
 
     for (const [key, value] of Object.entries(props)) {
         if (InlineCssProperties.includes(key)) {
-            // @ts-expect-error some description
             styles[key] = value;
         } else {
             if (key !== 'paddingX' && key !== 'paddingY') {
@@ -57,7 +52,6 @@ export const extractStyles = (props: UnitProps) => {
 
     for (const numericProp of NumericProps) {
         if (props[numericProp] !== undefined) {
-            // @ts-expect-error some description
             styles[numericProp] = Number(props[numericProp]) * 4;
         }
     }

@@ -26,6 +26,7 @@ export function Metrika() {
             </Script>
             <noscript>
                 <div>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                         src="https://mc.yandex.ru/watch/98845094"
                         style={{position: 'absolute', left: '-9999px'}}

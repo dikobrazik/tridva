@@ -1,7 +1,7 @@
 module.exports = {
     parser: '@typescript-eslint/parser',
     parserOptions: {
-        project: 'tsconfig.json',
+        project: './tsconfig.json',
         tsconfigRootDir: __dirname,
         sourceType: 'module',
     },
@@ -19,6 +19,7 @@ module.exports = {
     },
     ignorePatterns: ['.eslintrc.js'],
     rules: {
+        'no-undef': 'off',
         'no-console': ['error', {allow: ['warn', 'error']}],
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': ['error'],

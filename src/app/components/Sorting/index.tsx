@@ -15,7 +15,7 @@ const SORTING = {
     PRICE_DESC: 'PRICE_DESC',
     DISCOUNT: 'DISCOUNT',
     RATING: 'RATING',
-} as const;
+};
 
 const OPTIONS = {
     [SORTING.POPULAR]: 'Популярные',
@@ -24,7 +24,7 @@ const OPTIONS = {
     [SORTING.PRICE_DESC]: 'Сначала дорогие',
     [SORTING.DISCOUNT]: 'По размеру скидки',
     [SORTING.RATING]: 'С высоким рейтингом',
-};
+} as Record<Values<typeof SORTING>, string>;
 
 export const Sorting = () => {
     const {isActive, toggle} = useToggler();

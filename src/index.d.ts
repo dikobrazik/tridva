@@ -8,26 +8,26 @@ interface Array<T> {
     includes(searchElement: T | string, fromIndex?: number): searchElement is T;
 }
 
+type Entries<T> = {
+    [K in keyof T]: [K, T[K]];
+}[keyof T][];
+
 interface ObjectConstructor {
     /**
      * Returns an array of key/values of the enumerable properties of an object
      * @param o Object that contains the properties and methods. This can be an object that you created or an existing Document Object Model (DOM) object.
      */
-    entries<T>(o: {[s: keyof T]: T} | ArrayLike<T>): [keyof T, T][];
-
+    entries<T extends object>(o: T): Entries<T>;
     /**
      * Returns an array of key/values of the enumerable properties of an object
      * @param o Object that contains the properties and methods. This can be an object that you created or an existing Document Object Model (DOM) object.
      */
-    entries(o: object): [string, any][];
-
+    entries<T>(o: ArrayLike<T>): [keyof T, T][];
     /**
-     * Returns an object containing all own property descriptors of an object
+     * Returns an array of key/values of the enumerable properties of an object
      * @param o Object that contains the properties and methods. This can be an object that you created or an existing Document Object Model (DOM) object.
      */
-    getOwnPropertyDescriptors<T>(
-        o: T,
-    ): {[P in keyof T]: TypedPropertyDescriptor<T[P]>} & {[x: string]: PropertyDescriptor};
+    keys<T extends object>(o: T): keyof T[];
 }
 
-type Values<T> = T[keyof T];
+type Values<T extends object> = T[keyof T];

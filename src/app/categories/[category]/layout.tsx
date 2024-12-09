@@ -1,9 +1,10 @@
 import {loadCategory} from '@/api';
-import {PageParams} from '@/shared/types/next';
 import {Metadata} from 'next';
 import {PropsWithChildren} from 'react';
 
-export async function generateMetadata({params}: PageParams<null, {category: string}>): Promise<Metadata> {
+type Props = {params: {category: string}};
+
+export async function generateMetadata({params}: Props): Promise<Metadata> {
     const categoryId = Number(params.category);
     const category = await loadCategory({categoryId});
 
@@ -13,6 +14,6 @@ export async function generateMetadata({params}: PageParams<null, {category: str
     };
 }
 
-export default async function Layout(props: PropsWithChildren<PageParams<null, {category: string}>>) {
+export default async function Layout(props: PropsWithChildren<Props>) {
     return props.children;
 }
