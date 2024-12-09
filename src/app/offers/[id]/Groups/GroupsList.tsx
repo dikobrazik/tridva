@@ -1,12 +1,16 @@
 'use client';
 
 import {Group} from '@/types/group';
-import {GroupsItem} from './GroupItem';
 import {Button} from '@/components/Button';
 import {useToggler} from '@/hooks/useToggler';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
+import {Profile} from '@/components/Profile';
+import css from './Groups.module.scss';
+import {pluralize} from '@/shared/utils/pluralize';
+import {LeftTime} from './LeftTime';
+import {JoinGroupDrawer} from './JoinGroupDrawer';
 
 type Props = {
     groups: Group[];
@@ -18,17 +22,44 @@ export const GroupsList = ({groups}: Props) => {
     return (
         <>
             <Column gap={2}>
-                {groups.slice(0, isFullListVisible ? undefined : 2).map(group => (
-                    <GroupsItem
-                        key={group.id}
-                        offer={group.offer}
-                        groupId={group.id}
-                        ownerId={group.ownerId}
-                        ownerName={group.ownerName}
-                        count={group.capacity - group.participantsCount}
-                        createdAt={group.createdAt}
-                    />
-                ))}
+                {groups
+                    .slice(0, isFullListVisible ? undefined : 2)
+                    .map(group => ({...group, count: group.capacity - group.participantsCount}))
+                    .map(({id, ownerId, ownerName, count, createdAt, offer}) => (
+                        <Row
+                            key={id}
+                            className={css.groupItem}
+                            alignItems="flex-start"
+                            justifyContent="space-between"
+                            paddingY={3}
+                        >
+                            <Column gap={1}>
+                                <Row>
+                                    <Profile id={ownerId} name={ownerName} />
+                                </Row>
+                                <Text weight="400" size={12} lineHeight={12}>
+                                    {pluralize(count, [`Нужен `, `Нужно `, `Нужно `])} еще
+                                    <Text color="#f40c43">
+                                        {pluralize(count, [
+                                            ` ${count} человек`,
+                                            ` ${count} человека`,
+                                            ` ${count} человек`,
+                                        ])}
+                                    </Text>
+                                </Text>
+                                <Text weight="400" size={12} lineHeight={12} color="#303234A3">
+                                    Закрытие группы через: <LeftTime createdAt={new Date(createdAt)} />
+                                </Text>
+                            </Column>
+                            <JoinGroupDrawer
+                                offer={offer}
+                                ownerId={ownerId}
+                                groupId={id}
+                                ownerName={ownerName}
+                                createdAt={new Date(createdAt)}
+                            />
+                        </Row>
+                    ))}
             </Column>
 
             {groups.length > 2 ? (

@@ -4,6 +4,7 @@ import Footer from './Footer';
 import {loadOffer} from '@/api';
 import {PageParams} from '@/shared/types/next';
 import {Metadata} from 'next';
+import {getFirstOfferPhoto} from '@/shared/photos';
 
 export async function generateMetadata({params}: PageParams<null, {id: string}>): Promise<Metadata> {
     const offerId = Number(params.id);
@@ -12,6 +13,10 @@ export async function generateMetadata({params}: PageParams<null, {id: string}>)
     return {
         title: `${offer.title} купить по низкой цене`,
         description: `${offer.description}. совместная покупка, низкие цены, низкая цена, купить, дешево, недорого`,
+        openGraph: {
+            title: offer.title,
+            images: getFirstOfferPhoto(offer.photos, 700) as string,
+        },
     };
 }
 

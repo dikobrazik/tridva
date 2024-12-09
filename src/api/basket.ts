@@ -44,7 +44,7 @@ export const getBasketItem = ({offerId}: GetBasketItemByOfferIdPayload): Promise
         .then(response => response.data)
         .catch(() => []);
 
-export const joinGroup = ({groupId}: JoinGroupPayload): Promise<BasketItem[]> =>
+export const joinGroup = ({groupId}: JoinGroupPayload): Promise<BasketItem> =>
     axios.post(`basket/group`, {groupId}).then(response => response.data);
 
 export const putOfferToBasket = ({offerId}: PutOfferPayload): Promise<BasketItem> =>

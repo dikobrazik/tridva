@@ -1,4 +1,11 @@
-import {changeBasketItemCount, getBasketItems, putOfferToBasket, removeItemFromBasket} from '@/api';
+import {
+    changeBasketItemCount,
+    createGroup,
+    getBasketItems,
+    joinGroup,
+    putOfferToBasket,
+    removeItemFromBasket,
+} from '@/api';
 import {RootState, ThunkConfig} from '@/lib/store';
 import {calculatePrice} from '@/shared/utils/formatPrice';
 import {selectedBasketItemsStorage} from '@/shared/utils/local-storage/storages';
@@ -18,13 +25,17 @@ export const loadBasketItemsAction = createTypedAsyncThunk<BasketItem[]>(`${NAME
 
 export const putOfferToBasketAction = createTypedAsyncThunk<BasketItem, {offerId: number}>(
     `${NAMESPACE}/put-offer-to-basket`,
-    async ({offerId}) => {
-        const basketItem = await putOfferToBasket({offerId});
+    async ({offerId}) => putOfferToBasket({offerId}),
+);
 
-        // selectedBasketItemsStorage.set(selectedBasketItemsIds => (selectedBasketItemsIds ?? []).concat(basketItem.id));
+export const putGroupToBasketAction = createTypedAsyncThunk<BasketItem, {groupId: number}>(
+    `${NAMESPACE}/put-group-to-basket`,
+    async ({groupId}) => joinGroup({groupId}),
+);
 
-        return basketItem;
-    },
+export const createGroupAction = createTypedAsyncThunk<BasketItem, {offerId: number}>(
+    `${NAMESPACE}/create-group`,
+    async ({offerId}) => createGroup({offerId}),
 );
 
 export const increaseBasketItemCountAction = createTypedAsyncThunk<{id: number; count: number}, {id: number}>(
@@ -188,6 +199,14 @@ export const basketSlice = createSlice({
                 }
             })
             .addCase(putOfferToBasketAction.fulfilled, (state, {payload: basketItem}) => {
+                state.selectedBasketItems[basketItem.id] = true;
+                basketItemAdapter.addOne(state.basketItems, basketItem);
+            })
+            .addCase(createGroupAction.fulfilled, (state, {payload: basketItem}) => {
+                state.selectedBasketItems[basketItem.id] = true;
+                basketItemAdapter.addOne(state.basketItems, basketItem);
+            })
+            .addCase(putGroupToBasketAction.fulfilled, (state, {payload: basketItem}) => {
                 state.selectedBasketItems[basketItem.id] = true;
                 basketItemAdapter.addOne(state.basketItems, basketItem);
             })

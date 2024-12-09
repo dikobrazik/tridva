@@ -7,9 +7,10 @@ import {Row} from '@/components/layout/Row';
 import {DEFAUL_PAGE_SIZE} from '@/shared/constants';
 import {PageParams} from '@/shared/types/next';
 import {pluralize} from '@/shared/utils/pluralize';
-import Filter from '../components/Filter';
-import {Sorting} from '../components/Sorting';
+import Filter from '../../components/Filter';
+import {Sorting} from '../../components/Sorting';
 import css from './Page.module.scss';
+import Link from 'next/link';
 
 type Props = PageParams<{p: string; name: string}>;
 
@@ -20,6 +21,27 @@ export default async function Catalog(props: Props) {
         search,
         pageSize: page ? Number(page) * DEFAUL_PAGE_SIZE : undefined,
     });
+
+    if (total === 0) {
+        return (
+            <Column height="100%" gap={4} className={css.offerList} paddingX={4} id="offers-list-container">
+                <Column gap={2}>
+                    <Text size={24} weight={600}>
+                        {search}
+                    </Text>
+                    <Text size={10} weight={400}>
+                        {total} {pluralize(total ?? 0, ['товар', 'товара', 'товаров'])}
+                    </Text>
+                </Column>
+                <Column gap={2} alignItems="center">
+                    <Text>Простите, по вашему запросу товаров сейчас нет.</Text>
+                    <Link href="/">
+                        <Text color="#F40C43">На главную</Text>
+                    </Link>
+                </Column>
+            </Column>
+        );
+    }
 
     return (
         <Column className={css.offerList} paddingX={4} id="offers-list-container">

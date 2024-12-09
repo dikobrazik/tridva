@@ -8,16 +8,17 @@ import {useToggler} from '@/hooks/useToggler';
 import {Offer} from '@/types/offers';
 import Link from 'next/link';
 import {useEffect, useState} from 'react';
-import {createGroup} from '@/api';
 import {formatPrice} from '@/shared/utils/formatPrice';
 import {OfferBlock} from '@/components/OfferCard/OfferBlock';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
-import {basketSelectors, loadBasketItemsAction} from '@/lib/features/basket';
+import {basketSelectors, createGroupAction} from '@/lib/features/basket';
 
 const CreateGroupContent = ({onGroupCreated, offer}: {onGroupCreated: () => void; offer: Offer}) => {
+    const dispatch = useAppDispatch();
     const onJoinGroupClick = async () => {
-        await createGroup({offerId: offer.id});
-        onGroupCreated();
+        dispatch(createGroupAction({offerId: offer.id})).then(() => {
+            onGroupCreated();
+        });
     };
 
     return (
@@ -76,14 +77,12 @@ const GroupCreatedContent = ({offer}: {offer: Offer}) => {
 };
 
 export const CreateGroup = ({offer}: {offer: Offer}) => {
-    const dispatch = useAppDispatch();
     const basketItem = useAppSelector(state => basketSelectors.selectBasketItemByOfferId(state, offer.id));
     const [isGroupCreated, setGroupCreated] = useState(false);
 
     const {isActive, toggle} = useToggler();
 
     const onGroupCreated = () => {
-        dispatch(loadBasketItemsAction());
         setGroupCreated(true);
     };
 

@@ -10,11 +10,10 @@ import Image from 'next/image';
 import participantImage from './participant.svg';
 import Link from 'next/link';
 import {ReactNode, useEffect, useState} from 'react';
-import {joinGroup} from '@/api';
 import {Avatar} from '@/components/Avatar';
 import {Offer} from '@/types/offers';
 import {OfferBlock} from '@/components/OfferCard/OfferBlock';
-import {loadBasketItemsAction} from '@/lib/features/basket';
+import {putGroupToBasketAction} from '@/lib/features/basket';
 import {useAppDispatch} from '@/lib/hooks';
 import {LeftTime} from './LeftTime';
 
@@ -63,9 +62,10 @@ const JoinGroupContent = ({
     createdAt: Date;
     onGroupJoined: () => void;
 }) => {
+    const dispatch = useAppDispatch();
+
     const onJoinGroupClick = async () => {
-        await joinGroup({groupId});
-        onGroupJoined();
+        dispatch(putGroupToBasketAction({groupId})).then(() => onGroupJoined());
     };
 
     return (
@@ -135,13 +135,11 @@ type Props = {
 };
 
 export const JoinGroupDrawer = ({renderTrigger, offer, ownerName, createdAt, groupId, ownerId}: Props) => {
-    const dispatch = useAppDispatch();
     const [isGroupJoined, setGroupJoined] = useState(false);
 
     const {isActive, toggle} = useToggler();
 
     const onGroupJoined = () => {
-        dispatch(loadBasketItemsAction());
         setGroupJoined(true);
     };
 
