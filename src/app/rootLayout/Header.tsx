@@ -86,7 +86,7 @@ export const Header = () => {
         turnOnScroll();
         (e.currentTarget.querySelector('input[name="search"]') as HTMLInputElement).blur();
         resetSearchState(false);
-        router.push(`/search?${SEARCH_PARAM_NAME}=${search}`);
+        router.push(`/offers/search?${SEARCH_PARAM_NAME}=${search}`);
     };
 
     useEffect(() => {
@@ -133,7 +133,7 @@ export const Header = () => {
                                         <Link
                                             className={css.foundItem}
                                             key="search"
-                                            href={`/search?${SEARCH_PARAM_NAME}=${search}`}
+                                            href={`/offers/search?${SEARCH_PARAM_NAME}=${search}`}
                                             onClick={resetSearchState(false)}
                                         >
                                             <Row justifyContent="flex-start" paddingY={3} gap="3">

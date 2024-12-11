@@ -12,13 +12,15 @@ const offerAdapter = createEntityAdapter<Offer>();
 
 export const loadOffersAction = createAsyncThunk<
     {offers: Offer[]; pagesCount: number},
-    {categoryId?: number; search?: string},
+    {categoryId?: number; search?: string; priceFrom?: string; priceTo?: string},
     {state: RootState}
 >(`${NAMESPACE}/load`, (payload, {getState}) => {
     return loadOffers({
         page: offersSelectors.selectCurrentPage(getState()),
         search: payload.search,
         category: payload.categoryId,
+        priceFrom: payload.priceFrom,
+        priceTo: payload.priceTo,
     });
 });
 
@@ -33,7 +35,7 @@ export const toggleFavoriteOfferAction = createAsyncThunk<unknown, {offerId: num
 
 export const searchOffersAction = createAsyncThunk<
     {offers: Offer[]; pagesCount: number},
-    {search: string},
+    {search: string; priceFrom?: string; priceTo?: string},
     {state: RootState}
 >(`${NAMESPACE}/search`, (payload, {getState}) =>
     loadOffers({page: offersSelectors.selectCurrentPage(getState()), ...payload}),

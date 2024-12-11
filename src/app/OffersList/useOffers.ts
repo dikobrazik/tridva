@@ -46,9 +46,22 @@ export const useOffers = (props?: Props) => {
             if (!areOffersLoading && !isLastPageReached) {
                 dispatch(offersActions.incrementPage());
                 if (props?.name) {
-                    dispatch(searchOffersAction({search: props?.name}));
+                    dispatch(
+                        searchOffersAction({
+                            search: props?.name,
+                            priceFrom: searchParams.get('priceFrom') ?? undefined,
+                            priceTo: searchParams.get('priceTo') ?? undefined,
+                        }),
+                    );
                 } else {
-                    dispatch(loadOffersAction({categoryId: props?.categoryId, search: props?.name}));
+                    dispatch(
+                        loadOffersAction({
+                            categoryId: props?.categoryId,
+                            search: props?.name,
+                            priceFrom: searchParams.get('priceFrom') ?? undefined,
+                            priceTo: searchParams.get('priceTo') ?? undefined,
+                        }),
+                    );
                 }
             }
         }

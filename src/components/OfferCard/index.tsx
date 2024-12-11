@@ -36,14 +36,19 @@ export const OfferCard = memo(
                     <Column gap={2} paddingX={1}>
                         {discount ? (
                             <Row gap={2} alignItems="center">
-                                <Text color="#F40C43" size={16} weight={600}>
+                                <Text color="#F40C43" size={finalPrice.length > 5 ? 14 : 16} weight={600}>
                                     {finalPrice} ₽
                                 </Text>
                                 <Row gap={1}>
-                                    <Text color="#303234A3" decoration="line-through" size={12} weight={400}>
+                                    <Text
+                                        color="#303234A3"
+                                        decoration="line-through"
+                                        size={finalPrice.length > 5 ? 10 : 12}
+                                        weight={400}
+                                    >
                                         {Math.ceil(Number(price))} ₽
                                     </Text>
-                                    <Text color="#F40C43" size={12} weight={400}>
+                                    <Text color="#F40C43" size={finalPrice.length > 5 ? 10 : 12} weight={400}>
                                         -{discount}%
                                     </Text>
                                 </Row>

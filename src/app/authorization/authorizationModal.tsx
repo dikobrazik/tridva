@@ -75,10 +75,14 @@ export const AuthorizationModal = ({title, Toggler, onAuthorized}: Props) => {
                     <Label text="Телефон">
                         <PhoneTextField disabled={isCodeSent} value={phone} onChange={setPhone} placeholder="+7" />
                     </Label>
-                    {isCodeSent && (
+                    {true && (
                         <Column gap="4">
                             <Label text="Код из СМС">
-                                <MaskedTextField mask="000-000" value={code} onChange={setCode} />
+                                <MaskedTextField
+                                    maskOptions={{mask: '000-000', lazy: false}}
+                                    value={code}
+                                    onChange={setCode}
+                                />
                             </Label>
                             {seconds > 0 ? (
                                 <Text weight={400} size={10} color="#303234A3">

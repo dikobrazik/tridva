@@ -9,6 +9,8 @@ type LoadOffersPayload = {
     page?: number;
     pageSize?: number;
     category?: number;
+    priceFrom?: string;
+    priceTo?: string;
 };
 
 type LoadOfferPayload = {

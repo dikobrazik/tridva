@@ -1,37 +1,14 @@
 'use client';
 
-import IMask, {InputMask} from 'imask';
-import {useEffect, useRef} from 'react';
+import {FactoryOpts} from 'imask';
 import {TextField, TextFieldProps} from '.';
+import {useIMask} from 'react-imask';
 
-type Props = {
-    mask: string;
-} & TextFieldProps;
+export const MaskedTextField = ({maskOptions, defaultValue, ...props}: TextFieldProps & {maskOptions: FactoryOpts}) => {
+    const {ref, value, setValue} = useIMask<HTMLInputElement>(maskOptions, {
+        onAccept: (value, maskRef) => props.onChange && props.onChange(maskRef.unmaskedValue),
+        defaultValue: defaultValue ? defaultValue.toString() : undefined,
+    });
 
-export const MaskedTextField = ({onChange, mask, ...props}: Props) => {
-    const maskedRef = useRef<InputMask | null>(null);
-    const inputRef = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        if (inputRef.current) {
-            maskedRef.current = IMask(inputRef.current, {
-                mask,
-                lazy: false,
-            });
-
-            maskedRef.current.updateValue();
-
-            maskedRef.current.on('accept', () => {
-                if (maskedRef.current !== null) {
-                    if (onChange) {
-                        onChange(maskedRef.current.unmaskedValue);
-                    }
-                }
-            });
-        }
-    }, []);
-
-    const value = maskedRef.current?.value ?? '';
-
-    return <TextField ref={inputRef} {...props} type="text" value={value} />;
+    return <TextField ref={ref} {...props} value={value} onChange={setValue} />;
 };

@@ -9,18 +9,42 @@ import {Box} from '@/components/layout/Box';
 import {Button} from '@/components/Button';
 import {useToggler} from '@/hooks/useToggler';
 import {Drawer} from '@/components/Drawer';
-import {TextField} from '@/components/TextField';
+import {MaskedTextField} from '@/components/TextField/Masked';
+import {FormEventHandler} from 'react';
+import {OffersFilters} from '@/types/offers';
+import {useSearchParams} from 'next/navigation';
 
-export default function Filter() {
+type Props = {
+    onUpdate: (filters: OffersFilters) => void;
+};
+
+export default function Filter({onUpdate}: Props) {
+    const params = useSearchParams();
+
     const {isActive, toggle} = useToggler();
+
+    const onSubmit: FormEventHandler<HTMLFormElement> = e => {
+        e.preventDefault();
+        const formData = new FormData(e.target as HTMLFormElement);
+
+        const priceFrom = formData.get('priceFrom');
+        const priceTo = formData.get('priceTo');
+
+        onUpdate({
+            priceFrom: typeof priceFrom === 'string' ? priceFrom.replace(/\D/g, '') : undefined,
+            priceTo: typeof priceTo === 'string' ? priceTo.replace(/\D/g, '') : undefined,
+        });
+
+        toggle();
+    };
 
     return (
         <>
             <Icon name="audio" size="s" onClick={toggle} />
             <Drawer isOpen={isActive} onClose={toggle}>
-                <form onSubmit={e => e.preventDefault()}>
+                <form onSubmit={onSubmit}>
                     <Column gap="8">
-                        <Box>
+                        {/* <Box>
                             <Box marginBottom="12px">
                                 <Text size={16} lineHeight={20} weight={600}>
                                     Категории
@@ -73,7 +97,7 @@ export default function Filter() {
                                     </Text>
                                 </label>
                             </Column>
-                        </Box>
+                        </Box> */}
 
                         <Column gap="4">
                             <Box>
@@ -83,12 +107,24 @@ export default function Filter() {
                             </Box>
 
                             <Row className={css.inputContainer} gap="4" justifyContent="space-between">
-                                <TextField size="m" name="from" placeholder="От" />
-                                <TextField size="m" name="to" placeholder="До" />
+                                <MaskedTextField
+                                    size="m"
+                                    name="priceFrom"
+                                    placeholder="От"
+                                    defaultValue={params.get('priceFrom') ?? undefined}
+                                    maskOptions={{mask: Number, min: 0, max: 1_000_000, thousandsSeparator: ' '}}
+                                />
+                                <MaskedTextField
+                                    size="m"
+                                    name="priceTo"
+                                    placeholder="До"
+                                    defaultValue={params.get('priceTo') ?? undefined}
+                                    maskOptions={{mask: Number, min: 0, max: 1_000_000, thousandsSeparator: ' '}}
+                                />
                             </Row>
                         </Column>
 
-                        <Button>Применить фильтры</Button>
+                        <Button type="submit">Применить фильтры</Button>
                     </Column>
                 </form>
             </Drawer>

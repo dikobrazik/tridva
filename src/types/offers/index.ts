@@ -26,3 +26,8 @@ export type OfferPhoto = {
     photoBaseUrl: string;
     photosCount: number;
 };
+
+export type OffersFilters = {
+    priceFrom: string | undefined;
+    priceTo: string | undefined;
+};
