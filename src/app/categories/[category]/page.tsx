@@ -12,11 +12,12 @@ import {DEFAUL_PAGE_SIZE} from '@/shared/constants';
 import {PageParams} from '@/shared/types/next';
 import {PopularCategories} from '@/app/Home/PopularCategories';
 
-type Props = PageParams<{p: string}, {category: string}>;
+type Props = PageParams<{p: string; popular: string}, {category: string}>;
 
-export default async function Catalog(props: Props) {
+export default async function Category(props: Props) {
     const categoryId = Number(props.params.category);
     const page = props.searchParams.p;
+    const isPopular = props.searchParams.popular === 'true';
 
     const {offers} = await loadOffers({
         category: categoryId,
@@ -26,7 +27,7 @@ export default async function Catalog(props: Props) {
 
     return (
         <Column className={css.offerList} paddingX={4} id="offers-list-container">
-            <PopularCategories />
+            {isPopular ? <PopularCategories /> : null}
 
             <Column gap={2}>
                 <Text size={24} weight={600}>

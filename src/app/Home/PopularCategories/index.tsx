@@ -10,7 +10,7 @@ export const PopularCategories = async () => {
     return (
         <Row gap={2} overflowX="auto" paddingBottom="8px">
             {popularCategories.map(category => (
-                <Link key={category.id} href={`/categories/${category.id}`}>
+                <Link key={category.id} href={`/categories/${category.id}?popular=true`}>
                     <h2>
                         <Button
                             style={{whiteSpace: 'nowrap'}}
