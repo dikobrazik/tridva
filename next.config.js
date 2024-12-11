@@ -3,6 +3,7 @@ const {withSentryConfig} = require('@sentry/nextjs');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    distDir: process.env.LOCAL ? '.commit-build' : undefined,
     sassOptions: {
         includePaths: [path.join(__dirname, 'src/styles')],
     },
