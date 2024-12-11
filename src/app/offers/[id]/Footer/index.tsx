@@ -1,7 +1,7 @@
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {Offer} from '@/types/offers';
-import {CreateGroup} from './AddGroupItem';
+import {AddGroupItem} from './AddGroupItem';
 import {AddSignleItemButton} from './AddSingleItem';
 import css from './Footer.module.scss';
 import {BestGroup} from './BestGroup';
@@ -23,7 +23,7 @@ export default async function Footer({offer}: {offer: Offer}) {
                 background="#fff"
             >
                 <AddSignleItemButton offer={offer} />
-                <CreateGroup offer={offer} />
+                <AddGroupItem offer={offer} />
             </Row>
         </Column>
     );

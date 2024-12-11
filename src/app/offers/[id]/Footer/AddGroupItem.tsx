@@ -13,7 +13,7 @@ import {OfferBlock} from '@/components/OfferCard/OfferBlock';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 import {basketSelectors, createGroupAction} from '@/lib/features/basket';
 
-const CreateGroupContent = ({onGroupCreated, offer}: {onGroupCreated: () => void; offer: Offer}) => {
+const CreateGroupItemButton = ({onGroupCreated, offer}: {onGroupCreated: () => void; offer: Offer}) => {
     const dispatch = useAppDispatch();
     const onJoinGroupClick = async () => {
         dispatch(createGroupAction({offerId: offer.id})).then(() => {
@@ -49,7 +49,7 @@ const CreateGroupContent = ({onGroupCreated, offer}: {onGroupCreated: () => void
     );
 };
 
-const GroupCreatedContent = ({offer}: {offer: Offer}) => {
+const GroupItemCreatedButton = ({offer}: {offer: Offer}) => {
     return (
         <Column gap="10">
             <Column gap="2" alignItems="center">
@@ -76,8 +76,10 @@ const GroupCreatedContent = ({offer}: {offer: Offer}) => {
     );
 };
 
-export const CreateGroup = ({offer}: {offer: Offer}) => {
-    const basketItem = useAppSelector(state => basketSelectors.selectBasketItemByOfferId(state, offer.id));
+export const AddGroupItem = ({offer}: {offer: Offer}) => {
+    const isBasketGroupItemsExists = useAppSelector(state =>
+        basketSelectors.selectIsBasketGroupItemExists(state, offer.id),
+    );
     const [isGroupCreated, setGroupCreated] = useState(false);
 
     const {isActive, toggle} = useToggler();
@@ -94,7 +96,7 @@ export const CreateGroup = ({offer}: {offer: Offer}) => {
 
     const finalPrice = formatPrice(offer.price, offer.discount);
 
-    if (basketItem?.group) {
+    if (isBasketGroupItemsExists) {
         return (
             <Link style={{flex: '1'}} href="/basket">
                 <Button variant="green" width="full" size="m">
@@ -125,9 +127,9 @@ export const CreateGroup = ({offer}: {offer: Offer}) => {
             </Button>
             <Drawer isOpen={isActive} onClose={toggle}>
                 {isGroupCreated ? (
-                    <GroupCreatedContent offer={offer} />
+                    <GroupItemCreatedButton offer={offer} />
                 ) : (
-                    <CreateGroupContent offer={offer} onGroupCreated={onGroupCreated} />
+                    <CreateGroupItemButton offer={offer} onGroupCreated={onGroupCreated} />
                 )}
             </Drawer>
         </>

@@ -25,3 +25,12 @@
 .container .singleGroupButtons.padding {
     padding: 6px;
 }
+
+.basketLink {
+    width: 100%;
+    height: 100%;
+
+    & > button {
+        height: 100%;
+    }
+}

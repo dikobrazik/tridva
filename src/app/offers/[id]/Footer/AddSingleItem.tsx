@@ -2,28 +2,22 @@
 
 import {Button} from '@/components/Button';
 import {Text} from '@/components/Text';
-import {Column} from '@/components/layout/Column';
-import {Row} from '@/components/layout/Row';
-import {Offer} from '@/types/offers';
-import css from './Footer.module.scss';
 import {Box} from '@/components/layout/Box';
-import classNames from 'classnames';
+import {Column} from '@/components/layout/Column';
+import {basketSelectors, putOfferToBasketAction} from '@/lib/features/basket';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
-import {
-    basketSelectors,
-    decreaseBasketItemCountAction,
-    increaseBasketItemCountAction,
-    putOfferToBasketAction,
-} from '@/lib/features/basket';
 import {formatPrice} from '@/shared/utils/formatPrice';
+import {Offer} from '@/types/offers';
+import Link from 'next/link';
+import css from './Footer.module.scss';
 
-export const CreateSingleGroupButton = ({offer}: {offer: Offer}) => {
+export const CreateSingleItemButton = ({id, price}: Pick<Offer, 'id' | 'price'>) => {
     const dispatch = useAppDispatch();
     const onCreateSingleGroupClick = () => {
-        dispatch(putOfferToBasketAction({offerId: offer.id}));
+        dispatch(putOfferToBasketAction({offerId: id}));
     };
 
-    const formattedPrice = formatPrice(offer.price);
+    const formattedPrice = formatPrice(price);
 
     return (
         <Button width="full" variant="normal" size="m" onClick={onCreateSingleGroupClick}>
@@ -39,61 +33,32 @@ export const CreateSingleGroupButton = ({offer}: {offer: Offer}) => {
     );
 };
 
-export const SingleGroupButton = ({offer}: {offer: Offer}) => {
-    const dispatch = useAppDispatch();
-    const basketItem = useAppSelector(state => basketSelectors.selectBasketItemByOfferId(state, offer.id));
-
-    if (basketItem === undefined) return null;
-
-    const onMinusClick = () => {
-        dispatch(decreaseBasketItemCountAction({id: basketItem.id}));
-    };
-
-    const onPlusClick = () => {
-        dispatch(increaseBasketItemCountAction({id: basketItem.id}));
-    };
-
+const SignleItemCreatedButton = () => {
     return (
-        <Row flex="1" className={css.singleGroupButton} justifyContent="space-between" padding="8px" borderRadius="2">
-            <Button
-                className={classNames(css.singleGroupButtons, css.padding)}
-                variant="pseudo"
-                size="m"
-                icon="minus"
-                onClick={onMinusClick}
-            />
-            <Column gap="1">
-                <Text lineHeight={14} size={12} weight={600} align="center">
-                    {basketItem.count}
-                </Text>
-                <Text color="#303234A3" size={8} weight={400}>
-                    В корзине
-                </Text>
-            </Column>
-            <Button
-                className={classNames(css.singleGroupButtons, css.padding)}
-                variant="pseudo"
-                size="m"
-                icon="plus"
-                onClick={onPlusClick}
-            />
-        </Row>
+        <Link className={css.basketLink} href="/basket">
+            <Button size="m" width="full" variant="normal" icon="check">
+                В корзине
+            </Button>
+        </Link>
     );
 };
 
 export const AddSignleItemButton = ({offer}: {offer: Offer}) => {
-    const basketItem = useAppSelector(state => basketSelectors.selectBasketItemByOfferId(state, offer.id));
+    const isBasketGroupItemsExists = useAppSelector(state =>
+        basketSelectors.selectBasketItemByOfferId(state, offer.id),
+    );
+    const basketItem = useAppSelector(state => basketSelectors.selectBasketSingleItemByOfferId(state, offer.id));
 
-    if (basketItem?.group) {
+    if (isBasketGroupItemsExists) {
         return null;
     }
 
     return (
         <Box flex="1 1 50%">
             {basketItem && basketItem.count > 0 ? (
-                <SingleGroupButton offer={offer} />
+                <SignleItemCreatedButton />
             ) : (
-                <CreateSingleGroupButton offer={offer} />
+                <CreateSingleItemButton id={offer.id} price={offer.price} />
             )}
         </Box>
     );
