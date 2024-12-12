@@ -34,17 +34,19 @@ export const loadOffers = (
     );
 
 export const loadOffer = (payload: LoadOfferPayload): Promise<Offer> =>
-    appFetch<Offer>(`offers/${payload.id}`).then(r => {
-        if (r.status === 404) {
-            notFound();
-        }
-        return r.data;
-    });
+    appFetch<Offer>(`offers/${payload.id}`)
+        .then(r => r.data)
+        .catch(r => {
+            if (r.status === 404) {
+                notFound();
+            }
+            return r.data;
+        });
 
 export const loadOfferGroup = (payload: LoadOfferPayload): Promise<OfferBestGroupResponse | null> =>
-    appFetch<OfferBestGroupResponse | null>(`offers/${payload.id}/group`, {method: 'GET'}).then(r =>
-        r.status === 404 ? null : r.data,
-    );
+    appFetch<OfferBestGroupResponse | null>(`offers/${payload.id}/group`, {method: 'GET'})
+        .then(r => r.data)
+        .catch(r => (r.status === 404 ? null : r.data));
 
 export const loadIsFavoriteOffer = (payload: LoadOfferPayload): Promise<boolean> =>
     axios<boolean>(`offers/${payload.id}/favorite`).then(response => response.data);

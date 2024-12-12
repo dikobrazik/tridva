@@ -6,7 +6,7 @@ import {PageParams} from '@/shared/types/next';
 import {Metadata} from 'next';
 import {getFirstOfferPhoto} from '@/shared/photos';
 
-export async function generateMetadata({params}: PageParams<null, {id: string}>): Promise<Metadata> {
+export async function generateMetadata({params}: PageParams<never, {id: string}>): Promise<Metadata> {
     const offerId = Number(params.id);
     const offer = await loadOffer({id: offerId});
 

@@ -22,7 +22,12 @@ const handleResponse = async <Data>(response: Response): Promise<AppFetchRespons
     }
 
     if (!response.ok) {
-        throw {data, status: response.status, ok: response.ok};
+        throw {
+            data,
+            status: response.status,
+            ok: response.ok,
+            url: response.url,
+        };
     }
 
     return {data, status: response.status, ok: response.ok};
