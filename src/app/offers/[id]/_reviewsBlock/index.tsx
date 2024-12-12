@@ -47,7 +47,7 @@ export default async function Reviews({offer}: Props) {
                         {rating}
                     </Text>
                     <Rating rating={rating} />
-                    <Text size={10} weight={400} color="#303234A3">
+                    <Text size={12} weight={400} color="#303234A3">
                         {ratingsCount} {pluralize(ratingsCount, ['оценка', 'оценки', 'оценок'])}
                     </Text>
                 </Row>

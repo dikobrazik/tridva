@@ -16,15 +16,15 @@ import {BackButton} from './BackButton';
 const ReviewItem = (review: Review) => {
     return (
         <Column className={css.reviewItem} gap="2" paddingY="3" paddingX="4">
-            <Row justifyContent="space-between">
+            <Row justifyContent="space-between" alignItems="center">
                 <Profile name={review.authorName} />
 
-                <Text size="10px" weight={400} color="#303234A3">
+                <Text size={12} weight={400} color="#303234A3">
                     {omitCurrentYear(format(new Date(review.createdAt), 'dd MMMM yyyy'))}
                 </Text>
             </Row>
             <Row gap="2">
-                <Text size="12px" weight={400}>
+                <Text size={12} weight={400}>
                     {review.rating}
                 </Text>
                 <Rating rating={review.rating} />

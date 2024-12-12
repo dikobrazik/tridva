@@ -19,11 +19,11 @@ function AboutItem(props: AboutItemProps) {
 
     return (
         <Row gap={1} justifyContent="space-between">
-            <Text whiteSpace="nowrap" weight="400" size="10px" lineHeight={12}>
+            <Text whiteSpace="nowrap" weight="400" size={12} color="#303234A3" lineHeight={12}>
                 {name}
             </Text>
             <Box flex="1" className={css.underline}></Box>
-            <Text weight="400" size="10px" lineHeight={12} align="end">
+            <Text weight="400" size={12} lineHeight={12} align="end">
                 {value}
             </Text>
         </Row>

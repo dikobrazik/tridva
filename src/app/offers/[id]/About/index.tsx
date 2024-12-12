@@ -13,7 +13,7 @@ export default async function About({offerId, offerDescription = ''}: {offerId: 
                 О товаре
             </Text>
             <ExpandableList attributes={attributes} />
-            <Text size={10} weight={400}>
+            <Text size={12} weight={400}>
                 <div
                     className={css.description}
                     dangerouslySetInnerHTML={{__html: offerDescription.replace(/\s/g, ' ')}}
