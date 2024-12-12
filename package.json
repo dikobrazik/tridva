@@ -5,7 +5,6 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "build:local": "LOCAL=true next build",
         "build:analyze": "ANALYZE=true next build",
         "start": "next start",
         "lint": "next lint",

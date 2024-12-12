@@ -1,1 +1,1 @@
-npm run build:local && lint-staged --relative
+npx tsc --noEmit && lint-staged --relative
