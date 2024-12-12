@@ -12,6 +12,7 @@ type Props = {
     color?: CSSProperties['color'];
     marginRight?: CSSProperties['marginRight'];
     wrap?: CSSProperties['textWrap'];
+    overflowWrap?: CSSProperties['overflowWrap'];
     block?: boolean;
     className?: HTMLSpanElement['className'];
     selectable?: boolean;
@@ -31,6 +32,7 @@ export const Text = ({selectable = true, ...props}: PropsWithChildren<Props>) =>
                 marginRight: props.marginRight,
                 textWrap: props.wrap,
                 display: props.block ? 'inline-block' : undefined,
+                overflowWrap: props.overflowWrap,
             }}
             className={classNames(props.className, css.text, {[css.selectable]: selectable})}
         >

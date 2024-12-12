@@ -29,7 +29,9 @@ const ReviewItem = (review: Review) => {
                 </Text>
                 <Rating rating={review.rating} />
             </Row>
-            {review.text}
+            <Text weight={400} size={12} overflowWrap="break-word">
+                {review.text}
+            </Text>
         </Column>
     );
 };
