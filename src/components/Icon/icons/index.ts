@@ -13,6 +13,7 @@ export {default as audio} from './audio-settings.svg';
 export {default as delivery} from './delivery.svg';
 export {default as crown} from './crown.svg';
 export {default as help} from './help.svg';
+export {default as helpGreen} from './help-green.svg';
 export {default as pen} from './pen.svg';
 export {default as close} from './close.svg';
 export {default as minus} from './minus.svg';

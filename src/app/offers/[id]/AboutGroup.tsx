@@ -16,15 +16,17 @@ export const AboutGroup = () => {
             <Row
                 onClick={toggle}
                 className={classNames(css.tab, css.greentab)}
-                alignItems="center"
-                gap={2}
+                justifyContent="space-between"
                 paddingX={2}
                 paddingY={1}
             >
-                <Icon name="crown" />
-                <Text weight="400" size="10px" lineHeight={12}>
-                    Гарантия 100% сбора группы на первую созданную группу
-                </Text>
+                <Row gap={2} alignItems="center">
+                    <Icon name="crown" />
+                    <Text weight="400" size="10px" lineHeight={12}>
+                        Гарантия 100% сбора группы на первую созданную группу
+                    </Text>
+                </Row>
+                <Icon name="helpGreen" />
             </Row>
 
             <Modal isOpen={isActive} onClose={toggle}>
