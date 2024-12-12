@@ -16,6 +16,7 @@ import {OfferBlock} from '@/components/OfferCard/OfferBlock';
 import {putGroupToBasketAction} from '@/lib/features/basket';
 import {useAppDispatch} from '@/lib/hooks';
 import {LeftTime} from './LeftTime';
+import {useRouter} from 'next/navigation';
 
 const GroupHost = ({ownerId, ownerName}: {ownerId: number; ownerName: string}) => {
     return (
@@ -98,6 +99,7 @@ const JoinGroupContent = ({
 };
 
 const GroupJoinedContent = ({offer}: {offer: Offer}) => {
+    const router = useRouter();
     return (
         <Column gap="10">
             <Column gap="2" alignItems="center">
@@ -118,7 +120,7 @@ const GroupJoinedContent = ({offer}: {offer: Offer}) => {
                 <OfferBlock offer={offer} />
             </Column>
 
-            <Button width="full">
+            <Button width="full" onClick={router.refresh}>
                 <Link href="/basket">Перейти в корзину и оплатить</Link>
             </Button>
         </Column>
@@ -135,6 +137,7 @@ type Props = {
 };
 
 export const JoinGroupDrawer = ({renderTrigger, offer, ownerName, createdAt, groupId, ownerId}: Props) => {
+    const router = useRouter();
     const [isGroupJoined, setGroupJoined] = useState(false);
 
     const {isActive, toggle} = useToggler();
@@ -149,6 +152,10 @@ export const JoinGroupDrawer = ({renderTrigger, offer, ownerName, createdAt, gro
         }
     }, [isActive]);
 
+    const onClose = () => {
+        router.refresh();
+    };
+
     return (
         <>
             {renderTrigger ? (
@@ -158,7 +165,7 @@ export const JoinGroupDrawer = ({renderTrigger, offer, ownerName, createdAt, gro
                     <Text size={12}>Присоединиться</Text>
                 </Button>
             )}
-            <Drawer isOpen={isActive} onClose={toggle}>
+            <Drawer isOpen={isActive} onClose={onClose}>
                 {isGroupJoined ? (
                     <GroupJoinedContent offer={offer} />
                 ) : (

@@ -133,10 +133,10 @@ export const basketSlice = createSlice({
             basketItemAdapterSelectors
                 .selectAll(state.basketItems)
                 .find(basketItem => !basketItem.group && basketItem.offer.id === offerId),
-        selectIsBasketGroupItemExists: (state, offerId: number) =>
+        selectBasketGroupItem: (state, offerId: number) =>
             basketItemAdapterSelectors
                 .selectAll(state.basketItems)
-                .findIndex(basketItem => basketItem.group && basketItem.offer.id === offerId) > -1,
+                .find(basketItem => basketItem.group && basketItem.offer.id === offerId),
         selectBasketItemCountByOfferId: (state, offerId: number) =>
             basketItemAdapterSelectors.selectAll(state.basketItems).find(basketItem => basketItem.offer.id === offerId)
                 ?.count || 0,

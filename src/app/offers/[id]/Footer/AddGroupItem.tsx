@@ -77,9 +77,7 @@ const GroupItemCreatedButton = ({offer}: {offer: Offer}) => {
 };
 
 export const AddGroupItem = ({offer}: {offer: Offer}) => {
-    const isBasketGroupItemsExists = useAppSelector(state =>
-        basketSelectors.selectIsBasketGroupItemExists(state, offer.id),
-    );
+    const basketGroupItem = useAppSelector(state => basketSelectors.selectBasketGroupItem(state, offer.id));
     const [isGroupCreated, setGroupCreated] = useState(false);
 
     const {isActive, toggle} = useToggler();
@@ -96,35 +94,36 @@ export const AddGroupItem = ({offer}: {offer: Offer}) => {
 
     const finalPrice = formatPrice(offer.price, offer.discount);
 
-    if (isBasketGroupItemsExists) {
-        return (
-            <Link style={{flex: '1'}} href="/basket">
-                <Button variant="green" width="full" size="m">
-                    <Column>
-                        <Text size={12} weight={600} lineHeight={14}>
-                            Группа создана
-                        </Text>
-                        <Text size={12} weight={400} lineHeight={14}>
-                            Оплатите, чтобы подтвердить
-                        </Text>
-                    </Column>
-                </Button>
-            </Link>
-        );
-    }
+    const isBasketGroupItemExists = Boolean(basketGroupItem);
+    const isGroupOwner = basketGroupItem?.group?.owner;
 
     return (
         <>
-            <Button size="m" flex="1 1 50%" onClick={toggle}>
-                <Column>
-                    <Text size={12} weight={600} lineHeight={14}>
-                        Создать группу
-                    </Text>
-                    <Text size={12} weight={600} lineHeight={14}>
-                        {finalPrice} ₽
-                    </Text>
-                </Column>
-            </Button>
+            {isBasketGroupItemExists ? (
+                <Link style={{flex: '1'}} href="/basket">
+                    <Button variant="green" width="full" size="m">
+                        <Column>
+                            <Text size={12} weight={600} lineHeight={14}>
+                                {isGroupOwner ? 'Группа создана' : 'Вы присоеденились к группе'}
+                            </Text>
+                            <Text size={12} weight={400} lineHeight={14}>
+                                Оплатите, чтобы подтвердить
+                            </Text>
+                        </Column>
+                    </Button>
+                </Link>
+            ) : (
+                <Button size="m" flex="1 1 50%" onClick={toggle}>
+                    <Column>
+                        <Text size={12} weight={600} lineHeight={14}>
+                            Создать группу
+                        </Text>
+                        <Text size={12} weight={600} lineHeight={14}>
+                            {finalPrice} ₽
+                        </Text>
+                    </Column>
+                </Button>
+            )}
             <Drawer isOpen={isActive} onClose={toggle}>
                 {isGroupCreated ? (
                     <GroupItemCreatedButton offer={offer} />
