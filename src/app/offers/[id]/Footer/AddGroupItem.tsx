@@ -77,7 +77,7 @@ const GroupItemCreatedButton = ({offer}: {offer: Offer}) => {
 };
 
 export const AddGroupItem = ({offer}: {offer: Offer}) => {
-    const basketGroupItem = useAppSelector(state => basketSelectors.selectBasketGroupItem(state, offer.id));
+    const basketGroupItem = useAppSelector(state => basketSelectors.selectBasketGroupItemByOfferId(state, offer.id));
     const [isGroupCreated, setGroupCreated] = useState(false);
 
     const {isActive, toggle} = useToggler();

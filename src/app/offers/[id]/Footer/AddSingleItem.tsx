@@ -45,7 +45,7 @@ const SignleItemCreatedButton = () => {
 
 export const AddSignleItemButton = ({offer}: {offer: Offer}) => {
     const isBasketGroupItemsExists = useAppSelector(state =>
-        basketSelectors.selectBasketItemByOfferId(state, offer.id),
+        basketSelectors.selectBasketGroupItemByOfferId(state, offer.id),
     );
     const basketItem = useAppSelector(state => basketSelectors.selectBasketSingleItemByOfferId(state, offer.id));
 
