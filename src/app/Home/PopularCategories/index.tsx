@@ -19,7 +19,7 @@ export const PopularCategories = async (props: Props) => {
                 <Link key={category.id} href={`/categories/${category.id}?popular=true`}>
                     <h2>
                         <Button
-                            className={classNames(css.button, {
+                            className={classNames(css.button, css.customButton, {
                                 [css.active]: props.categoryId === category.id,
                             })}
                             style={{whiteSpace: 'nowrap'}}
