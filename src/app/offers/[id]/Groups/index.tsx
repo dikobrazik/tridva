@@ -42,7 +42,7 @@ export default async function Groups(props: Props) {
                     <AboutGroups />
                 </Row>
                 {groupsCount > 0 && (
-                    <Text weight="400" size={12} lineHeight={12}>
+                    <Text weight="400" size={12} lineHeight={14}>
                         {groupsCount}{' '}
                         {pluralize(groupsCount, ['человек создал', 'человека создали', 'человек создали'])} групповую
                         покупку.

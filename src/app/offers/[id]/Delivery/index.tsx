@@ -21,7 +21,7 @@ export const AboutDelivery = () => {
             >
                 <Row alignItems="center" gap={1}>
                     <Icon name="delivery" />
-                    <Text weight="400" size={14} lineHeight={12}>
+                    <Text weight="400" size={12} lineHeight={12}>
                         <Text color="#42C52D">17 ноября</Text>, бесплатная доставка
                     </Text>
                 </Row>

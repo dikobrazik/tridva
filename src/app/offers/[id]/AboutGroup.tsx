@@ -22,7 +22,7 @@ export const AboutGroup = () => {
             >
                 <Row gap={2} alignItems="center">
                     <Icon name="crown" />
-                    <Text weight="400" size={14} lineHeight={12}>
+                    <Text weight="400" size={12} lineHeight={12}>
                         Гарантия сбора первой группы
                     </Text>
                 </Row>
