@@ -27,7 +27,7 @@ export default async function Category(props: Props) {
 
     return (
         <Column className={css.offerList} paddingX={4} id="offers-list-container">
-            {isPopular ? <PopularCategories /> : null}
+            {isPopular ? <PopularCategories categoryId={categoryId} /> : null}
 
             <Column gap={2}>
                 <Text size={24} weight={600}>

@@ -2,9 +2,15 @@ import {loadPopularCategories} from '@/api';
 import {Button} from '@/components/Button';
 import {Text} from '@/components/Text';
 import {Row} from '@/components/layout/Row';
+import classNames from 'classnames';
 import Link from 'next/link';
+import css from './PopularCategories.module.scss';
 
-export const PopularCategories = async () => {
+type Props = {
+    categoryId?: number;
+};
+
+export const PopularCategories = async (props: Props) => {
     const popularCategories = await loadPopularCategories();
 
     return (
@@ -13,11 +19,12 @@ export const PopularCategories = async () => {
                 <Link key={category.id} href={`/categories/${category.id}?popular=true`}>
                     <h2>
                         <Button
+                            className={classNames(css.button, {
+                                [css.active]: props.categoryId === category.id,
+                            })}
                             style={{whiteSpace: 'nowrap'}}
                             size="m"
                             variant="normal"
-                            backgroundColor="#f5f5f5"
-                            border="1px solid #E1A6B414"
                         >
                             <Text whiteSpace="nowrap" size={12}>
                                 {category.name}
