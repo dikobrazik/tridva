@@ -24,7 +24,7 @@ const handleResponse = async <Data>(response: Response): Promise<AppFetchRespons
     }
 
     if (!response.ok) {
-        console.error(response.status, data);
+        console.error(response.url, response.status, data);
 
         throw {
             data,

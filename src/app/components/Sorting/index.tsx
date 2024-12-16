@@ -9,12 +9,12 @@ import {useCallback, useState} from 'react';
 import css from './Sorting.module.scss';
 
 const SORTING = {
-    POPULAR: 'POPULAR',
-    NEW: 'NEW',
-    PRICE_ASC: 'PRICE_ASC',
-    PRICE_DESC: 'PRICE_DESC',
-    DISCOUNT: 'DISCOUNT',
-    RATING: 'RATING',
+    POPULAR: 'p',
+    NEW: 'n',
+    PRICE_ASC: 'asc',
+    PRICE_DESC: 'desc',
+    DISCOUNT: 'd',
+    RATING: 'r',
 };
 
 const OPTIONS = {
