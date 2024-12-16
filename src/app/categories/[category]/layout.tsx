@@ -35,7 +35,8 @@ export default async function Layout(props: PropsWithChildren<Props>) {
                     {category?.name}
                 </Text>
                 <Text size={10} weight={400}>
-                    {category?.offersCount} {pluralize(category?.offersCount ?? 0, ['товар', 'товара', 'товаров'])}
+                    {category?.offersCount} {pluralize(category?.offersCount ?? 0, ['товар', 'товара', 'товаров'])} в
+                    категории
                 </Text>
             </Column>
             <FiltersRow />

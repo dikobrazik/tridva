@@ -7,7 +7,6 @@ import {Text} from '@/components/Text';
 import {OfferAttribute} from '@/types/offers';
 import {useToggler} from '@/hooks/useToggler';
 import {Column} from '@/components/layout/Column';
-import {Box} from '@/components/layout/Box';
 
 type AboutItemProps = {
     name: string;
@@ -18,11 +17,10 @@ function AboutItem(props: AboutItemProps) {
     const {name, value} = props;
 
     return (
-        <Row gap={1} justifyContent="space-between">
+        <Row className={css.item} gap={1} justifyContent="space-between">
             <Text whiteSpace="nowrap" weight="400" size={12} color="#303234A3" lineHeight={12}>
                 {name}
             </Text>
-            <Box flex="1" className={css.underline}></Box>
             <Text weight="400" size={12} lineHeight={12} align="end">
                 {value}
             </Text>
@@ -35,7 +33,7 @@ export const ExpandableList = ({attributes}: {attributes: OfferAttribute[]}) => 
 
     return (
         <>
-            <Column gap={2}>
+            <Column>
                 {attributes.slice(0, isExpanded ? undefined : 3).map(attribute => (
                     <AboutItem key={attribute.id} name={attribute.attributeName} value={attribute.value} />
                 ))}

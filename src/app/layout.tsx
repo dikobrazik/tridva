@@ -42,6 +42,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
                 <link rel="manifest" href="/favicon/site.webmanifest" />
                 <meta name="apple-mobile-web-app-title" content="Tridva" />
+                <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
             </head>
             <body className={classNames(inter.className, css.body)}>
                 <StoreProvider>
