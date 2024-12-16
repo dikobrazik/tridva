@@ -11,7 +11,11 @@ type Props = {
 };
 
 export const PopularCategories = async (props: Props) => {
-    const popularCategories = await loadPopularCategories();
+    let popularCategories = await loadPopularCategories();
+
+    if (props.categoryId) {
+        popularCategories = popularCategories.sort(category => (category.id === props.categoryId ? -1 : 1));
+    }
 
     return (
         <Row gap={2} overflowX="auto" paddingBottom="8px">
