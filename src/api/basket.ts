@@ -1,5 +1,6 @@
 import {BasketItem} from '@/types/basket';
 import axios from 'axios';
+import {appFetch} from './fetch';
 
 type JoinGroupPayload = {
     groupId: number;
@@ -27,8 +28,7 @@ type GetBasketItemByOfferIdPayload = {
 };
 
 export const getBasketItems = (): Promise<BasketItem[]> =>
-    axios
-        .get(`basket`)
+    appFetch<BasketItem[]>(`basket`)
         .then(response => response.data)
         .catch(() => []);
 

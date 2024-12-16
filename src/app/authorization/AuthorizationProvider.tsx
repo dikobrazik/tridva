@@ -27,10 +27,10 @@ export default function AuthTokenProvider({children}: {children: React.ReactNode
         if (!isRendered.current) {
             // надо бы перенести, чтобы не смешивать авторизацию и локали date fns
             setDefaultOptions({locale: ru});
+            dispatch(loadBasketItemsAction());
             dispatch(checkTokenAction())
                 .unwrap()
                 .then(() => {
-                    dispatch(loadBasketItemsAction());
                     dispatch(loadFavoriteOffersAction());
                 })
                 .finally(() => {

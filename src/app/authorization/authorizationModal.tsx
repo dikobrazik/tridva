@@ -75,7 +75,7 @@ export const AuthorizationModal = ({title, Toggler, onAuthorized}: Props) => {
                     <Label text="Телефон">
                         <PhoneTextField disabled={isCodeSent} value={phone} onChange={setPhone} placeholder="+7" />
                     </Label>
-                    {true && (
+                    {isCodeSent && (
                         <Column gap="4">
                             <Label text="Код из СМС">
                                 <MaskedTextField

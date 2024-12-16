@@ -1,4 +1,4 @@
-import css from './Column.module.css';
+import css from './Column.module.scss';
 import {extractStyles} from '../utils';
 import {AsTags, UnitProps} from '../types';
 import cn from 'classnames';

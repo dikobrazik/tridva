@@ -2,7 +2,7 @@ import {extractStyles} from '../utils';
 import {AsTags, UnitProps} from '../types';
 import React from 'react';
 import classNames from 'classnames';
-import css from './Box.module.css';
+import css from './Box.module.scss';
 
 export const Box = <As extends AsTags = 'div'>({children, as, ...props}: UnitProps<As>) => {
     const {otherProps, styles} = extractStyles(props);

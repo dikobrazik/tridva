@@ -12,7 +12,7 @@ type Props<As extends 'button' | 'a'> = PropsWithChildren<{
     icon?: IconName;
     size?: 'xs' | 's' | 'm' | 'l';
     iconSize?: IconProps['size'];
-    width?: 'auto' | 'full';
+    width?: 'auto' | 'full' | UnitProps<As>['width'];
 }> &
     UnitProps<As>;
 
@@ -34,6 +34,7 @@ export const Button = <As extends 'button' | 'a'>(props: Props<As>) => {
                 },
                 className,
             )}
+            width={width === 'full' ? undefined : width}
             {...buttonProps}
         >
             {children}

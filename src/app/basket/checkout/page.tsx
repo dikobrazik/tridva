@@ -30,13 +30,13 @@ export default function CheckoutPage() {
     const phone = useAppSelector(userSelectors.selectPhone);
     const profile = useAppSelector(userSelectors.selectProfile);
     const areBasketItemsLoading = useAppSelector(basketSelectors.selectAreBasketItemsLoading);
-    const selectedBasketItemsList = useAppSelector(basketSelectors.selectSelectedBasketItemsList);
+    const selectedBasketItems = useAppSelector(basketSelectors.selectSelectedBasketItems);
     const selectedBasketItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
-    const selectedBasketItemsCount = selectedBasketItemsList.length;
+    const selectedBasketItemsCount = selectedBasketItems.length;
 
     useEffect(() => {
         dispatch(loadLastSelectedPickupPointAction());
-        if ((!areBasketItemsLoading && selectedBasketItemsList.length === 0) || isUserAnonymous) {
+        if ((!areBasketItemsLoading && selectedBasketItems.length === 0) || isUserAnonymous) {
             redirect('/basket');
         }
     }, [areBasketItemsLoading]);
@@ -143,7 +143,7 @@ export default function CheckoutPage() {
                     </Column>
                 </Block>
 
-                <Summary selectedItemsCount={selectedBasketItemsCount} />
+                <Summary />
 
                 <Box minHeight="40px" />
             </Column>

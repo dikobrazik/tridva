@@ -1,7 +1,9 @@
-let BASE_URL = `${process.env.NEXT_PUBLIC_HOST}/api`;
+import {appConfig} from '@/shared/utils/config';
+
+let BASE_URL = `${appConfig.host}/api`;
 
 if (typeof window === 'undefined') {
-    BASE_URL = `${process.env.HOST}/api`;
+    BASE_URL = `${appConfig.host}/api`;
 }
 
 export type AppFetchResponse<Data> = {
@@ -22,6 +24,8 @@ const handleResponse = async <Data>(response: Response): Promise<AppFetchRespons
     }
 
     if (!response.ok) {
+        console.error(response.status, data);
+
         throw {
             data,
             status: response.status,
@@ -37,7 +41,9 @@ const handleResponse = async <Data>(response: Response): Promise<AppFetchRespons
 export const appFetch = <Data>(path: string, init?: RequestInit): Promise<AppFetchResponse<Data>> => {
     const customInit: RequestInit = init ?? ({} as RequestInit);
 
-    customInit.credentials = 'same-origin';
+    // в проде куки передаем только на свой домен
+    // при разработке разницы нет + сервер запускается на другом порте, поэтому используем include
+    customInit.credentials = appConfig.isDev ? 'include' : 'same-origin';
 
     // Говнохак, пока не посадим сервер и клиент на один домен
     if (typeof window === 'undefined') {

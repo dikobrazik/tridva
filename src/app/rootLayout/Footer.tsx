@@ -1,24 +1,23 @@
-'use client';
-
 import {Row} from '@/components/layout/Row';
 import {FooterButton} from './FooterButton';
 import css from './Footer.module.scss';
-import {useAppSelector} from '@/lib/hooks';
-import {basketSelectors} from '@/lib/features/basket';
 import {Column} from '@/components/layout/Column';
 import classNames from 'classnames';
-import {usePathname} from 'next/navigation';
+import {getBasketItems} from '@/api';
 
 const pageWithLocalFooterRe = /([/]basket[/]checkout[/]success)|([/]basket)|([/]offers[/]\d)/;
 
-export const Footer = () => {
-    const pathname = usePathname();
-    const basketItemsCount = useAppSelector(basketSelectors.selectBasketItemsCount);
+export const Footer = async () => {
+    const basketItemsCount = await getBasketItems().then(items => items.length);
 
-    const isPageWithLocalFooter = pageWithLocalFooterRe.test(pathname);
+    const isPageWithLocalFooter = pageWithLocalFooterRe.test('');
 
     return (
-        <Column className={classNames(css.footer, {[css.withoutShadow]: isPageWithLocalFooter})} padding="8px 16px">
+        <Column
+            id="footer-container"
+            className={classNames(css.footer, {[css.withoutShadow]: isPageWithLocalFooter})}
+            padding="8px 16px"
+        >
             <Row justifyContent="space-between">
                 <FooterButton icon="home" activeIcon="homeActive" title="Главная" href="/" strictActiveMatch />
                 <FooterButton icon="menu" activeIcon="menuActive" title="Категории" href="/categories" />

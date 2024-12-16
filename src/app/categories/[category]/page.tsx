@@ -17,7 +17,7 @@ export default async function Category(props: Props) {
     const categoryId = Number(props.params.category);
     const isPopular = popular === 'true';
 
-    const {offers} = await loadOffers({
+    const {offers, pagesCount} = await loadOffers({
         category: categoryId,
         pageSize: page ? Number(page) * DEFAUL_PAGE_SIZE : undefined,
         priceFrom: priceFrom ? priceFrom : undefined,
@@ -44,7 +44,7 @@ export default async function Category(props: Props) {
                 ))}
                 <OffersList categoryId={categoryId} />
             </OffersListContainer>
-            <OffersListLoader />
+            {pagesCount > 1 && <OffersListLoader />}
         </Column>
     );
 }

@@ -117,10 +117,6 @@ export const basketSlice = createSlice({
         selectBasketItemsByIds: (state, itemsIds: number[]) =>
             itemsIds.map(itemId => basketItemAdapterSelectors.selectById(state.basketItems, itemId)),
         selectSelectedBasketItems,
-        selectSelectedBasketItemsList: createSelector(
-            [state => selectSelectedBasketItems(state)],
-            selectedBasketItems => Object.values(selectedBasketItems),
-        ),
         selectBasketItemsCount: state => basketItemAdapterSelectors.selectAll(state.basketItems).length,
         selectIsBasketItemSelected: (state, itemId: number) => Boolean(state.selectedBasketItems[itemId]),
         selectIsAllBasketItemsSelected: state =>

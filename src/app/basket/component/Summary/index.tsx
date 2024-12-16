@@ -1,3 +1,5 @@
+'use client';
+
 import {Block} from '@/components/layout/Block';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
@@ -6,13 +8,16 @@ import {Text} from '@/components/Text';
 import {basketSelectors} from '@/lib/features/basket';
 import {useAppSelector} from '@/lib/hooks';
 import {formatPrice} from '@/shared/utils/formatPrice';
+import {sum} from '@/shared/utils/sum';
 
-export const Summary = ({selectedItemsCount}: {selectedItemsCount: number}) => {
-    const selectedItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
+export const Summary = () => {
+    const selectedBasketItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
+    const selectedBasketItems = useAppSelector(basketSelectors.selectSelectedBasketItems);
     const selectedBasketItemsCostBeforeDiscount = useAppSelector(
         basketSelectors.selectSelectedBasketItemsCostBeforeDiscount,
     );
-    const formattedSelectedItemsCost = formatPrice(selectedItemsCost);
+    const formattedSelectedItemsCost = formatPrice(selectedBasketItemsCost);
+    const selectedItemsCount = sum(selectedBasketItems.map(item => item.count));
 
     return (
         <Block gap="4">
@@ -33,7 +38,7 @@ export const Summary = ({selectedItemsCount}: {selectedItemsCount: number}) => {
                         Скидка
                     </Text>
                     <Text size={10} weight={600}>
-                        -{selectedBasketItemsCostBeforeDiscount - selectedItemsCost} ₽
+                        -{selectedBasketItemsCostBeforeDiscount - selectedBasketItemsCost} ₽
                     </Text>
                 </Row>
                 <Separator />

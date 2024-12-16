@@ -1,9 +1,10 @@
 'use client';
 
+import {appConfig} from '@/shared/utils/config';
 import Script from 'next/script';
 
 export function Metrika() {
-    if (process.env.IS_DEV || process.env.NEXT_PUBLIC_IS_DEV) return null;
+    if (appConfig.isDev) return null;
 
     return (
         <>

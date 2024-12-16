@@ -1,3 +1,4 @@
+import {appConfig} from '@/shared/utils/config';
 import axios from 'axios';
 
 export * from './auth';
@@ -11,10 +12,10 @@ export * from './profile';
 export * from './geo';
 
 axios.defaults.withCredentials = true;
-axios.defaults.baseURL = `${process.env.NEXT_PUBLIC_HOST}/api`;
+axios.defaults.baseURL = `${appConfig.host}/api`;
 
 if (typeof window === 'undefined') {
-    axios.defaults.baseURL = `${process.env.HOST}/api`;
+    axios.defaults.baseURL = `${appConfig.host}/api`;
 }
 
 axios.interceptors.request.use(function (config) {
@@ -29,7 +30,7 @@ axios.interceptors.request.use(function (config) {
     return config;
 });
 
-if (process.env.IS_DEV === 'true' && process.env.NEXT_RUNTIME !== 'edge') {
+if (appConfig.isDev && process.env.NEXT_RUNTIME === 'nodejs') {
     axios.interceptors.request.use(config => {
         config.headers['request-startTime'] = process.hrtime();
         return config;
