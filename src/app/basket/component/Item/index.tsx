@@ -69,6 +69,8 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
         dispatch(removeBasketItemAction({id}));
     };
 
+    const isGroupItem = capacity > 1;
+
     return (
         <Column className={css.item} gap="2">
             <Row gap="3" justifyContent="space-between">
@@ -76,9 +78,9 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
                 <Column flex="1" gap="2">
                     <Row gap={2} alignItems="center">
                         <Text color="#F40C43" size={14} weight={600}>
-                            {formatPrice(offer.price, offer.discount)} ₽
+                            {formatPrice(offer.price, isGroupItem ? offer.discount : undefined)} ₽
                         </Text>
-                        {offer.discount && (
+                        {isGroupItem && offer.discount && (
                             <Text color="#303234A3" decoration="line-through" size={10} weight={400}>
                                 {Math.ceil(Number(offer.price))} ₽
                             </Text>
