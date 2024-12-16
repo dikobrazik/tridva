@@ -20,7 +20,7 @@ export const PopularCategories = async (props: Props) => {
     return (
         <Row gap={2} overflowX="auto" paddingBottom="8px">
             {popularCategories.map(category => (
-                <Link key={category.id} href={`/categories/${category.id}?popular=true`}>
+                <Link key={category.id} href={`/categories/${category.id}`}>
                     <h2>
                         <Button
                             className={classNames(css.button, css.customButton, {

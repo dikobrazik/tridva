@@ -45,6 +45,11 @@ export const loadCategory = (payload: LoadCategoryPayload): Promise<Category> =>
         .then(response => response.data)
         .catch(() => ({}) as Category);
 
+export const loadIsPopularCategory = (payload: LoadCategoryPayload): Promise<boolean> =>
+    axios<boolean>(`categories/${payload.categoryId}/is-popular`, {params: payload})
+        .then(response => response.data)
+        .catch(() => false);
+
 export const loadCategoryAncestors = (payload: LoadCategoryPayload): Promise<Category[]> =>
     axios<Category[]>(`categories/${payload.categoryId}/ancestors`, {params: payload})
         .then(response => response.data)
