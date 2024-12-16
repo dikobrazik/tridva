@@ -140,7 +140,7 @@ export const JoinGroupDrawer = ({renderTrigger, offer, ownerName, createdAt, gro
     const router = useRouter();
     const [isGroupJoined, setGroupJoined] = useState(false);
 
-    const {isActive, toggle} = useToggler();
+    const {isActive, toggle, toggleOff} = useToggler();
 
     const onGroupJoined = () => {
         setGroupJoined(true);
@@ -153,6 +153,7 @@ export const JoinGroupDrawer = ({renderTrigger, offer, ownerName, createdAt, gro
     }, [isActive]);
 
     const onClose = () => {
+        toggleOff();
         router.refresh();
     };
 
