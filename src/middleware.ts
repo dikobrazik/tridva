@@ -9,7 +9,7 @@ export async function middleware(req: NextRequestType) {
 
             const response = NextResponse.next();
 
-            response.cookies.set('token', token);
+            response.cookies.set('token', token, {httpOnly: true, secure: true});
 
             return response;
         } catch (error) {
