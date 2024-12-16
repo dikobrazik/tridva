@@ -11,10 +11,10 @@ import {FiltersRow} from '../../components/Row/FiltersRow';
 import css from './Page.module.scss';
 import {redirect} from 'next/navigation';
 
-type Props = PageParams<{p: string; name: string; priceFrom: string; priceTo: string}>;
+type Props = PageParams<{p: string; name: string; priceFrom: string; priceTo: string; order: string}>;
 
 export default async function Catalog(props: Props) {
-    const {p: page, name: search, priceFrom, priceTo} = props.searchParams;
+    const {p: page, name: search, priceFrom, priceTo, order} = props.searchParams;
 
     if (!search) {
         redirect('/');
@@ -22,6 +22,7 @@ export default async function Catalog(props: Props) {
 
     const {offers, pagesCount, total} = await loadOffers({
         search,
+        order,
         pageSize: page ? Number(page) * DEFAUL_PAGE_SIZE : undefined,
         priceFrom: priceFrom ? priceFrom : undefined,
         priceTo: priceTo ? priceTo : undefined,

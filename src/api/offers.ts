@@ -11,6 +11,7 @@ type LoadOffersPayload = {
     category?: number;
     priceFrom?: string;
     priceTo?: string;
+    order?: string;
 };
 
 type LoadOfferPayload = {

@@ -1,6 +1,8 @@
 import {loadCategory} from '@/api';
+import {Row} from '@/components/layout/Row';
+import {Loader} from '@/components/Loader';
 import {Metadata} from 'next';
-import {PropsWithChildren} from 'react';
+import {PropsWithChildren, Suspense} from 'react';
 
 type Props = {params: {category: string}};
 
@@ -15,5 +17,16 @@ export async function generateMetadata({params}: Props): Promise<Metadata> {
 }
 
 export default async function Layout(props: PropsWithChildren<Props>) {
-    return props.children;
+    return (
+        <Suspense
+            key={Date.now()}
+            fallback={
+                <Row justifyContent="center" paddingY={5}>
+                    <Loader />
+                </Row>
+            }
+        >
+            {props.children}
+        </Suspense>
+    );
 }

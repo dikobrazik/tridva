@@ -10,15 +10,19 @@ import {PageParams} from '@/shared/types/next';
 import {PopularCategories} from '@/app/Home/PopularCategories';
 import {FiltersRow} from '@/app/components/Row/FiltersRow';
 
-type Props = PageParams<{p: string; popular: string; priceFrom: string; priceTo: string}, {category: string}>;
+type Props = PageParams<
+    {p: string; popular: string; priceFrom: string; priceTo: string; order: string},
+    {category: string}
+>;
 
 export default async function Category(props: Props) {
-    const {p: page, popular, priceFrom, priceTo} = props.searchParams;
+    const {p: page, popular, priceFrom, priceTo, order} = props.searchParams;
     const categoryId = Number(props.params.category);
     const isPopular = popular === 'true';
 
     const {offers, pagesCount} = await loadOffers({
         category: categoryId,
+        order,
         pageSize: page ? Number(page) * DEFAUL_PAGE_SIZE : undefined,
         priceFrom: priceFrom ? priceFrom : undefined,
         priceTo: priceTo ? priceTo : undefined,

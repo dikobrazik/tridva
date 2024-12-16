@@ -7,6 +7,7 @@ import {Row} from '@/components/layout/Row';
 import {useToggler} from '@/hooks/useToggler';
 import {useCallback, useState} from 'react';
 import css from './Sorting.module.scss';
+import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 
 const SORTING = {
     POPULAR: 'p',
@@ -27,17 +28,28 @@ const OPTIONS = {
 } as Record<Values<typeof SORTING>, string>;
 
 export const Sorting = () => {
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
     const {isActive, toggle} = useToggler();
-    // eslint-disable-next-line no-undef
-    const [selected, setSelected] = useState<Values<typeof SORTING>>(SORTING.POPULAR);
+    const [selected, setSelected] = useState<Values<typeof SORTING>>(searchParams.get('order') ?? SORTING.POPULAR);
 
     const onOptionClick = useCallback(
-        // eslint-disable-next-line no-undef
         (option: Values<typeof SORTING>) => {
+            if (option !== selected) {
+                const params = new URLSearchParams(searchParams.toString());
+
+                params.set('order', option);
+
+                router.replace(pathname + '?' + params.toString());
+                router.refresh();
+
+                setSelected(option);
+            }
+
             toggle();
-            setSelected(option);
         },
-        [toggle, setSelected],
+        [searchParams.toString(), router, pathname, searchParams, toggle, selected, setSelected],
     );
 
     return (
