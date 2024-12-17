@@ -10,4 +10,32 @@
         object-fit: contain;
         width: 100%;
     }
+
+    & > * {
+        &:first-child {
+            margin-top: 0;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        margin: 12px 0;
+    }
+
+    & > ul,
+    ol {
+        list-style-type: none;
+        list-style-position: inside;
+
+        & > li {
+            margin: 12px 0 12px 24px;
+            position: relative;
+
+            &::before {
+                content: '—';
+                position: absolute;
+                left: -20px;
+            }
+        }
+    }
 }

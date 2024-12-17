@@ -13,7 +13,7 @@ export type TextFieldProps = {
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange'>;
 
 export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props: TextFieldProps, ref) => {
-    const {icon, size = 's', onChange = () => {}, onIconClick, ...inputProps} = props;
+    const {icon, size = 's', onChange = () => {}, onIconClick, className, ...inputProps} = props;
 
     return (
         <span className={css.container}>
@@ -23,7 +23,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props: Te
                 type="search"
                 autoComplete="off"
                 onChange={e => onChange(e.target.value)}
-                className={cn(css.input, css[`size-${size}`])}
+                className={cn(css.input, className, css[`size-${size}`])}
                 {...inputProps}
             />
             {icon && <Icon className={css.icon} name={icon} onClick={onIconClick} />}

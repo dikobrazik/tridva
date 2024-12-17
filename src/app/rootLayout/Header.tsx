@@ -30,7 +30,7 @@ const pagesWithoutHeader = [
     /[/]basket[/]checkout[/]pickup-points/,
 ];
 
-const SEARCH_PARAM_NAME = 'name';
+const SEARCH_PARAM_NAME = 'search';
 
 export const Header = () => {
     const pathname = usePathname();
