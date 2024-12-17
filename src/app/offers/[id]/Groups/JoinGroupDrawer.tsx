@@ -10,7 +10,7 @@ import Image from 'next/image';
 import participantImage from './participant.svg';
 import Link from 'next/link';
 import {ReactNode, useEffect, useState} from 'react';
-import {Avatar} from '@/components/Avatar';
+import {RandomAvatar} from '@/components/Avatar';
 import {Offer} from '@/types/offers';
 import {OfferBlock} from '@/components/OfferCard/OfferBlock';
 import {putGroupToBasketAction} from '@/lib/features/basket';
@@ -21,7 +21,7 @@ import {useRouter} from 'next/navigation';
 const GroupHost = ({ownerId, ownerName}: {ownerId: number; ownerName: string}) => {
     return (
         <Column flex="1" gap="2" alignItems="center">
-            <Avatar id={ownerId} width={48} height={48} />
+            <RandomAvatar id={ownerId} width={48} height={48} />
             <Column gap="1">
                 <Text align="center" size={12} weight={500}>
                     {ownerName}

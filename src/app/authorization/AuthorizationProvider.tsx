@@ -1,6 +1,6 @@
 'use client';
 import React, {useEffect, useRef, useState} from 'react';
-import {checkTokenAction} from '@/lib/features/user';
+import {loadUserAction} from '@/lib/features/user';
 import {useAppDispatch} from '@/lib/hooks';
 
 import {ru} from 'date-fns/locale';
@@ -18,7 +18,7 @@ export default function AuthTokenProvider({children}: {children: React.ReactNode
     const isRendered = useRef(false);
     const pathname = usePathname();
 
-    const [isTokenChecked, setIsTokenChecked] = useState(false);
+    const [isUserLoaded, setIsUserLoaded] = useState(false);
 
     const dispatch = useAppDispatch();
     useSaveAppRouter();
@@ -28,20 +28,19 @@ export default function AuthTokenProvider({children}: {children: React.ReactNode
             // надо бы перенести, чтобы не смешивать авторизацию и локали date fns
             setDefaultOptions({locale: ru});
             dispatch(loadBasketItemsAction());
-            dispatch(checkTokenAction())
+            dispatch(loadFavoriteOffersAction());
+            dispatch(loadUserAction())
                 .unwrap()
-                .then(() => {
-                    dispatch(loadFavoriteOffersAction());
-                })
+                .then(() => {})
                 .finally(() => {
-                    setIsTokenChecked(true);
+                    setIsUserLoaded(true);
                 });
         }
 
         isRendered.current = true;
     }, []);
 
-    if (PAGES_WITH_TOKEN_CHECK.includes(pathname) && !isTokenChecked) {
+    if (PAGES_WITH_TOKEN_CHECK.includes(pathname) && !isUserLoaded) {
         return (
             <Box height="100vh" justifyContent="center" alignItems="center">
                 <Loader />

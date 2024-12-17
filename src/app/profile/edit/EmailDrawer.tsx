@@ -4,7 +4,7 @@ import {Button} from '@/components/Button';
 import {Drawer} from '@/components/Drawer';
 import {Label} from '@/components/Label';
 import {Text} from '@/components/Text';
-import {TextField} from '@/components/TextField';
+import {MaskedTextField} from '@/components/TextField/Masked';
 import {Column} from '@/components/layout/Column';
 import {updateProfileEmailAction, userSelectors} from '@/lib/features/user';
 import {useAppDispatch} from '@/lib/hooks';
@@ -42,7 +42,7 @@ export const EmailDrawer = ({isOpen, toggle}: Props) => {
                 </Text>
 
                 <Label text="Электронная почта">
-                    <TextField value={value} onChange={setValue} />
+                    <MaskedTextField maskOptions={{mask: /^\S*@?\S*$/}} value={value} onChange={setValue} />
                 </Label>
 
                 <Button onClick={onSaveClick}>Сохранить</Button>

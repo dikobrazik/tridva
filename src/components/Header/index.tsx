@@ -27,7 +27,7 @@ export const Header = (props: Props) => {
     );
 
     return (
-        <Row background="#fff" padding="16px" justifyContent="space-between">
+        <Row maxHeight="56px" background="#fff" padding="16px" justifyContent="space-between" alignItems="center">
             {left ? left : leftDefaultComponent}
             <Text size={16} weight={600}>
                 {children}

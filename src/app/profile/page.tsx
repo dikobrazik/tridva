@@ -10,15 +10,35 @@ import telegramIcon from './telegram.svg';
 import whatsappIcon from './whatsapp.svg';
 import {LinkCard} from './components/LinkCard';
 import {LinkButton} from './components/LinkButton';
-import {ProfileBlock} from './ProfileBlock';
-import {loadFavoriteOffersCount, loadOrdersCount, loadUserGroupsCount} from '@/api';
+import {ProfileBlock} from './components/ProfileBlock';
+import {loadFavoriteOffersCount, loadOrdersCount, loadUser, loadUserGroupsCount} from '@/api';
 
 export default async function ProfilePage() {
-    const [groupsCount, favoriteOffersCount, ordersCount] = await Promise.all([
+    const [user, groupsCount, favoriteOffersCount, ordersCount] = await Promise.all([
+        loadUser(),
         loadUserGroupsCount(),
         loadFavoriteOffersCount(),
         loadOrdersCount(),
     ]);
+
+    const ordersDescription =
+        ordersCount > 0
+            ? `${ordersCount} ${pluralize(ordersCount, ['доставка', 'доставки', 'доставок'])}. Ближайшая: 12 марта`
+            : 'Не ожидается';
+
+    const groupsDescription =
+        groupsCount > 0
+            ? `${groupsCount} ${pluralize(groupsCount, [
+                  'группа',
+                  'группы',
+                  'групп',
+              ])}. Отслеживайте статус сбора группы`
+            : 'У вас пока нет ни одной группы';
+
+    const favoriteOffersDescription =
+        favoriteOffersCount > 0
+            ? `${favoriteOffersCount} ${pluralize(favoriteOffersCount, ['товар', 'товара', 'товаров'])}`
+            : 'У вас пока нет ни одного товара в избранных';
 
     return (
         <Column gap="2">
@@ -26,59 +46,46 @@ export default async function ProfilePage() {
             <Block gap="4">
                 <ProfileBlock />
 
-                <Column gap="2">
+                {user.isAnonymous && (
                     <LinkCard
-                        href="/profile/orders"
-                        background="linear-gradient(112.76deg, rgba(255, 29, 82, 0.12) 9.48%, rgba(255, 214, 0, 0.12) 110.09%)"
-                        icon="delivery"
-                        title="Доставки"
-                        description={
-                            ordersCount > 0
-                                ? `${ordersCount} ${pluralize(ordersCount, [
-                                      'доставка',
-                                      'доставки',
-                                      'доставок',
-                                  ])}. Ближайшая: 12 марта`
-                                : 'Не ожидается'
-                        }
+                        href="/profile/favorites"
+                        icon="heart"
+                        title="Избранное"
+                        description={favoriteOffersDescription}
                     />
+                )}
 
-                    <Row gap="2">
-                        <Box flex="1 0 0">
-                            <LinkCard
-                                href="/profile/groups"
-                                icon="usersProfiles"
-                                title="Группы"
-                                description={
-                                    groupsCount > 0
-                                        ? `${groupsCount} ${pluralize(groupsCount, [
-                                              'группа',
-                                              'группы',
-                                              'групп',
-                                          ])}. Отслеживайте статус сбора группы`
-                                        : 'У вас пока нет ни одной группы'
-                                }
-                            />
-                        </Box>
-                        <Box flex="1 0 0">
-                            <LinkCard
-                                href="/profile/favorites"
-                                icon="heart"
-                                title="Избранное"
-                                description={
-                                    favoriteOffersCount > 0
-                                        ? `${favoriteOffersCount} ${pluralize(favoriteOffersCount, [
-                                              'товар',
-                                              'товара',
-                                              'товаров',
-                                          ])}`
-                                        : 'У вас пока нет ни одного товара в избранных'
-                                }
-                            />
-                        </Box>
-                    </Row>
-                    <LinkCard href="/profile/orders-history" icon="bag" title="Купленные товары" />
-                </Column>
+                {!user.isAnonymous && (
+                    <Column gap="2">
+                        <LinkCard
+                            href="/profile/orders"
+                            background="linear-gradient(112.76deg, rgba(255, 29, 82, 0.12) 9.48%, rgba(255, 214, 0, 0.12) 110.09%)"
+                            icon="delivery"
+                            title="Доставки"
+                            description={ordersDescription}
+                        />
+
+                        <Row gap="2">
+                            <Box flex="1 0 0">
+                                <LinkCard
+                                    href="/profile/groups"
+                                    icon="usersProfiles"
+                                    title="Группы"
+                                    description={groupsDescription}
+                                />
+                            </Box>
+                            <Box flex="1 0 0">
+                                <LinkCard
+                                    href="/profile/favorites"
+                                    icon="heart"
+                                    title="Избранное"
+                                    description={favoriteOffersDescription}
+                                />
+                            </Box>
+                        </Row>
+                        <LinkCard href="/profile/orders-history" icon="bag" title="Купленные товары" />
+                    </Column>
+                )}
             </Block>
 
             {/* <Block gap="2">

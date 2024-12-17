@@ -12,6 +12,7 @@ import avatar9 from './assets/adventurerNeutral-1716375799213.svg';
 import avatar10 from './assets/adventurerNeutral-1716375802063.svg';
 import avatar11 from './assets/adventurerNeutral-1716375804680.svg';
 import avatar12 from './assets/adventurerNeutral-1716375808764.svg';
+import unknownUserAvatar from './assets/unknown.svg';
 
 const avatars = [
     avatar1,
@@ -35,7 +36,7 @@ type Props = {
     width?: number;
 };
 
-export const Avatar = (props: Props) => {
+export const RandomAvatar = (props: Props) => {
     return (
         <Box>
             <Image
@@ -44,6 +45,14 @@ export const Avatar = (props: Props) => {
                 alt="avatar"
                 src={avatars[(props.id ?? 0) % (avatars.length - 1)]}
             />
+        </Box>
+    );
+};
+
+export const UnknownAvatar = (props: Props) => {
+    return (
+        <Box>
+            <Image height={props.height ?? 76} width={props.width ?? 76} alt="avatar" src={unknownUserAvatar} />
         </Box>
     );
 };

@@ -1,31 +1,30 @@
-'use client';
-
-import {Avatar} from '@/components/Avatar';
+import {loadUser} from '@/api';
+import {RandomAvatar} from '@/components/Avatar';
 import {Icon} from '@/components/Icon';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
-// import {offersSelectors} from '@/lib/features/offers';
-import {userSelectors} from '@/lib/features/user';
 import Link from 'next/link';
-import {useSelector} from 'react-redux';
+import {AnonymousProfile} from './AnonymousProfile';
 
-export const ProfileBlock = () => {
-    const profile = useSelector(userSelectors.selectProfile);
-    const phone = useSelector(userSelectors.selectPhone);
-    // const favoriteOffersCount = useSelector(offersSelectors.selectFavoriteOffersCount);
+export const ProfileBlock = async () => {
+    const {isAnonymous, profile, phone} = await loadUser();
+
+    if (isAnonymous) {
+        return <AnonymousProfile />;
+    }
 
     return (
         <Link href="/profile/edit">
             <Row gap="4" justifyContent="space-between" alignItems="center">
                 <Row gap="4" alignItems="center">
-                    <Avatar id={profile.id} />
+                    <RandomAvatar id={profile.id} width={48} height={48} />
                     <Column gap="1">
                         <Text size={16} weight={600}>
                             {profile?.name}
                         </Text>
                         <Text size={10} weight={400} color="#303234A3">
-                            {phone}
+                            +7{phone}
                         </Text>
                     </Column>
                 </Row>
