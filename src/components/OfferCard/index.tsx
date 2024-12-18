@@ -12,8 +12,8 @@ import ImageWithFallback from '../Image';
 import {memo} from 'react';
 
 export const OfferCard = memo(
-    (props: Offer) => {
-        const {id, title, price, ordersCount, discount, rating, photos, reviewsCount} = props;
+    (props: Offer & {priority?: boolean}) => {
+        const {id, title, priority = false, price, ordersCount, discount, rating, photos, reviewsCount} = props;
 
         const imageSrc = getFirstOfferPhoto(photos, 280);
         const fallbackImageSrc = typeof imageSrc === 'string' ? imageSrc.replace('280.jpg', '140.jpg') : undefined;
@@ -26,7 +26,7 @@ export const OfferCard = memo(
                     <ImageWithFallback
                         width="150"
                         height="150"
-                        priority={false}
+                        priority={priority}
                         className={css.image}
                         alt={`image for offer named ${title}`}
                         src={imageSrc}

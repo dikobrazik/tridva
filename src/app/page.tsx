@@ -33,8 +33,8 @@ export default async function Home(params: Props) {
                 </Box>
 
                 <OffersListContainer>
-                    {offers.map(offer => (
-                        <OfferCard key={`${offer.id}`} {...offer} />
+                    {offers.map((offer, index) => (
+                        <OfferCard key={`${offer.id}`} {...offer} priority={index < 4} />
                     ))}
                     <OffersList />
                 </OffersListContainer>
