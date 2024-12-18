@@ -98,15 +98,8 @@ export const offersSlice = createSlice({
             .addCase(loadOffersAction.rejected, state => {
                 state.loading = false;
             })
-            .addCase(loadFavoriteOffersAction.pending, state => {
-                state.loading = true;
-            })
             .addCase(loadFavoriteOffersAction.fulfilled, (state, {payload}) => {
-                state.loading = false;
                 state.favoriteOffersIds = payload;
-            })
-            .addCase(loadFavoriteOffersAction.rejected, state => {
-                state.loading = false;
             })
             .addCase(toggleFavoriteOfferAction.pending, (state, {meta}) => {
                 if (state.favoriteOffersIds.includes(meta.arg.offerId)) {

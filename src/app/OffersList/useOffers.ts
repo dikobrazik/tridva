@@ -86,5 +86,5 @@ export const useOffers = (props?: Props) => {
         };
     }, [memoizedOnScroll]);
 
-    return {areOffersLoading, offers};
+    return {offers};
 };
