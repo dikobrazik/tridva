@@ -8,7 +8,7 @@ export function Metrika() {
 
     return (
         <>
-            <Script id="yandex-metrika" strategy="worker">
+            <Script id="yandex-metrika" strategy="lazyOnload">
                 {`
                 if (window.location.host === 'tridva.store') {
                   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
