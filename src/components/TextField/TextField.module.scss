@@ -6,15 +6,13 @@
 
 .input {
     font-family: inherit;
-    font-size: 14px;
+    font-size: 16px;
+    line-height: 20px;
 
     width: 100%;
 
     border: 1px solid #9ca3aa7a;
     border-radius: 10px;
-
-    size: 12px;
-    line-height: 14px;
 
     padding-right: 40px;
 
@@ -37,11 +35,7 @@
         display: none;
     }
 
-    &::placeholder {
-        font-family: inherit;
-        font-size: 14px;
-    }
-
+    &::placeholder,
     &::-ms-input-placeholder {
         font-family: inherit;
         font-size: 14px;
@@ -54,5 +48,5 @@
     top: 50%;
     right: 12px;
 
-    margin-top: -8px;
+    margin-top: -12px;
 }

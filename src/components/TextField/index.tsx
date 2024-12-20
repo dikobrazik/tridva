@@ -26,7 +26,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props: Te
                 className={cn(css.input, className, css[`size-${size}`])}
                 {...inputProps}
             />
-            {icon && <Icon className={css.icon} name={icon} onClick={onIconClick} />}
+            {icon && <Icon className={css.icon} name={icon} size="sm" onClick={onIconClick} />}
         </span>
     );
 });
