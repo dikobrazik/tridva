@@ -3,7 +3,7 @@ import {Column} from '@/components/layout/Column';
 import StoreProvider from '@/lib/StoreProvider';
 import classNames from 'classnames';
 import {setDefaultOptions} from 'date-fns';
-import {ru} from 'date-fns/locale';
+import {ru} from 'date-fns/locale/ru';
 import type {Metadata} from 'next';
 import {Inter} from 'next/font/google';
 import React, {Suspense} from 'react';

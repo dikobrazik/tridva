@@ -25,32 +25,32 @@ export const Summary = () => {
 
     return (
         <Block gap="4">
-            <Text size={12} weight={600}>
+            <Text size={16} weight={600}>
                 Ваш заказ
             </Text>
             <Column gap="2">
                 <Row justifyContent="space-between">
-                    <Text size={10} weight={400} color="#303234A3">
+                    <Text size={14} weight={400} color="#303234A3">
                         Товары ({selectedItemsCount})
                     </Text>
-                    <Text size={10} weight={400}>
+                    <Text size={14} weight={400}>
                         {selectedBasketItemsCostBeforeDiscount} ₽
                     </Text>
                 </Row>
                 <Row justifyContent="space-between">
-                    <Text size={10} weight={400} color="#303234A3">
+                    <Text size={14} weight={400} color="#303234A3">
                         Скидка
                     </Text>
-                    <Text size={10} weight={600}>
+                    <Text size={14} weight={600}>
                         -{selectedBasketItemsCostBeforeDiscount - selectedBasketItemsCost} ₽
                     </Text>
                 </Row>
                 <Separator />
                 <Row justifyContent="space-between">
-                    <Text size={12} weight={400} color="#303234A3">
+                    <Text size={16} weight={400} color="#303234A3">
                         Итого
                     </Text>
-                    <Text color="#F40C43" size={10} weight={600}>
+                    <Text color="#F40C43" size={16} weight={600}>
                         {formattedSelectedItemsCost} ₽
                     </Text>
                 </Row>

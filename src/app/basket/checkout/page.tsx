@@ -20,6 +20,7 @@ import {redirect} from 'next/navigation';
 import {FormEventHandler, useEffect} from 'react';
 import {Summary} from '../component/Summary';
 import {useRouter} from 'next/navigation';
+import css from './Page.module.scss';
 
 export default function CheckoutPage() {
     const dispatch = useAppDispatch();
@@ -65,65 +66,76 @@ export default function CheckoutPage() {
 
                 <Block>
                     <Row display="inline">
-                        <Text>
+                        <Text size={14} weight={400}>
                             {`${selectedBasketItemsCount} ${pluralize(selectedBasketItemsCount, [
                                 'товар',
                                 'товара',
                                 'товаров',
                             ])} на сумму `}
                         </Text>
-                        <Text color="#F40C43" size={12} weight={600}>
+                        <Text color="#F40C43" size={14} weight={600}>
                             {selectedBasketItemsCost} ₽
                         </Text>
                     </Row>
                 </Block>
                 <Block gap="4">
                     <Column gap="2">
-                        <Text size={12} weight={600}>
+                        <Text size={14} weight={600}>
                             Укажите адрес доставки
+                        </Text>
+                        <Text size={10} weight={400} color="#303234A3">
+                            Пока мы работаем только в Самаре, поэтому выбор города не доступен
                         </Text>
                         <Select disabled value={0} options={[{id: 0, name: 'Самара'}]} />
                     </Column>
                     <Column gap="2">
-                        <Text size={12} weight={600}>
+                        <Text size={14} weight={600}>
                             <Text color="#4FDE38">Бесплатная</Text> доставка в пункт выдачи, можно забрать{' '}
-                            {format(new Date(), 'do MMMM ')}
+                            {format(new Date(), 'dd MMMM ')}
                             (завтра)
                         </Text>
 
-                        <Column gap="1">
-                            <Text size={10} weight={400} color="#303234A3">
-                                Срок хранения заказа 5 дней
-                            </Text>
-                            <Text size={10} weight={400} color="#303234A3">
-                                Можно проверить и примерить
-                            </Text>
-                            <Text size={10} weight={400} color="#303234A3">
-                                Возврат товара быстро и без проблем
-                            </Text>
+                        <Column gap="1" paddingX={3}>
+                            <ul className={css.list}>
+                                <li>
+                                    <Text size={12} weight={400} color="#303234A3">
+                                        Срок хранения заказа 5 дней
+                                    </Text>
+                                </li>
+                                <li>
+                                    <Text size={12} weight={400} color="#303234A3">
+                                        Можно проверить и примерить
+                                    </Text>
+                                </li>
+                                <li>
+                                    <Text size={12} weight={400} color="#303234A3">
+                                        Возврат товара быстро и без проблем
+                                    </Text>
+                                </li>
+                            </ul>
                         </Column>
                     </Column>
 
                     {selectedPickupPoint && (
                         <Column gap={1}>
-                            <Text weight={400} size={12}>
+                            <Text weight={400} size={14}>
                                 Пункт выдачи г. Самара, {selectedPickupPoint.address}
                             </Text>
-                            <Text weight={400} size={10} color="#303234A3">
+                            <Text weight={400} size={12} color="#303234A3">
                                 Хранение 5 дней, ежедневно с 10:00 до 21-00
                             </Text>
                         </Column>
                     )}
 
                     <Link href="/basket/checkout/pickup-points">
-                        <Button variant="outline" size="m" width="full">
-                            {selectedPickupPoint ? 'Изменить' : 'Выбрать'} пункт выдачи
+                        <Button variant={selectedPickupPoint ? 'normal' : 'outline'} size="m" width="full">
+                            {selectedPickupPoint ? 'Изменить адрес' : 'Выбрать пункт выдачи'}
                         </Button>
                     </Link>
                 </Block>
 
                 <Block gap="4">
-                    <Text size={12} weight={600}>
+                    <Text size={14} weight={600}>
                         Получатель заказа
                     </Text>
 
@@ -137,7 +149,7 @@ export default function CheckoutPage() {
                             value={profile?.email ?? ''}
                         />
                         <TextField disabled placeholder="Номер телефона" name="phone" value={phone} />
-                        <Text size={10} weight={400} color="#303234A3">
+                        <Text size={12} weight={400} color="#303234A3">
                             Пришлем статус заказа по e-mail и в SMS
                         </Text>
                     </Column>
