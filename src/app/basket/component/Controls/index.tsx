@@ -21,6 +21,11 @@ export const Controls = () => {
     const onToggleAllSelected = () => {
         dispatch(basketActions.toggleAllBasketItems());
     };
+
+    if (selectedBasketItems.length === 0) {
+        return null;
+    }
+
     return (
         <Row paddingX={4} justifyContent="space-between">
             <Box height={28}>

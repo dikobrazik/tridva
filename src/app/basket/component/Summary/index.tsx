@@ -19,6 +19,10 @@ export const Summary = () => {
     const formattedSelectedItemsCost = formatPrice(selectedBasketItemsCost);
     const selectedItemsCount = sum(selectedBasketItems.map(item => item.count));
 
+    if (selectedItemsCount === 0) {
+        return null;
+    }
+
     return (
         <Block gap="4">
             <Text size={12} weight={600}>
