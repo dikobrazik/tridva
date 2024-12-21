@@ -4,7 +4,6 @@ import {Button} from '@/components/Button';
 import {Header} from '@/components/Header';
 import {Select} from '@/components/Select';
 import {Text} from '@/components/Text';
-import {TextField} from '@/components/TextField';
 import {Block} from '@/components/layout/Block';
 import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
@@ -16,11 +15,11 @@ import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 import {pluralize} from '@/shared/utils/pluralize';
 import {format} from 'date-fns';
 import Link from 'next/link';
-import {redirect} from 'next/navigation';
+import {redirect, useRouter} from 'next/navigation';
 import {FormEventHandler, useEffect} from 'react';
 import {Summary} from '../component/Summary';
-import {useRouter} from 'next/navigation';
 import css from './Page.module.scss';
+import {RecipientForm} from './components/recipient';
 
 export default function CheckoutPage() {
     const dispatch = useAppDispatch();
@@ -28,8 +27,6 @@ export default function CheckoutPage() {
     const selectedPickupPoint = useAppSelector(checkoutSelectors.selectSelectedPickupPoint);
 
     const isUserAnonymous = useAppSelector(userSelectors.selectIsAnonymous);
-    const phone = useAppSelector(userSelectors.selectPhone);
-    const profile = useAppSelector(userSelectors.selectProfile);
     const areBasketItemsLoading = useAppSelector(basketSelectors.selectAreBasketItemsLoading);
     const selectedBasketItems = useAppSelector(basketSelectors.selectSelectedBasketItems);
     const selectedBasketItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
@@ -139,20 +136,7 @@ export default function CheckoutPage() {
                         Получатель заказа
                     </Text>
 
-                    <Column gap="2">
-                        <TextField disabled placeholder="Имя*" name="name" value={profile?.name ?? ''} />
-                        <TextField
-                            disabled
-                            placeholder="E-mail"
-                            type="email"
-                            name="email"
-                            value={profile?.email ?? ''}
-                        />
-                        <TextField disabled placeholder="Номер телефона" name="phone" value={phone} />
-                        <Text size={12} weight={400} color="#303234A3">
-                            Пришлем статус заказа по e-mail и в SMS
-                        </Text>
-                    </Column>
+                    <RecipientForm />
                 </Block>
 
                 <Summary />

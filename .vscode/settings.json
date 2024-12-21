@@ -1,4 +1,11 @@
 {
     "eslint.format.enable": true,
-    "typescript.tsdk": "node_modules/typescript/lib"
+    "typescript.tsdk": "node_modules/typescript/lib",
+    "alias-tool.mappings": {
+        "animation": "${workspace}/src/styles/animation",
+        "mixins": "${workspace}/src/styles/mixins"
+    },
+    "path-autocomplete.pathMappings": {
+        "@": "${folder}"
+    }
 }
