@@ -30,12 +30,12 @@ type OfferBestGroupResponse = {
 export const loadOffers = (
     payload?: LoadOffersPayload,
 ): Promise<{offers: Offer[]; total: number; pagesCount: number}> =>
-    appFetch<{offers: Offer[]; total: number; pagesCount: number}>(`offers?${getSearchParams(payload)}`).then(
-        r => r.data,
-    );
+    appFetch<{offers: Offer[]; total: number; pagesCount: number}>(`offers?${getSearchParams(payload)}`, {
+        cache: 'force-cache',
+    }).then(r => r.data);
 
 export const loadOffer = (payload: LoadOfferPayload): Promise<Offer> =>
-    appFetch<Offer>(`offers/${payload.id}`)
+    appFetch<Offer>(`offers/${payload.id}`, {cache: 'force-cache'})
         .then(r => r.data)
         .catch(r => {
             if (r.status === 404) {
