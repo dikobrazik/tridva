@@ -13,6 +13,7 @@ import {Icon} from '@/components/Icon';
 import Link from 'next/link';
 import {Separator} from '@/components/Separator';
 import {CancelOrderButton} from './CancelOrderButton';
+import {NoItems} from '@/components/Empty/NoItems';
 
 const Status = () => {
     return (
@@ -26,12 +27,6 @@ const Status = () => {
     );
 };
 
-const NoOrders = () => (
-    <Block>
-        <Text align="center">У вас пока нет заказанных товаров</Text>
-    </Block>
-);
-
 export default async function OrdersPage() {
     const orders = await loadOrders();
 
@@ -39,7 +34,12 @@ export default async function OrdersPage() {
         <Column gap={2}>
             <Header withBackArrow>Доставки {orders.length}</Header>
 
-            {orders.length === 0 ? <NoOrders /> : undefined}
+            {orders.length === 0 ? (
+                <NoItems
+                    title="Доставок пока нет"
+                    description="Загляните на главную, чтобы выбрать товар или найдите нужное в поиске"
+                />
+            ) : undefined}
 
             {orders.map(({id, order, offer}) => {
                 return (

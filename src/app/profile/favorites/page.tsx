@@ -1,22 +1,10 @@
 import {loadFavoriteOffers} from '@/api';
 import {OffersListContainer} from '@/app/OffersList';
-import {LinkButton} from '@/components/Button';
-import {Footer} from '@/components/Footer';
+import {NoItems} from '@/components/Empty/NoItems';
 import {Header} from '@/components/Header';
 import {OfferCard} from '@/components/OfferCard';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
-
-const NoFavorites = () => (
-    <Column gap="2" alignItems="center" paddingX={7}>
-        <Text size={20} weight={500}>
-            Товаров в избранном пока нет
-        </Text>
-        <Text size={14} weight={400} color="#303234A3" align="center">
-            Загляните на главную, чтобы выбрать товар или найдите нужное в поиске
-        </Text>
-    </Column>
-);
 
 export default async function FavoritesPage() {
     const offers = await loadFavoriteOffers();
@@ -41,15 +29,10 @@ export default async function FavoritesPage() {
                     </OffersListContainer>
                 </Column>
             ) : (
-                <Column justifyContent="space-between" height="100%">
-                    <div />
-                    <NoFavorites />
-                    <Footer>
-                        <LinkButton width="full" href="/">
-                            Перейти в каталог
-                        </LinkButton>
-                    </Footer>
-                </Column>
+                <NoItems
+                    title="Товаров в избранном пока нет"
+                    description="Загляните на главную, чтобы выбрать товар или найдите нужное в поиске"
+                />
             )}
         </Column>
     );
