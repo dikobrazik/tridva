@@ -1,5 +1,7 @@
 {
     "eslint.format.enable": true,
+    "eslint.validate": ["javascript", "javascriptreact", "html", "typescriptreact"],
+
     "typescript.tsdk": "node_modules/typescript/lib",
     "alias-tool.mappings": {
         "animation": "${workspace}/src/styles/animation",
