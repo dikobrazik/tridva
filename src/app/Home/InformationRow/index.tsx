@@ -16,6 +16,7 @@ import third from './images/3.png';
 import fourth from './images/4.png';
 import fithe from './images/5.png';
 import {Icon} from '@/components/Icon';
+import {useToggler} from '@/hooks/useToggler';
 
 const InformationList = [
     {
@@ -84,6 +85,7 @@ const InformationList = [
 ];
 
 export default function InformationRow() {
+    const {isActive, toggle} = useToggler();
     const [selectedInformationIndex, setSelectedInformationIndex] = useState<number>();
     const selectedInformation =
         selectedInformationIndex !== undefined ? InformationList[selectedInformationIndex] : undefined;
@@ -92,7 +94,10 @@ export default function InformationRow() {
         <Row justifyContent="space-between" paddingY={2}>
             {InformationList.map((information, index) => (
                 <Column
-                    onClick={() => setSelectedInformationIndex(index)}
+                    onClick={() => {
+                        setSelectedInformationIndex(index);
+                        toggle();
+                    }}
                     gap={2}
                     className={css.information}
                     key={index}
@@ -114,10 +119,7 @@ export default function InformationRow() {
                 </Column>
             ))}
 
-            <Modal
-                isOpen={selectedInformationIndex !== undefined}
-                onClose={() => setSelectedInformationIndex(undefined)}
-            >
+            <Modal isOpen={isActive} onClose={toggle}>
                 <PopUp
                     image={selectedInformation?.withImage ? selectedInformation?.image : undefined}
                     title={selectedInformation?.title}

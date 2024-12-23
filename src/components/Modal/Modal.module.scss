@@ -1,4 +1,8 @@
-@import 'animation/slide-in.scss';
+@import 'mixins/mixins.scss';
+@import 'animation/fade-in.scss';
+@import 'animation/fade-out.scss';
+
+$easeOutBack: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 
 .wrapper {
     position: fixed;
@@ -8,36 +12,82 @@
     right: 0;
     z-index: 2;
     background: #38343a85;
+    display: none;
+
+    &.open {
+        display: initial;
+
+        -webkit-animation: fade-in 0.1s linear forwards;
+        animation: fade-in 0.1s linear forwards;
+
+        & .content {
+            -webkit-animation: slide-bottom 0.3s $easeOutBack forwards;
+            animation: slide-bottom 0.3s $easeOutBack forwards;
+        }
+    }
+
+    &.closed {
+        display: initial;
+
+        & .content {
+            -webkit-animation: slide-top 0.3s linear forwards;
+            animation: slide-top 0.3s linear forwards;
+        }
+
+        -webkit-animation: fade-out 0.1s linear 0.3s forwards;
+        animation: fade-out 0.1s linear 0.3s forwards;
+    }
+
+    & .content {
+        display: flex;
+        flex-direction: column;
+
+        background: #fff;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        margin-left: auto;
+        margin-right: auto;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 40px 16px 16px 16px;
+        border-radius: 24px;
+        color: #303234;
+
+        max-width: 360px;
+
+        & .closeIcon {
+            cursor: pointer;
+            position: absolute;
+
+            top: 16px;
+            right: 16px;
+        }
+    }
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
+@include keyframes('slide-bottom') {
+    0% {
+        -webkit-transform: translateY(-50vh);
+        transform: translateY(-50vh);
+    }
 
-    background: #fff;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    margin-left: auto;
-    margin-right: auto;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 40px 16px 16px 16px;
-    border-radius: 24px;
-    color: #303234;
+    100% {
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+}
 
-    max-width: 360px;
+@include keyframes('slide-top') {
+    0% {
+        -webkit-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
 
-    -webkit-animation: fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-    animation: fade-in 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-
-    & .closeIcon {
-        cursor: pointer;
-        position: absolute;
-
-        top: 16px;
-        right: 16px;
+    100% {
+        -webkit-transform: translateY(-100vh);
+        transform: translateY(-100vh);
     }
 }

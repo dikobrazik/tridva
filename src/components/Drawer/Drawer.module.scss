@@ -1,4 +1,4 @@
-@import 'animation/slide-in.scss';
+@import 'mixins/mixins.scss';
 
 .wrapper {
     position: fixed;
@@ -8,9 +8,29 @@
 
     z-index: 2;
 
+    display: none;
+
     &.blackout {
         top: 0;
         background: #38343a85;
+    }
+
+    &.open {
+        display: initial;
+
+        & .content {
+            -webkit-animation: slide-top 0.5s ease-out forwards;
+            animation: slide-top 0.5s ease-out forwards;
+        }
+    }
+
+    &.closed {
+        display: initial;
+
+        & .content {
+            -webkit-animation: slide-bottom 0.5s ease-out forwards;
+            animation: slide-bottom 0.5s ease-out forwards;
+        }
     }
 }
 
@@ -29,9 +49,6 @@
     padding: 40px 16px 16px 16px;
     border-radius: 24px 24px 0 0;
     color: #303234;
-
-    -webkit-animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-    animation: slide-in-bottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 
     &.withLine {
         // полоска сверху дровера
@@ -52,5 +69,29 @@
 
         top: 16px;
         right: 16px;
+    }
+}
+
+@include keyframes('slide-bottom') {
+    0% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
+    }
+
+    100% {
+        -webkit-transform: translateY(100%);
+        transform: translateY(100%);
+    }
+}
+
+@include keyframes('slide-top') {
+    0% {
+        -webkit-transform: translateY(100%);
+        transform: translateY(100%);
+    }
+
+    100% {
+        -webkit-transform: translateY(0);
+        transform: translateY(0);
     }
 }

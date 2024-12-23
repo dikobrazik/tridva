@@ -3,12 +3,12 @@ import {FooterButton} from './FooterButton';
 import css from './Footer.module.scss';
 import {Column} from '@/components/layout/Column';
 import classNames from 'classnames';
-import {getBasketItems} from '@/api';
+import {getBasketItemsCount} from '@/api';
 
 const pageWithLocalFooterRe = /([/]basket[/]checkout[/]success)|([/]basket)|([/]offers[/]\d)/;
 
 export const Footer = async () => {
-    const basketItemsCount = await getBasketItems().then(items => items.length);
+    const basketItemsCount = await getBasketItemsCount().catch(() => 0);
 
     const isPageWithLocalFooter = pageWithLocalFooterRe.test('');
 

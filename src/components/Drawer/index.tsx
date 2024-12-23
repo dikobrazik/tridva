@@ -2,9 +2,9 @@ import {MouseEventHandler, PropsWithChildren, useCallback, useEffect} from 'reac
 import cn from 'classnames';
 import css from './Drawer.module.scss';
 import {Icon} from '../Icon';
-import classNames from 'classnames';
-import {createPortal} from 'react-dom';
 import {usePageScrollable} from '@/hooks/usePageScrollable';
+import {useAnimatedPopover} from '@/hooks/useAnimatedPopover';
+import {Portal} from '../Portal';
 
 type Props = PropsWithChildren<{
     isOpen: boolean;
@@ -14,7 +14,16 @@ type Props = PropsWithChildren<{
 }>;
 
 export const Drawer = (props: Props) => {
-    const {onClose, isOpen, withoutBlackout, children} = props;
+    const {isOpen, withoutBlackout, children} = props;
+
+    const {classNames, onClose, onAnimationEnd} = useAnimatedPopover({
+        isOpen: props.isOpen,
+        onClose: props.onClose,
+        closeAnimationClassName: css['slide-bottom'],
+        openClassName: css.open,
+        closedClassName: css.closed,
+    });
+
     const onWrapperClick = useCallback<MouseEventHandler<HTMLDivElement>>(
         e => {
             if (e.target === e.currentTarget) {
@@ -33,22 +42,19 @@ export const Drawer = (props: Props) => {
         return turnOnScroll;
     }, [isOpen]);
 
-    if (!isOpen) {
-        return null;
-    }
-
-    return createPortal(
-        <div
-            className={classNames(css.wrapper, {[css.blackout]: !withoutBlackout})}
-            onClick={withoutBlackout ? undefined : onWrapperClick}
-        >
-            <div className={cn(css.content, {[css.withLine]: false})}>
-                <div className={css.closeIcon}>
-                    <Icon size="m" onClick={onClose} name="close" />
+    return (
+        <Portal>
+            <div
+                className={cn(css.wrapper, {[css.blackout]: !withoutBlackout}, classNames)}
+                onClick={withoutBlackout ? undefined : onWrapperClick}
+            >
+                <div className={cn(css.content, {[css.withLine]: false})} onAnimationEnd={onAnimationEnd}>
+                    <div className={css.closeIcon}>
+                        <Icon size="m" onClick={onClose} name="close" />
+                    </div>
+                    {children}
                 </div>
-                {children}
             </div>
-        </div>,
-        document.body,
+        </Portal>
     );
 };
