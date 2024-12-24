@@ -1,0 +1,58 @@
+.statusFlowContainer {
+    padding-left: 20px;
+
+    &:not(:has(.status.active)) {
+        & > .status {
+            &::before,
+            &::after {
+                background-color: #ececec;
+            }
+        }
+    }
+
+    & > .status {
+        position: relative;
+
+        &::before {
+            position: absolute;
+
+            left: -20px;
+
+            content: '';
+
+            width: 12px;
+            height: 12px;
+
+            border-radius: 50%;
+
+            background-color: #4fde38;
+        }
+
+        &.active ~ ::before {
+            background-color: #ececec;
+        }
+    }
+
+    & > .status:not(:last-child) {
+        &::after {
+            position: absolute;
+
+            top: 12px;
+            left: -15px;
+
+            content: '';
+
+            width: 2px;
+            height: calc(100% + 8px);
+
+            background-color: #4fde38;
+        }
+
+        &.active {
+            &::after,
+            & ~ ::after {
+                background-color: #ececec;
+            }
+        }
+    }
+}

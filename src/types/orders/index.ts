@@ -13,7 +13,11 @@ export type Order = {
 
 export type OrderOffer = {
     id: number;
-    offer: Offer;
+    orderId: number;
+    offerId: number;
     count: number;
+    status: number;
+    offer: Offer;
     order: Order;
+    statusText: string;
 };
