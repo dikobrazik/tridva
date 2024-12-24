@@ -5,7 +5,6 @@ import {Header} from '@/components/Header';
 import {Select} from '@/components/Select';
 import {Text} from '@/components/Text';
 import {Block} from '@/components/layout/Block';
-import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {basketSelectors} from '@/lib/features/basket';
@@ -59,7 +58,7 @@ export default function CheckoutPage() {
 
     return (
         <Column as="form" onSubmit={onCheckoutClick} height="100%" justifyContent="space-between">
-            <Column height="100%" overflowY="auto" gap="2" paddingBottom={40}>
+            <Column height="100%" overflowY="auto" gap="2" paddingBottom={80}>
                 <Header withBackArrow>Оформление заказа</Header>
 
                 <Block>
@@ -141,8 +140,6 @@ export default function CheckoutPage() {
                 </Block>
 
                 <Summary />
-
-                <Box minHeight="40px" />
             </Column>
 
             <Footer fixed>
