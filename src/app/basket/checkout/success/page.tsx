@@ -1,10 +1,10 @@
 import {Column} from '@/components/layout/Column';
 import {Text} from '@/components/Text';
 
-import css from './Success.module.scss';
 import {Button} from '@/components/Button';
 import {Header} from '@/components/Header';
 import Link from 'next/link';
+import {Footer} from '@/components/Footer';
 
 export default function SuccessOrder() {
     return (
@@ -23,18 +23,20 @@ export default function SuccessOrder() {
                 </Column>
             </Column>
 
-            <Column gap={2} className={css.footer} paddingX={4} paddingY={2}>
-                <Link href="/">
-                    <Button width="full" variant="action">
-                        Вернуться к покупкам
-                    </Button>
-                </Link>
-                <Link href="/profile/orders">
-                    <Button width="full" variant="outline">
-                        Перейти в личный кабинет
-                    </Button>
-                </Link>
-            </Column>
+            <Footer>
+                <Column gap={2}>
+                    <Link href="/">
+                        <Button width="full" variant="action">
+                            Вернуться к покупкам
+                        </Button>
+                    </Link>
+                    <Link href="/profile/orders">
+                        <Button width="full" variant="outline">
+                            Перейти в личный кабинет
+                        </Button>
+                    </Link>
+                </Column>
+            </Footer>
         </Column>
     );
 }

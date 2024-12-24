@@ -20,6 +20,7 @@ import {FormEventHandler, useEffect} from 'react';
 import {Summary} from '../component/Summary';
 import css from './Page.module.scss';
 import {RecipientForm} from './components/recipient';
+import {Footer} from '@/components/Footer';
 
 export default function CheckoutPage() {
     const dispatch = useAppDispatch();
@@ -58,7 +59,7 @@ export default function CheckoutPage() {
 
     return (
         <Column as="form" onSubmit={onCheckoutClick} height="100%" justifyContent="space-between">
-            <Column height="100%" overflowY="auto" gap="2">
+            <Column height="100%" overflowY="auto" gap="2" paddingBottom={40}>
                 <Header withBackArrow>Оформление заказа</Header>
 
                 <Block>
@@ -144,11 +145,11 @@ export default function CheckoutPage() {
                 <Box minHeight="40px" />
             </Column>
 
-            <Row background="#fff" padding="8px 16px">
+            <Footer fixed>
                 <Button width="full" type="submit">
                     Перейти к оплате ({selectedBasketItemsCost} ₽)
                 </Button>
-            </Row>
+            </Footer>
         </Column>
     );
 }

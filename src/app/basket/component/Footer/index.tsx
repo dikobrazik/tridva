@@ -16,6 +16,7 @@ import Link from 'next/link';
 import {useRouter} from 'next/navigation';
 import {AuthorizationModal} from '../../../authorization/authorizationModal';
 import css from './Footer.module.scss';
+import {Footer as CommonFooter} from '@/components/Footer';
 
 export const Footer = () => {
     const router = useRouter();
@@ -41,36 +42,38 @@ export const Footer = () => {
     }
 
     return (
-        <Row className={css.checkoutButtonContainer} gap="6" padding="8px 16px 8px 16px" background="#fff">
-            <Box display="flex" flex="1">
-                <Column justifyContent="center" gap="1" width="70px">
-                    <Text size={14} weight={600} whiteSpace="nowrap">
-                        {formattedSelectedItemsCost}&nbsp;₽
-                    </Text>
-                    <Text size={10} weight={400} color="#303234A3">
-                        {selectedBasketItems.length}&nbsp;
-                        {pluralize(selectedBasketItems.length, ['товар', 'товара', 'товаров'])}
-                    </Text>
-                </Column>
-            </Box>
+        <CommonFooter fixed>
+            <Row gap="6" flex="1">
+                <Box display="flex" flex="1">
+                    <Column justifyContent="center" gap="1" width="70px">
+                        <Text size={14} weight={600} whiteSpace="nowrap">
+                            {formattedSelectedItemsCost}&nbsp;₽
+                        </Text>
+                        <Text size={10} weight={400} color="#303234A3">
+                            {selectedBasketItems.length}&nbsp;
+                            {pluralize(selectedBasketItems.length, ['товар', 'товара', 'товаров'])}
+                        </Text>
+                    </Column>
+                </Box>
 
-            <Box flex="2">
-                {!isUserAnonymous ? (
-                    <Link className={css.checkoutLink} href="/basket/checkout" onClick={onCheckoutClick}>
-                        <Button width="full">Оформить</Button>
-                    </Link>
-                ) : (
-                    <AuthorizationModal
-                        title="Для оформления заказа войдите или зарегистрируйтесь"
-                        onAuthorized={onAuthorized}
-                        Toggler={({onClick}: {onClick: () => void}) => (
-                            <Button width="full" onClick={onClick}>
-                                Оформить
-                            </Button>
-                        )}
-                    />
-                )}
-            </Box>
-        </Row>
+                <Box flex="2">
+                    {!isUserAnonymous ? (
+                        <Link className={css.checkoutLink} href="/basket/checkout" onClick={onCheckoutClick}>
+                            <Button width="full">Оформить</Button>
+                        </Link>
+                    ) : (
+                        <AuthorizationModal
+                            title="Для оформления заказа войдите или зарегистрируйтесь"
+                            onAuthorized={onAuthorized}
+                            Toggler={({onClick}: {onClick: () => void}) => (
+                                <Button width="full" onClick={onClick}>
+                                    Оформить
+                                </Button>
+                            )}
+                        />
+                    )}
+                </Box>
+            </Row>
+        </CommonFooter>
     );
 };
