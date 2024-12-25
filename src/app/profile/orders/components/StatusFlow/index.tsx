@@ -1,7 +1,7 @@
 import {Column} from '@/components/layout/Column';
 import {Text} from '@/components/Text';
 import css from './StatusFlow.module.scss';
-import {STATUS_MAP} from '@/shared/constants/status';
+import {ORDER_STATUS_MAP} from '@/shared/constants/order-status';
 import cn from 'classnames';
 import {useMemo} from 'react';
 
@@ -16,23 +16,23 @@ export const StatusFlow = ({address, statusText}: Props) => {
     const STATUSES = useMemo(
         () =>
             [
-                // {name: 'В сборке', description: 'Собираем у упаковываем заказ', status: STATUS_MAP.PAID},
+                {name: 'В сборке', description: 'Собираем у упаковываем заказ', status: ORDER_STATUS_MAP.PAID},
                 {
                     name: 'Передается в доставку',
                     description: 'Товары собраны и передаются в доставку',
-                    status: STATUS_MAP.PAID,
+                    status: ORDER_STATUS_MAP.TO_DELIVERY,
                 },
                 {
                     name: 'В пути',
                     description: 'Транспортировка товара до пункта выдачи',
-                    status: STATUS_MAP.IN_DELIVERY,
+                    status: ORDER_STATUS_MAP.IN_DELIVERY,
                 },
                 {
                     name: 'Ожидает в пункте выдачи',
                     description: `Адрес ПВЗ: ${address}.\nЕжедневно 10:00 - 21:00\nСрок хранения 5 дней`,
-                    status: STATUS_MAP.DELIVERED,
+                    status: ORDER_STATUS_MAP.DELIVERED,
                 },
-                {name: 'Получен', description: undefined, status: STATUS_MAP.RECEIVED},
+                {name: 'Получен', description: undefined, status: ORDER_STATUS_MAP.RECEIVED},
             ] as const,
         [address],
     );

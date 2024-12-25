@@ -24,7 +24,7 @@ export default function SuccessOrder() {
             </Column>
 
             <Footer>
-                <Column gap={2}>
+                <Column gap={2} width="100%">
                     <Link href="/">
                         <Button width="full" variant="action">
                             Вернуться к покупкам

@@ -4,13 +4,11 @@ import {cancelOrder} from '@/api';
 import {Confirm} from '@/components/Confirm';
 import {Box} from '@/components/layout/Box';
 import {Text} from '@/components/Text';
-import {Offer} from '@/types/offers';
 import {Order} from '@/types/orders';
 import {useRouter} from 'next/navigation';
 
 type Props = {
     orderId: Order['id'];
-    offerId: Offer['id'];
 };
 
 export const CancelOrderButton = (props: Props) => {

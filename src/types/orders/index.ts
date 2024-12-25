@@ -1,23 +1,18 @@
+import {ORDER_STATUS_MAP} from '@/shared/constants/order-status';
 import {PickupPoint} from '../geo';
 import {Offer} from '../offers';
 
 export type Order = {
     id: number;
-    userId: number;
-    pickupPoint: PickupPoint;
-    pickupPointId: number;
-    status: number;
     createdAt: string;
     updatedAt: string;
+    pickupPoint: PickupPoint;
+    items: OrderItem[];
 };
 
-export type OrderOffer = {
-    id: number;
-    orderId: number;
-    offerId: number;
-    count: number;
+export type OrderItem = {
+    offer: Pick<Offer, 'id' | 'title' | 'discount' | 'price' | 'photos'>;
     status: number;
-    offer: Offer;
-    order: Order;
-    statusText: string;
+    statusText: Values<typeof ORDER_STATUS_MAP>;
+    count: number;
 };

@@ -6,31 +6,33 @@ import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
 import {useToggler} from '@/hooks/useToggler';
 import {StatusFlow} from '../StatusFlow';
-import {STATUS_MAP} from '@/shared/constants/status';
+import {ORDER_STATUS_MAP} from '@/shared/constants/order-status';
 import {Drawer} from '@/components/Drawer';
-import {OrderOffer} from '@/types/orders';
+import {OrderItem} from '@/types/orders';
 
 type Props = {
     address: string;
-    statusText: OrderOffer['statusText'];
+    statusText: OrderItem['statusText'];
 };
 
 const ORDER_STATUS_DESCRIPTION = {
-    [STATUS_MAP.CREATED]: 'Заказ ожидает оплаты',
-    [STATUS_MAP.PAYMENT_ERROR]: 'Заказ ожидает оплаты',
-    [STATUS_MAP.PAID]: 'Передается в доставку',
-    [STATUS_MAP.IN_DELIVERY]: 'В пути',
-    [STATUS_MAP.DELIVERED]: 'Ожидает в пункте выдачи',
-    [STATUS_MAP.RECEIVED]: 'Получен',
+    [ORDER_STATUS_MAP.CREATED]: 'Заказ ожидает оплаты',
+    [ORDER_STATUS_MAP.PAYMENT_ERROR]: 'Заказ ожидает оплаты',
+    [ORDER_STATUS_MAP.PAID]: 'В сборке',
+    [ORDER_STATUS_MAP.TO_DELIVERY]: 'Передается в доставку',
+    [ORDER_STATUS_MAP.IN_DELIVERY]: 'В пути',
+    [ORDER_STATUS_MAP.DELIVERED]: 'Ожидает в пункте выдачи',
+    [ORDER_STATUS_MAP.RECEIVED]: 'Получен',
 };
 
 const ORDER_STATUS_COLOR = {
-    [STATUS_MAP.CREATED]: '#F4420C',
-    [STATUS_MAP.PAYMENT_ERROR]: '#F4420C',
-    [STATUS_MAP.PAID]: '#4FDE38',
-    [STATUS_MAP.IN_DELIVERY]: '#4FDE38',
-    [STATUS_MAP.DELIVERED]: '#4FDE38',
-    [STATUS_MAP.RECEIVED]: '#4FDE38',
+    [ORDER_STATUS_MAP.CREATED]: '#F4420C',
+    [ORDER_STATUS_MAP.PAYMENT_ERROR]: '#F4420C',
+    [ORDER_STATUS_MAP.PAID]: '#4FDE38',
+    [ORDER_STATUS_MAP.TO_DELIVERY]: '#4FDE38',
+    [ORDER_STATUS_MAP.IN_DELIVERY]: '#4FDE38',
+    [ORDER_STATUS_MAP.DELIVERED]: '#4FDE38',
+    [ORDER_STATUS_MAP.RECEIVED]: '#4FDE38',
 };
 
 export const Status = (props: Props) => {
