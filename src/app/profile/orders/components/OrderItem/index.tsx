@@ -29,7 +29,7 @@ export const OrderItem = (order: Props) => {
                 </Text>
             </Column>
 
-            {order.items.map(({offer, statusText}) => (
+            {order.items.map(({offer, status}) => (
                 <>
                     <Link href={`/offers/${offer.id}`}>
                         <Row gap={3}>
@@ -65,7 +65,7 @@ export const OrderItem = (order: Props) => {
                             <Text size={12} weight={500}>
                                 Статус:
                             </Text>
-                            <Status statusText={statusText} address={address} />
+                            <Status status={status} address={address} />
                         </Column>
 
                         <Column gap={1}>

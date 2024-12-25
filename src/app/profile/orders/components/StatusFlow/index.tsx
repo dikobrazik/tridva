@@ -4,15 +4,17 @@ import css from './StatusFlow.module.scss';
 import {ORDER_STATUS_MAP} from '@/shared/constants/order-status';
 import cn from 'classnames';
 import {useMemo} from 'react';
+import {OrderItem} from '@/types/orders';
+import {PickupPoint} from '@/types/geo';
 
 type Props = {
-    address: string;
-    statusText: string;
+    address: PickupPoint['address'];
+    status: OrderItem['status'];
 
     onClose: () => void;
 };
 
-export const StatusFlow = ({address, statusText}: Props) => {
+export const StatusFlow = ({address, status: itemStatus}: Props) => {
     const STATUSES = useMemo(
         () =>
             [
@@ -45,7 +47,7 @@ export const StatusFlow = ({address, statusText}: Props) => {
 
             <Column className={css.statusFlowContainer} gap={5}>
                 {STATUSES.map(({name, description, status}, index) => (
-                    <Column key={index} className={cn(css.status, {[css.active]: statusText === status})} gap={1}>
+                    <Column key={index} className={cn(css.status, {[css.active]: itemStatus === status})} gap={1}>
                         <Text size={10} weight={500}>
                             {name}
                         </Text>

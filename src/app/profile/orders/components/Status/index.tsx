@@ -12,7 +12,7 @@ import {OrderItem} from '@/types/orders';
 
 type Props = {
     address: string;
-    statusText: OrderItem['statusText'];
+    status: OrderItem['status'];
 };
 
 const ORDER_STATUS_DESCRIPTION = {
@@ -23,7 +23,8 @@ const ORDER_STATUS_DESCRIPTION = {
     [ORDER_STATUS_MAP.IN_DELIVERY]: 'В пути',
     [ORDER_STATUS_MAP.DELIVERED]: 'Ожидает в пункте выдачи',
     [ORDER_STATUS_MAP.RECEIVED]: 'Получен',
-};
+    [ORDER_STATUS_MAP.CANCELED]: 'Отменен',
+} as const;
 
 const ORDER_STATUS_COLOR = {
     [ORDER_STATUS_MAP.CREATED]: '#F4420C',
@@ -33,23 +34,24 @@ const ORDER_STATUS_COLOR = {
     [ORDER_STATUS_MAP.IN_DELIVERY]: '#4FDE38',
     [ORDER_STATUS_MAP.DELIVERED]: '#4FDE38',
     [ORDER_STATUS_MAP.RECEIVED]: '#4FDE38',
-};
+    [ORDER_STATUS_MAP.CANCELED]: '#4FDE38',
+} as const;
 
 export const Status = (props: Props) => {
     const {isActive, toggle, toggleOff} = useToggler();
 
     return (
         <>
-            <Row className={css.status} backgroundColor={ORDER_STATUS_COLOR[props.statusText]} gap={1} onClick={toggle}>
+            <Row className={css.status} backgroundColor={ORDER_STATUS_COLOR[props.status]} gap={1} onClick={toggle}>
                 <Text size={14} weight={500} color="#FFFFFF">
-                    {ORDER_STATUS_DESCRIPTION[props.statusText]}
+                    {ORDER_STATUS_DESCRIPTION[props.status]}
                 </Text>
 
                 <Icon name="informationCircleWhite" />
             </Row>
 
             <Drawer isOpen={isActive} onClose={toggle}>
-                <StatusFlow statusText={props.statusText} address={props.address} onClose={toggleOff} />
+                <StatusFlow status={props.status} address={props.address} onClose={toggleOff} />
             </Drawer>
         </>
     );

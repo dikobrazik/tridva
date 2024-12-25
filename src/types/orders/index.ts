@@ -12,7 +12,6 @@ export type Order = {
 
 export type OrderItem = {
     offer: Pick<Offer, 'id' | 'title' | 'discount' | 'price' | 'photos'>;
-    status: number;
-    statusText: Values<typeof ORDER_STATUS_MAP>;
+    status: Values<typeof ORDER_STATUS_MAP>;
     count: number;
 };

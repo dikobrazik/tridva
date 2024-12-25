@@ -7,4 +7,4 @@ export const ORDER_STATUS_MAP = {
     DELIVERED: 'DELIVERED',
     RECEIVED: 'RECEIVED',
     CANCELED: 'CANCELED',
-};
+} as const;
