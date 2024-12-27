@@ -19,6 +19,7 @@ export const OfferCard = memo(
         const fallbackImageSrc = typeof imageSrc === 'string' ? imageSrc.replace('280.jpg', '140.jpg') : undefined;
 
         const finalPrice = formatPrice(price, discount);
+        const isWidePrice = finalPrice.length > 5;
 
         return (
             <Link href={`/offers/${id}`}>
@@ -34,30 +35,26 @@ export const OfferCard = memo(
                     />
 
                     <Column gap={2} paddingX={1}>
-                        {discount ? (
-                            <Row gap={2} alignItems="center">
-                                <Text color="#F40C43" size={finalPrice.length > 5 ? 14 : 16} weight={600}>
-                                    {finalPrice} ₽
-                                </Text>
+                        <Row gap={2} alignItems="center">
+                            <Text color="#F40C43" size={isWidePrice ? 14 : 16} weight={600}>
+                                {finalPrice} ₽
+                            </Text>
+                            {Boolean(discount) && (
                                 <Row gap={1}>
                                     <Text
                                         color="#303234A3"
                                         decoration="line-through"
-                                        size={finalPrice.length > 5 ? 10 : 12}
+                                        size={isWidePrice ? 10 : 12}
                                         weight={400}
                                     >
                                         {Math.ceil(Number(price))} ₽
                                     </Text>
-                                    <Text color="#F40C43" size={finalPrice.length > 5 ? 10 : 12} weight={400}>
+                                    <Text color="#F40C43" size={isWidePrice ? 10 : 12} weight={400}>
                                         -{discount}%
                                     </Text>
                                 </Row>
-                            </Row>
-                        ) : (
-                            <Text color="#F40C43" size={16} weight={600}>
-                                {finalPrice} ₽
-                            </Text>
-                        )}
+                            )}
+                        </Row>
 
                         <Column gap={1}>
                             <Text className={css.title}>{title}</Text>

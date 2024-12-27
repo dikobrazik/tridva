@@ -11,6 +11,7 @@ export type Order = {
 };
 
 export type OrderItem = {
+    isGroupItem: boolean;
     offer: Pick<Offer, 'id' | 'title' | 'discount' | 'price' | 'photos'>;
     status: Values<typeof ORDER_STATUS_MAP>;
     count: number;
