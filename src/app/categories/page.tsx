@@ -7,6 +7,7 @@ import {loadCategories} from '@/api';
 import Link from 'next/link';
 import Image from 'next/image';
 import {makeServerUrl} from '@/api/fetch';
+import {appConfig} from '@/shared/utils/config';
 
 function CategoryItem({id, name, href}: {id: number; name: string; href: string}) {
     return (
@@ -17,7 +18,7 @@ function CategoryItem({id, name, href}: {id: number; name: string; href: string}
                         width={24}
                         height={24}
                         alt={`${name} category icon`}
-                        src={makeServerUrl(`/categories/${id}/icon`)}
+                        src={appConfig.isDev ? makeServerUrl(`/categories/${id}/icon`) : `/api/categories/${id}/icon`}
                         unoptimized
                     />
                     <Row width="100%" paddingX={3}>
