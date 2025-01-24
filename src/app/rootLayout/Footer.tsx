@@ -1,23 +1,13 @@
 import {Row} from '@/components/layout/Row';
 import {FooterButton} from './FooterButton';
-import css from './Footer.module.scss';
-import {Column} from '@/components/layout/Column';
-import classNames from 'classnames';
 import {getBasketItemsCount} from '@/api';
-
-const pageWithLocalFooterRe = /([/]basket[/]checkout[/]success)|([/]basket)|([/]offers[/]\d)/;
+import {FooterContainer} from './FooterContainer';
 
 export const Footer = async () => {
     const basketItemsCount = await getBasketItemsCount().catch(() => 0);
 
-    const isPageWithLocalFooter = pageWithLocalFooterRe.test('');
-
     return (
-        <Column
-            id="footer-container"
-            className={classNames(css.footer, {[css.withoutShadow]: isPageWithLocalFooter})}
-            padding="8px 16px"
-        >
+        <FooterContainer>
             <Row justifyContent="space-between">
                 <FooterButton icon="home" activeIcon="homeActive" title="Главная" href="/" strictActiveMatch />
                 <FooterButton icon="menu" activeIcon="menuActive" title="Категории" href="/categories" />
@@ -30,6 +20,6 @@ export const Footer = async () => {
                 />
                 <FooterButton icon="user" activeIcon="userActive" title="Профиль" href="/profile" />
             </Row>
-        </Column>
+        </FooterContainer>
     );
 };
