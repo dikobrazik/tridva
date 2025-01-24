@@ -5,13 +5,21 @@ import {Row} from '@/components/layout/Row';
 import css from './Page.module.scss';
 import {loadCategories} from '@/api';
 import Link from 'next/link';
+import Image from 'next/image';
+import {makeServerUrl} from '@/api/fetch';
 
-function CategoryItem({name, href}: {name: string; href: string}) {
+function CategoryItem({id, name, href}: {id: number; name: string; href: string}) {
     return (
         <Link href={href}>
             <Column className={css.categoryItem} paddingY={4} paddingX={4}>
                 <Row alignItems="center" justifyContent="space-between">
-                    <Icon name="hanger" size="m" />
+                    <Image
+                        width={24}
+                        height={24}
+                        alt={`${name} category icon`}
+                        src={makeServerUrl(`/categories/${id}/icon`)}
+                        unoptimized
+                    />
                     <Row width="100%" paddingX={3}>
                         <Text size={14}>{name}</Text>
                     </Row>
@@ -30,7 +38,7 @@ export default async function Categories() {
             {categories
                 .filter(category => category.offersCount > 0)
                 .map(({id, name}) => (
-                    <CategoryItem key={id} name={name} href={`/categories/${id}`} />
+                    <CategoryItem key={id} id={id} name={name} href={`/categories/${id}`} />
                 ))}
         </Column>
     );

@@ -53,7 +53,7 @@ export const appFetch = <Data>(path: string, init?: RequestInit): Promise<AppFet
         customInit.headers = {...customInit.headers, Authorization: `Bearer ${token?.value}`};
     }
 
-    return fetch(`${BASE_URL}/${path}`, customInit).then(r => handleResponse<Data>(r));
+    return fetch(makeServerUrl(path), customInit).then(r => handleResponse<Data>(r));
 };
 
 export const getSearchParams = (params?: Record<string, any>) => {
@@ -67,3 +67,5 @@ export const getSearchParams = (params?: Record<string, any>) => {
         ),
     ).toString();
 };
+
+export const makeServerUrl = (pathname: string) => [BASE_URL, pathname].join('/').replace(/(?<!:)\/\//g, '/');
