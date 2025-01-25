@@ -45,7 +45,7 @@ export const loadOffer = (payload: LoadOfferPayload): Promise<Offer> =>
         });
 
 export const loadOfferGroup = (payload: LoadOfferPayload): Promise<OfferBestGroupResponse | null> =>
-    appFetch<OfferBestGroupResponse | null>(`offers/${payload.id}/group`, {method: 'GET'})
+    appFetch<OfferBestGroupResponse | null>(`offers/${payload.id}/group`)
         .then(r => r.data)
         .catch(r => (r.status === 404 ? null : r.data));
 

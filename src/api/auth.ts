@@ -5,7 +5,7 @@ import {appFetch} from './fetch';
 type GetCodePayload = {phone: string};
 export type CheckCodePayload = {phone: string; code: string};
 
-export type CheckTokenResponse = {isAnonymous: boolean; phone: string; profile: Profile};
+export type CheckTokenResponse = {isAnonymous: boolean; id: number; phone: string; profile: Profile};
 
 export const loadUser = async (): Promise<CheckTokenResponse> =>
     appFetch<CheckTokenResponse>('auth/user').then(response => response.data);

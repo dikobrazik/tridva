@@ -31,6 +31,7 @@ export const checkCodeAction = createAsyncThunk<Profile, CheckCodePayload, Thunk
 type UserState = {
     isAnonymous: boolean;
     isUserLoading: boolean;
+    id?: number;
     phone?: string;
     profile: Partial<Profile>;
 };
@@ -38,7 +39,6 @@ type UserState = {
 const initialState: UserState = {
     isUserLoading: true,
     isAnonymous: true,
-    phone: undefined,
     profile: {},
 };
 
@@ -49,6 +49,7 @@ export const userSlice = createSlice({
     selectors: {
         selectIsUserLoading: state => state.isUserLoading,
         selectIsAnonymous: state => state.isAnonymous,
+        selectUserId: state => state.id,
         selectPhone: state => (state.phone ? `+7${state.phone}` : undefined),
         selectProfile: state => state.profile,
     },
@@ -62,6 +63,7 @@ export const userSlice = createSlice({
                 state.isAnonymous = payload.isAnonymous;
                 state.profile = payload.profile;
                 state.phone = payload.phone;
+                state.id = payload.id;
             })
             .addCase(loadUserAction.rejected, state => {
                 state.isUserLoading = false;

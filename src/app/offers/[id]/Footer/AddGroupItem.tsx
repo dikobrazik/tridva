@@ -12,6 +12,7 @@ import {formatPrice} from '@/shared/utils/formatPrice';
 import {OfferBlock} from '@/components/OfferCard/OfferBlock';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 import {basketSelectors, createGroupAction} from '@/lib/features/basket';
+import {userSelectors} from '@/lib/features/user';
 
 const CreateGroupItemButton = ({onGroupCreated, offer}: {onGroupCreated: () => void; offer: Offer}) => {
     const dispatch = useAppDispatch();
@@ -77,6 +78,7 @@ const GroupItemCreatedButton = ({offer}: {offer: Offer}) => {
 };
 
 export const AddGroupItem = ({offer}: {offer: Offer}) => {
+    const userId = useAppSelector(userSelectors.selectUserId);
     const basketGroupItem = useAppSelector(state => basketSelectors.selectBasketGroupItemByOfferId(state, offer.id));
     const [isGroupCreated, setGroupCreated] = useState(false);
 
@@ -95,7 +97,7 @@ export const AddGroupItem = ({offer}: {offer: Offer}) => {
     const finalPrice = formatPrice(offer.price, offer.discount);
 
     const isBasketGroupItemExists = Boolean(basketGroupItem);
-    const isGroupOwner = basketGroupItem?.group?.owner;
+    const isGroupOwner = basketGroupItem?.group?.ownerId === userId;
 
     return (
         <>
