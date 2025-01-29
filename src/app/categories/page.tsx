@@ -31,6 +31,8 @@ function CategoryItem({id, name, href}: {id: number; name: string; href: string}
     );
 }
 
+// type CategoriesPageProps = PageParams<{parentId: number; level: number}>;
+
 export default async function Categories() {
     const categories = await loadCategories();
 

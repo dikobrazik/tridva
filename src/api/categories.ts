@@ -3,6 +3,7 @@ import {Category} from '@/types/category';
 import axios from 'axios';
 
 type LoadCategoriesPayload = {
+    parentId?: number;
     level?: number;
 };
 type LoadCategoriesByNamePayload = {
