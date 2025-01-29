@@ -2,3 +2,17 @@
     background-color: #fff;
     border-bottom: 1px solid #9ca3aa52;
 }
+
+.dot {
+    width: 4px;
+    height: 4px;
+
+    margin: 0 8px;
+
+    position: relative;
+    top: 5px;
+
+    border-radius: 50%;
+
+    background-color: #303234a3;
+}

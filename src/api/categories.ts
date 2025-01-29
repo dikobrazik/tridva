@@ -15,7 +15,7 @@ type LoadCategoryPayload = {
 };
 
 export const loadCategories = (payload: LoadCategoriesPayload = {level: 1}): Promise<Category[]> =>
-    axios<Category[]>('categories', {params: payload})
+    axios<Category[]>('categories', {params: {level: payload.level ?? 1, parentId: payload.parentId}})
         .then(response => response.data)
         .catch(e => {
             console.log(e);
