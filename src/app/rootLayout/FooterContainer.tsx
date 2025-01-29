@@ -3,19 +3,18 @@
 import {PropsWithChildren, useRef} from 'react';
 import css from './Footer.module.scss';
 import {Column} from '@/components/layout/Column';
-import {usePathname} from 'next/navigation';
 import {useScrollObserver} from '@/hooks/useScrollObserver';
 
 // const PAGES_WITH_HIDING_FOOTER_RE = /(\/)|(\/offers\/\d+)/;
 
 export const FooterContainer = (props: PropsWithChildren) => {
-    const pathname = usePathname();
-
     const columnRef = useRef<HTMLDivElement>(null);
 
     useScrollObserver({
         // isEnabled: PAGES_WITH_HIDING_FOOTER_RE.test(pathname),
-        isEnabled: pathname === '/',
+        // isEnabled: pathname === '/',
+        // пока что отключил, потому что pathname всегда равен странице, на которую зашли в первую очередь
+        isEnabled: false,
         onScrollDown: () => {
             if (!columnRef.current?.classList.contains(css.hide)) {
                 columnRef.current?.classList.add(css.hide);

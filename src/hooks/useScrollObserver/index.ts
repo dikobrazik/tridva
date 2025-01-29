@@ -8,10 +8,9 @@ type Props = {
 
 export const useScrollObserver = (props: Props) => {
     useEffect(() => {
-        let lastScroll = window.scrollY,
-            lastTimeoutId: NodeJS.Timeout;
-
         if (props.isEnabled) {
+            let lastScroll = window.scrollY,
+                lastTimeoutId: NodeJS.Timeout;
             document.addEventListener('scroll', () => {
                 clearTimeout(lastTimeoutId);
 

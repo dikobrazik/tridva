@@ -33,8 +33,7 @@ export const getBasketItems = (): Promise<BasketItem[]> =>
         .catch(() => []);
 
 export const getBasketItemsCount = (): Promise<number> =>
-    axios
-        .get(`basket/count`)
+    appFetch<number>(`basket/count`)
         .then(response => response.data)
         .catch(() => 0);
 
