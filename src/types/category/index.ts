@@ -3,4 +3,5 @@ export type Category = {
     name: string;
     level: number;
     offersCount: number;
+    childrenCount: number;
 };
