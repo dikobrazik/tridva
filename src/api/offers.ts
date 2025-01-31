@@ -18,15 +18,6 @@ type LoadOfferPayload = {
     id: number;
 };
 
-type OfferBestGroupResponse = {
-    id: number;
-    offer: Offer;
-    leftCapacity: number;
-    ownerId: number;
-    ownerName: string;
-    createdAt: Date;
-};
-
 export const loadOffers = (
     payload?: LoadOffersPayload,
 ): Promise<{offers: Offer[]; total: number; pagesCount: number}> =>
@@ -44,8 +35,8 @@ export const loadOffer = (payload: LoadOfferPayload): Promise<Offer> =>
             return r.data;
         });
 
-export const loadOfferGroup = (payload: LoadOfferPayload): Promise<OfferBestGroupResponse | null> =>
-    appFetch<OfferBestGroupResponse | null>(`offers/${payload.id}/group`)
+export const loadOfferGroup = (payload: LoadOfferPayload): Promise<Group | null> =>
+    appFetch<Group | null>(`offers/${payload.id}/group`)
         .then(r => r.data)
         .catch(r => (r.status === 404 ? null : r.data));
 

@@ -2,7 +2,7 @@ import css from './Groups.module.scss';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
-import {loadOfferGroups} from '@/api';
+import {loadOffer, loadOfferGroups} from '@/api';
 import {pluralize} from '@/shared/utils/pluralize';
 import {AboutGroups} from './About';
 import {GroupsList} from './GroupsList';
@@ -25,7 +25,7 @@ const NoGroups = () => {
 };
 
 export default async function Groups(props: Props) {
-    const groups = await loadOfferGroups({id: props.offerId});
+    const [groups, offer] = await Promise.all([loadOfferGroups({id: props.offerId}), loadOffer({id: props.offerId})]);
 
     const groupsCount = groups.length;
 
@@ -52,7 +52,7 @@ export default async function Groups(props: Props) {
                 )}
             </Column>
 
-            {groupsCount > 0 ? <GroupsList groups={groups} /> : <NoGroups />}
+            {groupsCount > 0 ? <GroupsList groups={groups} offer={offer} /> : <NoGroups />}
         </Column>
     );
 }

@@ -1,15 +1,17 @@
 'use client';
 
-import {loadOfferGroup} from '@/api';
 import {Button} from '@/components/Button';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {LeftTime} from '../Groups/LeftTime';
 import {JoinGroupDrawer} from '../Groups/JoinGroupDrawer';
+import {Group} from '@/types/group';
 
-export function BestGroup({group}: {group: Awaited<ReturnType<typeof loadOfferGroup>>}) {
+export function BestGroup({group}: {group: Group | null}) {
     if (group) {
+        const leftCapacity = group.capacity - group.participantsCount;
+
         return (
             <JoinGroupDrawer
                 offer={group.offer}
@@ -25,7 +27,7 @@ export function BestGroup({group}: {group: Awaited<ReturnType<typeof loadOfferGr
                                     Присоединиться к группе с {group.ownerName}
                                 </Text>
                                 <Text align="start" size={10} weight={400} lineHeight={12} color="#303234A3">
-                                    Нужен еще {group.leftCapacity} человек для покупки, до конца сбора:{' '}
+                                    Нужен еще {leftCapacity} человек для покупки, до конца сбора:{' '}
                                     <Text size={10} weight={600} lineHeight={12}>
                                         <LeftTime createdAt={group.createdAt} />
                                     </Text>
