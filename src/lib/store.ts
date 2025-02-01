@@ -5,41 +5,41 @@ import {basketReducer, basketSlice} from './features/basket';
 import {userReducer, userSlice} from './features/user';
 import {checkoutReducer, checkoutSlice} from './features/checkout';
 import {lastSelectedPickupPointIdStorage, selectedBasketItemsStorage} from '@/shared/utils/local-storage/storages';
+import {notificationsReducer, notificationsSlice} from './features/notifications';
+import {addIdMiddleware} from './features/notifications/middlewares';
 
 const reHydrateStore = () => {
-    if (typeof window !== 'undefined') {
-        const selectedBasketItemsIds = selectedBasketItemsStorage.get() ?? [];
-        const selectedPickupPointId = lastSelectedPickupPointIdStorage.get();
-
-        return {
-            offers: offersSlice.getInitialState(),
-            reviews: reviewsSlice.getInitialState(),
-            user: userSlice.getInitialState(),
-            checkout: {
-                ...checkoutSlice.getInitialState(),
-                selectedBasketItems: selectedBasketItemsIds,
-                selectedPickupPointId,
-            },
-            basket: {
-                ...basketSlice.getInitialState(),
-                selectedBasketItems: selectedBasketItemsIds.reduce(
-                    (map, id) => {
-                        map[id] = true;
-                        return map;
-                    },
-                    {} as Record<number, boolean>,
-                ),
-            },
-        };
-    }
-
-    return {
+    const state = {
+        notifications: notificationsSlice.getInitialState(),
         offers: offersSlice.getInitialState(),
         reviews: reviewsSlice.getInitialState(),
         user: userSlice.getInitialState(),
         checkout: checkoutSlice.getInitialState(),
         basket: basketSlice.getInitialState(),
     };
+
+    if (typeof window !== 'undefined') {
+        const selectedBasketItemsIds = selectedBasketItemsStorage.get() ?? [];
+        const selectedPickupPointId = lastSelectedPickupPointIdStorage.get();
+
+        state.checkout = {
+            ...checkoutSlice.getInitialState(),
+            selectedBasketItems: selectedBasketItemsIds,
+            selectedPickupPointId,
+        };
+        state.basket = {
+            ...basketSlice.getInitialState(),
+            selectedBasketItems: selectedBasketItemsIds.reduce(
+                (map, id) => {
+                    map[id] = true;
+                    return map;
+                },
+                {} as Record<number, boolean>,
+            ),
+        };
+    }
+
+    return state;
 };
 
 const listenerMiddleware = createListenerMiddleware();
@@ -57,17 +57,30 @@ listenerMiddleware.startListening({
     },
 });
 
+listenerMiddleware.startListening({
+    actionCreator: notificationsSlice.actions.__addNotification,
+    effect: async (action, listenerApi) => {
+        const notificationId = action.payload.id;
+
+        await listenerApi.delay(5000);
+
+        listenerApi.dispatch(notificationsSlice.actions.hideNotification({id: notificationId}));
+    },
+});
+
 export const makeStore = () => {
     return configureStore({
         preloadedState: reHydrateStore(),
         reducer: {
+            notifications: notificationsReducer,
             basket: basketReducer,
             offers: offersReducer,
             reviews: reviewsReducer,
             user: userReducer,
             checkout: checkoutReducer,
         },
-        middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(listenerMiddleware.middleware),
+        middleware: getDefaultMiddleware =>
+            getDefaultMiddleware().prepend(addIdMiddleware).prepend(listenerMiddleware.middleware),
     });
 };
 

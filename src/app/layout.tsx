@@ -13,6 +13,7 @@ import AuthTokenProvider from './authorization/AuthorizationProvider';
 import './globals.scss';
 import {Footer} from './rootLayout/Footer';
 import {Header} from './rootLayout/Header';
+import {NotificationsContainer} from './notifications';
 
 setDefaultOptions({locale: ru});
 
@@ -51,6 +52,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                             <Suspense>
                                 <Header />
                             </Suspense>
+                            <NotificationsContainer />
                             <Box id="content" className={css.content}>
                                 {children}
                             </Box>

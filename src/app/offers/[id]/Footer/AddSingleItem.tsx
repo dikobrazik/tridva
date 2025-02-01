@@ -10,11 +10,16 @@ import {formatPrice} from '@/shared/utils/formatPrice';
 import {Offer} from '@/types/offers';
 import Link from 'next/link';
 import css from './Footer.module.scss';
+import {notificationsActions} from '@/lib/features/notifications';
 
 export const CreateSingleItemButton = ({id, price}: Pick<Offer, 'id' | 'price'>) => {
     const dispatch = useAppDispatch();
     const onCreateSingleGroupClick = () => {
-        dispatch(putOfferToBasketAction({offerId: id}));
+        dispatch(putOfferToBasketAction({offerId: id}))
+            .unwrap()
+            .then(() =>
+                dispatch(notificationsActions.showNotification({icon: 'checkWhite', text: 'Товар добавлен в корзину'})),
+            );
     };
 
     const formattedPrice = formatPrice(price);

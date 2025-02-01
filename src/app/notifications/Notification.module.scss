@@ -1,0 +1,40 @@
+@import 'mixins/mixins.scss';
+
+.container {
+    position: fixed;
+    top: 70px;
+    z-index: 3;
+
+    @media (max-width: 460px) {
+        left: 0;
+        right: 0;
+    }
+
+    @media (min-width: 461px) {
+        width: 460px;
+        min-width: 360px;
+    }
+}
+
+.notification {
+    border-radius: 8px;
+    background-color: #2d2d2dcc;
+
+    &.hide {
+        animation: slide-left 0.5s ease-out forwards;
+    }
+}
+
+@include keyframes('slide-left') {
+    0% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
+    }
+
+    100% {
+        -webkit-transform: translateX(-100vw);
+        transform: translateX(-100vw);
+
+        display: none;
+    }
+}

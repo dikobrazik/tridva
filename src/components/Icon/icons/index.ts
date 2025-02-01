@@ -1,5 +1,6 @@
 export {default as bag} from './bag.svg';
 export {default as check} from './check.svg';
+export {default as checkWhite} from './check-white.svg';
 export {default as search} from './search.svg';
 export {default as message} from './message.svg';
 export {default as hanger} from './hanger.svg';
