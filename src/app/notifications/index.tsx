@@ -44,7 +44,7 @@ export const NotificationsContainer = () => {
             if (containerRef.current) {
                 const scrollY = window.scrollY;
 
-                const translate = Math.max(-scrollY, -62);
+                const translate = Math.max(-scrollY, -70);
 
                 containerRef.current.style.transform = `translateY(${translate}px)`;
             }
