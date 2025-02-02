@@ -4,25 +4,25 @@ import {PropsWithChildren, useRef} from 'react';
 import css from './Footer.module.scss';
 import {Column} from '@/components/layout/Column';
 import {useScrollObserver} from '@/hooks/useScrollObserver';
+import {usePathname} from 'next/navigation';
 
-// const PAGES_WITH_HIDING_FOOTER_RE = /(\/)|(\/offers\/\d+)/;
+const PAGES_WITH_HIDDEN_FOOTER_RE = /^[/]((categories([/]\d+)?)|basket|offers[/]search)?$/;
 
 export const FooterContainer = (props: PropsWithChildren) => {
     const columnRef = useRef<HTMLDivElement>(null);
+    const pathname = usePathname();
+
+    const shouldHideFooterOnScroll = PAGES_WITH_HIDDEN_FOOTER_RE.test(pathname);
 
     useScrollObserver({
-        // isEnabled: PAGES_WITH_HIDING_FOOTER_RE.test(pathname),
-        // isEnabled: pathname === '/',
-        // пока что отключил, потому что pathname всегда равен странице, на которую зашли в первую очередь
-        isEnabled: false,
         onScrollDown: () => {
-            if (!columnRef.current?.classList.contains(css.hide)) {
+            if (shouldHideFooterOnScroll && !columnRef.current?.classList.contains(css.hide)) {
                 columnRef.current?.classList.add(css.hide);
                 columnRef.current?.classList.remove(css.show);
             }
         },
         onScrollUp: () => {
-            if (!columnRef.current?.classList.contains(css.show)) {
+            if (shouldHideFooterOnScroll && !columnRef.current?.classList.contains(css.show)) {
                 columnRef.current?.classList.add(css.show);
                 columnRef.current?.classList.remove(css.hide);
             }

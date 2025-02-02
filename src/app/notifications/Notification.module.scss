@@ -5,6 +5,8 @@
     top: 70px;
     z-index: 3;
 
+    animation: slide-in-right 0.5s ease-out forwards;
+
     @media (max-width: 460px) {
         left: 0;
         right: 0;
@@ -22,6 +24,18 @@
 
     &.hide {
         animation: slide-left 0.5s ease-out forwards;
+    }
+}
+
+@include keyframes('slide-in-right') {
+    0% {
+        -webkit-transform: translateX(100vw);
+        transform: translateX(100vw);
+    }
+
+    100% {
+        -webkit-transform: translateX(0);
+        transform: translateX(0);
     }
 }
 

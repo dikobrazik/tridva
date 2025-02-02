@@ -20,6 +20,7 @@ import {
 import {formatPrice} from '@/shared/utils/formatPrice';
 import classNames from 'classnames';
 import {Confirm} from '@/components/Confirm';
+import {notificationsActions} from '@/lib/features/notifications';
 
 type Props = {
     id: number;
@@ -66,7 +67,16 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
     };
 
     const onRemoveClick = () => {
-        dispatch(removeBasketItemAction({id}));
+        dispatch(removeBasketItemAction({id}))
+            .unwrap()
+            .then(() =>
+                dispatch(
+                    notificationsActions.showNotification({
+                        icon: 'checkWhite',
+                        text: `Товар ${offer.title} удален из корзины`,
+                    }),
+                ),
+            );
     };
 
     const isGroupItem = capacity > 1;

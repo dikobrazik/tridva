@@ -25,7 +25,7 @@ export const Notification = ({icon, text}: NotificationProps) => {
     }, []);
 
     return (
-        <Row className={className} gap={2} paddingY={3} justifyContent="center">
+        <Row className={className} gap={2} paddingY={3} paddingX={5} justifyContent="center">
             {icon && <Icon name={icon} />}
 
             <Text color="#fff" size={14} weight={500}>

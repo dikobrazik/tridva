@@ -1,29 +1,31 @@
 import {useEffect} from 'react';
 
 type Props = {
-    isEnabled: boolean;
     onScrollDown: () => void;
     onScrollUp: () => void;
 };
 
-export const useScrollObserver = (props: Props) => {
+export const useScrollObserver = ({onScrollDown, onScrollUp}: Props) => {
     useEffect(() => {
-        if (props.isEnabled) {
-            let lastScroll = window.scrollY,
-                lastTimeoutId: NodeJS.Timeout;
-            document.addEventListener('scroll', () => {
-                clearTimeout(lastTimeoutId);
+        let lastScroll = window.scrollY,
+            lastTimeoutId: NodeJS.Timeout;
 
-                if (window.scrollY - lastScroll > 100) {
-                    props.onScrollDown();
-                } else if (window.scrollY - lastScroll < -100) {
-                    props.onScrollUp();
-                }
+        const listener = () => {
+            clearTimeout(lastTimeoutId);
 
-                lastTimeoutId = setTimeout(() => {
-                    lastScroll = window.scrollY;
-                }, 50);
-            });
-        }
-    }, []);
+            if (window.scrollY - lastScroll > 100) {
+                onScrollDown();
+            } else if (window.scrollY - lastScroll < -100) {
+                onScrollUp();
+            }
+
+            lastTimeoutId = setTimeout(() => {
+                lastScroll = window.scrollY;
+            }, 50);
+        };
+
+        document.addEventListener('scroll', listener);
+
+        return () => document.removeEventListener('scroll', listener);
+    }, [onScrollDown, onScrollUp]);
 };
