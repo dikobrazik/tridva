@@ -1,5 +1,6 @@
 'use client';
 
+import {cancelGroup} from '@/api';
 import {Button} from '@/components/Button';
 import {Confirm} from '@/components/Confirm';
 import {Icon} from '@/components/Icon';
@@ -35,7 +36,8 @@ export const GroupItem = ({group}: Props) => {
         );
     };
 
-    const onExitGroupClick = () => {
+    const onExitGroupClick = async () => {
+        await cancelGroup({groupId: group.id});
         dispatch(
             notificationsActions.showNotification({
                 text: 'Вы покинули группу',
