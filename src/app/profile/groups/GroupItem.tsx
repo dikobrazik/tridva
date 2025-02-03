@@ -13,6 +13,7 @@ import {notificationsActions} from '@/lib/features/notifications';
 import {useAppDispatch} from '@/lib/hooks';
 import {pluralize} from '@/shared/utils/pluralize';
 import {Group} from '@/types/group';
+import Link from 'next/link';
 
 type Props = {
     group: Group;
@@ -59,7 +60,9 @@ export const GroupItem = ({group}: Props) => {
                 </Column>
             </Column>
 
-            <OfferOrderBlock withBorder offer={group.offer} imageSize={68} />
+            <Link href={`/offers/${group.offer.id}`}>
+                <OfferOrderBlock isGroupItem withBorder offer={group.offer} imageSize={68} />
+            </Link>
 
             <Column gap={2}>
                 <Button onClick={() => onInviteClick(group.id)} size="m">
