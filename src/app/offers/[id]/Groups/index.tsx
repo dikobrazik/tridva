@@ -6,6 +6,7 @@ import {loadOffer, loadOfferGroups} from '@/api';
 import {pluralize} from '@/shared/utils/pluralize';
 import {AboutGroups} from './About';
 import {GroupsList} from './GroupsList';
+import {InvitedToGroupDrawer} from './InvitedToGroupDrawer';
 
 type Props = {
     offerId: number;
@@ -51,6 +52,8 @@ export default async function Groups(props: Props) {
                     </Text>
                 )}
             </Column>
+
+            <InvitedToGroupDrawer groups={groups} offer={offer} />
 
             {groupsCount > 0 ? <GroupsList groups={groups} offer={offer} /> : <NoGroups />}
         </Column>

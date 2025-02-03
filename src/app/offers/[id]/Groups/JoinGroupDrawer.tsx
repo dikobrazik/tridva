@@ -140,7 +140,7 @@ export const JoinGroupDrawer = ({renderTrigger, offer, ownerName, createdAt, gro
     const router = useRouter();
     const [isGroupJoined, setGroupJoined] = useState(false);
 
-    const {isActive, toggle, toggleOff} = useToggler();
+    const {isActive, toggleOn: openJoinGroupDrawer, toggleOff: closeJoinGroupDrawer} = useToggler();
 
     const onGroupJoined = () => {
         setGroupJoined(true);
@@ -153,16 +153,16 @@ export const JoinGroupDrawer = ({renderTrigger, offer, ownerName, createdAt, gro
     }, [isActive]);
 
     const onClose = () => {
-        toggleOff();
+        closeJoinGroupDrawer();
         router.refresh();
     };
 
     return (
         <>
             {renderTrigger ? (
-                renderTrigger({onClick: toggle})
+                renderTrigger({onClick: openJoinGroupDrawer})
             ) : (
-                <Button onClick={toggle} size="m">
+                <Button onClick={openJoinGroupDrawer} size="m">
                     <Text size={12}>Присоединиться</Text>
                 </Button>
             )}
