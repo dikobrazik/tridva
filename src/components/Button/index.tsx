@@ -13,6 +13,7 @@ type ButtonProps = {
     icon?: IconName;
     size?: 'xs' | 's' | 'm' | 'l';
     iconSize?: IconProps['size'];
+    iconLeft?: boolean;
     width?: 'auto' | 'full' | UnitProps<'button'>['width'];
 };
 
@@ -46,7 +47,18 @@ export const Button = (props: Props) => {
 };
 
 export const LinkButton = (props: ComponentProps<typeof Link> & ButtonProps) => {
-    const {variant = 'action', size = 'l', width, children, icon, iconSize, className, href, ...linkProps} = props;
+    const {
+        variant = 'action',
+        iconLeft,
+        size = 'l',
+        width,
+        children,
+        icon,
+        iconSize,
+        className,
+        href,
+        ...linkProps
+    } = props;
 
     const isFullWidth = width === 'full';
 
@@ -64,8 +76,9 @@ export const LinkButton = (props: ComponentProps<typeof Link> & ButtonProps) => 
             href={href}
             {...linkProps}
         >
+            {iconLeft && icon && <Icon className={css.icon} name={icon} size={iconSize} />}
             {children}
-            {icon && <Icon className={css.icon} name={icon} size={iconSize} />}
+            {!iconLeft && icon && <Icon className={css.icon} name={icon} size={iconSize} />}
         </Link>
     );
 };

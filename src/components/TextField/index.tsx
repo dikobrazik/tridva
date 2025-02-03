@@ -13,7 +13,7 @@ export type TextFieldProps = {
     onIconClick?: () => void;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange'>;
 
-export const TextField = (forwardRef<HTMLInputElement, TextFieldProps>((props: TextFieldProps, ref) => {
+export const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props: TextFieldProps, ref) => {
     const {icon, variant = 'default', size = 's', onChange = () => {}, onIconClick, className, ...inputProps} = props;
 
     return (
