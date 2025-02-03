@@ -13,10 +13,9 @@ type Props = PropsWithChildren<{
 }>;
 
 export const Modal = (props: Props) => {
-    const {children} = props;
-    const {classNames, onClose, onAnimationEnd} = useAnimatedPopover({
+    const {children, onClose} = props;
+    const {classNames, onAnimationEnd} = useAnimatedPopover({
         isOpen: props.isOpen,
-        onClose: props.onClose,
         closeAnimationClassName: css['fade-out'],
         openClassName: css.open,
         closedClassName: css.closed,

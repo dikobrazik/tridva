@@ -1,6 +1,7 @@
 'use client';
 
 import {Button} from '@/components/Button';
+import {Confirm} from '@/components/Confirm';
 import {Icon} from '@/components/Icon';
 import {LeftTime} from '@/components/LeftTime';
 import {OfferOrderBlock} from '@/components/OfferCard/OfferOrderBlock';
@@ -14,12 +15,14 @@ import {useAppDispatch} from '@/lib/hooks';
 import {pluralize} from '@/shared/utils/pluralize';
 import {Group} from '@/types/group';
 import Link from 'next/link';
+import {useRouter} from 'next/navigation';
 
 type Props = {
     group: Group;
 };
 
 export const GroupItem = ({group}: Props) => {
+    const router = useRouter();
     const dispatch = useAppDispatch();
     const {onInviteClick} = useCopyGroupInviteLink();
 
@@ -30,6 +33,15 @@ export const GroupItem = ({group}: Props) => {
                 text: 'Отправили чек на электронную почту',
             }),
         );
+    };
+
+    const onExitGroupClick = () => {
+        dispatch(
+            notificationsActions.showNotification({
+                text: 'Вы покинули группу',
+            }),
+        );
+        router.refresh();
     };
 
     const left = group.capacity - group.participantsCount;
@@ -73,9 +85,18 @@ export const GroupItem = ({group}: Props) => {
                     <Text color="#303234A3">Электронный чек</Text>
                 </Button>
 
-                <Button size="m" variant="action-white">
-                    <Text color="#F4420C">Выйти из группы и вернуть деньги</Text>
-                </Button>
+                <Confirm
+                    title="Вы уверены, что хотите покинуть группу?"
+                    description="После выхода из группы деньги вернутся к вам в течении 14 рабочих дней"
+                    acceptButtonText="Все равно покинуть группу"
+                    cancelButtonText="Остаться"
+                    onAcceptClick={onExitGroupClick}
+                    renderButton={({onClick}) => (
+                        <Button size="m" variant="action-white" onClick={onClick}>
+                            <Text color="#F4420C">Выйти из группы и вернуть деньги</Text>
+                        </Button>
+                    )}
+                ></Confirm>
             </Column>
         </Block>
     );

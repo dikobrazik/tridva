@@ -1,10 +1,10 @@
-import {MouseEventHandler, PropsWithChildren, useCallback, useEffect} from 'react';
-import cn from 'classnames';
-import css from './Drawer.module.scss';
-import {Icon} from '../Icon';
-import {usePageScrollable} from '@/hooks/usePageScrollable';
 import {useAnimatedPopover} from '@/hooks/useAnimatedPopover';
+import {usePageScrollable} from '@/hooks/usePageScrollable';
+import cn from 'classnames';
+import {MouseEventHandler, PropsWithChildren, useCallback, useEffect} from 'react';
+import {Icon} from '../Icon';
 import {Portal} from '../Portal';
+import css from './Drawer.module.scss';
 
 type Props = PropsWithChildren<{
     isOpen: boolean;
@@ -14,11 +14,10 @@ type Props = PropsWithChildren<{
 }>;
 
 export const Drawer = (props: Props) => {
-    const {isOpen, withoutBlackout, children} = props;
+    const {isOpen, onClose, withoutBlackout, children} = props;
 
-    const {classNames, onClose, onAnimationEnd} = useAnimatedPopover({
+    const {classNames, onAnimationEnd} = useAnimatedPopover({
         isOpen: props.isOpen,
-        onClose: props.onClose,
         closeAnimationClassName: css['slide-bottom'],
         openClassName: css.open,
         closedClassName: css.closed,
