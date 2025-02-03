@@ -50,6 +50,8 @@ export const NotificationsContainer = () => {
             }
         };
 
+        listener();
+
         document.addEventListener('scroll', listener);
 
         return () => {

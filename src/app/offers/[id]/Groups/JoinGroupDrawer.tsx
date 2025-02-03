@@ -15,7 +15,7 @@ import {Offer} from '@/types/offers';
 import {OfferBlock} from '@/components/OfferCard/OfferBlock';
 import {putGroupToBasketAction} from '@/lib/features/basket';
 import {useAppDispatch} from '@/lib/hooks';
-import {LeftTime} from './LeftTime';
+import {LeftTime} from '@/components/LeftTime';
 import {useRouter} from 'next/navigation';
 
 const GroupHost = ({ownerId, ownerName}: {ownerId: number; ownerName: string}) => {

@@ -10,7 +10,7 @@ import {pluralize} from '@/shared/utils/pluralize';
 import {Group, UserRelations} from '@/types/group';
 import {Offer} from '@/types/offers';
 import css from './Groups.module.scss';
-import {LeftTime} from './LeftTime';
+import {LeftTime} from '@/components/LeftTime';
 import {GroupButton} from './GroupButton';
 
 type Props = {
@@ -18,7 +18,7 @@ type Props = {
     offer: Offer;
 };
 
-const LeftCapacityText = ({capacity, participantsCount}: Pick<Group, 'capacity' | 'participantsCount'>) => {
+export const LeftCapacityText = ({capacity, participantsCount}: Pick<Group, 'capacity' | 'participantsCount'>) => {
     const left = capacity - participantsCount;
 
     if (left > 0) {

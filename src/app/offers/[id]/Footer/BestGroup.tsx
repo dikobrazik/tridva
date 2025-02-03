@@ -4,7 +4,7 @@ import {Button} from '@/components/Button';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
-import {LeftTime} from '../Groups/LeftTime';
+import {LeftTime} from '@/components/LeftTime';
 import {JoinGroupDrawer} from '../Groups/JoinGroupDrawer';
 import {Group} from '@/types/group';
 

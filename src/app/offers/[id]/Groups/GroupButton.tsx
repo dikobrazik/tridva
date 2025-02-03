@@ -6,23 +6,10 @@ import {Text} from '@/components/Text';
 import {Group, UserRelations} from '@/types/group';
 import {Offer} from '@/types/offers';
 import {JoinGroupDrawer} from './JoinGroupDrawer';
-import {useAppDispatch} from '@/lib/hooks';
-import {notificationsActions} from '@/lib/features/notifications';
+import {useCopyGroupInviteLink} from '@/hooks/useCopyGroupInviteLink';
 
 export const GroupButton = ({group, offer}: {offer: Offer; group: Group}) => {
-    const dispatch = useAppDispatch();
-
-    const onInviteClick = () => {
-        const currentOfferPage = new URL(window.location.href);
-
-        currentOfferPage.searchParams.append('groupId', group.id.toString());
-
-        navigator.clipboard.writeText(currentOfferPage.toJSON());
-
-        dispatch(
-            notificationsActions.showNotification({icon: 'checkWhite', text: 'Ссылка на приглашение скопирована!'}),
-        );
-    };
+    const {onInviteClick} = useCopyGroupInviteLink();
 
     switch (group.relation) {
         case UserRelations.NONE:
@@ -48,7 +35,7 @@ export const GroupButton = ({group, offer}: {offer: Offer; group: Group}) => {
             );
         default:
             return (
-                <Button onClick={onInviteClick} variant="green" size="m">
+                <Button onClick={() => onInviteClick(group.id)} variant="green" size="m">
                     <Text size={12}>Пригласить</Text>
                 </Button>
             );

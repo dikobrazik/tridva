@@ -110,6 +110,10 @@
         color: #303234;
 
         padding: 0px;
+
+        &:hover {
+            filter: brightness(1.2);
+        }
     }
 
     &.variant-outline {

@@ -32,6 +32,7 @@ export {default as informationCircle} from './information-circle.svg';
 export {default as informationCircleWhite} from './information-circle-white.svg';
 export {default as phone} from './phone.svg';
 export {default as calendar} from './calendar.svg';
+export {default as hourglass} from './hourglass.svg';
 
 export {default as home} from './home.svg';
 export {default as homeActive} from './home-active.svg';
