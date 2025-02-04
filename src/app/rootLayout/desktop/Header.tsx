@@ -58,22 +58,22 @@ export const Header = () => {
                     <Search />
 
                     <Row gap={3}>
-                        <Button variant="pseudo">
+                        <LinkButton href="/profile/favorites" variant="pseudo">
                             <Column gap="2" alignItems="center">
                                 <Icon size="m" name="heart" />
                                 <Text size={14} weight={400}>
                                     Избранное
                                 </Text>
                             </Column>
-                        </Button>
-                        <Button variant="pseudo">
+                        </LinkButton>
+                        <LinkButton href="/profile" variant="pseudo">
                             <Column gap="2" alignItems="center">
                                 <Icon size="m" name="user" />
                                 <Text size={14} weight={400}>
                                     Профиль
                                 </Text>
                             </Column>
-                        </Button>
+                        </LinkButton>
                         <LinkButton href="/basket" variant="pseudo">
                             <Column gap="2" alignItems="center">
                                 <Icon size="m" name="cart" />
