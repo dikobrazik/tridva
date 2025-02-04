@@ -3,7 +3,7 @@
 import {PropsWithChildren, useEffect} from 'react';
 import {Row} from '../layout/Row';
 import css from './Footer.module.scss';
-import footerCss from '@/app/rootLayout/Footer.module.scss';
+import footerCss from '@/app/rootLayout/mobile/Footer.module.scss';
 import cn from 'classnames';
 
 export const Footer = (props: PropsWithChildren<{fixed?: boolean}>) => {

@@ -20,7 +20,17 @@ type ButtonProps = {
 type Props = PropsWithChildren<ButtonProps> & UnitProps<'button'>;
 
 export const Button = (props: Props) => {
-    const {variant = 'action', size = 'l', width, children, icon, iconSize, className, ...buttonProps} = props;
+    const {
+        variant = 'action',
+        iconLeft,
+        size = 'l',
+        width,
+        children,
+        icon,
+        iconSize,
+        className,
+        ...buttonProps
+    } = props;
 
     const isFullWidth = width === 'full';
 
@@ -40,8 +50,9 @@ export const Button = (props: Props) => {
             width={width === 'full' ? undefined : width}
             {...buttonProps}
         >
+            {iconLeft && icon && <Icon className={css.icon} name={icon} size={iconSize} />}
             {children}
-            {icon && <Icon className={css.icon} name={icon} size={iconSize} />}
+            {!iconLeft && icon && <Icon className={css.icon} name={icon} size={iconSize} />}
         </Box>
     );
 };

@@ -5,11 +5,13 @@
 .content {
     max-width: 1320px;
 
+    width: 100%;
+
     margin-left: auto;
     margin-right: auto;
 }
 
-.categoriesButton.customSize {
+button.categoriesButton.customSize {
     color: #ffffff;
     background: linear-gradient(93.58deg, #f40c43 0.6%, #fd6e55 51%, #ffaf60 99.68%);
 
@@ -22,8 +24,11 @@
 
     right: 0;
     top: 0;
+    bottom: 0;
 }
 
 .textField.custom {
     padding: 9px 12px;
+
+    display: block;
 }

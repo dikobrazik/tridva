@@ -1,7 +1,5 @@
 import {Box} from '@/components/layout/Box';
-import {Column} from '@/components/layout/Column';
 import StoreProvider from '@/lib/StoreProvider';
-import classNames from 'classnames';
 import {setDefaultOptions} from 'date-fns';
 import {ru} from 'date-fns/locale/ru';
 import type {Metadata} from 'next';
@@ -9,12 +7,12 @@ import {Inter} from 'next/font/google';
 import React from 'react';
 import * as RootMobileLayout from './rootLayout/mobile';
 import * as RootDesktopLayout from './rootLayout/desktop';
-import css from './Layout.module.scss';
 import {Metrika} from './Metrika';
 import AuthTokenProvider from './authorization/AuthorizationProvider';
 import './globals.scss';
 import {NotificationsContainer} from './notifications';
-import {isMobileDevice} from './utils/isMobileDevice';
+import {Device} from '@/components/layout/Device';
+import {Container} from './rootLayout/container';
 
 setDefaultOptions({locale: ru});
 
@@ -32,29 +30,7 @@ export const metadata: Metadata = {
     },
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
-    const isMobile = isMobileDevice();
-
-    if (isMobile) {
-        return (
-            <html lang="en">
-                <body className={classNames(inter.className, css.body)}>
-                    <StoreProvider>
-                        <AuthTokenProvider>
-                            <Column className={css.container} width={460} minWidth={360} paddingBottom="59px">
-                                <RootMobileLayout.Header />
-                                <Box id="content" className={css.content}>
-                                    {children}
-                                </Box>
-                                <RootMobileLayout.Footer />
-                            </Column>
-                        </AuthTokenProvider>
-                    </StoreProvider>
-                </body>
-            </html>
-        );
-    }
-
+export default async function RootLayout({children}: {children: React.ReactNode}) {
     return (
         <html lang="en">
             <head>
@@ -68,16 +44,15 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
                 <meta name="apple-mobile-web-app-title" content="Tridva" />
                 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"></meta>
             </head>
-            <body className={classNames(inter.className, css.body)}>
+            <body className={inter.className}>
                 <StoreProvider>
                     <AuthTokenProvider>
-                        <Column className={css.container} width={460} minWidth={360} paddingBottom="59px">
-                            <RootDesktopLayout.Header />
+                        <Container>
+                            <Device mobile={<RootMobileLayout.Header />} desktop={<RootDesktopLayout.Header />} />
                             <NotificationsContainer />
-                            <Box id="content" className={css.content}>
-                                {children}
-                            </Box>
-                        </Column>
+                            <Box id="content">{children}</Box>
+                            <Device mobile={<RootMobileLayout.Footer />} />
+                        </Container>
                     </AuthTokenProvider>
                 </StoreProvider>
                 <Metrika />

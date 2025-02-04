@@ -1,5 +1,3 @@
-'use client';
-
 import {Column} from '@/components/layout/Column';
 import css from './Header.module.scss';
 import {Row} from '@/components/layout/Row';
@@ -8,7 +6,7 @@ import {Text} from '@/components/Text';
 import {Box} from '@/components/layout/Box';
 import Link from 'next/link';
 import {Logo} from '@/components/Logo';
-import {Button} from '@/components/Button';
+import {Button, LinkButton} from '@/components/Button';
 import cn from 'classnames';
 import {TextField} from '@/components/TextField';
 import {PopularCategories} from '@/app/Home/PopularCategories';
@@ -41,7 +39,7 @@ export const Header = () => {
                     </Row>
                 </Row>
 
-                <Row gap="8">
+                <Row gap="8" alignItems="flex-start">
                     <Link href="/">
                         <Logo isDesktop />
                     </Link>
@@ -70,30 +68,32 @@ export const Header = () => {
                         </Button>
                     </Box>
 
-                    <Button variant="pseudo">
-                        <Column gap="2" alignItems="center">
-                            <Icon size="m" name="heart" />
-                            <Text size={14} weight={400}>
-                                Избранное
-                            </Text>
-                        </Column>
-                    </Button>
-                    <Button variant="pseudo">
-                        <Column gap="2" alignItems="center">
-                            <Icon size="m" name="user" />
-                            <Text size={14} weight={400}>
-                                Профиль
-                            </Text>
-                        </Column>
-                    </Button>
-                    <Button variant="pseudo">
-                        <Column gap="2" alignItems="center">
-                            <Icon size="m" name="cart" />
-                            <Text size={14} weight={400}>
-                                Корзина
-                            </Text>
-                        </Column>
-                    </Button>
+                    <Row gap={3}>
+                        <Button variant="pseudo">
+                            <Column gap="2" alignItems="center">
+                                <Icon size="m" name="heart" />
+                                <Text size={14} weight={400}>
+                                    Избранное
+                                </Text>
+                            </Column>
+                        </Button>
+                        <Button variant="pseudo">
+                            <Column gap="2" alignItems="center">
+                                <Icon size="m" name="user" />
+                                <Text size={14} weight={400}>
+                                    Профиль
+                                </Text>
+                            </Column>
+                        </Button>
+                        <LinkButton href="/basket" variant="pseudo">
+                            <Column gap="2" alignItems="center">
+                                <Icon size="m" name="cart" />
+                                <Text size={14} weight={400}>
+                                    Корзина
+                                </Text>
+                            </Column>
+                        </LinkButton>
+                    </Row>
                 </Row>
 
                 <PopularCategories />
