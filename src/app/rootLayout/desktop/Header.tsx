@@ -51,8 +51,9 @@ export const Header = () => {
                         iconLeft
                         variant="custom"
                         size="s"
+                        padding="8px 16px"
                     >
-                        <Text size={16}>Категории</Text>
+                        <Text size={14}>Категории</Text>
                     </Button>
 
                     <Search />

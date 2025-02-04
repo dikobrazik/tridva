@@ -9,8 +9,6 @@ import {PopularCategories} from './Home/PopularCategories';
 import {Column} from '@/components/layout/Column';
 import {DEFAUL_PAGE_SIZE} from '@/shared/constants';
 import {PageParams} from '@/shared/types/next';
-import {Row} from '@/components/layout/Row';
-import {Button} from '@/components/Button';
 import Image from 'next/image';
 import bannerImage from './optimize.webp';
 import css from './Page.module.scss';
@@ -60,13 +58,7 @@ export default async function Home(params: Props) {
                     </Box>
 
                     <Block>
-                        <Row justifyContent="space-between">
-                            <Button variant="normal">О групповых покупках</Button>
-                            <Button variant="normal">Доставка</Button>
-                            <Button variant="normal">Помощь</Button>
-                            <Button variant="normal">Получи бесплатно</Button>
-                            <Button variant="normal">Выгодные товары дня</Button>
-                        </Row>
+                        <InformationRow />
                     </Block>
 
                     <Block>

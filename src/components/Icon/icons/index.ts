@@ -7,6 +7,7 @@ export {default as hanger} from './hanger.svg';
 export {default as chevronUp} from './chevron-up.svg';
 export {default as chevronDown} from './chevron-down.svg';
 export {default as chevronRight} from './chevron-right.svg';
+export {default as chevronRightRed} from './chevron-right-red.svg';
 export {default as chevronLeft} from './chevron-left.svg';
 export {default as chevronRightWhite} from './chevron-right-white.svg';
 export {default as switch} from './arrow-switch.svg';

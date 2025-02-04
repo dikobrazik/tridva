@@ -17,6 +17,9 @@ import fourth from './images/4.png';
 import fithe from './images/5.png';
 import {Icon} from '@/components/Icon';
 import {useToggler} from '@/hooks/useToggler';
+import {Device} from '@/components/layout/Device';
+import {Button} from '@/components/Button';
+import Link from 'next/link';
 
 const InformationList = [
     {
@@ -39,7 +42,7 @@ const InformationList = [
         withImage: true,
         bottomRow: (
             <Row justifyContent="space-between">
-                <a className={css.link} href="/">
+                <Link href="/">
                     <Row alignItems="center">
                         <Box className={css.iconBox}>
                             <Icon name="chevronLeft" size="s" />
@@ -48,17 +51,17 @@ const InformationList = [
                             О сервисе
                         </Text>
                     </Row>
-                </a>
-                <a className={css.link} href="/">
+                </Link>
+                <Link href="/">
                     <Row alignItems="center">
-                        <Text size={12} lineHeight={16} weight={600}>
+                        <Text size={12} lineHeight={16} weight={600} color="#F40C43">
                             Пригласи друзей
                         </Text>
                         <Box className={css.iconBox}>
-                            <Icon name="chevronRight" size="s" />
+                            <Icon name="chevronRightRed" size="s" />
                         </Box>
                     </Row>
-                </a>
+                </Link>
             </Row>
         ),
     },
@@ -84,6 +87,29 @@ const InformationList = [
     },
 ];
 
+const MobileButton = ({
+    onClick,
+    index,
+    information,
+}: {
+    index: number;
+    information: (typeof InformationList)[number];
+    onClick: () => void;
+}) => {
+    return (
+        <Column onClick={onClick} gap={2} className={css.information} key={index}>
+            <Box height={58} width={58} className={css.box} borderRadius={4}>
+                <Image className={css.image} src={information.image} width={58} height={58} alt="tridva store" />
+            </Box>
+            <Box as={information.titleTag} width="100%" display="flex" justifyContent="center">
+                <Text block size={8} weight={600} align="center">
+                    {information.title}
+                </Text>
+            </Box>
+        </Column>
+    );
+};
+
 export default function InformationRow() {
     const {isActive, toggle} = useToggler();
     const [selectedInformationIndex, setSelectedInformationIndex] = useState<number>();
@@ -92,32 +118,31 @@ export default function InformationRow() {
 
     return (
         <Row justifyContent="space-between" paddingY={2}>
-            {InformationList.map((information, index) => (
-                <Column
-                    onClick={() => {
-                        setSelectedInformationIndex(index);
-                        toggle();
-                    }}
-                    gap={2}
-                    className={css.information}
-                    key={index}
-                >
-                    <Box height={58} width={58} className={css.box} borderRadius={4}>
-                        <Image
-                            className={css.image}
-                            src={information.image}
-                            width={58}
-                            height={58}
-                            alt="tridva store"
-                        />
-                    </Box>
-                    <Box as={information.titleTag} width="100%" display="flex" justifyContent="center">
-                        <Text block size={8} weight={600} align="center">
-                            {information.title}
-                        </Text>
-                    </Box>
-                </Column>
-            ))}
+            <Device
+                mobile={InformationList.map((information, index) => (
+                    <MobileButton
+                        key={`mobile-button-${index}`}
+                        index={index}
+                        information={information}
+                        onClick={() => {
+                            setSelectedInformationIndex(index);
+                            toggle();
+                        }}
+                    />
+                ))}
+                desktop={InformationList.map((information, index) => (
+                    <Button
+                        key={`desktop-button-${index}`}
+                        variant="normal"
+                        onClick={() => {
+                            setSelectedInformationIndex(index);
+                            toggle();
+                        }}
+                    >
+                        {information.title}
+                    </Button>
+                ))}
+            />
 
             <Modal isOpen={isActive} onClose={toggle}>
                 <PopUp
