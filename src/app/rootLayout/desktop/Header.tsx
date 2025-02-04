@@ -8,8 +8,8 @@ import Link from 'next/link';
 import {Logo} from '@/components/Logo';
 import {Button, LinkButton} from '@/components/Button';
 import cn from 'classnames';
-import {TextField} from '@/components/TextField';
 import {PopularCategories} from '@/app/Home/PopularCategories';
+import {Search} from './Search';
 
 export const Header = () => {
     return (
@@ -55,18 +55,7 @@ export const Header = () => {
                         <Text size={16}>Категории</Text>
                     </Button>
 
-                    <Box position="relative" width="100%">
-                        <TextField
-                            className={cn(css.textField, css.custom)}
-                            variant="red"
-                            placeholder="Искать товары и категории"
-                        />
-                        <Button className={css.searchButton} size="m">
-                            <Text size={14} weight={400}>
-                                Найти
-                            </Text>
-                        </Button>
-                    </Box>
+                    <Search />
 
                     <Row gap={3}>
                         <Button variant="pseudo">

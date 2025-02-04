@@ -1,0 +1,54 @@
+.controls {
+    position: absolute;
+
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.textField.custom {
+    padding: 9px 12px;
+
+    display: block;
+}
+
+.searchContainer {
+    position: relative;
+
+    z-index: 2;
+}
+
+.layover {
+    position: absolute;
+
+    top: 46px;
+    left: 0;
+    right: 0;
+
+    z-index: 2;
+
+    max-height: 370px;
+
+    background-color: #fff;
+
+    border-radius: 16px;
+}
+
+.foundItem {
+    border-radius: 8px;
+
+    &:hover {
+        background-color: #f5f5f5;
+    }
+}
+
+.blackout {
+    position: fixed;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    background-color: #30323452;
+}

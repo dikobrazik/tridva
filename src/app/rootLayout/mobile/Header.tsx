@@ -1,23 +1,20 @@
 'use client';
-import {TextField} from '@/components/TextField';
-import {Column} from '@/components/layout/Column';
-import {useToggler} from '@/hooks/useToggler';
-import css from './Header.module.scss';
+
 import {Button} from '@/components/Button';
-import {FormEventHandler, useEffect, useState} from 'react';
-import {Logo} from '@/components/Logo';
-import Link from 'next/link';
-import {Row} from '@/components/layout/Row';
-import {usePathname, useRouter, useSearchParams} from 'next/navigation';
-import {Text} from '@/components/Text';
 import {Icon} from '@/components/Icon';
-import {useDebounce} from '@/hooks/useDebounce';
-import {loadCategoriesByName} from '@/api';
-import {Category} from '@/types/category';
 import {Loader} from '@/components/Loader';
+import {Logo} from '@/components/Logo';
+import {Text} from '@/components/Text';
+import {TextField} from '@/components/TextField';
 import {Box} from '@/components/layout/Box';
+import {Column} from '@/components/layout/Column';
+import {Row} from '@/components/layout/Row';
+import Link from 'next/link';
+import {usePathname} from 'next/navigation';
+import {useEffect} from 'react';
 import {createPortal} from 'react-dom';
-import {usePageScrollable} from '@/hooks/usePageScrollable';
+import {useSearch, SEARCH_PARAM_NAME} from '../hooks/useSearch';
+import css from './Header.module.scss';
 
 const pagesWithoutHeader = [
     /[/]offers[/]\d+[/]reviews/,
@@ -30,64 +27,21 @@ const pagesWithoutHeader = [
     /[/]basket[/]checkout[/]pickup-points/,
 ];
 
-const SEARCH_PARAM_NAME = 'search';
-
 export const Header = () => {
     const pathname = usePathname();
-    const searchParams = useSearchParams();
-    const router = useRouter();
-    const [foundCategories, setFoundCategories] = useState<Category[]>([]);
-    const [search, setSearch] = useState(searchParams.get(SEARCH_PARAM_NAME) ?? '');
-    const [isLoading, setIsLoading] = useState(false);
-    const {isActive, toggleOn, toggleOff} = useToggler();
 
-    const {turnOnScroll, turnOffScroll} = usePageScrollable();
-
-    const searchDebounced = useDebounce((value: string) => {
-        setFoundCategories([]);
-        if (value) {
-            setIsLoading(true);
-            loadCategoriesByName({name: value})
-                .then(categories => setFoundCategories(categories))
-                .finally(() => setIsLoading(false));
-        }
-    }, 1000);
-
-    const resetSearchState = (clearInput?: boolean) => () => {
-        if (clearInput) {
-            setSearch('');
-        }
-        toggleOff();
-        turnOnScroll();
-        setFoundCategories([]);
-    };
-
-    const onIconClick = () => {
-        if (search) {
-            setSearch('');
-        }
-    };
-
-    const onInputChange = (value: string) => {
-        setSearch(value);
-        searchDebounced(value);
-    };
-
-    const onInputFocus = () => {
-        toggleOn();
-
-        turnOffScroll();
-    };
-
-    const onSubmit: FormEventHandler<HTMLFormElement> = e => {
-        e.preventDefault();
-        // почему то resetSearchState не работает, поэтому закостылил след 2 строки
-        toggleOff();
-        turnOnScroll();
-        (e.currentTarget.querySelector('input[name="search"]') as HTMLInputElement).blur();
-        resetSearchState(false);
-        router.push(`/offers/search?${SEARCH_PARAM_NAME}=${search}`);
-    };
+    const {
+        isActive,
+        isLoading,
+        search,
+        setSearch,
+        foundCategories,
+        onSubmit,
+        onInputChange,
+        onInputFocus,
+        onIconClick,
+        resetSearchState,
+    } = useSearch();
 
     useEffect(() => {
         if (!/[/]search/.test(pathname)) {
