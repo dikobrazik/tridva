@@ -4,7 +4,7 @@ import {setDefaultOptions} from 'date-fns';
 import {ru} from 'date-fns/locale/ru';
 import type {Metadata} from 'next';
 import {Inter} from 'next/font/google';
-import React from 'react';
+import React, {Suspense} from 'react';
 import * as RootMobileLayout from './rootLayout/mobile';
 import * as RootDesktopLayout from './rootLayout/desktop';
 import {Metrika} from './Metrika';
@@ -48,7 +48,9 @@ export default async function RootLayout({children}: {children: React.ReactNode}
                 <StoreProvider>
                     <AuthTokenProvider>
                         <Container>
-                            <Device mobile={<RootMobileLayout.Header />} desktop={<RootDesktopLayout.Header />} />
+                            <Suspense>
+                                <Device mobile={<RootMobileLayout.Header />} desktop={<RootDesktopLayout.Header />} />
+                            </Suspense>
                             <NotificationsContainer />
                             <Box id="content">{children}</Box>
                             <Device mobile={<RootMobileLayout.Footer />} />
