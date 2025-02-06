@@ -50,9 +50,7 @@ export default async function Home(params: Props) {
                 </Column>
             }
             desktop={
-                <Column gap="6" className={css.container}>
-                    <div></div>
-
+                <Column gap="6">
                     <Box className={css.bannerContainer}>
                         <Image src={bannerImage} alt="banner" />
                     </Box>

@@ -94,7 +94,7 @@ export const Search = () => {
                                                 className={css.foundItem}
                                                 key={category.id}
                                                 href={`/categories/${category.id}`}
-                                                onClick={resetSearchState(true)}
+                                                // onClick={resetSearchState(true)}
                                             >
                                                 <Row justifyContent="space-between" paddingX={4} paddingY={2}>
                                                     <Text weight={400} size={14}>

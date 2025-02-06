@@ -1,0 +1,14 @@
+@import 'mixins/device-query';
+
+@include desktop {
+    .container {
+        display: flex;
+        justify-content: center;
+    }
+
+    .content {
+        flex: 1;
+
+        max-width: 1320px;
+    }
+}
