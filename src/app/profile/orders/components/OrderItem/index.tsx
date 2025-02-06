@@ -22,7 +22,7 @@ export const OrderItem = (order: Props) => {
         <Block gap={5}>
             <Column gap="1">
                 <Text size={14} weight={500}>
-                    Заказ от {formatDate(order.createdAt, 'd MMMM')}
+                    Заказ №{order.id} от {formatDate(order.createdAt, 'd MMMM')}
                 </Text>
                 <Text size={12} weight={400} color="#303234A3">
                     Пункт выдачи: {order.pickupPoint.address}. Ежедневно 10:00 - 21:00
