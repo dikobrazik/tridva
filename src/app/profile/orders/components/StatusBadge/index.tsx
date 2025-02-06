@@ -37,17 +37,23 @@ const ORDER_STATUS_COLOR = {
     [ORDER_STATUS_MAP.CANCELED]: '#4FDE38',
 } as const;
 
-export const Status = (props: Props) => {
+export const StatusBadge = (props: Props) => {
     const {isActive, toggle, toggleOff} = useToggler();
 
     return (
         <>
-            <Row className={css.status} backgroundColor={ORDER_STATUS_COLOR[props.status]} gap={1} onClick={toggle}>
+            <Row
+                className={css.status}
+                backgroundColor={ORDER_STATUS_COLOR[props.status]}
+                gap={1}
+                onClick={props.status === ORDER_STATUS_MAP.PAYMENT_ERROR ? () => {} : toggle}
+                alignItems="center"
+            >
                 <Text size={14} weight={500} color="#FFFFFF">
                     {ORDER_STATUS_DESCRIPTION[props.status]}
                 </Text>
 
-                <Icon name="informationCircleWhite" />
+                <Icon size="xs" name="informationCircleWhite" />
             </Row>
 
             <Drawer isOpen={isActive} onClose={toggle}>

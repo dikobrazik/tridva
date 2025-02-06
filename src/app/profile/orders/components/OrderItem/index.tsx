@@ -1,18 +1,22 @@
+import {OfferOrderBlock} from '@/components/OfferCard/OfferOrderBlock';
 import {Separator} from '@/components/Separator';
 import {Text} from '@/components/Text';
 import {Block} from '@/components/layout/Block';
 import {Column} from '@/components/layout/Column';
+import {ORDER_STATUS_MAP} from '@/shared/constants/order-status';
+import {Order} from '@/types/orders';
 import {formatDate} from 'date-fns';
 import Link from 'next/link';
-import {Status} from '../Status';
+import {StatusBadge} from '../StatusBadge';
 import {CancelOrderButton} from './CancelOrderButton';
-import {Order} from '@/types/orders';
-import {OfferOrderBlock} from '@/components/OfferCard/OfferOrderBlock';
+import {NotPaidBlock} from './NotPaidBlock';
 
 type Props = Order;
 
 export const OrderItem = (order: Props) => {
     const address = order.pickupPoint.address;
+
+    const isOrderNotPaid = order.items.every(item => item.status === ORDER_STATUS_MAP.PAYMENT_ERROR);
 
     return (
         <Block gap={5}>
@@ -30,29 +34,33 @@ export const OrderItem = (order: Props) => {
                     <Link href={`/offers/${offer.id}`}>
                         <OfferOrderBlock isGroupItem={isGroupItem} offer={offer} />
                     </Link>
-                    <Column gap={3}>
-                        <Column gap={2} alignItems="flex-start">
-                            <Text size={12} weight={500}>
-                                Статус:
-                            </Text>
-                            <Status status={status} address={address} />
-                        </Column>
+                    {!isOrderNotPaid && (
+                        <Column gap={3}>
+                            <Column gap={2} alignItems="flex-start">
+                                <Text size={12} weight={500}>
+                                    Статус:
+                                </Text>
+                                <StatusBadge status={status} address={address} />
+                            </Column>
 
-                        <Column gap={1}>
-                            <Text size={12} weight={500}>
-                                Ожидаемая дата доставки: 12 февраля
-                            </Text>
-                            <Text size={12} weight={400} color="#303234A3">
-                                Мы сообщим, когда товар можно будет забрать
-                            </Text>
+                            <Column gap={1}>
+                                <Text size={12} weight={500}>
+                                    Ожидаемая дата доставки: 12 февраля
+                                </Text>
+                                <Text size={12} weight={400} color="#303234A3">
+                                    Мы сообщим, когда товар можно будет забрать
+                                </Text>
+                            </Column>
                         </Column>
-                    </Column>
+                    )}
 
                     <Separator />
                 </>
             ))}
 
-            <CancelOrderButton orderId={order.id} />
+            {isOrderNotPaid && <NotPaidBlock {...order} />}
+
+            {!isOrderNotPaid && <CancelOrderButton orderId={order.id} />}
         </Block>
     );
 };

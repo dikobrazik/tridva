@@ -10,6 +10,7 @@ import {Button, LinkButton} from '@/components/Button';
 import cn from 'classnames';
 import {PopularCategories} from '@/app/Home/PopularCategories';
 import {Search} from './Search';
+import {Suspense} from 'react';
 
 export const Header = () => {
     return (
@@ -86,7 +87,9 @@ export const Header = () => {
                     </Row>
                 </Row>
 
-                <PopularCategories />
+                <Suspense>
+                    <PopularCategories />
+                </Suspense>
             </Column>
         </Row>
     );

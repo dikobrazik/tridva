@@ -35,6 +35,7 @@ export {default as phone} from './phone.svg';
 export {default as calendar} from './calendar.svg';
 export {default as hourglass} from './hourglass.svg';
 export {default as menuWhite} from './menu-white.svg';
+export {default as alertTriangle} from './alert-triangle.svg';
 
 export {default as home} from './home.svg';
 export {default as homeActive} from './home-active.svg';
