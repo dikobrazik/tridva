@@ -1,30 +1,29 @@
 /* eslint-disable no-console */
 'use client';
 
+import {Button} from '@/components/Button';
+import {Drawer} from '@/components/Drawer';
 import {Header} from '@/components/Header';
+import {Icon} from '@/components/Icon';
+import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
+import {Row} from '@/components/layout/Row';
 import {checkoutActions, loadPickupPointsAction} from '@/lib/features/checkout';
 import {useAppDispatch} from '@/lib/hooks';
+import {lastSelectedPickupPointIdStorage} from '@/shared/utils/local-storage/storages';
 import {PickupPoint} from '@/types/geo';
+import {useRouter} from 'next/navigation';
 import * as ol from 'ol';
-import {Circle} from 'ol/geom';
-import {Select, defaults} from 'ol/interaction';
-import TileLayer from 'ol/layer/Tile';
-import VectorLayer from 'ol/layer/Vector';
+import {singleClick} from 'ol/events/condition';
+import {Select} from 'ol/interaction';
 import 'ol/ol.css';
-import {fromLonLat, toLonLat} from 'ol/proj';
-import {default as OSM} from 'ol/source/OSM';
 import VectorSource from 'ol/source/Vector';
 import {useEffect, useRef, useState} from 'react';
-import {pickupPointCircleSelectStyle, pickupPointCircleStyle} from './helpers';
-import {click} from 'ol/events/condition';
-import {Drawer} from '@/components/Drawer';
-import {Text} from '@/components/Text';
-import {Row} from '@/components/layout/Row';
-import {Icon} from '@/components/Icon';
-import {Button} from '@/components/Button';
-import {useRouter} from 'next/navigation';
-import {lastSelectedPickupPointIdStorage} from '@/shared/utils/local-storage/storages';
+import {ClusterLayer, LayerBuilder} from './builders/LayerBuilder';
+import {MapBuilder} from './builders/MapBuilder';
+import {PickupPointsBuilder} from './builders/PickupPointsBuilder';
+import {selectedPickupPointStyle} from './helpers';
+import {zoomOnCluster} from './utils/zoomOnCluster';
 
 export default function PickupPointsPage() {
     const dispatch = useAppDispatch();
@@ -35,86 +34,60 @@ export default function PickupPointsPage() {
     const ref = useRef<HTMLDivElement>(null);
     const mapRef = useRef<ol.Map | null>(null);
     const selectClickRef = useRef<Select | null>(null);
-
-    const onPickupPointsLoaded = (pickupPoints: PickupPoint[]) => {
-        const features = pickupPoints.map(pickupPoint => {
-            const circleGeometry = new Circle(
-                fromLonLat([Number(pickupPoint.longitude), Number(pickupPoint.latitude)]),
-                150,
-            );
-
-            const circleFeature = new ol.Feature({
-                geometry: circleGeometry,
-                pickupPoint,
-            });
-
-            circleFeature.setStyle(pickupPointCircleStyle);
-
-            return circleFeature;
-        });
-
-        mapRef.current?.addLayer(
-            new VectorLayer({
-                source: new VectorSource({
-                    features,
-                }),
-            }),
-        );
-    };
+    const vectorSourceRef = useRef<VectorSource | null>(null);
 
     useEffect(() => {
         dispatch(loadPickupPointsAction())
             .unwrap()
             .then(pickupPoints => {
-                onPickupPointsLoaded(pickupPoints);
+                vectorSourceRef.current?.addFeatures(PickupPointsBuilder.build(pickupPoints));
             });
+    }, []);
 
+    useEffect(() => {
         if (ref.current && !mapRef.current) {
-            mapRef.current = new ol.Map({
-                target: ref.current,
-                interactions: defaults({dragPan: true, mouseWheelZoom: true}),
-                layers: [
-                    new TileLayer({
-                        source: new OSM(),
-                    }),
-                ],
-                view: new ol.View({
-                    center: fromLonLat([50.20626, 53.22545]),
-                    zoom: 11,
-                }),
-            });
+            const map = MapBuilder.build(ref.current);
+            const layer = LayerBuilder.build();
 
-            mapRef.current.on('singleclick', function (evt) {
-                const coordinate = evt.coordinate;
-                console.log(toLonLat(coordinate));
-            });
+            mapRef.current = map;
 
-            let currZoom = mapRef.current.getView().getZoom();
+            map.addLayer(layer);
 
-            mapRef.current.on('moveend', function () {
-                const newZoom = mapRef.current?.getView().getZoom();
-                if (currZoom != newZoom) {
-                    console.log('zoom end, new zoom: ' + newZoom);
-                    currZoom = newZoom;
-                }
+            vectorSourceRef.current = layer.getSource()!.getSource();
+
+            map.on('click', async event => {
+                const clusterLayer = event.map.getAllLayers().find(ClusterLayer.isClusterLayer);
+
+                if (!clusterLayer) throw new Error('No cluster layers on map');
+
+                const cluster = await clusterLayer.getCluster(event.pixel);
+
+                if (cluster && cluster.isCluster()) zoomOnCluster(event, cluster);
             });
 
             selectClickRef.current = new Select({
-                condition: click,
-                style: pickupPointCircleSelectStyle,
-                toggleCondition: function (mbe) {
-                    return mbe.type == 'click';
+                condition: singleClick,
+                style: feature => {
+                    if (feature.get('selected')) {
+                        return selectedPickupPointStyle;
+                    }
                 },
+                filter: feature => feature.get('features').length === 1,
             });
 
-            mapRef.current.addInteraction(selectClickRef.current);
+            map.addInteraction(selectClickRef.current);
 
             selectClickRef.current.on('select', function (e) {
+                for (const deselected of e.deselected) {
+                    deselected.set('selected', false);
+                }
+
                 if (e.selected.length) {
-                    if ((selectClickRef.current?.getFeatures().getLength() || 0) > 1) {
-                        selectClickRef.current?.getFeatures().removeAt(0);
-                    }
-                    setSelectedPickupPoint(e.selected[0].get('pickupPoint'));
+                    const feature = e.selected[0].get('features')[0];
+
+                    e.selected[0].set('selected', true);
+
+                    setSelectedPickupPoint(feature.get('pickupPoint'));
                 } else {
                     setSelectedPickupPoint(undefined);
                 }

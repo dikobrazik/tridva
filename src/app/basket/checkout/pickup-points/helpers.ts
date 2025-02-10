@@ -1,56 +1,51 @@
-import {Coordinate} from 'ol/coordinate';
-import Style from 'ol/style/Style';
+import {asColorLike} from 'ol/colorlike';
+import {Style, Fill, Stroke, Circle, Text} from 'ol/style';
+import {StyleFunction} from 'ol/style/Style';
 
-export const pickupPointCircleStyle = new Style({
-    renderer(coordinates, state) {
-        const [[x, y], [x1, y1]] = coordinates as Coordinate[];
-        const ctx = state.context;
-        const dx = x1 - x;
-        const dy = y1 - y;
-        const radius = Math.sqrt(dx * dx + dy * dy);
+const mainColor = asColorLike('#ff0000');
+const selectedColor = asColorLike('rgba(185,0,0,1)');
 
-        ctx.beginPath();
-        ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
-        ctx.fillStyle = 'rgba(255,0,0,1)';
-        ctx.fill();
+export const getPickupPointCircleStyle = (size: number, isSelected: boolean = false) => {
+    const fillColor = isSelected ? selectedColor : mainColor;
 
-        ctx.beginPath();
-        ctx.arc(x, y, radius * 0.9, 0, 2 * Math.PI, true);
-        ctx.arc(x, y, radius * 0.8, 0, 2 * Math.PI, true);
-        ctx.fillStyle = 'rgba(255,255,255,1)';
-        ctx.fill();
+    return [
+        new Style({
+            image: new Circle({
+                radius: 10,
+                fill: new Fill({
+                    color: fillColor,
+                }),
+            }),
+        }),
+        new Style({
+            image: new Circle({
+                radius: 8,
+                stroke: new Stroke({
+                    color: 'white',
+                    width: 2,
+                }),
+                fill: new Fill({
+                    color: fillColor,
+                }),
+            }),
+            ...(size > 1
+                ? {
+                      text: new Text({
+                          text: size.toString(),
+                          fill: new Fill({
+                              color: '#fff',
+                          }),
+                      }),
+                  }
+                : undefined),
+        }),
+    ];
+};
 
-        ctx.beginPath();
-        ctx.arc(x, y, radius * 0.7, 0, 2 * Math.PI, true);
-        ctx.arc(x, y, radius * 0.6, 0, 2 * Math.PI, true);
-        ctx.fillStyle = 'rgba(255,0,0,1)';
-        ctx.fill();
-    },
-});
+export const selectedPickupPointStyle = getPickupPointCircleStyle(1, true);
 
-export const pickupPointCircleSelectStyle = new Style({
-    renderer(coordinates, state) {
-        const [[x, y], [x1, y1]] = coordinates as Coordinate[];
-        const ctx = state.context;
-        const dx = x1 - x;
-        const dy = y1 - y;
-        const radius = Math.sqrt(dx * dx + dy * dy);
+export const clusterStyleFunction: StyleFunction = function (feature) {
+    const size = feature.get('features').length; // Количество точек в кластере
 
-        ctx.beginPath();
-        ctx.arc(x, y, radius, 0, 2 * Math.PI, true);
-        ctx.fillStyle = 'rgba(185,0,0,1)';
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.arc(x, y, radius * 0.9, 0, 2 * Math.PI, true);
-        ctx.arc(x, y, radius * 0.8, 0, 2 * Math.PI, true);
-        ctx.fillStyle = 'rgba(255,255,255,1)';
-        ctx.fill();
-
-        ctx.beginPath();
-        ctx.arc(x, y, radius * 0.7, 0, 2 * Math.PI, true);
-        ctx.arc(x, y, radius * 0.6, 0, 2 * Math.PI, true);
-        ctx.fillStyle = 'rgba(185,0,0,1)';
-        ctx.fill();
-    },
-});
+    return getPickupPointCircleStyle(size);
+};

@@ -1,4 +1,5 @@
 'use client';
+
 import React, {useEffect, useRef, useState} from 'react';
 import {loadUserAction} from '@/lib/features/user';
 import {useAppDispatch} from '@/lib/hooks';
