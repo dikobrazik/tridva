@@ -24,6 +24,7 @@ import {MapBuilder} from './builders/MapBuilder';
 import {PickupPointsBuilder} from './builders/PickupPointsBuilder';
 import {selectedPickupPointStyle} from './helpers';
 import {zoomOnCluster} from './utils/zoomOnCluster';
+import {Circle} from 'ol/geom';
 
 export default function PickupPointsPage() {
     const dispatch = useAppDispatch();
@@ -87,6 +88,11 @@ export default function PickupPointsPage() {
 
                     e.selected[0].set('selected', true);
 
+                    map.getView().animate({
+                        center: (feature.getGeometry() as Circle).getCenter(),
+                        duration: 300,
+                    });
+
                     setSelectedPickupPoint(feature.get('pickupPoint'));
                 } else {
                     setSelectedPickupPoint(undefined);
@@ -107,7 +113,7 @@ export default function PickupPointsPage() {
         <Column>
             <Header withBackArrow>Пункты выдачи</Header>
 
-            <div ref={ref} style={{width: '100%', height: '450px'}}></div>
+            <div ref={ref} style={{width: '100%', height: 'calc(100vh - 116px)'}}></div>
 
             <Drawer
                 isOpen={Boolean(selectedPickupPoint?.id)}
