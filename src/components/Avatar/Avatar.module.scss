@@ -2,4 +2,10 @@
     border-radius: 50%;
 
     overflow: hidden;
+
+    display: flex;
+
+    & img {
+        object-fit: cover;
+    }
 }
