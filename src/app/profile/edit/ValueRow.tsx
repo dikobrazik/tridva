@@ -42,7 +42,7 @@ export const ValueRow = (props: ValueRowProps) => {
 
             {props.value ? (
                 <Row gap="1" color="#303234A3" alignItems="center">
-                    <Icon name="pen" />
+                    <Icon name="pen" size="xs" />
                     <Text size={10} weight={500}>
                         Изменить
                     </Text>

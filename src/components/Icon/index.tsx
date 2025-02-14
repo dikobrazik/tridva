@@ -1,11 +1,15 @@
-import Image from 'next/image';
 import * as icons from './icons';
+import css from './Icon.module.scss';
+import classNames from 'classnames';
 
 export type IconName = keyof typeof icons;
+
+type Color = 'brand' | 'white';
 
 export type IconProps = {
     className?: string;
     name: IconName;
+    color?: Color;
     size?: 'xs' | 's' | 'sm' | 'm' | 'l';
     onClick?: () => void;
 };
@@ -19,16 +23,17 @@ const SIZE_MAP = {
 };
 
 export const Icon = (props: IconProps) => {
-    const {className, name, size = 's', onClick} = props;
+    const {className, color, name, size = 's', onClick} = props;
+
+    const IconCmp = icons[name];
+
     return (
-        <Image
-            className={className}
+        <IconCmp
+            className={classNames(css.icon, className, {[css[`color-${color}`]]: true})}
+            onClick={onClick}
             width={SIZE_MAP[size]}
             height={SIZE_MAP[size]}
-            alt={`icon ${name}`}
-            src={icons[name]}
-            onClick={onClick}
-            unoptimized
+            preserveAspectRatio="xMidYMid meet"
         />
     );
 };

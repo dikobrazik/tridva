@@ -1,0 +1,11 @@
+.icon {
+    &.color-brand {
+        filter: invert(11%) sepia(83%) saturate(7171%) hue-rotate(342deg) brightness(104%) contrast(92%);
+    }
+    &.color-white {
+        filter: invert(100%) sepia(81%) saturate(2%) hue-rotate(120deg) brightness(110%) contrast(101%);
+    }
+    &.color-green {
+        filter: invert(68%) sepia(76%) saturate(1732%) hue-rotate(63deg) brightness(93%) contrast(81%);
+    }
+}

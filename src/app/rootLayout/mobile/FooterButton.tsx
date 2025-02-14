@@ -10,14 +10,12 @@ import css from './Footer.module.scss';
 
 export const FooterButton = ({
     icon,
-    activeIcon,
     title,
     href,
     strictActiveMatch,
     count,
 }: {
     icon: IconName;
-    activeIcon: IconName;
     title: string;
     href: string;
     strictActiveMatch?: boolean;
@@ -25,13 +23,12 @@ export const FooterButton = ({
 }) => {
     const pathname = usePathname();
     const isActive = strictActiveMatch ? pathname === href : pathname.startsWith(href);
-    const iconName = isActive ? activeIcon : icon;
 
     return (
         <Link href={href}>
             <Column position="relative" gap={1} alignItems="center" paddingX={3}>
                 {count !== undefined && <Box className={css.footerButtonCount}>{count}</Box>}
-                <Icon name={iconName} size="m" />
+                <Icon name={icon} color={isActive ? 'brand' : undefined} size="m" />
                 <Text color={isActive ? '#F40C43' : '#303234'}>{title}</Text>
             </Column>
         </Link>

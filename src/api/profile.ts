@@ -13,3 +13,11 @@ export const updateProfileName = (payload: UpdateNamePayload): Promise<void> =>
 
 export const updateProfileEmail = (payload: UpdateEmailPayload): Promise<void> =>
     axios.patch(`profile`, payload).then(() => undefined);
+
+export const uploadProfileAvatar = (file: File): Promise<void> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return axios
+        .put(`profile/avatar`, formData, {headers: {'Content-Type': 'multipart/form-data'}})
+        .then(() => undefined);
+};

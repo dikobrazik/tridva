@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import LogoIcon from './logo.svg';
+import LogoIcon from './logo.svg?url';
 
 type Props = {
     isDesktop?: boolean;

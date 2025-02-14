@@ -10,7 +10,6 @@ const BasketButton = async () => {
     return (
         <FooterButton
             icon="cart"
-            activeIcon="cartActive"
             title="Корзина"
             href="/basket"
             count={basketItemsCount > 0 ? basketItemsCount : undefined}
@@ -22,14 +21,12 @@ export const Footer = () => {
     return (
         <FooterContainer>
             <Row justifyContent="space-between">
-                <FooterButton icon="home" activeIcon="homeActive" title="Главная" href="/" strictActiveMatch />
-                <FooterButton icon="menu" activeIcon="menuActive" title="Категории" href="/categories" />
-                <Suspense
-                    fallback={<FooterButton icon="cart" activeIcon="cartActive" title="Корзина" href="/basket" />}
-                >
+                <FooterButton icon="home" title="Главная" href="/" strictActiveMatch />
+                <FooterButton icon="menu" title="Категории" href="/categories" />
+                <Suspense fallback={<FooterButton icon="cart" title="Корзина" href="/basket" />}>
                     <BasketButton />
                 </Suspense>
-                <FooterButton icon="user" activeIcon="userActive" title="Профиль" href="/profile" />
+                <FooterButton icon="user" title="Профиль" href="/profile" />
             </Row>
         </FooterContainer>
     );

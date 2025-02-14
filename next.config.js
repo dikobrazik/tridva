@@ -12,6 +12,41 @@ const nextConfig = {
     devIndicators: {
         buildActivity: true,
     },
+    webpack(config) {
+        config.module.rules.push(
+            {
+                test: /\.svg$/,
+                type: 'asset',
+                resourceQuery: /url/, // *.svg?url
+            },
+            {
+                test: /\.svg$/,
+                // issuer: /\.[jt]sx?$/,
+                resourceQuery: {not: [/url/]},
+                use: [
+                    {
+                        loader: '@svgr/webpack',
+                        options: {
+                            svgoConfig: {
+                                plugins: [
+                                    {
+                                        name: 'preset-default',
+                                        params: {
+                                            overrides: {
+                                                removeViewBox: false,
+                                            },
+                                        },
+                                    },
+                                ],
+                            },
+                        },
+                    },
+                ],
+            },
+        );
+
+        return config;
+    },
     images: {
         minimumCacheTTL: 60,
         remotePatterns: [
@@ -25,6 +60,12 @@ const nextConfig = {
                 protocol: 'https',
                 hostname: 'cdn-icons-png.flaticon.com',
                 port: '',
+            },
+            {
+                protocol: 'https',
+                hostname: 'storage.yandexcloud.net',
+                port: '',
+                pathname: '/td-avatars/*',
             },
         ],
     },

@@ -1,5 +1,5 @@
 import {loadUser} from '@/api';
-import {RandomAvatar} from '@/components/Avatar';
+import {ProfileAvatar} from '@/components/Avatar';
 import {Icon} from '@/components/Icon';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
@@ -18,7 +18,7 @@ export const ProfileBlock = async () => {
         <Link href="/profile/edit">
             <Row gap="4" justifyContent="space-between" alignItems="center">
                 <Row gap="4" alignItems="center">
-                    <RandomAvatar id={profile.id} width={48} height={48} />
+                    <ProfileAvatar width={48} height={48} id={profile.id} />
                     <Column gap="1">
                         <Text size={16} weight={600}>
                             {profile?.name}
