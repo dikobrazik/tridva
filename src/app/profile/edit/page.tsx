@@ -1,23 +1,21 @@
 'use client';
 
+import {logout} from '@/api';
 import {AuthorizationModal} from '@/app/authorization/authorizationModal';
+import {Button} from '@/components/Button';
 import {Header} from '@/components/Header';
 import {Icon} from '@/components/Icon';
+import {Skeleton} from '@/components/Skeleton';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {useToggler} from '@/hooks/useToggler';
 import {userSelectors} from '@/lib/features/user';
 import {useSelector} from 'react-redux';
+import {Avatar} from './Avatar';
 import {EmailDrawer} from './EmailDrawer';
 import {NameDrawer} from './NameDrawer';
 import {ValueRow} from './ValueRow';
-import {Button} from '@/components/Button';
-import {logout, uploadProfileAvatar} from '@/api';
-import {Skeleton} from '@/components/Skeleton';
-import {Box} from '@/components/layout/Box';
-import css from './Page.module.scss';
-import {ProfileAvatar} from '@/components/Avatar';
 
 export default function ProfileEditPage() {
     const {isActive: isNameDrawerActive, toggle: toggleNameDrawer} = useToggler();
@@ -40,34 +38,7 @@ export default function ProfileEditPage() {
             <Column paddingX="4" gap="6">
                 <Row gap="4" alignItems="center">
                     <Skeleton isLoading={isUserLoading} height={76} width={76} borderRadius={50}>
-                        <Box
-                            className={css.avatarBox}
-                            clickable
-                            as="label"
-                            height={76}
-                            width={76}
-                            htmlFor="avatar-upload"
-                        >
-                            <input
-                                id="avatar-upload"
-                                name="file"
-                                type="file"
-                                accept="image/*"
-                                style={{display: 'none'}}
-                                onChange={event => {
-                                    const file = event.target.files?.item(0);
-
-                                    if (file) {
-                                        uploadProfileAvatar(file);
-                                    }
-                                }}
-                            />
-
-                            <ProfileAvatar id={profile.id} />
-                            <Box position="absolute">
-                                <Icon color="white" size="m" name="camera" />
-                            </Box>
-                        </Box>
+                        <Avatar />
                     </Skeleton>
                     <Row onClick={toggleNameDrawer} gap="2" alignItems="center" padding="12px">
                         <Skeleton isLoading={isUserLoading} height={19.5} width={160}>
