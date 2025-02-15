@@ -1,13 +1,44 @@
 const path = require('path');
 const {withSentryConfig} = require('@sentry/nextjs');
 
+const isDev = process.env.IS_DEV;
+
+const imagesRemotePatterns = [
+    {
+        protocol: 'https',
+        hostname: 'goods-photos.static1-sima-land.com',
+        port: '',
+        pathname: '/items/**',
+    },
+    {
+        protocol: 'https',
+        hostname: 'cdn-icons-png.flaticon.com',
+        port: '',
+    },
+    {
+        protocol: 'https',
+        hostname: 'tridva.store',
+        port: '',
+        pathname: '/api/**',
+    },
+];
+
+if (isDev) {
+    imagesRemotePatterns.push({
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '',
+        pathname: '/api/**',
+    });
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     sassOptions: {
         includePaths: [path.join(__dirname, 'src/styles')],
     },
     experimental: {
-        instrumentationHook: !process.env.IS_DEV,
+        instrumentationHook: !isDev,
     },
     devIndicators: {
         buildActivity: true,
@@ -49,25 +80,7 @@ const nextConfig = {
     },
     images: {
         minimumCacheTTL: 10,
-        remotePatterns: [
-            {
-                protocol: 'https',
-                hostname: 'goods-photos.static1-sima-land.com',
-                port: '',
-                pathname: '/items/**',
-            },
-            {
-                protocol: 'https',
-                hostname: 'cdn-icons-png.flaticon.com',
-                port: '',
-            },
-            {
-                protocol: 'https',
-                hostname: 'storage.yandexcloud.net',
-                port: '',
-                pathname: '/td-avatars/*',
-            },
-        ],
+        remotePatterns: imagesRemotePatterns,
     },
 };
 

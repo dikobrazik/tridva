@@ -9,17 +9,31 @@ import {useSelector} from 'react-redux';
 import css from './Page.module.scss';
 import {ChangeEventHandler, useState} from 'react';
 import {Loader} from '@/components/Loader';
+import {useAppDispatch} from '@/lib/hooks';
+import {notificationsActions} from '@/lib/features/notifications';
 
 export const Avatar = () => {
-    const [isUploading, setIsUploadin] = useState(false);
+    const dispatch = useAppDispatch();
+    const [isUploading, setIsUploading] = useState(false);
     const profile = useSelector(userSelectors.selectProfile);
+    const [avatarHash, setAvatarHash] = useState(profile.avatarHash);
 
     const onImageSelect: ChangeEventHandler<HTMLInputElement> = event => {
         const file = event.target.files?.item(0);
 
         if (file) {
-            setIsUploadin(true);
-            uploadProfileAvatar(file).finally(() => setIsUploadin(false));
+            if (file.size / 1024 / 1024 > 15) {
+                dispatch(notificationsActions.showNotification({text: 'Слишком большой размер файла'}));
+                return;
+            }
+
+            setIsUploading(true);
+            uploadProfileAvatar(file)
+                .then(setAvatarHash)
+                .finally(() => {
+                    dispatch(notificationsActions.showNotification({text: 'Фотография успешно обновлена'}));
+                    setIsUploading(false);
+                });
         }
     };
 
@@ -34,7 +48,7 @@ export const Avatar = () => {
                 onChange={onImageSelect}
             />
 
-            <ProfileAvatar id={profile.id} />
+            <ProfileAvatar id={profile.id} hash={avatarHash} />
             <Box position="absolute">{isUploading ? <Loader /> : <Icon color="white" size="m" name="camera" />}</Box>
         </Box>
     );

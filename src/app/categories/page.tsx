@@ -6,12 +6,11 @@ import css from './Page.module.scss';
 import {loadCategories, loadCategory, loadCategoryAncestors} from '@/api';
 import Link from 'next/link';
 import Image from 'next/image';
-import {makeServerUrl} from '@/api/fetch';
-import {appConfig} from '@/shared/utils/config';
 import {PageParams} from '@/shared/types/next';
 import {Category} from '@/types/category';
 import {LinkButton} from '@/components/Button';
 import {Box} from '@/components/layout/Box';
+import {makeEnvironmentUrl} from '@/shared/utils/makeEnironmentUrl';
 
 function CategoryItem({id, name, level, childrenCount}: Category) {
     return (
@@ -21,7 +20,7 @@ function CategoryItem({id, name, level, childrenCount}: Category) {
                     width={24}
                     height={24}
                     alt={`${name} category icon`}
-                    src={appConfig.isDev ? makeServerUrl(`/categories/${id}/icon`) : `/api/categories/${id}/icon`}
+                    src={makeEnvironmentUrl(`/categories/${id}/icon`)}
                     unoptimized
                 />
             )}

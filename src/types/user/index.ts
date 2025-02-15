@@ -4,5 +4,5 @@ export type Profile = {
     email: string | null;
     birthdate: string | null;
     sex: string | null;
-    hasAvatar: boolean;
+    avatarHash: string;
 };

@@ -6,7 +6,7 @@ import {Text} from '@/components/Text';
 import {Box} from '@/components/layout/Box';
 import Link from 'next/link';
 import {Logo} from '@/components/Logo';
-import {Button, LinkButton} from '@/components/Button';
+import {LinkButton} from '@/components/Button';
 import cn from 'classnames';
 import {PopularCategories} from '@/app/Home/PopularCategories';
 import {Search} from './Search';
@@ -45,17 +45,18 @@ export const Header = () => {
                         <Logo isDesktop />
                     </Link>
 
-                    <Button
+                    <LinkButton
+                        href="/categories"
                         className={cn(css.categoriesButton, css.customSize)}
                         icon="menuWhite"
                         iconSize="m"
                         iconLeft
                         variant="custom"
                         size="s"
-                        padding="8px 16px"
+                        style={{padding: '8px 16px'}}
                     >
                         <Text size={14}>Категории</Text>
-                    </Button>
+                    </LinkButton>
 
                     <Search />
 

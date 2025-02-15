@@ -1,4 +1,5 @@
 import {appConfig} from '@/shared/utils/config';
+import {replaceDoubleSlash} from '@/shared/utils/replaceDoubleSlash';
 
 let BASE_URL = `${appConfig.host}/api`;
 
@@ -66,4 +67,4 @@ export const getSearchParams = (params?: Record<string, any>) => {
     ).toString();
 };
 
-export const makeServerUrl = (pathname: string) => [BASE_URL, pathname].join('/').replace(/(?<!:)\/\//g, '/');
+export const makeServerUrl = (pathname: string) => replaceDoubleSlash([BASE_URL, pathname].join('/'));

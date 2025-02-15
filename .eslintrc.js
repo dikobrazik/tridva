@@ -1,4 +1,5 @@
-module.exports = {
+/** @type {import('eslint').Linter.BaseConfig} */
+const eslintConfig = {
     parser: '@typescript-eslint/parser',
     parserOptions: {
         project: './tsconfig.json',
@@ -41,3 +42,5 @@ module.exports = {
         },
     ],
 };
+
+module.exports = eslintConfig;
