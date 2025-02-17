@@ -1,4 +1,4 @@
 User-Agent: *
 Disallow: /profile
 Disallow: /basket
-Sitemap: https://tridva.store/robots/sitemap.xml
+Sitemap: https://tridva.store/shared/sitemap.xml

@@ -3,20 +3,23 @@
 import {useEffect, useState} from 'react';
 import {useIsDesktopLayoutEnabled} from '../useIsDesktopLayoutEnabled';
 
-const getDesktopMatchMedia = () => window.matchMedia('(min-width: 1024px)');
+const getDesktopMatchMedia = () =>
+    typeof window !== 'undefined'
+        ? window.matchMedia('(min-width: 1024px)')
+        : {matches: false, addEventListener: () => {}, removeEventListener: () => {}};
 
 export const useIsDesktop = () => {
     const isDesktopLayoutEnabled = useIsDesktopLayoutEnabled();
 
-    const [isDesktop, setIsDesktop] = useState(false);
+    const [isDesktop, setIsDesktop] = useState(getDesktopMatchMedia().matches);
 
     useEffect(() => {
         const listener = () => {
             setIsDesktop(isDesktopLayoutEnabled && getDesktopMatchMedia().matches);
         };
 
-        getDesktopMatchMedia().addEventListener('change', listener);
         listener();
+        getDesktopMatchMedia().addEventListener('change', listener);
 
         return () => getDesktopMatchMedia().removeEventListener('change', listener);
     }, [isDesktopLayoutEnabled]);
