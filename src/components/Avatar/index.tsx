@@ -21,6 +21,7 @@ export const ProfileAvatar = (props: Props) => {
                     width={props.width ?? 76}
                     alt="avatar"
                     priority={false}
+                    unoptimized
                     fallbackSrc={unknownUserAvatar}
                     src={makeEnvironmentUrl(`/profile/avatar/${props.id}?h=${props.hash}`)}
                 />
