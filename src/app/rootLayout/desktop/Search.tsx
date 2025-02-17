@@ -23,7 +23,6 @@ export const Search = () => {
         onSubmit,
         onInputChange,
         onInputFocus,
-        onInputBlur,
         onIconClick,
         resetSearchState,
     } = useSearch();
@@ -40,7 +39,6 @@ export const Search = () => {
                     value={search}
                     onChange={onInputChange}
                     onFocus={onInputFocus}
-                    onBlur={onInputBlur}
                 />
                 <Row className={css.controls}>
                     {Boolean(search) && (
@@ -55,7 +53,17 @@ export const Search = () => {
                     </Button>
                 </Row>
                 {isDropdownOpen && (
-                    <Column padding="16px" gap={3} className={css.layover} justifyContent="space-between">
+                    <Column
+                        padding="16px"
+                        gap={3}
+                        className={css.layover}
+                        onClick={e => {
+                            if (e.target === e.currentTarget) {
+                                resetSearchState(false);
+                            }
+                        }}
+                        justifyContent="space-between"
+                    >
                         <Column height="100%" overflowY="scroll" gap={3}>
                             <Column>
                                 {search && (
@@ -94,7 +102,7 @@ export const Search = () => {
                                                 className={css.foundItem}
                                                 key={category.id}
                                                 href={`/categories/${category.id}`}
-                                                // onClick={resetSearchState(true)}
+                                                onClick={resetSearchState(true)}
                                             >
                                                 <Row justifyContent="space-between" paddingX={4} paddingY={2}>
                                                     <Text weight={400} size={14}>

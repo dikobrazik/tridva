@@ -1,9 +1,12 @@
 import React, {CSSProperties, PropsWithChildren} from 'react';
 import {InlineCssProperties} from './utils';
 
-export type AsTags = keyof React.JSX.IntrinsicElements;
+export type AsTags = Extract<
+    keyof React.JSX.IntrinsicElements,
+    'h1' | 'div' | 'span' | 'form' | 'label' | 'button' | 'a'
+>;
 
-type StyleProps = Pick<CSSProperties, (typeof InlineCssProperties)[number]> & {
+export type StyleProps = Pick<CSSProperties, (typeof InlineCssProperties)[number]> & {
     gap?: number | `${number}`;
     paddingX?: number | `${number}`;
     paddingY?: number | `${number}`;
