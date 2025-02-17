@@ -6,7 +6,7 @@ import {Column} from '@/components/layout/Column';
 import {useScrollObserver} from '@/hooks/useScrollObserver';
 import {usePathname} from 'next/navigation';
 
-const PAGES_WITH_HIDDEN_FOOTER_RE = /^[/]((categories([/]\d+)?)|basket|offers[/]search)?$/;
+const PAGES_WITH_HIDDEN_FOOTER_RE = /^[/]((categories([/]\d+)?)|offers[/]search)?$/;
 
 export const FooterContainer = (props: PropsWithChildren) => {
     const columnRef = useRef<HTMLDivElement>(null);

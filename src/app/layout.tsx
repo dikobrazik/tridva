@@ -1,10 +1,9 @@
-import {Box} from '@/components/layout/Box';
 import StoreProvider from '@/lib/StoreProvider';
 import {setDefaultOptions} from 'date-fns';
 import {ru} from 'date-fns/locale/ru';
 import type {Metadata} from 'next';
 import {Inter} from 'next/font/google';
-import React, {PropsWithChildren, Suspense} from 'react';
+import React, {Suspense} from 'react';
 import * as RootMobileLayout from './rootLayout/mobile';
 import * as RootDesktopLayout from './rootLayout/desktop';
 import {Metrika} from './Metrika';
@@ -12,9 +11,7 @@ import AuthTokenProvider from './authorization/AuthorizationProvider';
 import './globals.scss';
 import {NotificationsContainer} from './notifications';
 import {Device} from '@/components/layout/Device';
-import {Container} from './rootLayout/container';
-import css from './Layout.module.scss';
-import {Block} from '@/components/layout/Block';
+import {Container, Content} from './rootLayout/container';
 
 setDefaultOptions({locale: ru});
 
@@ -30,21 +27,6 @@ export const metadata: Metadata = {
     other: {
         'mobile-web-app-capable': 'true',
     },
-};
-
-const RenderContent = (props: PropsWithChildren) => {
-    return (
-        <Device
-            mobile={<Box id="content">{props.children}</Box>}
-            desktop={
-                <Box id="content" className={css.container} paddingTop="24px">
-                    <Block roundAll className={css.content}>
-                        {props.children}
-                    </Block>
-                </Box>
-            }
-        />
-    );
 };
 
 export default async function RootLayout({children}: {children: React.ReactNode}) {
@@ -70,7 +52,7 @@ export default async function RootLayout({children}: {children: React.ReactNode}
                             </Suspense>
                             <NotificationsContainer />
                             <Suspense>
-                                <RenderContent>{children}</RenderContent>
+                                <Content>{children}</Content>
                             </Suspense>
                             <Device mobile={<RootMobileLayout.Footer />} />
                         </Container>

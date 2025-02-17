@@ -4,11 +4,21 @@
     .container {
         display: flex;
         justify-content: center;
+
+        padding-top: 24px;
     }
 
     .content {
         flex: 1;
 
         max-width: 1320px;
+    }
+}
+
+@include mobile {
+    div.content {
+        background-color: initial;
+        border-radius: 0;
+        padding: 0;
     }
 }
