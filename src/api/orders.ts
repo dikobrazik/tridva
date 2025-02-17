@@ -4,6 +4,7 @@ import {Order} from '@/types/orders';
 import axios from 'axios';
 
 type ProcessOrderPayload = {
+    name: string;
     pickupPointId: PickupPoint['id'];
     basketItemsIds: BasketItem['id'][];
 };

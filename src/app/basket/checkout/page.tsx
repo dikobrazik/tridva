@@ -15,15 +15,21 @@ import {pluralize} from '@/shared/utils/pluralize';
 import {format} from 'date-fns';
 import Link from 'next/link';
 import {redirect, useRouter} from 'next/navigation';
-import {FormEventHandler, useEffect} from 'react';
+import {FormEventHandler, useEffect, useState} from 'react';
 import {Summary} from '../component/Summary';
 import css from './Page.module.scss';
 import {RecipientForm} from './components/recipient';
 import {Footer} from '@/components/Footer';
+import {FullScreenLoader} from '@/components/Loader';
+import {uploadProfileAvatar} from '@/api';
+import {generateAvatar} from '@/shared/utils/generateAvatar';
 
 export default function CheckoutPage() {
     const dispatch = useAppDispatch();
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const profile = useAppSelector(userSelectors.selectProfile);
     const selectedPickupPoint = useAppSelector(checkoutSelectors.selectSelectedPickupPoint);
 
     const isUserAnonymous = useAppSelector(userSelectors.selectIsAnonymous);
@@ -39,18 +45,28 @@ export default function CheckoutPage() {
         }
     }, [areBasketItemsLoading]);
 
-    const onCheckoutClick: FormEventHandler<HTMLFormElement> = e => {
+    const onCheckoutClick: FormEventHandler<HTMLFormElement> = async e => {
         e.preventDefault();
 
+        const formData = new FormData(e.currentTarget);
+        const name = String(formData.get('name') ?? '');
+        const _email = formData.get('email');
+
         if (selectedPickupPoint) {
-            dispatch(processOrderAction())
+            setIsLoading(true);
+            if (!profile.avatarHash) {
+                const avatar = await generateAvatar(name);
+                await uploadProfileAvatar(avatar);
+            }
+            dispatch(processOrderAction({name}))
                 .unwrap()
                 .then(paymentUrl => {
                     window.location.replace(paymentUrl);
                 })
                 .catch(() => {
                     router.replace('/');
-                });
+                })
+                .finally(() => setIsLoading(false));
         } else {
             window.alert('не выбран пункт выдачи!');
         }
@@ -58,6 +74,7 @@ export default function CheckoutPage() {
 
     return (
         <Column as="form" onSubmit={onCheckoutClick} height="100%" justifyContent="space-between">
+            {isLoading && <FullScreenLoader />}
             <Column height="100%" overflowY="auto" gap="2" paddingBottom={80}>
                 <Header withBackArrow>Оформление заказа</Header>
 

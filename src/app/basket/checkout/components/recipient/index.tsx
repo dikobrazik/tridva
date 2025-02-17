@@ -2,61 +2,80 @@ import {Button} from '@/components/Button';
 import {Column} from '@/components/layout/Column';
 import {Text} from '@/components/Text';
 import {TextField} from '@/components/TextField';
-import {updateProfileEmailAction, updateProfileNameAction, userSelectors} from '@/lib/features/user';
-import {useAppDispatch, useAppSelector} from '@/lib/hooks';
-import {useState} from 'react';
+import {userSelectors} from '@/lib/features/user';
+import {useAppSelector} from '@/lib/hooks';
+import {useEffect, useState} from 'react';
 
 export const RecipientForm = () => {
-    const dispatch = useAppDispatch();
     const [isEditing, setIsEditing] = useState(false);
 
     const phone = useAppSelector(userSelectors.selectPhone);
     const profile = useAppSelector(userSelectors.selectProfile);
 
-    const [name, setName] = useState(profile?.name ?? '');
-    const [email, setEmail] = useState(profile?.email ?? '');
+    const name = profile?.name ?? '';
 
-    const onNameChanged = () => {
-        if (profile?.name !== name) {
-            dispatch(updateProfileNameAction(name));
+    useEffect(() => {
+        if (!name) {
+            setIsEditing(true);
         }
-    };
+    }, []);
 
-    const onEmailChanged = () => {
-        if (profile?.email !== email) {
-            dispatch(updateProfileEmailAction(email));
-        }
-    };
+    // if (!isEditing) {
+    //     return (
+    //         <Column gap={4}>
+    //             <Text size={14} weight={400} color="#303234">
+    //                 {name}, {phone}
+    //             </Text>
 
-    if (name && phone && !isEditing) {
-        return (
-            <Column gap={4}>
-                <Text size={14} weight={400} color="#303234">
-                    {name}, {phone}
-                </Text>
-
-                <Button onClick={() => setIsEditing(true)} width="full" variant="normal" size="m">
-                    Редактировать
-                </Button>
-            </Column>
-        );
-    }
+    //             <Button onClick={() => setIsEditing(true)} width="full" variant="normal" size="m">
+    //                 Редактировать
+    //             </Button>
+    //         </Column>
+    //     );
+    // }
 
     return (
-        <Column gap="2">
-            <TextField placeholder="Имя*" name="name" value={name} onChange={setName} onBlur={onNameChanged} />
+        <Column gap={isEditing ? 2 : 0}>
+            {!isEditing && (
+                <Column gap={4}>
+                    <Text size={14} weight={400} color="#303234">
+                        {name}, {phone}
+                    </Text>
+
+                    <Button onClick={() => setIsEditing(true)} width="full" variant="normal" size="m">
+                        Редактировать
+                    </Button>
+                </Column>
+            )}
+
+            <TextField
+                hidden={!isEditing}
+                type="text"
+                required
+                placeholder="Имя*"
+                name="name"
+                defaultValue={profile?.name ?? ''}
+            />
             <TextField
                 placeholder="E-mail"
+                hidden={!isEditing}
                 type="email"
                 name="email"
-                value={email}
-                onChange={setEmail}
-                onBlur={onEmailChanged}
+                defaultValue={profile?.email ?? ''}
             />
-            <TextField disabled placeholder="Номер телефона" name="phone" value={phone} />
-            <Text size={12} weight={400} color="#303234A3">
-                Пришлем статус заказа по e-mail и в SMS
-            </Text>
+            <TextField
+                disabled
+                hidden={!isEditing}
+                type="tel"
+                placeholder="Номер телефона"
+                name="phone"
+                defaultValue={phone}
+            />
+            {isEditing && (
+                <Text size={12} weight={400} color="#303234A3">
+                    Пришлем статус заказа по e-mail и в SMS
+                </Text>
+            )}
         </Column>
     );
 };

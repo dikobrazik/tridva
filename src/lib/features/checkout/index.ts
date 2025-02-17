@@ -21,16 +21,19 @@ export const loadLastSelectedPickupPointAction = createAsyncThunk(`${NAMESPACE}/
     }
 });
 
-export const processOrderAction = createAsyncThunk<string>(`${NAMESPACE}/process-order`, (_, {getState}) => {
-    const state = getState() as RootState;
+export const processOrderAction = createAsyncThunk<string, {name: string}>(
+    `${NAMESPACE}/process-order`,
+    ({name}, {getState}) => {
+        const state = getState() as RootState;
 
-    const selectedPickupPoint = checkoutSelectors.selectSelectedPickupPoint(state);
-    const selectedBasketItemsIds = checkoutSelectors.selectSelectedBasketItems(state);
+        const selectedPickupPoint = checkoutSelectors.selectSelectedPickupPoint(state);
+        const selectedBasketItemsIds = checkoutSelectors.selectSelectedBasketItems(state);
 
-    if (!selectedPickupPoint) throw new Error('Pickup point not selected');
+        if (!selectedPickupPoint) throw new Error('Pickup point not selected');
 
-    return processOrder({pickupPointId: selectedPickupPoint.id, basketItemsIds: selectedBasketItemsIds});
-});
+        return processOrder({name, pickupPointId: selectedPickupPoint.id, basketItemsIds: selectedBasketItemsIds});
+    },
+);
 
 const initialState = {
     arePickupPointsLoading: false,
