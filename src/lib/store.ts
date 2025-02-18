@@ -46,7 +46,7 @@ const listenerMiddleware = createListenerMiddleware();
 
 listenerMiddleware.startListening({
     actionCreator: offersSlice.actions.incrementPage,
-    effect: async (action, listenerApi) => {
+    effect: async (_action, listenerApi) => {
         listenerApi.cancelActiveListeners();
 
         const page = offersSlice.getSelectors().selectCurrentPage((listenerApi.getState() as RootState).offers);
