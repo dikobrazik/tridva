@@ -11,7 +11,7 @@ export async function generateMetadata({params}: PageParams<never, {id: string}>
     const offer = await loadOffer({id: offerId});
 
     return {
-        title: `${offer.title} купить по низкой цене`,
+        title: `${offer.title} купить дешево`,
         description: `${offer.description}. совместная покупка, низкие цены, низкая цена, купить, дешево, недорого`,
         openGraph: {
             title: offer.title,

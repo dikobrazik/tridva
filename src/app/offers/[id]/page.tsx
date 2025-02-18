@@ -1,4 +1,4 @@
-import {loadCategory, loadCategoryAncestors, loadOffer, loadOfferAttributesCount, loadOfferGroupsCount} from '@/api';
+import {loadOffer, loadOfferAttributesCount, loadOfferGroupsCount} from '@/api';
 import {Column} from '@/components/layout/Column';
 import css from './Page.module.scss';
 import {Box} from '@/components/layout/Box';
@@ -9,7 +9,7 @@ import Groups from './Groups';
 import Reviews from './_reviewsBlock';
 import {pluralize} from '@/shared/utils/pluralize';
 import Link from 'next/link';
-import {ReactNode} from 'react';
+import {ReactNode, Suspense} from 'react';
 import {Block} from '@/components/layout/Block';
 import About from './About';
 import {formatPrice} from '@/shared/utils/formatPrice';
@@ -20,6 +20,7 @@ import {AboutDelivery} from './Delivery';
 import {AboutGroup} from './AboutGroup';
 import {SeeAlso} from './SeeAlso';
 import {PageParams} from '@/shared/types/next';
+import {CategoriesRow} from './CategoriesRow';
 
 type Props = PageParams<{p: string}, {id: string}>;
 
@@ -51,11 +52,9 @@ const Card = ({href, title, description}: CardProps) => {
 export default async function Offer(props: Props) {
     const offerId = Number(props.params.id);
     const page = props.searchParams.p ? Number(props.searchParams.p) : undefined;
-    const offer = await loadOffer({id: offerId});
-    const [groupsCount, categoryAncestors, category, attributesCount] = await Promise.all([
+    const [offer, groupsCount, attributesCount] = await Promise.all([
+        loadOffer({id: offerId}),
         loadOfferGroupsCount({id: offerId}),
-        loadCategoryAncestors({categoryId: Number(offer.categoryId)}),
-        loadCategory({categoryId: Number(offer.categoryId)}),
         loadOfferAttributesCount({id: offerId}),
     ]);
 
@@ -72,26 +71,9 @@ export default async function Offer(props: Props) {
                     {photos.photosCount ? <PhotosCarousel photos={photos} /> : null}
                 </Box>
 
-                <Row gap={1}>
-                    {categoryAncestors[0] && (
-                        <Link href={`/categories/${categoryAncestors[0].id}`}>
-                            <Row className={css.category} alignItems="center">
-                                <Text size={12} weight={400}>
-                                    {categoryAncestors[0].name}
-                                </Text>
-                                <Icon size="xs" name="chevronRight" />
-                            </Row>
-                        </Link>
-                    )}
-                    <Link href={`/categories/${category.id}`}>
-                        <Row className={css.category} alignItems="center">
-                            <Text size={12} weight={400}>
-                                {category.name}
-                            </Text>
-                            <Icon size="xs" name="chevronRight" />
-                        </Row>
-                    </Link>
-                </Row>
+                <Suspense>
+                    <CategoriesRow categoryId={offer.categoryId} />
+                </Suspense>
                 {discount ? (
                     <Row gap={2} alignItems="center">
                         <Text color="#F40C43" size={24} weight={600}>
