@@ -9,7 +9,7 @@ import Link from 'next/link';
 import telegramIcon from './telegram.svg?url';
 import whatsappIcon from './whatsapp.svg?url';
 import {LinkCard} from './components/LinkCard';
-import {LinkButton} from './components/LinkButton';
+import {ProfileButton, ProfileLinkButton} from './components/ProfileButton';
 import {ProfileBlock} from './components/ProfileBlock';
 import {loadFavoriteOffersCount, loadOrdersCount, loadUser, loadUserGroupsCount} from '@/api';
 
@@ -89,13 +89,13 @@ export default async function ProfilePage() {
             </Block>
 
             {/* <Block gap="2">
-                <LinkButton href="#" icon="marker" title="Город" description="Екатеринбург" />
-                <LinkButton href="#" icon="map" title="Пункты выдачи на карте" />
+                <ProfileButton href="#" icon="marker" title="Город" description="Екатеринбург" />
+                <ProfileButton href="#" icon="map" title="Пункты выдачи на карте" />
             </Block> */}
 
             <Block gap="2">
-                <LinkButton href="#" icon="help" title="Справка" />
-                <LinkButton href="#" icon="messageChat" title="Связаться с нами" />
+                <ProfileLinkButton href="/profile/support" icon="help" title="Справка" />
+                <ProfileButton icon="messageChat" title="Связаться с нами" />
             </Block>
 
             <Column paddingX="4" gap="3">

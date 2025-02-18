@@ -1,0 +1,33 @@
+@import 'mixins/mixins.scss';
+
+.detailsList {
+    & details {
+        padding: 12px;
+        border-bottom: 1px solid #9ca3aa52;
+
+        & summary .icon {
+            transition: transform 0.4s;
+            transform: rotate(0);
+        }
+        &[open] summary .icon {
+            transform: rotate(90deg);
+        }
+
+        & summary {
+            list-style: none;
+
+            &::marker {
+                display: none;
+            }
+        }
+    }
+}
+
+@include keyframes('rotate') {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(90deg);
+    }
+}

@@ -20,6 +20,7 @@ const pagesWithoutHeader = [
     /[/]offers[/]\d+[/]reviews/,
     /[/]basket/,
     /[/]profile[/]edit/,
+    /[/]profile[/]support/,
     /[/]profile[/]orders/,
     /[/]profile[/]favorites/,
     /[/]profile[/]groups/,
