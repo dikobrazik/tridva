@@ -11,6 +11,7 @@ export type Offer = {
     ordersCount: number;
     rating?: number;
     ratingsCount: number;
+    groupsOwnersIds: number[];
     reviewsCount: number;
 };
 

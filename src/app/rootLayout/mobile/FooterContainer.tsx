@@ -3,9 +3,9 @@
 import {PropsWithChildren, useRef} from 'react';
 import css from './Footer.module.scss';
 import {Column} from '@/components/layout/Column';
-import {useScrollObserver} from '@/hooks/useScrollObserver';
 import {usePathname} from 'next/navigation';
 import classNames from 'classnames';
+import {useFooterVisibility} from './useFooterVisibility';
 
 const PAGES_WITH_HIDDEN_FOOTER_RE = /^[/]((categories([/]\d+)?)|offers[/]search)?$/;
 
@@ -15,14 +15,14 @@ export const FooterContainer = (props: PropsWithChildren) => {
 
     const shouldHideFooterOnScroll = PAGES_WITH_HIDDEN_FOOTER_RE.test(pathname);
 
-    useScrollObserver({
-        onScrollDown: () => {
+    useFooterVisibility({
+        hideFooter: () => {
             if (shouldHideFooterOnScroll && !columnRef.current?.classList.contains(css.hide)) {
                 columnRef.current?.classList.add(css.hide);
                 columnRef.current?.classList.remove(css.show);
             }
         },
-        onScrollUp: () => {
+        showFooter: () => {
             if (shouldHideFooterOnScroll && !columnRef.current?.classList.contains(css.show)) {
                 columnRef.current?.classList.add(css.show);
                 columnRef.current?.classList.remove(css.hide);

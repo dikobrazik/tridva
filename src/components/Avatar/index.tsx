@@ -4,9 +4,11 @@ import unknownUserAvatar from './assets/unknown.svg?url';
 import css from './Avatar.module.scss';
 import ImageWithFallback from '../Image';
 import {makeEnvironmentUrl} from '@/shared/utils/makeEnironmentUrl';
+import classNames from 'classnames';
 
 type Props = {
     id?: number;
+    className?: string;
     hash?: string;
     height?: number;
     width?: number;
@@ -14,7 +16,7 @@ type Props = {
 
 export const ProfileAvatar = (props: Props) => {
     return (
-        <Box className={css.avatarContainer}>
+        <Box className={classNames(css.avatarContainer, props.className)}>
             {props.id ? (
                 <ImageWithFallback
                     height={props.height ?? 76}

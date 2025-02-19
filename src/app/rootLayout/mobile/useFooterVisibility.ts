@@ -1,11 +1,13 @@
 import {useEffect} from 'react';
 
 type Props = {
-    onScrollDown: () => void;
-    onScrollUp: () => void;
+    hideFooter: () => void;
+    showFooter: () => void;
 };
 
-export const useScrollObserver = ({onScrollDown, onScrollUp}: Props) => {
+const FOOTER_HEIGHT = 59;
+
+export const useFooterVisibility = ({hideFooter, showFooter}: Props) => {
     useEffect(() => {
         let lastScroll = window.scrollY,
             lastTimeoutId: NodeJS.Timeout;
@@ -13,10 +15,17 @@ export const useScrollObserver = ({onScrollDown, onScrollUp}: Props) => {
         const listener = () => {
             clearTimeout(lastTimeoutId);
 
+            const windowBottomLinePosition = window.scrollY + window.innerHeight;
+            const footerAlwaysVisibleLine = document.documentElement.scrollHeight - FOOTER_HEIGHT;
+
             if (window.scrollY - lastScroll > 100) {
-                onScrollDown();
+                hideFooter();
             } else if (window.scrollY - lastScroll < -100) {
-                onScrollUp();
+                showFooter();
+            }
+
+            if (windowBottomLinePosition > footerAlwaysVisibleLine) {
+                showFooter();
             }
 
             lastTimeoutId = setTimeout(() => {
@@ -27,5 +36,5 @@ export const useScrollObserver = ({onScrollDown, onScrollUp}: Props) => {
         document.addEventListener('scroll', listener);
 
         return () => document.removeEventListener('scroll', listener);
-    }, [onScrollDown, onScrollUp]);
+    }, [hideFooter, showFooter]);
 };

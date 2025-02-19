@@ -10,10 +10,22 @@ import {getFirstOfferPhoto} from '@/shared/photos';
 import {formatPrice} from '@/shared/utils/formatPrice';
 import ImageWithFallback from '../Image';
 import {memo} from 'react';
+import {ProfileAvatar} from '../Avatar';
 
 export const OfferCard = memo(
     (props: Offer & {priority?: boolean}) => {
-        const {id, title, priority = false, price, ordersCount, discount, rating, photos, reviewsCount} = props;
+        const {
+            id,
+            title,
+            priority = false,
+            price,
+            ordersCount,
+            discount,
+            rating,
+            photos,
+            reviewsCount,
+            groupsOwnersIds,
+        } = props;
 
         const imageSrc = getFirstOfferPhoto(photos, 280);
         const fallbackImageSrc = typeof imageSrc === 'string' ? imageSrc.replace('280.jpg', '140.jpg') : undefined;
@@ -73,9 +85,21 @@ export const OfferCard = memo(
                                 </Row>
                             </Row>
                             <Row justifyContent="space-between">
-                                <Text size={10}>
+                                <Text size={10} lineHeight={14}>
                                     Купили {ordersCount} {pluralize(ordersCount, ['раз', 'раза', 'раз'])}
                                 </Text>
+
+                                <Row className={css.groupsOwnersAvatarsRow}>
+                                    {groupsOwnersIds?.map(id => (
+                                        <ProfileAvatar
+                                            className={css.avatarContainer}
+                                            id={id}
+                                            key={id}
+                                            width={12}
+                                            height={12}
+                                        />
+                                    ))}
+                                </Row>
                             </Row>
                         </Column>
                     </Column>
