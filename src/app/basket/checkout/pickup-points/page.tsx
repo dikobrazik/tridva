@@ -134,22 +134,22 @@ export default function PickupPointsPage() {
                     </Column>
 
                     <Row gap={1} alignItems="center">
-                        <Icon name="informationCircle" />
-                        <Text weight={500} size={10} color="#4FDE38">
+                        <Icon size="xs" name="informationCircle" />
+                        <Text weight={500} size={12} color="#4FDE38">
                             Доставим бесплатно
                         </Text>
                     </Row>
 
                     <Row gap={1}>
-                        <Icon name="phone" />
-                        <Text weight={500} size={10}>
+                        <Icon size="xs" name="phone" />
+                        <Text weight={500} size={12}>
                             {selectedPickupPoint?.phone}
                         </Text>
                     </Row>
 
                     <Row gap={1}>
-                        <Icon name="calendar" />
-                        <Text weight={500} size={10}>
+                        <Icon size="xs" name="calendar" />
+                        <Text weight={500} size={12}>
                             Срок хранения заказа 5 дней
                         </Text>
                     </Row>

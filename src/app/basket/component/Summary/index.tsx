@@ -24,11 +24,11 @@ export const Summary = () => {
     }
 
     return (
-        <Block gap="4">
+        <Block gap={4}>
             <Text size={16} weight={600}>
                 Ваш заказ
             </Text>
-            <Column gap="2">
+            <Column gap={3}>
                 <Row justifyContent="space-between">
                     <Text size={14} weight={400} color="#303234A3">
                         Товары ({selectedItemsCount})
@@ -45,9 +45,17 @@ export const Summary = () => {
                         -{selectedBasketItemsCostBeforeDiscount - selectedBasketItemsCost} ₽
                     </Text>
                 </Row>
+                <Row justifyContent="space-between">
+                    <Text size={14} weight={400} color="#303234A3">
+                        Доставка
+                    </Text>
+                    <Text size={14} weight={400}>
+                        Бесплатно
+                    </Text>
+                </Row>
                 <Separator />
                 <Row justifyContent="space-between">
-                    <Text size={16} weight={400} color="#303234A3">
+                    <Text size={16} weight={600}>
                         Итого
                     </Text>
                     <Text color="#F40C43" size={16} weight={600}>
