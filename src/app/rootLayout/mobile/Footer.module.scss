@@ -23,16 +23,6 @@
     position: fixed;
 
     bottom: 0;
-
-    @media (max-width: 460px) {
-        left: 0;
-        right: 0;
-    }
-
-    @media (min-width: 461px) {
-        width: 460px;
-        min-width: 360px;
-    }
 }
 
 .footerButtonCount {

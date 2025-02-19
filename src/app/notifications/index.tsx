@@ -60,7 +60,7 @@ export const NotificationsContainer = () => {
     }, []);
 
     return (
-        <Column ref={containerRef} className={css.container} gap={2} paddingX={2}>
+        <Column ref={containerRef} className={classNames(css.container, 'absolute-fullwidth')} gap={2} paddingX={2}>
             {notifications.map(notification => (
                 <Notification key={notification.id} {...notification} />
             ))}

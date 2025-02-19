@@ -1,9 +1,10 @@
 @import 'mixins/device-query';
+@import 'constants/base';
 
 .oldContainer {
-    max-width: 460px;
-    width: 460px;
-    min-width: 360px;
+    max-width: $mobile-layout-max-width;
+    width: $mobile-layout-max-width;
+    min-width: 0;
 
     padding-bottom: 59px;
 
@@ -14,9 +15,9 @@
 
 .container {
     @include mobile {
-        max-width: 460px;
-        width: 460px;
-        min-width: 360px;
+        max-width: $mobile-layout-max-width;
+        width: $mobile-layout-max-width;
+        min-width: 0;
 
         padding-bottom: 59px;
     }

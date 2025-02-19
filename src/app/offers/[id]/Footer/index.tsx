@@ -6,12 +6,13 @@ import {AddSignleItemButton} from './AddSingleItem';
 import css from './Footer.module.scss';
 import {BestGroup} from './BestGroup';
 import {loadOfferGroup} from '@/api';
+import classNames from 'classnames';
 
 export default async function Footer({offer}: {offer: Offer}) {
     const bestGroup = await loadOfferGroup({id: offer.id});
 
     return (
-        <Column className={css.container}>
+        <Column className={classNames(css.container, 'absolute-fullwidth')}>
             <Row padding="8px 16px 4px">
                 <BestGroup group={bestGroup} />
             </Row>

@@ -26,9 +26,5 @@ export const Content = (props: PropsWithChildren) => {
         );
     }
 
-    return (
-        <Box id="content" className={css.container}>
-            {props.children}
-        </Box>
-    );
+    return <Box id="content">{props.children}</Box>;
 };

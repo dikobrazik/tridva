@@ -5,6 +5,7 @@ import css from './Footer.module.scss';
 import {Column} from '@/components/layout/Column';
 import {useScrollObserver} from '@/hooks/useScrollObserver';
 import {usePathname} from 'next/navigation';
+import classNames from 'classnames';
 
 const PAGES_WITH_HIDDEN_FOOTER_RE = /^[/]((categories([/]\d+)?)|offers[/]search)?$/;
 
@@ -30,7 +31,12 @@ export const FooterContainer = (props: PropsWithChildren) => {
     });
 
     return (
-        <Column ref={columnRef} id="footer-container" className={css.footer} padding="8px 16px">
+        <Column
+            ref={columnRef}
+            id="footer-container"
+            className={classNames(css.footer, 'absolute-fullwidth')}
+            padding="8px 16px"
+        >
             {props.children}
         </Column>
     );

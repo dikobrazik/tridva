@@ -1,3 +1,5 @@
+@import 'constants/base';
+
 .footer {
     background-color: #fff;
 
@@ -6,7 +8,7 @@
     padding: 8px 16px;
 
     &.fixed {
-        max-width: 460px;
+        max-width: $mobile-layout-max-width;
 
         position: fixed;
 
