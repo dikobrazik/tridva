@@ -11,7 +11,7 @@ import {omitCurrentYear} from '@/shared/date/omitCurrentYear';
 import {NewReviewButton} from './NewReviewButton';
 import {pluralize} from '@/shared/utils/pluralize';
 import {PageParams} from '@/shared/types/next';
-import {BackButton} from './BackButton';
+import {Header} from '@/components/Header';
 
 const ReviewItem = (review: Review) => {
     return (
@@ -50,31 +50,26 @@ export default async function Reviews(props: Props) {
 
     return (
         <Column className={css.container} height="100%" gap={2}>
-            <Column className={css.topContent} gap="3">
-                <Row className={css.header} paddingTop="16px" justifyContent="space-between" alignItems="center">
-                    <BackButton />
-
-                    <Text weight="600" size="16px" lineHeight={20}>
-                        Отзывы{' '}
-                        <Text weight="600" size="16px" lineHeight={20} color="#3032347A">
-                            {reviewsCount}
+            <Column>
+                <Header withBackArrow backRoute={`/offers/${offerId}`}>
+                    Отзывы{' '}
+                    <Text weight="600" size="16px" lineHeight={20} color="#3032347A">
+                        {reviewsCount}
+                    </Text>
+                </Header>
+                <Column className={css.topContent} gap="3">
+                    <Row alignItems="center" gap={2}>
+                        <Text size="12px" weight={400}>
+                            {rating}
                         </Text>
-                    </Text>
+                        <Rating rating={rating} />
+                        <Text size={10} weight={400} color="#303234A3">
+                            {ratingsCount} {pluralize(ratingsCount, ['оценка', 'оценки', 'оценок'])}
+                        </Text>
+                    </Row>
 
-                    <span />
-                </Row>
-
-                <Row alignItems="center" gap={2}>
-                    <Text size="12px" weight={400}>
-                        {rating}
-                    </Text>
-                    <Rating rating={rating} />
-                    <Text size={10} weight={400} color="#303234A3">
-                        {ratingsCount} {pluralize(ratingsCount, ['оценка', 'оценки', 'оценок'])}
-                    </Text>
-                </Row>
-
-                {!hasReview && <NewReviewButton offer={offer} />}
+                    {!hasReview && <NewReviewButton offer={offer} />}
+                </Column>
             </Column>
 
             <Column gap="2" overflowY="scroll">

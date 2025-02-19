@@ -11,6 +11,7 @@ type Props = PropsWithChildren<{
     left?: ReactNode;
     right?: ReactNode;
     withBackArrow?: boolean;
+    backRoute?: string;
 }>;
 
 export const Header = (props: Props) => {
@@ -18,8 +19,16 @@ export const Header = (props: Props) => {
 
     const {left, right, children, withBackArrow} = props;
 
+    const onBackClick = () => {
+        if (props.backRoute) {
+            router.push(props.backRoute);
+        } else {
+            router.back();
+        }
+    };
+
     const leftDefaultComponent = withBackArrow ? (
-        <Box onClick={() => router.back()}>
+        <Box onClick={onBackClick}>
             <Icon size="m" name="chevronLeft" />
         </Box>
     ) : (
