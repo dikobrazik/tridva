@@ -4,7 +4,7 @@ import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
 import Link from 'next/link';
 
-import css from './Page.module.scss';
+import css from './CategoriesRow.module.scss';
 
 type Props = {
     categoryId: number;

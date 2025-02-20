@@ -2,7 +2,7 @@
 
 import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
-import {NewReviewDrawer} from '../reviews/NewReviewDrawer';
+import {NewReviewDrawer} from '../../reviews/NewReviewDrawer';
 import {Button} from '@/components/Button';
 import {Offer} from '@/types/offers';
 

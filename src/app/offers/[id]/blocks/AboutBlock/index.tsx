@@ -1,14 +1,14 @@
 import {loadOfferAttributes} from '@/api';
-import {Column} from '@/components/layout/Column';
 import {Text} from '@/components/Text';
 import css from './About.module.scss';
 import {ExpandableList} from './ExpandableList';
+import {Block} from '@/components/layout/Block';
 
 export default async function About({offerId, offerDescription = ''}: {offerId: number; offerDescription: string}) {
     const attributes = await loadOfferAttributes({id: offerId});
 
     return (
-        <Column className={css.about} gap={3}>
+        <Block gap={3}>
             <Text weight={600} size={16} lineHeight={20}>
                 О товаре
             </Text>
@@ -19,6 +19,6 @@ export default async function About({offerId, offerDescription = ''}: {offerId: 
                     dangerouslySetInnerHTML={{__html: offerDescription.replace(/\s/g, ' ')}}
                 ></div>
             </Text>
-        </Column>
+        </Block>
     );
 }

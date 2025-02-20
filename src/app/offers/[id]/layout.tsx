@@ -1,6 +1,6 @@
 import {Column} from '@/components/layout/Column';
 import {PropsWithChildren} from 'react';
-import Footer from './Footer';
+import Footer from './components/Footer';
 import {loadOffer} from '@/api';
 import {PageParams} from '@/shared/types/next';
 import {Metadata} from 'next';

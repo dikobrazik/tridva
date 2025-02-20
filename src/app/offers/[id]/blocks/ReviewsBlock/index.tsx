@@ -12,6 +12,7 @@ import {omitCurrentYear} from '@/shared/date/omitCurrentYear';
 import {Offer} from '@/types/offers';
 import {ReviewsBlockHeader} from './Header';
 import {pluralize} from '@/shared/utils/pluralize';
+import {Block} from '@/components/layout/Block';
 
 function ReviewsItem(review: Review) {
     return (
@@ -39,7 +40,7 @@ export default async function Reviews({offer}: Props) {
     const {reviewsCount, ratingsCount, rating = 0} = offer;
 
     return (
-        <Column gap={3}>
+        <Block id="reviews" gap={3}>
             <ReviewsBlockHeader offer={offer} reviewsCount={reviewsCount} hasReview={hasReview} />
             {rating && (
                 <Row alignItems="center" gap={2}>
@@ -75,6 +76,6 @@ export default async function Reviews({offer}: Props) {
                     </Row>
                 </Link>
             )}
-        </Column>
+        </Block>
     );
 }

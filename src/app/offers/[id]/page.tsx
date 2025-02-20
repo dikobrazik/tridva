@@ -5,22 +5,22 @@ import {Box} from '@/components/layout/Box';
 import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
 import {Icon} from '@/components/Icon';
-import Groups from './Groups';
-import Reviews from './_reviewsBlock';
+import Groups from './blocks/GroupsBlock';
+import Reviews from './blocks/ReviewsBlock';
 import {pluralize} from '@/shared/utils/pluralize';
 import Link from 'next/link';
 import {ReactNode, Suspense} from 'react';
 import {Block} from '@/components/layout/Block';
-import About from './About';
+import About from './blocks/AboutBlock';
 import {formatPrice} from '@/shared/utils/formatPrice';
-import {PhotosCarousel} from './PhotosCarousel';
-import {BackButton} from './BackButton';
-import {LikeButton} from './LikeButton';
-import {AboutDelivery} from './Delivery';
-import {AboutGroup} from './AboutGroup';
-import {SeeAlso} from './SeeAlso';
+import {PhotosCarousel} from './components/PhotosCarousel';
+import {BackButton} from './components/Buttons/BackButton';
+import {LikeButton} from './components/Buttons/LikeButton';
+import {AboutDelivery} from './components/AboutDelivery';
+import {AboutGroup} from './components/AboutGroup';
+import {SeeAlso} from './components/SeeAlso';
 import {PageParams} from '@/shared/types/next';
-import {CategoriesRow} from './CategoriesRow';
+import {CategoriesRow} from './components/CategoriesRow';
 
 type Props = PageParams<{p: string}, {id: string}>;
 
@@ -129,25 +129,27 @@ export default async function Offer(props: Props) {
                 </Column>
             </Block>
 
-            <Block>
+            <Suspense>
                 <Groups offerId={offerId} />
-            </Block>
+            </Suspense>
 
             {attributesCount > 0 && (
-                <Block>
+                <Suspense>
                     <About offerId={offerId} offerDescription={offer.description} />
-                </Block>
+                </Suspense>
             )}
 
-            <Block id="reviews">
+            <Suspense>
                 <Reviews offer={offer} />
-            </Block>
+            </Suspense>
 
             <Block gap="3" id="offers-list-container">
                 <Text size={16} weight={600}>
                     Смотрите также
                 </Text>
-                <SeeAlso categoryId={offer.categoryId} page={page} />
+                <Suspense>
+                    <SeeAlso categoryId={offer.categoryId} page={page} />
+                </Suspense>
             </Block>
         </Column>
     );

@@ -1,6 +1,6 @@
 'use client';
 
-import css from './Page.module.scss';
+import css from './Buttons.module.scss';
 import {Button} from '@/components/Button';
 import {Box} from '@/components/layout/Box';
 import classNames from 'classnames';

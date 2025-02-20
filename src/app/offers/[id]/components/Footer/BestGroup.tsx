@@ -5,7 +5,7 @@ import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
 import {Row} from '@/components/layout/Row';
 import {LeftTime} from '@/components/LeftTime';
-import {JoinGroupDrawer} from '../Groups/JoinGroupDrawer';
+import {JoinGroupDrawer} from '../../blocks/GroupsBlock/JoinGroupDrawer';
 import {Group} from '@/types/group';
 
 export function BestGroup({group}: {group: Group | null}) {

@@ -7,6 +7,7 @@ import {pluralize} from '@/shared/utils/pluralize';
 import {AboutGroups} from './About';
 import {GroupsList} from './GroupsList';
 import {InvitedToGroupDrawer} from './InvitedToGroupDrawer';
+import {Block} from '@/components/layout/Block';
 
 type Props = {
     offerId: number;
@@ -31,7 +32,7 @@ export default async function Groups(props: Props) {
     const groupsCount = groups.length;
 
     return (
-        <Column className={css.groups} gap={groupsCount > 0 ? 2 : 4}>
+        <Block gap={groupsCount > 0 ? 2 : 4}>
             <Column gap={1}>
                 <Row justifyContent="space-between">
                     <Text weight="600" size={16} lineHeight={12}>
@@ -56,6 +57,6 @@ export default async function Groups(props: Props) {
             <InvitedToGroupDrawer groups={groups} offer={offer} />
 
             {groupsCount > 0 ? <GroupsList groups={groups} offer={offer} /> : <NoGroups />}
-        </Column>
+        </Block>
     );
 }

@@ -4,7 +4,7 @@ import {Icon} from '@/components/Icon';
 import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
 import classNames from 'classnames';
-import css from './Page.module.scss';
+import css from './AboutGroup.module.scss';
 import {useToggler} from '@/hooks/useToggler';
 import {Modal} from '@/components/Modal';
 import {Column} from '@/components/layout/Column';
