@@ -6,6 +6,7 @@ import cn from 'classnames';
 import {useMemo} from 'react';
 import {OrderItem} from '@/types/orders';
 import {PickupPoint} from '@/types/geo';
+import {Button} from '@/components/Button';
 
 type Props = {
     address: PickupPoint['address'];
@@ -14,7 +15,7 @@ type Props = {
     onClose: () => void;
 };
 
-export const StatusFlow = ({address, status: itemStatus}: Props) => {
+export const StatusFlow = ({onClose, address, status: itemStatus}: Props) => {
     const STATUSES = useMemo(
         () =>
             [
@@ -59,6 +60,10 @@ export const StatusFlow = ({address, status: itemStatus}: Props) => {
                     </Column>
                 ))}
             </Column>
+
+            <Button onClick={onClose} size="m">
+                Понятно, спасибо
+            </Button>
         </Column>
     );
 };
