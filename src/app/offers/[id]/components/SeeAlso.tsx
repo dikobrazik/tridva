@@ -5,7 +5,7 @@ import {DEFAUL_PAGE_SIZE} from '@/shared/constants';
 
 type Props = {categoryId: number; page?: number};
 
-export const SeeAlso = async ({categoryId, page}: Props) => {
+export default async function SeeAlso({categoryId, page}: Props) {
     const {offers, pagesCount} = await loadOffers({
         category: categoryId,
         pageSize: page ? Number(page) * DEFAUL_PAGE_SIZE : undefined,
@@ -22,4 +22,4 @@ export const SeeAlso = async ({categoryId, page}: Props) => {
             {pagesCount > 1 && <OffersListLoader />}
         </>
     );
-};
+}

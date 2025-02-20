@@ -5,13 +5,14 @@ import {Text} from '@/components/Text';
 import {Box} from '@/components/layout/Box';
 import {Column} from '@/components/layout/Column';
 import {basketSelectors, putOfferToBasketAction} from '@/lib/features/basket';
+import {notificationsActions} from '@/lib/features/notifications';
 import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 import {formatPrice} from '@/shared/utils/formatPrice';
 import {Offer} from '@/types/offers';
 import Link from 'next/link';
-import css from './Footer.module.scss';
-import {notificationsActions} from '@/lib/features/notifications';
 import {useRouter} from 'next/navigation';
+import {useOffer} from '../../context';
+import css from './Footer.module.scss';
 
 export const CreateSingleItemButton = ({id, price}: Pick<Offer, 'id' | 'price'>) => {
     const router = useRouter();
@@ -51,7 +52,9 @@ const SignleItemCreatedButton = () => {
     );
 };
 
-export const AddSignleItemButton = ({offer}: {offer: Offer}) => {
+export const AddSignleItemButton = () => {
+    const offer = useOffer();
+
     const isBasketGroupItemsExists = useAppSelector(state =>
         basketSelectors.selectBasketGroupItemByOfferId(state, offer.id),
     );

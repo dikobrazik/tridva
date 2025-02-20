@@ -5,22 +5,24 @@ import {Box} from '@/components/layout/Box';
 import {Row} from '@/components/layout/Row';
 import {Text} from '@/components/Text';
 import {Icon} from '@/components/Icon';
-import Groups from './blocks/GroupsBlock';
-import Reviews from './blocks/ReviewsBlock';
 import {pluralize} from '@/shared/utils/pluralize';
 import Link from 'next/link';
 import {ReactNode, Suspense} from 'react';
 import {Block} from '@/components/layout/Block';
-import About from './blocks/AboutBlock';
 import {formatPrice} from '@/shared/utils/formatPrice';
 import {PhotosCarousel} from './components/PhotosCarousel';
 import {BackButton} from './components/Buttons/BackButton';
 import {LikeButton} from './components/Buttons/LikeButton';
 import {AboutDelivery} from './components/AboutDelivery';
 import {AboutGroup} from './components/AboutGroup';
-import {SeeAlso} from './components/SeeAlso';
 import {PageParams} from '@/shared/types/next';
-import {CategoriesRow} from './components/CategoriesRow';
+import {OfferContextProvider} from './context';
+
+import SeeAlso from './components/SeeAlso';
+import CategoriesRow from './components/CategoriesRow';
+import Groups from './blocks/GroupsBlock';
+import Reviews from './blocks/ReviewsBlock';
+import About from './blocks/AboutBlock';
 
 type Props = PageParams<{p: string}, {id: string}>;
 
@@ -130,7 +132,9 @@ export default async function Offer(props: Props) {
             </Block>
 
             <Suspense>
-                <Groups offerId={offerId} />
+                <OfferContextProvider offer={offer}>
+                    <Groups offerId={offerId} />
+                </OfferContextProvider>
             </Suspense>
 
             {attributesCount > 0 && (

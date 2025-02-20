@@ -4,23 +4,19 @@ import {Button, LinkButton} from '@/components/Button';
 import {Column} from '@/components/layout/Column';
 import {Text} from '@/components/Text';
 import {Group, UserRelations} from '@/types/group';
-import {Offer} from '@/types/offers';
-import {JoinGroupDrawer} from './JoinGroupDrawer';
+import {JoinGroupDrawer} from './components/JoinGroupDrawer';
 import {useCopyGroupInviteLink} from '@/hooks/useCopyGroupInviteLink';
+import {GroupContext} from './context';
 
-export const GroupButton = ({group, offer}: {offer: Offer; group: Group}) => {
+export const GroupButton = ({group}: {group: Group}) => {
     const {onInviteClick} = useCopyGroupInviteLink();
 
     switch (group.relation) {
         case UserRelations.NONE:
             return (
-                <JoinGroupDrawer
-                    offer={offer}
-                    ownerId={group.ownerId}
-                    groupId={group.id}
-                    ownerName={group.ownerName}
-                    createdAt={new Date(group.createdAt)}
-                />
+                <GroupContext.Provider value={{group}}>
+                    <JoinGroupDrawer />
+                </GroupContext.Provider>
             );
         case UserRelations.BASKET:
             return (

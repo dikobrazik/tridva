@@ -2,19 +2,21 @@
 
 import {Button} from '@/components/Button';
 import {Drawer} from '@/components/Drawer';
+import {OfferBlock} from '@/components/OfferCard/OfferBlock';
 import {Text} from '@/components/Text';
 import {Column} from '@/components/layout/Column';
 import {useToggler} from '@/hooks/useToggler';
-import {Offer} from '@/types/offers';
-import Link from 'next/link';
-import {useEffect, useState} from 'react';
-import {formatPrice} from '@/shared/utils/formatPrice';
-import {OfferBlock} from '@/components/OfferCard/OfferBlock';
-import {useAppDispatch, useAppSelector} from '@/lib/hooks';
 import {basketSelectors, createGroupAction} from '@/lib/features/basket';
 import {userSelectors} from '@/lib/features/user';
+import {useAppDispatch, useAppSelector} from '@/lib/hooks';
+import {formatPrice} from '@/shared/utils/formatPrice';
+import Link from 'next/link';
+import {useEffect, useState} from 'react';
+import {useOffer} from '../../context';
 
-const CreateGroupItemButton = ({onGroupCreated, offer}: {onGroupCreated: () => void; offer: Offer}) => {
+const CreateGroupItemButton = ({onGroupCreated}: {onGroupCreated: () => void}) => {
+    const offer = useOffer();
+
     const dispatch = useAppDispatch();
     const onJoinGroupClick = async () => {
         dispatch(createGroupAction({offerId: offer.id})).then(() => {
@@ -50,7 +52,9 @@ const CreateGroupItemButton = ({onGroupCreated, offer}: {onGroupCreated: () => v
     );
 };
 
-const GroupItemCreatedButton = ({offer}: {offer: Offer}) => {
+const GroupItemCreatedButton = () => {
+    const offer = useOffer();
+
     return (
         <Column gap="10">
             <Column gap="2" alignItems="center">
@@ -77,7 +81,9 @@ const GroupItemCreatedButton = ({offer}: {offer: Offer}) => {
     );
 };
 
-export const AddGroupItem = ({offer}: {offer: Offer}) => {
+export const AddGroupItem = () => {
+    const offer = useOffer();
+
     const userId = useAppSelector(userSelectors.selectUserId);
     const basketGroupItem = useAppSelector(state => basketSelectors.selectBasketGroupItemByOfferId(state, offer.id));
     const [isGroupCreated, setGroupCreated] = useState(false);
@@ -128,9 +134,9 @@ export const AddGroupItem = ({offer}: {offer: Offer}) => {
             )}
             <Drawer isOpen={isActive} onClose={toggle}>
                 {isGroupCreated ? (
-                    <GroupItemCreatedButton offer={offer} />
+                    <GroupItemCreatedButton />
                 ) : (
-                    <CreateGroupItemButton offer={offer} onGroupCreated={onGroupCreated} />
+                    <CreateGroupItemButton onGroupCreated={onGroupCreated} />
                 )}
             </Drawer>
         </>

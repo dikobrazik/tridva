@@ -1,14 +1,13 @@
 'use client';
 
 import {Group, UserRelations} from '@/types/group';
-import {JoinGroupDrawer} from './JoinGroupDrawer';
-import {Offer} from '@/types/offers';
+import {JoinGroupDrawer} from './components/JoinGroupDrawer';
 import {usePathname, useRouter, useSearchParams} from 'next/navigation';
 import {useEffect, useMemo} from 'react';
+import {GroupContext} from './context';
 
 type Props = {
     groups: Group[];
-    offer: Offer;
 };
 
 const Trigger = ({onClick}: {onClick: () => void}) => {
@@ -19,7 +18,7 @@ const Trigger = ({onClick}: {onClick: () => void}) => {
     return null;
 };
 
-export const InvitedToGroupDrawer = ({groups, offer}: Props) => {
+export const InvitedToGroupDrawer = ({groups}: Props) => {
     const router = useRouter();
     const pathname = usePathname();
     const searchParams = useSearchParams();
@@ -37,13 +36,8 @@ export const InvitedToGroupDrawer = ({groups, offer}: Props) => {
     if (!group || group.relation !== UserRelations.NONE) return null;
 
     return (
-        <JoinGroupDrawer
-            offer={offer}
-            ownerId={group.ownerId}
-            groupId={group.id}
-            ownerName={group.ownerName}
-            createdAt={new Date(group.createdAt)}
-            renderTrigger={({onClick}) => <Trigger onClick={onClick} />}
-        />
+        <GroupContext.Provider value={{group}}>
+            <JoinGroupDrawer renderTrigger={({onClick}) => <Trigger onClick={onClick} />} />
+        </GroupContext.Provider>
     );
 };

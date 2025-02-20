@@ -8,14 +8,12 @@ import {Text} from '@/components/Text';
 import {useToggler} from '@/hooks/useToggler';
 import {pluralize} from '@/shared/utils/pluralize';
 import {Group, UserRelations} from '@/types/group';
-import {Offer} from '@/types/offers';
 import css from './Groups.module.scss';
 import {LeftTime} from '@/components/LeftTime';
 import {GroupButton} from './GroupButton';
 
 type Props = {
     groups: Group[];
-    offer: Offer;
 };
 
 export const LeftCapacityText = ({capacity, participantsCount}: Pick<Group, 'capacity' | 'participantsCount'>) => {
@@ -35,7 +33,7 @@ export const LeftCapacityText = ({capacity, participantsCount}: Pick<Group, 'cap
     return null;
 };
 
-export const GroupsList = ({groups, offer}: Props) => {
+export const GroupsList = ({groups}: Props) => {
     const {toggle: toggleList, isActive: isFullListVisible} = useToggler();
 
     return (
@@ -61,13 +59,15 @@ export const GroupsList = ({groups, offer}: Props) => {
                                 </Row>
                                 <LeftCapacityText
                                     capacity={group.capacity}
-                                    participantsCount={group.participantsCount}
+                                    participantsCount={
+                                        group.participantsCount + Number(relation === UserRelations.BASKET)
+                                    }
                                 />
                                 <Text weight="400" size={12} lineHeight={12} color="#303234A3">
                                     Закрытие группы через: <LeftTime createdAt={new Date(createdAt)} />
                                 </Text>
                             </Column>
-                            <GroupButton group={group} offer={offer} />
+                            <GroupButton group={group} />
                         </Row>
                     );
                 })}

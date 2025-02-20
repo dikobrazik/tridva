@@ -10,7 +10,7 @@ type Props = {
     categoryId: number;
 };
 
-export const CategoriesRow = async ({categoryId}: Props) => {
+export default async function CategoriesRow({categoryId}: Props) {
     const [categoryAncestors, category] = await Promise.all([
         loadCategoryAncestors({categoryId: categoryId}),
         loadCategory({categoryId: categoryId}),
@@ -37,4 +37,4 @@ export const CategoriesRow = async ({categoryId}: Props) => {
             </Link>
         </Row>
     );
-};
+}
