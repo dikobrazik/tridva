@@ -10,7 +10,11 @@ import {useAppSelector} from '@/lib/hooks';
 import {formatPrice} from '@/shared/utils/formatPrice';
 import {sum} from '@/shared/utils/sum';
 
-export const Summary = () => {
+type Props = {
+    isDescriptionVisible?: boolean;
+};
+
+export const Summary = (props: Props) => {
     const selectedBasketItemsCost = useAppSelector(basketSelectors.selectSelectedOffersCost);
     const selectedBasketItems = useAppSelector(basketSelectors.selectSelectedBasketItems);
     const selectedBasketItemsCostBeforeDiscount = useAppSelector(
@@ -63,6 +67,11 @@ export const Summary = () => {
                     </Text>
                 </Row>
             </Column>
+            {Boolean(props.isDescriptionVisible) && (
+                <Text size={12} weight={400} color="#303234A3">
+                    Доступные способы и время доставки можно выбрать при оформлении заказа
+                </Text>
+            )}
         </Block>
     );
 };

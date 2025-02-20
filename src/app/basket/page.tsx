@@ -26,7 +26,7 @@ export default async function Basket(props: Props) {
                 <Column gap="2">
                     <Controls />
                     <List />
-                    <Summary />
+                    <Summary isDescriptionVisible />
                 </Column>
             </Column>
 

@@ -106,7 +106,7 @@ export const BasketItem = ({id, capacity, offer, count, owner}: Props) => {
                             <Text size={12} weight={500} color="#F4B30C">
                                 {owner ? 'Группа создана' : 'Группа собрана'}
                             </Text>
-                            <Text size={10} weight={400} color="#303234A3">
+                            <Text size={12} weight={400} color="#303234A3">
                                 Оплатите товар, чтобы подтвердить участие.
                             </Text>
                         </Column>
